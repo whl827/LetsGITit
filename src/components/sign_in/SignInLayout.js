@@ -8,8 +8,8 @@ class SignInLayout extends Component {
 	render() {
 	    return (
 	    	<div>
-	    		sign in!!!
-		  </div>
+	    		
+		  	</div>
 	    );
   	}
 }
