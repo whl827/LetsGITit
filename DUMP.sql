@@ -2,7 +2,7 @@ drop database if exists KnowItAll;
 create database KnowItAll;
 use KnowItAll;
 
-create table User (
+create table KUser (
 	userID int(8) primary key auto_increment,
     username varchar(8) not null,
     passwordHash int(12) not null
@@ -15,7 +15,7 @@ create table Poll (
     subTitle varchar(50),
     description varchar(500) not null,
     totalVotes int(8) not null,
-    foreign key fk1(userID) references User(userID)
+    foreign key fk1(userID) references KUser(userID)
 );
 
 create table PollOption (
@@ -33,7 +33,7 @@ create table PollComment (
     userID int(8) not null,
     description varchar(500), 
     foreign key fk1(pollID) references Poll(pollID),
-    foreign key fk2(userID) references User(userID)
+    foreign key fk2(userID) references KUser(userID)
 );
 
 create table RankingQuestion (
@@ -44,7 +44,7 @@ create table RankingQuestion (
     description varchar(500),
     totalRating int(8) not null,
     totalPossibleRating int(8) not null,
-    foreign key fk1(userID) references User(userID)
+    foreign key fk1(userID) references KUser(userID)
 );
 
 create table RankingOption (
@@ -52,7 +52,7 @@ create table RankingOption (
     userID int(8) not null,
     rankingQuestionID int(8) not null,
     rating int(3) not null,
-    foreign key fk1(userID) references User(userID),
+    foreign key fk1(userID) references KUser(userID),
     foreign key fk2(rankingQuestionID) references RankingQuestion(rankingQuestionID)
 );
 
@@ -62,21 +62,21 @@ create table RankingComment (
     rankingQuestionID int(8) not null,
     title varchar(20) not null,
     description varchar(20) not null,
-    foreign key fk1(userID) references User(userID),
+    foreign key fk1(userID) references KUser(userID),
     foreign key fk2(rankingQuestionID) references RankingQuestion(rankingQuestionID)
 );
 
 create table UserToPoll (
 	userID int(8) not null,
     pollID int(8) not null,
-    foreign key fk1(userID) references User(userID),
+    foreign key fk1(userID) references KUser(userID),
     foreign key fk2(pollID) references Poll(pollID)
 );
 
 create table UserToRatingQuestion (
 	userID int(8) not null,
     ratingQuestionID int(8) not null,
-    foreign key fk1(userID) references User(userID),
+    foreign key fk1(userID) references KUser(userID),
     foreign key fk2(ratingQuestionID) references RatingQuestion(ratingQuestionID)
 );
 
@@ -96,5 +96,36 @@ create table RatingQuestionToCommentOption (
     foreign key fk1(ratingQuestionID) references RatingQuestion(ratingQuestionID),
     foreign key fk2(ratingQuestionCommentID) references RatingQuestionComment(ratingQuestionCommentID),
     foreign key fk3(ratingQuestionOptionID) references RatingQuestionOption(ratingQuestionOptionID)
+);
+
+create table PollLike (
+	pollLikeID int(8) primary key auto_increment,
+    pollID int(8) not null,
+    userID int(8) not null,
+    pollLike boolean not null,
+    foreign key fk1(pollID) references Poll(pollID),
+    foreign key fk2(userID) references KUser(userID)
+);
+
+create table RatingQuestionLike (
+	ratingQuestionLikeID int(8) primary key auto_increment,
+    ratingQuestionID int(8) not null,
+    userID int(8) not null,
+    foreign key fk1(ratingQuestionID) references RatingQuestion(ratingQuestionID),
+    foreign key fk2(userID) references KUser(userID)
+);
+
+create table userToFollowing(
+	mainUserID int(8) not null,
+    followingUserID int(8) not null,
+    foreign key fk1(mainUserID) references KUser(userID),
+    foreign key fk2(userFollowingID) references KUser(userID)
+);
+
+create table userToFollowers(
+	mainUserID int(8) not null,
+    followerUserID int(8) not null,
+    foreign key fk1(mainUserID) references KUser(userID),
+    foreign key fk2(followerUserID) references KUser(userID)
 );
 
