@@ -8,6 +8,12 @@
   display: inline-block;
 }
 
+.login-form{
+  padding-top: 100px;
+  padding-left: 150px;
+  padding-right: 150px; 
+  
+}
 
 /* Profile */
 .profile-top{

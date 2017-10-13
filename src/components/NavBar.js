@@ -12,8 +12,8 @@ const NavBar = () => (
 		<Nav>
 			<NavItem><NavLink exact to='/'>TEST</NavLink></NavItem>
 			<NavItem><NavLink to='/profile'>PROFILE</NavLink></NavItem>
-			<NavItem href="#">LOGIN</NavItem>
-			<NavItem><NavLink to='/sign_in'>SIGN IN</NavLink></NavItem>
+			<NavItem><NavLink to='/log_in'>LOG IN</NavLink></NavItem>
+			<NavItem><NavLink to='/sign_up'>SIGN UP</NavLink></NavItem>
 			<NavItem href="#">SEARCH BAR HERE</NavItem>
 		</Nav>
 	</Navbar>
