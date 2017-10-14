@@ -1,7 +1,5 @@
 import React, { Component } from 'react';
-
 import { Button, FormGroup, FormControl, ControlLabel } from "react-bootstrap";
-//import "./Login.css";
 
 class LogInLayout extends Component {  
 
@@ -12,18 +10,20 @@ class LogInLayout extends Component {
         password: ""
       };
   }
+
   validateForm() {
-  return this.state.email.length > 0 && this.state.password.length > 0;
+    return this.state.email.length > 0 && this.state.password.length > 0;
   }
+
   handleChange = event => {
-  this.setState({
-    [event.target.id]: event.target.value
-  });
+    this.setState({
+      [event.target.id]: event.target.value
+    });
   }
 
   handleSubmit = event => {
-  event.preventDefault();
-    }
+   event.preventDefault();
+  }
 
   //alert 
   alertFunction(){

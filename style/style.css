@@ -15,6 +15,19 @@
   
 }
 
+.signup-form{
+  padding-top: 20px;
+  padding-left: 150px;
+  padding-right: 150px; 
+  
+}
+.signup-title{
+   margin: auto;
+   width: 50%;
+   padding: 10px;
+   padding-bottom: 30px;
+}
+
 /* Profile */
 .profile-top{
   margin-top: 2%;
