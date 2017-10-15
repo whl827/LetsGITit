@@ -14,10 +14,10 @@ app.get('/questionList', function (req, res) {
 	console.log("The server recieved the GET request");
 	con.connect(function(err) {
 	  if (err) throw err;
-	  console.log(req.query.query);
+	  console.log(req.query);
 
 	  con.query("SELECT DISTINCT p.description, p.subTitle, p.title FROM poll "+
-	  	" p, tag t, tagtopoll tp where tagStr='" + req.query.query +
+	  	" p, tag t, tagtopoll tp where tagStr='" + req.query.tagQuery +
 	  	"' AND tp.tagID = tp.pollID", 
 	  function (err, result, fields) {
 	    if (err) throw err;

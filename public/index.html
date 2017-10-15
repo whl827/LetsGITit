@@ -1,0 +1,67 @@
+<!DOCTYPE>
+<html ng-app="KnowItAll">
+<head>
+
+	<!-- Latest compiled and minified JavaScript -->
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
+
+
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+
+	<link rel="stylesheet" href="/style/style.css">
+
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+
+	<script src="app.js"></script>
+	<script src="controllers/feedController.js"></script>
+
+	<title>KnowItAll</title>
+
+</head>
+<body>
+
+	<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+		
+		<a class="navbar-brand" href="#">KnowItAll!</a>
+
+		<div id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
+
+				<li class="nav-item">
+					<a class="nav-link" href="#!">Home</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="#!profile">Profile</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="#!login">Login</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="#!signup">SignUp</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="#!createPoll">Create Poll</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#!createRating">Create Rating</a>
+				</li>
+
+			</ul>
+		</div>
+	</nav>
+
+	<div ng-controller="FeedCtrl">
+		<input type="text" class="form-control" placeholder="tag" aria-describedby="basic-addon1" ng-model="tagQuery">
+		<button type="button" class="btn btn-success" ng-click="submitQuery()">Search</button>
+
+		<div className = "navBar" ng-view></div>
+	</div>
+	
+
+</body>
+</html>

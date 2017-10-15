@@ -1,5 +1,5 @@
-var app = angular.module("KnowItAll", ["ngRoute"]);
-app.config(function($routeProvider) {
+angular.module("KnowItAll", ["ngRoute"]);
+angular.module("KnowItAll").config(function($routeProvider) {
     $routeProvider
     .when("/", {
         templateUrl : "pages/home.html"
