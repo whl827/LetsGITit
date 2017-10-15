@@ -1,5 +1,4 @@
-var myApp = angular.module('myApp', []);
-myApp.controller('FeedCtrl', ['$scope', '$http', function($scope, $http) {
+app.controller('FeedCtrl', ['$scope', '$http', function($scope, $http) {
     console.log("Hello World from controller");
 
     $scope.submitQuery = function () {

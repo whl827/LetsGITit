@@ -1,5 +1,5 @@
 <!DOCTYPE>
-<html>
+<html ng-app="KnowItAll">
 <head>
 
 	<!-- Latest compiled and minified JavaScript -->
@@ -12,6 +12,11 @@
 
 	<script src="controllers/feedController.js"></script>
 
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
+
+	<script src="app.js"></script>
+
 	<link rel="stylesheet" href="/style/style.css">
 
 	<title>KnowItAll</title>
@@ -21,20 +26,31 @@
 
 	<div ng-app="myApp" ng-controller="FeedCtrl">
 
-		<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+		<div id="navbarSupportedContent">
+			<ul class="navbar-nav mr-auto">
 
-			<a class="navbar-brand" href="#">KnowItAll!</a>
+				<li class="nav-item">
+					<a class="nav-link" href="#!">Home</a>
+				</li>
 
-			<div class="collapse navbar-collapse" id="navbarSupportedContent">
-				<ul class="navbar-nav mr-auto">
+				<li class="nav-item">
+					<a class="nav-link" href="#!profile">Profile</a>
+				</li>
 
-					<li class="nav-item">
-						<a class="nav-link" href="#">AAA</a>
-					</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#!login">Login</a>
+				</li>
 
-					<li class="nav-item">
-						<a class="nav-link" href="#">BBB</a>
-					</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#!signup">SignUp</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="#!createPoll">Create Poll</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#!createRating">Create Rating</a>
+				</li>
 
 					<li class="nav-item">
 						<a class="nav-link" href="#">CCC</a>
@@ -59,6 +75,14 @@
 		</p>
 
 	</div>
+
+	<div className = "navBar" ng-view></div>
+
+
+	<div class="input-group">
+		<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
+	</div>
+	<button type="button" class="btn btn-success">Search</button>
 
 </body>
 </html>
