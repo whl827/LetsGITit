@@ -9,6 +9,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+
 	<script src="controllers/feedController.js"></script>
 
 	<link rel="stylesheet" href="/style/style.css">
@@ -18,36 +19,37 @@
 </head>
 <body>
 
-	<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
-
-		<a class="navbar-brand" href="#">KnowItAll!</a>
-
-		<div class="collapse navbar-collapse" id="navbarSupportedContent">
-			<ul class="navbar-nav mr-auto">
-
-				<li class="nav-item">
-					<a class="nav-link" href="#">AAA</a>
-				</li>
-
-				<li class="nav-item">
-					<a class="nav-link" href="#">BBB</a>
-				</li>
-
-				<li class="nav-item">
-					<a class="nav-link" href="#">CCC</a>
-				</li>
-
-			</ul>
-		</div>
-	</nav>
-
-
-	<div class="input-group">
-		<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-	</div>
-	<button type="button" class="btn btn-success">Search</button>
-	
 	<div ng-app="myApp" ng-controller="FeedCtrl">
+
+		<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+
+			<a class="navbar-brand" href="#">KnowItAll!</a>
+
+			<div class="collapse navbar-collapse" id="navbarSupportedContent">
+				<ul class="navbar-nav mr-auto">
+
+					<li class="nav-item">
+						<a class="nav-link" href="#">AAA</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="#">BBB</a>
+					</li>
+
+					<li class="nav-item">
+						<a class="nav-link" href="#">CCC</a>
+					</li>
+
+				</ul>
+			</div>
+		</nav>
+
+
+		<div class="input-group">
+			<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" ng-model="query">
+		</div>
+		<button type="button" class="btn btn-success" ng-click="submitQuery()">Search</button>
+		
 		<p ng-repeat="question in questionList">
 			--------------------------------------- <br>
 			{{question.title}} <br>
@@ -55,6 +57,7 @@
 			{{question.description}} <br>
 			---------------------------------------
 		</p>
+
 	</div>
 
 </body>

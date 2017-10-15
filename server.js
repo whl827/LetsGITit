@@ -12,12 +12,14 @@ var con = mysql.createConnection({
 app.use(express.static(__dirname + '/public'));
 app.get('/questionList', function (req, res) {
 	console.log("The server recieved the GET request");
-
-	var questionList;
-
 	con.connect(function(err) {
 	  if (err) throw err;
-	  con.query("SELECT * FROM poll", function (err, result, fields) {
+	  console.log(req.query.query);
+
+	  con.query("SELECT DISTINCT p.description, p.subTitle, p.title FROM poll "+
+	  	" p, tag t, tagtopoll tp where tagStr='" + req.query.query +
+	  	"' AND tp.tagID = tp.pollID", 
+	  function (err, result, fields) {
 	    if (err) throw err;
 	    res.json(result);
 	  });

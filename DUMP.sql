@@ -66,6 +66,25 @@ create table RatingQuestionComment (
     foreign key fk2(ratingQuestionID) references RatingQuestion(ratingQuestionID)
 );
 
+create table Tag(
+	tagID int(8) primary key auto_increment,
+    tagStr varchar(50) not null
+);
+
+create table TagToPoll (
+	tagID int(8) not null,
+    pollID int (8) not null,
+    foreign key fk1(tagID) references Tag(tagID),
+    foreign key fk2(pollID) references Poll(pollID)
+);
+
+create table TagToRatingQuestion (
+	tagID int(8) not null,
+    ratingQuestionID int (8) not null,
+    foreign key fk1(tagID) references Tag(tagID),
+    foreign key fk2(ratingQuestionID) references RatingQuestion(ratingQuestionID)
+);
+
 create table UserToPoll (
 	userID int(8) not null,
     pollID int(8) not null,
