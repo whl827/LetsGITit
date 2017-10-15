@@ -1,5 +1,5 @@
 <!DOCTYPE>
-<html ng-app>
+<html ng-app="KnowItAll">
 <head>
 
 	<!-- Latest compiled and minified JavaScript -->
@@ -23,20 +23,33 @@
 			<ul class="navbar-nav mr-auto">
 
 				<li class="nav-item">
-					<a class="nav-link" href="#">AAA</a>
+					<a class="nav-link" href="#!">Home</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="#">BBB</a>
+					<a class="nav-link" href="#!profile">Profile</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="#">CCC</a>
+					<a class="nav-link" href="#login">Login</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="#!signup">SignUp</a>
+				</li>
+
+				<li class="nav-item">
+					<a class="nav-link" href="#!createPoll">Create Poll</a>
+				</li>
+				<li class="nav-item">
+					<a class="nav-link" href="#!createRating">Create Rating</a>
 				</li>
 
 			</ul>
 		</div>
 	</nav>
+
+	<div ng-view></div>
 
 
 	<div class="input-group">
@@ -44,9 +57,10 @@
 	</div>
 	<button type="button" class="btn btn-success">Search</button>
 	
-	
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
 
-	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.5.6/angular.min.js"></script>
+	<script src="app.js"></script>
 
 </body>
 </html>
