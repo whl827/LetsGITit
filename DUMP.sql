@@ -6,7 +6,7 @@ create table KUser (
 	userID int(8) primary key auto_increment,
     username varchar(8) not null,
     passwordHash int(12) not null
-);
+);  
 
 create table Poll (
 	pollID int(8) primary key auto_increment,
