@@ -60,29 +60,7 @@
 			</div>
 		</nav>
 
-
-		<div class="input-group">
-			<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1" ng-model="query">
-		</div>
-		<button type="button" class="btn btn-success" ng-click="submitQuery()">Search</button>
-		
-		<p ng-repeat="question in questionList">
-			--------------------------------------- <br>
-			{{question.title}} <br>
-			{{question.subTitle}} <br>
-			{{question.description}} <br>
-			---------------------------------------
-		</p>
-
 	</div>
-
-	<div className = "navBar" ng-view></div>
-
-
-	<div class="input-group">
-		<input type="text" class="form-control" placeholder="Username" aria-describedby="basic-addon1">
-	</div>
-	<button type="button" class="btn btn-success">Search</button>
 
 </body>
 </html>
