@@ -1,0 +1,20 @@
+{
+  "name": "letsgitit",
+  "version": "1.0.0",
+  "description": "csci 310 proj",
+  "main": "server.js",
+  "scripts": {
+    "test": "test",
+    "start": "node server.js"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rdiersing1/LetsGITit.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rdiersing1/LetsGITit/issues"
+  },
+  "homepage": "https://github.com/rdiersing1/LetsGITit#readme"
+}
