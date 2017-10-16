@@ -27,5 +27,15 @@ app.get('/questionList', function (req, res) {
 	});
 });
 
+app.get('/profile', function (req, res) {
+	con.query("SELECT p.title, p.subTitle, p.description FROM kuser u, poll p, usertopoll up WHERE username='" 
+		+ req.query.username + "' AND up.userID = u.userID AND up.pollID = p.pollID;", 
+		function (err, result, fields) {
+			console.log("Server fetched the profile from the db");
+			if(err) throw err;
+			res.json(result);
+		});
+});
+
 app.listen(8080);
 console.log("Server running on port 8080");

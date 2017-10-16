@@ -37,6 +37,9 @@ values (
     0
 );
 
+insert into UserToPoll(userID, pollID) values (1, 1);
+insert into UserToPoll(userID, pollID) values (1, 2);
+
 insert into TagToPoll(tagID, pollID) values (1, 1);
 insert into TagToPoll(tagID, pollID) values (2, 1);
 insert into TagToPoll(tagID, pollID) values (2, 2);
