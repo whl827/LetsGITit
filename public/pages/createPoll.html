@@ -1,1 +1,87 @@
+<script> 
+
+
+
+
+</script>
+
+
 <h1>This is Creating Poll.</h1>
+<form class="container"
+	ng-controller="CreatePollCtrl"
+
+	>
+
+	<h3> Title </h3>
+	<input type="text" name="title" ng-model="pollTitleInput">
+	<br>
+
+	<h3> Option 1 </h3>
+	<input type="text" name="option" ng-model="option1Input">
+	<br>
+
+	<h3> Option 2 </h3>
+	<input type="text" name="option" ng-model="option2Input">
+	<br>
+
+	<h3> Option 3 </h3>
+	<input type="text" name="option" ng-model="option3Input">
+	<br>
+
+	<h3> Option 4 </h3>
+	<input type="text" name="option" ng-model="option4Input">
+	<br>
+
+	<h3> Option 5 </h3>
+	<input type="text" name="option" ng-model="option5Input">
+	<br>
+
+	<h3> Option 6 </h3>
+	<input type="text" name="option" ng-model="option6Input">
+	<br>
+
+	<h3> Option 7 </h3>
+	<input type="text" name="option" ng-model="option7Input">
+	<br>
+
+	<h3> Option 8 </h3>
+	<input type="text" name="option" ng-model="option8Input">
+	<br>
+
+	<h3> Option 9 </h3>
+	<input type="text" name="option" ng-model="option9Input">
+	<br>
+
+	<h3> Option 10 </h3>
+	<input type="text" name="option" ng-model="option10Input">
+	<br>
+
+
+	<h3> Start Date </h3>
+	<input type="date" name="startDate" ng-model="startDateInput">
+	<br>
+
+	<h3> End Date </h3>
+	<input type="date" name="endDate" ng-model="endDateInput">
+
+	<h3> Open Forever </h3>
+	<input type="checkbox" name="openForever" ng-model="openForeverInput">
+
+	<h3> Post Anonymously </h3>
+	<input type="checkbox" name="anonymous" ng-model="isAnonymousInput">
+
+	<h3> Tags </h3>
+	<input type="text" name="tag" ng-model="tagInput">
+	<br>
+
+
+
+	<input type="submit" 
+		   value="submit"
+		   ng-click="createPoll()"
+	>
+
+
+	<p>{{errorMessage}}</p>
+
+</form>

@@ -1,1 +1,12 @@
 <h1>This is Profile.</h1>
+
+<div ng-controller="ProfileCtrl">
+	<p ng-repeat="question in questionList">
+		------------------------------ <br>
+		<span>{{question.isPoll ? 'Poll' : 'Ranking'}}</span> <br>
+		{{question.title}} <br>
+		{{question.subTitle}} <br>
+		{{question.description}} <br>
+		------------------------------ <br>
+	</p>
+</div>

@@ -16,14 +16,13 @@ con.connect(function(err) {
 
 app.use(express.static(__dirname + '/public'));
 app.get('/questionList', function (req, res) {
-	console.log("The server recieved the GET request");
+	console.log("The server recieved the GET request: ");
 
 	console.log("hi:", req.query.tagQuery);
 
-
 	con.query("SELECT DISTINCT p.description, p.subTitle, p.title FROM poll "+
 	  	" p, tag t, tagtopoll tp where tagStr='" + req.query.tagQuery +
-	  	"' AND tp.tagID = tp.pollID", 
+	  	"' AND tp.tagID = tp.pollID",
 	  function (err, result, fields) {
 	  	console.log("Server fetched the data from the db haha");
 	    if (err) throw err;
@@ -85,6 +84,17 @@ app.get('/insertUser', function (req, res) {
 
 
 
+
+app.get('/profile', function (req, res) {
+	con.query("SELECT q.isPoll, q.title, q.subTitle, q.description " + 
+		"FROM KUser u, Question q, UserToQuestion uq WHERE u.username='" +
+		req.query.username + "' AND uq.userID = u.userID AND uq.questionID = q.questionID;", 
+		function (err, result, fields) {
+			console.log("Server fetched the profile from the db");
+			if(err) throw err;
+			res.json(result);
+		});
+});
 
 app.listen(8080);
 console.log("Server running on port 8080");
