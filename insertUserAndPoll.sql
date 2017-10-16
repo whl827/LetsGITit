@@ -5,6 +5,11 @@ insert into KUser(username, passwordHash) values
 	"user1",
     1
 );
+insert into KUser(username, passwordHash) values 
+(
+	"user2",
+    2
+);
 
 insert into Tag(tagStr) values ("t1");
 insert into Tag(tagStr) values ("t2");

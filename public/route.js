@@ -7,7 +7,7 @@ angular.module("KnowItAll").config(function($routeProvider) {
         templateUrl : "pages/profile.html"
     })
     .when("/login", {
-        templateUrl : "pages/login.html"
+        templateUrl : "pages/login.html",
     })
     .when("/signup", {
         templateUrl : "pages/signUp.html"

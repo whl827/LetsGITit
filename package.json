@@ -16,5 +16,8 @@
   "bugs": {
     "url": "https://github.com/rdiersing1/LetsGITit/issues"
   },
-  "homepage": "https://github.com/rdiersing1/LetsGITit#readme"
+  "homepage": "https://github.com/rdiersing1/LetsGITit#readme",
+  "dependencies": {
+    "password-hash-and-salt": "^0.1.4"
+  }
 }
