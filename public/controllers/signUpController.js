@@ -17,12 +17,6 @@ angular.module("KnowItAll").controller('signUpController', ['$scope', '$http', '
 	    	if(response.data.length == 0){
 	    		console.log(response.data);
 	    		console.log("user does not exist in database");
-
-	    		//insert to the database
-	    		//console.log(response.data);
-	    		//var username = $scope.userData.username;
-	    		//var password = $scope.userData.passwordHash;
-	    		//$window.location.href = '../index.html
 	    	} 
 	    	else {
 	    		//user exists already
@@ -33,7 +27,6 @@ angular.module("KnowItAll").controller('signUpController', ['$scope', '$http', '
 	    function (res) {
 	    	console.log("user NOT received");
 	    });
-		//$scope.errorMessage = "The username and password combination is incorrect."
  
     }
 }]);

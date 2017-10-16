@@ -15,7 +15,8 @@ create table Question (
     title varchar(20) not null,
     subTitle varchar(50),
     description varchar(500),
-    endDate date,
+    startDate datetime not null default now(),
+    endDate datetime,
     totalVotes int(8) not null,
     positiveVotes int(8),			 #only for rating question
     foreign key fk1(userID) references KUser(userID)
@@ -71,6 +72,13 @@ create table QuestionToComment (
     questionCommentID int(8) not null,
     foreign key fk1(questionID) references Question(questionID),
     foreign key fk2(questionCommentID) references QuestionComment(questionCommentID)
+);
+
+create table QuestionToPollOption (
+	questionID int(8) not null,
+    pollOptionID int(8) not null,
+    foreign key fk1(questionID) references Question(questionID),
+    foreign key fk2(pollOptionID) references PollOption
 );
 
 create table QuestionLike (

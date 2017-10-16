@@ -3,7 +3,7 @@ use KnowItAll;
 insert into KUser(username, passwordHash) values 
 (
 	"user1",
-    1
+    111421	# actual password is pwd
 );
 
 insert into Tag(tagStr) values ("t1");

@@ -1,4 +1,4 @@
-angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$window', function($scope, $http, $window) {
+angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$window', '$cookies', function($scope, $http, $window, $cookies) {
     
 	
 
@@ -6,12 +6,11 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 
 
     $scope.userQuery = function () {
-    	console.log("In get query function, username: " + $scope.username);
-    	console.log("in get query, function, passwrd: " + $scope.password);
-
+    	var password = $scope.password.hashCode();
+    	console.log("password hash: " + password);
 
 		$http.get('/user?username=' + $scope.username + "&password=" + 
-									  $scope.password).then(function (response) {
+									  password).then(function (response) {
 	    	console.log("user received");
 	    	console.log(response.data);
 	    	
@@ -19,26 +18,8 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 	    		$scope.errorMessage = "The username and password combination is incorrect."
 	    	} else {
 	    		$scope.userData = response.data[0];
-
-	    		console.log(response.data);
-
-	    		var username = $scope.userData.username;
-	    		var password = $scope.userData.passwordHash;
-	    		//var passwordHash = hashCode(password);
-	    		//console.log("hashed pw: " + passwordHash);
-	    		//console.log("username: " + username);
-
-
-	    		//var hash = CryptoJS.SHA512("Message");
-	    		//sconsole.log(hash);
-
-	   //  		var myuser = [];
-	   //  		password_(password).hash(function(error, hash) {
-				// 	myuser.hash = hash;
-				// 	console.log(myuser.hash); 
-				// });
-
-
+	    		$cookies.put('username', response.data[0].username);
+	    		$cookies.put('userID', response.data[0].userID);
 
 	    		$window.location.href = '../index.html';
 	    	}	    	
@@ -50,13 +31,13 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 
 
 		//$scope.errorMessage = "The username and password combination is incorrect."
-
-
     }
 
-
-
+    $scope.logout = function () {
+    	$cookies.put("username", null);
+    	$cookies.put("userID", null);
+    	console.log("The user has logged out");
+    	$scope.errorMessage = "You have logged out";
+    }
     
 }]);
-
-

@@ -35,10 +35,8 @@ app.get('/questionList', function (req, res) {
 
 //log in
 app.get('/user', function (req, res) {
-	console.log("The server recieved the GET request for user");
+	console.log("The server recieved the GET request for user: in log in");
 	
-	console.log("id: ", req.query.username);
-	console.log('pw: ', req.query.password);
 	console.log("SELECT u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
 		"' and u.passwordHash=" + req.query.password);
@@ -48,7 +46,6 @@ app.get('/user', function (req, res) {
 		"' and u.passwordHash=" + req.query.password + ";",
 	  function (err, result, fields) {
 	  	console.log("Server fetched the data from the db !!!!!");
-	  	console.log("result is " + result); 
 	    //if (err) throw err;
 	    res.json(result);
 	});
