@@ -4,6 +4,7 @@ Search Results:
 
 <p ng-repeat="question in questionList">
 	------------------------------ <br>
+	<span>{{question.isPoll ? 'Poll' : 'Ranking'}}</span> <br>
 	{{question.title}} <br>
 	{{question.subTitle}} <br>
 	{{question.description}} <br>

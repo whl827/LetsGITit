@@ -16,10 +16,10 @@ con.connect(function(err) {
 
 app.use(express.static(__dirname + '/public'));
 app.get('/questionList', function (req, res) {
-	console.log("The server recieved the GET request");
+	console.log("The server recieved the GET request: ");
 
-	con.query("SELECT p.title FROM Poll p, Tag t, TagToPoll tp WHERE t.tagStr='"
-	 + req.query.tagQuery + "' AND tp.tagID = t.tagID AND tp.pollID = p.pollID; ", 
+	con.query("SELECT q.isPoll, q.title, q.subTitle, q.description FROM Question q, Tag t, TagToQuestion tq " + 
+	"WHERE t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND tq.questionID = q.questionID;", 
 	  function (err, result, fields) {
 	  	console.log("Server fetched the data from the db");
 	    if (err) throw err;
@@ -28,8 +28,9 @@ app.get('/questionList', function (req, res) {
 });
 
 app.get('/profile', function (req, res) {
-	con.query("SELECT p.title, p.subTitle, p.description FROM kuser u, poll p, usertopoll up WHERE username='" 
-		+ req.query.username + "' AND up.userID = u.userID AND up.pollID = p.pollID;", 
+	con.query("SELECT q.isPoll, q.title, q.subTitle, q.description " + 
+		"FROM KUser u, Question q, UserToQuestion uq WHERE u.username='" +
+		req.query.username + "' AND uq.userID = u.userID AND uq.questionID = q.questionID;", 
 		function (err, result, fields) {
 			console.log("Server fetched the profile from the db");
 			if(err) throw err;
