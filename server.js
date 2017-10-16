@@ -35,15 +35,17 @@ app.get('/user', function (req, res) {
 	
 	console.log("id: ", req.query.username);
 	console.log('pw: ', req.query.password);
+	console.log("SELECT u.username, u.passwordHash FROM KUser u " +
+		"WHERE u.username='"+ req.query.username + 
+		"' and u.passwordHash=" + req.query.password);
 
 	con.query("SELECT u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
-		"' and u.passwordHash=" + req.query.password,
+		"' and u.passwordHash=" + req.query.password + ";",
 	  function (err, result, fields) {
 	  	console.log("Server fetched the data from the db !!!!!");
-	  	console.log("asdasdsad");
-	  	console.log("result is " + result);
-	    if (err) throw err;
+	  	console.log("result is " + result); 
+	    //if (err) throw err;
 	    res.json(result);
 	});
 });
@@ -76,7 +78,7 @@ app.get('/insertUser', function (req, res) {
 			req.query.signupPassword + ")",
 	  function (err, result, fields) {
 	  	console.log("Server fetched the data from the db !!!!!");
-	    if (err) throw err;
+	    // if (err) throw err;
 	    res.json(result);
 	});
 });

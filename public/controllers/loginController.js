@@ -41,15 +41,7 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 
 
 	    		$window.location.href = '../index.html';
-	    	}
-
-
-
-
-	    	
-
-
-	    	
+	    	}	    	
 	    },
 	    function (res) {
 	    	console.log("user NOT received");
