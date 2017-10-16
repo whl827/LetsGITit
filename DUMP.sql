@@ -15,6 +15,7 @@ create table Question (
     title varchar(20) not null,
     subTitle varchar(50),
     description varchar(500),
+    endDate date,
     totalVotes int(8) not null,
     positiveVotes int(8),			 #only for rating question
     foreign key fk1(userID) references KUser(userID)
@@ -33,7 +34,6 @@ create table PollOption (
 	pollOptionID int(8) primary key auto_increment,
     questionID int(8) not null,
     title varchar(20) not null,
-    description varchar(80) not null,
     votes int(8) not null,
 	foreign key fk1(questionID) references Question(questionID)
 );
