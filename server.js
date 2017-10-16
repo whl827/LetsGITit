@@ -15,20 +15,24 @@ con.connect(function(err) {
 });
 
 app.use(express.static(__dirname + '/public'));
+
+// Get Search from navbar
 app.get('/questionList', function (req, res) {
 	console.log("The server recieved the GET request: ");
 
 	console.log("hi:", req.query.tagQuery);
 
-	con.query("SELECT DISTINCT p.description, p.subTitle, p.title FROM poll "+
-	  	" p, tag t, tagtopoll tp where tagStr='" + req.query.tagQuery +
-	  	"' AND tp.tagID = tp.pollID",
+	con.query("SELECT q.isPoll, q.title, q.subtitle, q.description " + 
+		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
+		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
+		" tq.questionID = q.questionID;",
 	  function (err, result, fields) {
 	  	console.log("Server fetched the data from the db haha");
 	    if (err) throw err;
 	    res.json(result);
 	});
 });
+
 //log in
 app.get('/user', function (req, res) {
 	console.log("The server recieved the GET request for user");
@@ -49,6 +53,7 @@ app.get('/user', function (req, res) {
 	    res.json(result);
 	});
 });
+
 //sign up
 app.get('/signupFunction', function (req, res) {
 	console.log("The server recieved the GET request for user");
@@ -83,10 +88,7 @@ app.get('/insertUser', function (req, res) {
 	});
 });
 
-
-
-
-
+// Get a users profile
 app.get('/profile', function (req, res) {
 	con.query("SELECT q.isPoll, q.title, q.subTitle, q.description " + 
 		"FROM KUser u, Question q, UserToQuestion uq WHERE u.username='" +
