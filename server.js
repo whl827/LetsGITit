@@ -84,7 +84,7 @@ app.get('/sendEmail', function (req, res) {
 	var email = req.query.newEmail;
 	var password = req.query.newPasswordHash;
 	var username = req.query.newUsername;
-	var link = "localhost:8080/newUser/:" + username + "/:" + password;
+	var link = "localhost:8080/#!newUser/:" + username + "/:" + password;
 
 	var mailOptions = {
 		from: 'knowitall857@gmail.com',

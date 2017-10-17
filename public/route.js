@@ -18,7 +18,7 @@ angular.module("KnowItAll").config(function($routeProvider) {
     .when("/createRating", {
         templateUrl : "pages/createRating.html"
     })
-    .when("/newUser/:password/:username", {
+    .when("/newUser/:username/:password", {
         templateUrl : "pages/newUser.html",
         controller : "createUser"
     });
