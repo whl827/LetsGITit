@@ -98,5 +98,49 @@ app.get('/profile', function (req, res) {
 		});
 });
 
+
+app.get('/insertPoll', function (req, res) {
+
+	//insert the questions
+	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, totalVotes, positiveVotes) " +
+		"values(" + 1 + "," + 1 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '" + req.query.description 
+		+ "' ," + 0 + "," + 0 + ")",
+		function (err, result, fields) {
+			console.log("Server fetched the profile from the db from Creating Poll!!");
+			//if(err) throw err;
+			//res.json(result);
+		});
+
+	//insert the questions
+	con.query("SELECT questionID from Question where title='" + req.query.title + "'",
+		function (err, result, fields) {
+			console.log("Server fetched the profile from the db from Creating Poll!!");
+			var questionID =  result[0].questionID;
+			console.log("HERE!!!: " + questionID);
+
+
+			console.log(req.query.randomArray); 
+			// console.log(req.query.randomArray[0].opt1);
+			console.log(req.query.randomArray.length);
+
+			var splitArr = req.query.randomArray[0].split(",");
+			console.log("size: " + splitArr.length ); 
+			for(var i=0; i<splitArr.length; i++){
+				console.log(splitArr[i]);
+				con.query("INSERT INTO pollOption(questionID, title, description, votes) values (" +
+				questionID + " , '" + splitArr[i] + " ', " + " 'description'," + 0 + ")");
+			}
+			//ng-repeat option in req.query.optionArray
+
+		});
+
+	
+
+});
+
+
+
+
+
 app.listen(8080);
 console.log("Server running on port 8080");
