@@ -1,4 +1,4 @@
-angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', function($scope, $http) {
+angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$cookies', function($scope, $http, $cookies) {
 	console.log("in create poll ctrl"); 
 
 	function validate(input){
@@ -22,6 +22,11 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', fun
 
 	$scope.createPoll = function () { // handle submit
 		console.log("inside function ");
+
+
+
+		console.log("FIRST CURRENT USER ID: " + $cookies.get("userID"));
+		console.log("FIRST CURRENT USER name: " + $cookies.get("username"));
 
 		var validTitle = validate($scope.pollTitleInput); 
 		var title = $scope.pollTitleInput; 
@@ -167,10 +172,15 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', fun
 
 
 
+		var userID = $cookies.get("userID");
+		console.log("this is userID " + userID);
+		//if($cookies.get("userID") === n)
 
-
-	
-		if(!validTitle){
+		//typeof $cookies.get("userID") === 'undefined'
+		if(userID == -1){
+			console.log("user id is null");
+			$scope.errorMessage = "Please login to create a poll.";
+		}else if(!validTitle){
 			$scope.errorMessage = "Please provide a title for your survey.";
 		} 
 		else if (!validOption){ // option
@@ -195,7 +205,7 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', fun
 
 
 
-
+			
 
 			// var allOptions = {
 			// 	opt1:"Fiat", 
@@ -208,7 +218,9 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', fun
 				  "&subTitle=" + subtitle +
 				  "&description=" + description +
 				  "&randomArray[]=" + allOptions +
-				  "&option1Input=" + option1
+				  "&option1Input=" + option1 +
+				  "&userID=" + userID +
+				  "&endDate=" + endDate
 				  ).then(function (response) {
 	    		console.log("user received from creaitng poll!");
 	    	//console.log(response.data);

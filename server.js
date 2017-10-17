@@ -45,13 +45,13 @@ app.get('/questionList', function (req, res) {
 
 //log in
 app.get('/user', function (req, res) {
-	
+
 	console.log("The server recieved the GET request for user: in log in");
 	console.log("SELECT u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
 		"' and u.passwordHash=" + req.query.password);
 
-	con.query("SELECT u.username, u.passwordHash FROM KUser u " +
+	con.query("SELECT u.userID, u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
 		"' and u.passwordHash=" + req.query.password,
 	  function (err, result, fields) {
@@ -135,9 +135,12 @@ app.get('/profile', function (req, res) {
 
 app.get('/insertPoll', function (req, res) {
 
+	console.log("ENDDATE in str!!!! : " + (req.query.endDate).toString());
+
+
 	//insert the questions
 	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, totalVotes, positiveVotes) " +
-		"values(" + 1 + "," + 1 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '" + req.query.description 
+		"values(" + req.query.userID + "," + 1 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '" + req.query.description 
 		+ "' ," + 0 + "," + 0 + ")",
 		function (err, result, fields) {
 			console.log("Server fetched the profile from the db from Creating Poll!!");
@@ -161,8 +164,8 @@ app.get('/insertPoll', function (req, res) {
 			console.log("size: " + splitArr.length ); 
 			for(var i=0; i<splitArr.length; i++){
 				console.log(splitArr[i]);
-				con.query("INSERT INTO pollOption(questionID, title, description, votes) values (" +
-				questionID + " , '" + splitArr[i] + " ', " + " 'description'," + 0 + ")");
+				con.query("INSERT INTO pollOption(questionID, title, votes) values (" +
+				questionID + " , '" + splitArr[i] + " ', " + 0 + ")");
 			}
 			//ng-repeat option in req.query.optionArray
 
