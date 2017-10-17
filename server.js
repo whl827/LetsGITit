@@ -106,17 +106,17 @@ app.get('/sendEmail', function (req, res) {
 //insert user to the database
 app.get('/insertUser', function (req, res) {
 	console.log("The server recieved the GET request for user");
-	
-	console.log("id: ", req.query.signupUsername);
-	console.log('pw: ', req.query.signupPassword);
+	var username = req.query.username;
+	var password = req.query.passwordHash
+	console.log("id: ", username);
+	console.log('pw: ', password);
+	console.log("INSERT INTO KUser(username, passwordHash) " +
+			"values('" + username + "', " + password + ");");
 
 	con.query("INSERT INTO KUser(username, passwordHash) " +
-			+ "values('" + req.query.signupUsername + "', " + 
-			req.query.signupPassword + ")",
+			"values('" + username + "', " + password + ");",
 	  function (err, result, fields) {
-	  	console.log("Server fetched the data from the db !!!!!");
-	    // if (err) throw err;
-	    res.json(result);
+	  	if (err) throw err;
 	});
 });
 
