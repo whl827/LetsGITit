@@ -45,15 +45,15 @@ app.get('/questionList', function (req, res) {
 
 //log in
 app.get('/user', function (req, res) {
-	console.log("The server recieved the GET request for user: in log in");
 	
+	console.log("The server recieved the GET request for user: in log in");
 	console.log("SELECT u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
 		"' and u.passwordHash=" + req.query.password);
 
 	con.query("SELECT u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
-		"' and u.passwordHash=" + req.query.password + ";",
+		"' and u.passwordHash=" + req.query.password,
 	  function (err, result, fields) {
 	  	console.log("Server fetched the data from the db !!!!!");
 	    //if (err) throw err;
