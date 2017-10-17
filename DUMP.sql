@@ -78,7 +78,7 @@ create table QuestionToPollOption (
 	questionID int(8) not null,
     pollOptionID int(8) not null,
     foreign key fk1(questionID) references Question(questionID),
-    foreign key fk2(pollOptionID) references PollOption
+    foreign key fk2(pollOptionID) references PollOption(pollOptionID)
 );
 
 create table QuestionLike (

@@ -18,6 +18,7 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 	    		$scope.errorMessage = "The username and password combination is incorrect."
 	    	} else {
 	    		$scope.userData = response.data[0];
+	    		console.log("PASSWORD HASH IS: " + response.data[0].passwordHash);
 	    		$cookies.put('username', response.data[0].username);
 	    		$cookies.put('userID', response.data[0].userID);
 
