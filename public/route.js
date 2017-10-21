@@ -19,7 +19,13 @@ angular.module("KnowItAll").config(function($routeProvider) {
         templateUrl : "pages/createRating.html"
     })
     .when("/newUser/:username/:password", {
-        templateUrl : "pages/newUser.html",
-        controller : "createUser"
+          templateUrl : "pages/newUser.html",
+          controller : "createUser"
+    })
+    .when("/rating", {
+        templateUrl : "pages/rating.html"
+    })
+    .when("/poll", {
+        templateUrl : "pages/poll.html"
     });
 });

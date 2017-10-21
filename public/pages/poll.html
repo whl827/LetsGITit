@@ -1,0 +1,79 @@
+<link rel="stylesheet" type="text/css" href="../style/style.css">
+
+<h1>Poll</h1>
+
+<form ng-app="poll" class="container"
+	ng-controller= "PollCtrl"
+>
+
+<p>Creator:</p> 
+
+<!-- 1. import the data of rating from database 
+	-Title
+	-Poll options
+	-Duration : startdate / end date
+	-Analymous
+		-if Yes, don't show creator's name
+		-if No, show 
+	make a <p> of poll info
+
+-->
+<h2>Title: </h2>
+<h3>{{x.title}}</h3>
+
+<h2>Duration: </h2>
+<h3>{{x.endDate}}</h3>
+
+<table>
+  <tr ng-repeat="x in options">
+    <td>option:</td>
+    <td>{{ (pollOption).title }}</td>
+  </tr>
+</table>
+
+<h3> Post Anonymously </h3>
+<input type="checkbox" name="anonymous" ng-model="isAnonymousInput">
+<br>
+
+<form ng-model="likeInput">
+
+<label>
+  <input type="radio" name="dis/like" value="like" />
+  <img src="img/like.png" width="50" height="50">
+</label>
+
+  
+<label>
+<input type="radio" name="dis/like" value="dislike" />
+<img src="img/dislike.png" width="50" height="50">
+</label>
+
+</form>
+
+<br>
+Comment: 
+<textarea rows="4" cols="50">
+</textarea> 
+
+<input type="submit" 
+	   value="submit"
+	   ng-click="Rating()"
+>
+	<p>{{errorMessage}}</p>
+
+</form>
+
+
+<script>
+
+con.query("SELECT q.isPoll, q.title, q.subTitle, q.description " + 
+	"FROM KUser u, Question q, UserToQuestion uq WHERE u.username='" +
+	req.query.username + "' AND uq.userID = u.userID AND uq.questionID = q.questionID;", 
+
+	function (err, result, fields) {
+		console.log("Server fetched the profile from the db");
+		if(err) throw err;
+		res.json(result);
+	});
+
+</script>

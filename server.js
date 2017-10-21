@@ -20,7 +20,7 @@ var transporter = nodemailer.createTransport({
 });
 
 con.connect(function(err) {
-	if (err) throw err;
+	//if (err) throw err;
 	console.log("Sucessfully connected to the MySql Database");
 });
 
@@ -38,20 +38,20 @@ app.get('/questionList', function (req, res) {
 		" tq.questionID = q.questionID;",
 	  function (err, result, fields) {
 	  	console.log("Server fetched the data from the db haha");
-	    if (err) throw err;
+	    // if (err) throw err;
 	    res.json(result);
 	});
 });
 
 //log in
 app.get('/user', function (req, res) {
-
+	
 	console.log("The server recieved the GET request for user: in log in");
 	console.log("SELECT u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
 		"' and u.passwordHash=" + req.query.password);
 
-	con.query("SELECT u.userID, u.username, u.passwordHash FROM KUser u " +
+	con.query("SELECT u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
 		"' and u.passwordHash=" + req.query.password,
 	  function (err, result, fields) {
@@ -84,7 +84,7 @@ app.get('/sendEmail', function (req, res) {
 	var email = req.query.newEmail;
 	var password = req.query.newPasswordHash;
 	var username = req.query.newUsername;
-	var link = "localhost:8080/#!newUser/:" + username + "/:" + password;
+	var link = "localhost:8080/newUser/:" + username + "/:" + password;
 
 	var mailOptions = {
 		from: 'knowitall857@gmail.com',
@@ -106,17 +106,17 @@ app.get('/sendEmail', function (req, res) {
 //insert user to the database
 app.get('/insertUser', function (req, res) {
 	console.log("The server recieved the GET request for user");
-	var username = req.query.username;
-	var password = req.query.passwordHash
-	console.log("id: ", username);
-	console.log('pw: ', password);
-	console.log("INSERT INTO KUser(username, passwordHash) " +
-			"values('" + username + "', " + password + ");");
+	
+	console.log("id: ", req.query.signupUsername);
+	console.log('pw: ', req.query.signupPassword);
 
 	con.query("INSERT INTO KUser(username, passwordHash) " +
-			"values('" + username + "', " + password + ");",
+			+ "values('" + req.query.signupUsername + "', " + 
+			req.query.signupPassword + ")",
 	  function (err, result, fields) {
-	  	if (err) throw err;
+	  	console.log("Server fetched the data from the db !!!!!");
+	    // if (err) throw err;
+	    res.json(result);
 	});
 });
 
@@ -135,12 +135,9 @@ app.get('/profile', function (req, res) {
 
 app.get('/insertPoll', function (req, res) {
 
-	console.log("ENDDATE in str!!!! : " + (req.query.endDate).toString());
-
-
 	//insert the questions
 	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, totalVotes, positiveVotes) " +
-		"values(" + req.query.userID + "," + 1 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '" + req.query.description 
+		"values(" + 1 + "," + 1 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '" + req.query.description 
 		+ "' ," + 0 + "," + 0 + ")",
 		function (err, result, fields) {
 			console.log("Server fetched the profile from the db from Creating Poll!!");
@@ -164,19 +161,37 @@ app.get('/insertPoll', function (req, res) {
 			console.log("size: " + splitArr.length ); 
 			for(var i=0; i<splitArr.length; i++){
 				console.log(splitArr[i]);
-				con.query("INSERT INTO pollOption(questionID, title, votes) values (" +
-				questionID + " , '" + splitArr[i] + " ', " + 0 + ")");
+				con.query("INSERT INTO pollOption(questionID, title, subTitle, description, votes) values (" +
+				questionID + " , '" + splitArr[i] + " ', " + " 'description'," + 0 + ")");
 			}
 			//ng-repeat option in req.query.optionArray
 
 		});
-
-	
-
 });
 
+app.get('/insertRating', function (req, res) {
+	// insert the questions
+	con.query("INSERT INTO Question(userID, isPoll, title, description) " +
+		"values(" + 1 + "," + 0 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '"+ req.query.description 
+		+ "' ,"  + ")", 
+		function (err, result, fields) {
+			console.log("Server fetched the profile from the db from Creating Poll!!");
+			//if(err) throw err;
+			//res.json(result);
+		});
+	//insert the questions
+	con.query("SELECT questionID from Question where title='" + req.query.title + "'",
+		function (err, result, fields) {
+			console.log("Server fetched the profile from the db from Creating Rating!!");
+			var questionID =  result[0].questionID;
+			console.log("HERE!!!: " + questionID);
 
-
+			con.query("INSERT INTO RatingQuestionOption(questionID) values (" + questionID + ") ");
+			// console.log(req.query.randomArray); 
+			// // console.log(req.query.randomArray[0].opt1);
+			// console.log(req.query.randomArray.length);
+		});
+});
 
 
 app.listen(8080);
