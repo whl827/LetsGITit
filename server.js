@@ -47,11 +47,11 @@ app.get('/questionList', function (req, res) {
 app.get('/user', function (req, res) {
 	
 	console.log("The server recieved the GET request for user: in log in");
-	console.log("SELECT u.username, u.passwordHash FROM KUser u " +
+	console.log("SELECT u.userID, u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
 		"' and u.passwordHash=" + req.query.password);
 
-	con.query("SELECT u.username, u.passwordHash FROM KUser u " +
+	con.query("SELECT u.userID, u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
 		"' and u.passwordHash=" + req.query.password,
 	  function (err, result, fields) {
@@ -63,7 +63,7 @@ app.get('/user', function (req, res) {
 
 //sign up
 app.get('/signupFunction', function (req, res) {
-	console.log("The server recieved the GET request for user");
+	console.log("The server recieved the GET request for user (for signing up)");
 	
 	console.log("id: ", req.query.signupUsername);
 	console.log('pw: ', req.query.signupPassword);
@@ -105,7 +105,7 @@ app.get('/sendEmail', function (req, res) {
 
 //insert user to the database
 app.get('/insertUser', function (req, res) {
-	console.log("The server recieved the GET request for user");
+	console.log("The server recieved the GET request for user (for inserting user)");
 	var username = req.query.username;
 	var password = req.query.passwordHash
 	console.log("id: ", username);
@@ -136,19 +136,19 @@ app.get('/profile', function (req, res) {
 app.get('/insertPoll', function (req, res) {
 
 	//insert the questions
-	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, totalVotes, positiveVotes) " +
+	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes) " +
 		"values(" + 1 + "," + 1 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '" + req.query.description 
-		+ "' ," + 0 + "," + 0 + ")",
+		+ "', '" + req.query.endDate + "'," + 0 + "," + 0 + ")",
 		function (err, result, fields) {
-			console.log("Server fetched the profile from the db from Creating Poll!!");
+			console.log("Server fetched the profile from the db from Creating Poll!! (inserting poll)");
 			//if(err) throw err;
 			//res.json(result);
 		});
 
-	//insert the questions
+	//insert options
 	con.query("SELECT questionID from Question where title='" + req.query.title + "'",
 		function (err, result, fields) {
-			console.log("Server fetched the profile from the db from Creating Poll!!");
+			console.log("Server fetched the profile from the db from Creating Poll!! (inserting options)");
 			var questionID =  result[0].questionID;
 			console.log("HERE!!!: " + questionID);
 
@@ -171,9 +171,9 @@ app.get('/insertPoll', function (req, res) {
 
 app.get('/insertRating', function (req, res) {
 	// insert the questions
-	con.query("INSERT INTO Question(userID, isPoll, title, description) " +
-		"values(" + 1 + "," + 0 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '"+ req.query.description 
-		+ "' ,"  + ")", 
+	con.query("INSERT INTO Question(userID, isPoll, title, subtitle, description, endDate, totalVotes) " +
+		"values(" + req.query.userID + "," + 0 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '"+ req.query.description 
+		+ "', '" + req.query.endDate + "', " + 0 + ")", 
 		function (err, result, fields) {
 			console.log("Server fetched the profile from the db from Creating Poll!!");
 			//if(err) throw err;
