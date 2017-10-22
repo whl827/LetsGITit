@@ -26,7 +26,7 @@ con.connect(function(err) {
 
 app.use(express.static(__dirname + '/public'));
 
-// Get Search from navbar
+// Get Question Search from navbar
 app.get('/searchQuestions', function (req, res) {
 	console.log("The server recieved the questionList GET request");
 
@@ -39,6 +39,19 @@ app.get('/searchQuestions', function (req, res) {
 	    if (err) throw err;
 	    res.json(result);
 	});
+});
+
+// Get user search from navbar
+app.get('/searchUser', function (req, res) {
+	console.log("The server recieved the userList GET request");
+
+	con.query("SELECT u.username FROM user u, WHERE u.username=" + req.query.userQuery, 
+		function (err, result, fields) {
+			console.log("Server fetched user from the db");
+			if (err) throw err;
+			res.json(result);
+		});
+
 });
 
 //log in

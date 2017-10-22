@@ -73,13 +73,12 @@
 	</nav>
 
 	<div ng-controller="FeedCtrl">
-		<input type="text" class="form-control" placeholder="tag" aria-describedby="basic-addon1" ng-model="tagQuery">
-		<button type="button" class="btn btn-success" ng-click="submitQuery()">Search</button>
+		<input type="text" class="form-control" placeholder="tag" aria-describedby="basic-addon1" ng-model="query">
+		<button type="button" class="btn btn-success" ng-click="queryQuestions()">Search Questions</button>
+		<button type="button" class="btn btn-success" ng-click="queryUsers()">Search Users</button>
 
 		<div className = "navBar" ng-view></div>
 	</div>
 
-	
- 
 </body>
 </html>
