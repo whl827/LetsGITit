@@ -42,16 +42,16 @@ app.get('/searchQuestions', function (req, res) {
 });
 
 // Get user search from navbar
-app.get('/searchUser', function (req, res) {
+app.get('/searchUsers', function (req, res) {
 	console.log("The server recieved the userList GET request");
 
-	con.query("SELECT u.username FROM user u, WHERE u.username=" + req.query.userQuery, 
+	con.query("SELECT u.username FROM KUser u WHERE u.username='" 
+		+ req.query.userQuery + "';", 
 		function (err, result, fields) {
 			console.log("Server fetched user from the db");
 			if (err) throw err;
 			res.json(result);
 		});
-
 });
 
 //log in
