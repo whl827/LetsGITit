@@ -27,7 +27,7 @@ con.connect(function(err) {
 app.use(express.static(__dirname + '/public'));
 
 // Get Search from navbar
-app.get('/questionList', function (req, res) {
+app.get('/searchQuestions', function (req, res) {
 	console.log("The server recieved the questionList GET request");
 
 	con.query("SELECT q.isPoll, q.title, q.subtitle, q.description " + 
