@@ -9,6 +9,12 @@ angular.module("KnowItAll").controller('signUpController', ['$scope', '$http', '
     	var passwordHash = $scope.signupPassword.hashCode();
     	var username = $scope.signupUsername;
     	var signupEmail = $scope.signupEmail;
+
+    	var splitName = signupEmail.split("@");
+    	if(splitName[1] != "usc.edu"){
+    		$scope.signupErrorMessage = "Please use a usc.edu domain";
+    		return; 
+    	}
     
 		$http.get('/signupFunction?signupUsername=' + username + 
 				  "&signupPassword=" + passwordHash +

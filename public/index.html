@@ -8,6 +8,7 @@
 	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
 
 	<link rel="stylesheet" href="/style/style.css">
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
@@ -71,10 +72,16 @@
 		</div>
 	</nav>
 
-	<div ng-controller="FeedCtrl">
-		<input type="text" class="form-control" placeholder="tag" aria-describedby="basic-addon1" ng-model="query">
-		<button type="button" class="btn btn-success" ng-click="queryQuestions()">Search Questions</button>
-		<button type="button" class="btn btn-success" ng-click="queryUsers()">Search Users</button>
+	<div  class="search-wrapper" ng-controller="FeedCtrl">
+
+		<div class="search-bar-container row">
+			<input type="text" class="search-bar form-control" placeholder="Type tags" aria-describedby="basic-addon1" ng-model="query">
+			
+			<button type="button" class="search-button"  ng-click="queryQuestions()">SEARCH</button>
+			
+			<button type="button" class="btn btn-success" ng-click="queryUsers()">Search Users</button>
+
+		</div>
 
 		<div className = "navBar" ng-view></div>
 	</div>

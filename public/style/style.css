@@ -1,0 +1,159 @@
+body {
+	font-family: "Roboto";
+}
+
+/* search bar */
+.search-bar-container {
+	margin-top: 30px; 
+	margin-bottom: 50px;
+	width:  80%;
+	margin-left: auto;
+	margin-right: auto;
+}
+
+.search-bar {
+	width: 100%;
+	border-radius: 30px;
+	height: 60px;
+	padding-left: 40px;
+	padding-right: 40px;
+	padding-bottom: 30px;
+	padding-top: 30px;
+	font-family: "Roboto";
+	letter-spacing: 2px;
+}
+
+.search-button {
+	overflow: visible;
+    position: relative;
+    float: right;
+    border: 0;
+   
+   	height: 60px;
+    width: 200px;
+    border-radius: 30px;
+    margin-left: -200px;
+    margin-top:1px;
+    color: white;
+    cursor: pointer;
+    font-family: "Roboto";
+	letter-spacing: 2px;
+	background: #e53935; 
+	background: -webkit-linear-gradient(to right, #e53935, #e35d5b);
+	background: linear-gradient(to right, #e53935, #e35d5b);
+
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.search-button:hover {
+    opacity: 0.8;
+}
+
+.search-button:focus {outline:0;}
+
+
+/* create poll */
+.create-survey-container > p {
+	font-size: 20px;
+}
+
+.heading {
+	margin-left: 100px;
+}
+
+.create-survey-container {
+	padding-left: 150px;
+	padding-right: 150px;
+	padding-top: 30px;
+	padding-bottom: 50px;
+}
+
+.create-button, .submit-button, .login-button, .signup-button {
+	border-radius: 30px;
+	border: 0;
+
+	background: #e53935; 
+	background: -webkit-linear-gradient(to right, #e53935, #e35d5b);
+	background: linear-gradient(to right, #e53935, #e35d5b);
+
+	color: white;
+
+    cursor: pointer;
+
+    font-family: "Roboto";
+	letter-spacing: 2px;
+	font-size: 12px; 
+
+	padding-left: 25px;
+	padding-right: 25px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+
+	margin-top: 50px;
+
+	margin-left: 85%;
+
+
+
+	-webkit-transition-duration: 0.7s; /* Safari */
+    transition-duration: 0.7s;
+}
+
+
+.create-button:hover, submit-button:hover, .login-button:hover, .signup-button:hover {
+	opacity: 0.8;
+
+
+    
+}
+
+
+
+.error-message {
+
+}
+
+
+/* login */
+.login-heading, .signup-heading{
+	margin-left: 200px;
+}
+
+.login-container, .signup-container {
+	padding-left: 250px;
+	padding-right: 250px;
+	padding-top: 30px;
+	padding-bottom: 50px;
+}
+
+/* sign-up */
+
+
+
+
+@media only screen and (max-width: 784px) {
+	.login-container, .signup-container {
+		padding-left: 75px;
+		padding-right: 75px;
+		padding-top: 30px;
+		padding-bottom: 50px;
+	}
+
+   .login-heading, .signup-heading{
+		margin-left: 50px;
+	}
+
+	.login-button, .signup-button {
+		margin-top: 25px;
+	}
+
+	.login-button {
+		margin-left: 80%;
+	}
+
+	.signup-button {
+		margin-left: 75%;
+	}
+}
+
