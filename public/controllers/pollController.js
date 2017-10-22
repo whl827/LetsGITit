@@ -8,18 +8,11 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', function(
 	//getting information from search page (Home)
 	//(search result controller)
 
-	// if ($cookies.get("questionID") != null) {
-	// 	console.log("Getting poll");
-	// 	questionID = $cookies.get("questionID");
-	// 	getPoll = true;
-	// 	 // need to set this up
-	// } else {
-	// 	console.log("poll not selected")s;
-	// }
+//Set Question ID as URL, and read it when pulling poll / rating information 
 
 	if (getPoll) {
 		console.log("getting poll");
-		$http.get('/getPoll?questionID=' + questionID).then(function (response) {
+		$http.get('/getQuestion?questionID=' + questionID).then(function (response) {
 			console.log("Got poll info");
 			console.log(response.data[0]);
 			$scope.title = response.data[0].title;
