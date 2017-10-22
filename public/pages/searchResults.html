@@ -1,0 +1,26 @@
+<!-- print out all the search results according to tags -->
+
+<form ng-app="searchResult" class="container"
+	ng-controller= "searchResultCtrl"
+>
+
+<table>
+  <tr ng-repeat="x in options">
+    <td>
+    	<form action="">
+		  <input type="radio" name="result" value="result" ng-model="searchInput"> 
+		  <!-- {{ info about poll or rating }} -->
+		  <br>
+		</form>
+    </td>
+  </tr>
+</table>
+
+<button type="submitButton">Submit</button>
+
+<input type="submit" 
+	   value="submit"
+	   ng-click="searchResult()"
+>
+
+</form>

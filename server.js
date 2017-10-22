@@ -6,7 +6,7 @@ var nodemailer = require('nodemailer');
 var con = mysql.createConnection({
   host: "localhost",
   user: "root",
-  password: "root",
+  password: "gkftndlTek!!",
   database: "knowitall"
 });
 
@@ -47,11 +47,11 @@ app.get('/questionList', function (req, res) {
 app.get('/user', function (req, res) {
 	
 	console.log("The server recieved the GET request for user: in log in");
-	console.log("SELECT u.userID, u.username, u.passwordHash FROM KUser u " +
+	console.log("SELECT u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
 		"' and u.passwordHash=" + req.query.password);
 
-	con.query("SELECT u.userID, u.username, u.passwordHash FROM KUser u " +
+	con.query("SELECT u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
 		"' and u.passwordHash=" + req.query.password,
 	  function (err, result, fields) {
@@ -63,7 +63,7 @@ app.get('/user', function (req, res) {
 
 //sign up
 app.get('/signupFunction', function (req, res) {
-	console.log("The server recieved the GET request for user (for signing up)");
+	console.log("The server recieved the GET request for user");
 	
 	console.log("id: ", req.query.signupUsername);
 	console.log('pw: ', req.query.signupPassword);
@@ -105,22 +105,18 @@ app.get('/sendEmail', function (req, res) {
 
 //insert user to the database
 app.get('/insertUser', function (req, res) {
-	console.log("The server recieved the GET request for user (for inserting user)");
-	
-	console.log("id: ", req.query.username);
-	console.log('pw: ', req.query.passwordHash);
+	console.log("The server recieved the GET request for user");
+	var username = req.query.username;
+	var password = req.query.passwordHash
+	console.log("id: ", username);
+	console.log('pw: ', password);
+	console.log("INSERT INTO KUser(username, passwordHash) " +
+			"values('" + username + "', " + password + ");");
 
-	console.log("INSERT INTO KUser(username, passwordHash) " 
-			+ "values('" + req.query.username + "', " + 
-			req.query.passwordHash + ")");
-
-	con.query("INSERT INTO KUser(username, passwordHash) " 
-			+ "values('" + req.query.username + "', " + 
-			req.query.passwordHash + ")",
+	con.query("INSERT INTO KUser(username, passwordHash) " +
+			"values('" + username + "', " + password + ");",
 	  function (err, result, fields) {
-	  	console.log("Server fetched the data from the db !!!!!");
-	    // if (err) throw err;
-	    res.json(result);
+	  	if (err) throw err;
 	});
 });
 
@@ -139,29 +135,20 @@ app.get('/profile', function (req, res) {
 
 app.get('/insertPoll', function (req, res) {
 
-		console.log("END DATE::: " + req.query.endDate);
-
-		console.log("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes) " +
-		"values(" + 1 + "," + 1 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '" + req.query.description 
-		+ "', '" + req.query.endDate + 
-		"'," + 0 + "," + 0 + ")");
-
 	//insert the questions
-	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes) " +
+	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, totalVotes, positiveVotes) " +
 		"values(" + 1 + "," + 1 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '" + req.query.description 
-		+ "', '" + req.query.endDate + 
-		"', " + 0 + "," + 0 + ")",
+		+ "' ," + 0 + "," + 0 + ")",
 		function (err, result, fields) {
-			console.log("Server fetched the profile from the db from Creating Poll!! (inserting poll)");
+			console.log("Server fetched the profile from the db from Creating Poll!!");
 			//if(err) throw err;
 			//res.json(result);
-		}
-	);
+		});
 
-	//insert options
+	//insert the questions
 	con.query("SELECT questionID from Question where title='" + req.query.title + "'",
 		function (err, result, fields) {
-			console.log("Server fetched the profile from the db from Creating Poll!! (inserting options");
+			console.log("Server fetched the profile from the db from Creating Poll!!");
 			var questionID =  result[0].questionID;
 			console.log("HERE!!!: " + questionID);
 
@@ -174,30 +161,91 @@ app.get('/insertPoll', function (req, res) {
 			console.log("size: " + splitArr.length ); 
 			for(var i=0; i<splitArr.length; i++){
 				console.log(splitArr[i]);
-				con.query("INSERT INTO pollOption(questionID, title, votes) values (" +
-				questionID + " , '" + splitArr[i] + " '," + 0 + ")");
+				con.query("INSERT INTO pollOption(questionID, title, subTitle, description, votes) values (" +
+				questionID + " , '" + splitArr[i] + " ', " + " 'description'," + 0 + ")");
 			}
-			// ng-repeat option in req.query.optionArray
-		}
-	);
+			//ng-repeat option in req.query.optionArray
+
+		});
 });
 
 app.get('/insertRating', function (req, res) {
-	console.log("END DATE FOR RATING::: " + req.query.endDate);
 	// insert the questions
-	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes) " +
-		"values(" + req.query.userID + "," + 0 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '"+ req.query.description 
-		+ "', '" + req.query.endDate + "', " + 0 + ")", 
+	con.query("INSERT INTO Question(userID, isPoll, title, description) " +
+		"values(" + 1 + "," + 0 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '"+ req.query.description 
+		+ "' ,"  + ")", 
 		function (err, result, fields) {
 			console.log("Server fetched the profile from the db from Creating Poll!!");
 			//if(err) throw err;
 			//res.json(result);
 		});
+	//insert the questions
+	con.query("SELECT questionID from Question where title='" + req.query.title + "'",
+		function (err, result, fields) {
+			console.log("Server fetched the profile from the db from Creating Rating!!");
+			var questionID =  result[0].questionID;
+			console.log("HERE!!!: " + questionID);
+
+			con.query("INSERT INTO RatingQuestionOption(questionID) values (" + questionID + ") ");
+			// console.log(req.query.randomArray); 
+			// // console.log(req.query.randomArray[0].opt1);
+			// console.log(req.query.randomArray.length);
+		});
+});
+
+app.get('/getPoll', function (req, res) {
+	con.query("SELECT q.title, q.userID, q.description, q.endDate " + 
+		"FROM Question q WHERE q.questionID='" +
+		req.query.questionID + "';", 
+		function (err, result, fields) {
+			console.log("Server fetched the poll from the db");
+			if(err) throw err;
+			res.json(result);
+		});
+});
+
+app.get('/commentList', function (req, res) {
+	console.log("The server recieved the GET request: ");
+
+	console.log("hi:", req.query.questionID);
+
+	con.query("SELECT qc.userID, qc.description "+
+		"FROM QuestionComment qc WHERE " + 
+		"qc.questionID='" + req.query.questionID + "';",
+	  	function (err, result, fields) {
+	  	console.log("Server fetched the data from the db haha");
+	    // if (err) throw err;
+	    res.json(result);
+	});
+});
+
+app.get('/insertComment', function (req, res) {
+	console.log("In server insert Comment");
+	var questionID = req.query.questionID;
+	var userID = req.query.userID;
+	var description = req.query.description;
+
+	//console.log("insert comment:", req.query.questionID);
+	con.query("INSERT INTO QuestionComment (questionID, userID, description) " +
+			"VALUES('" + questionID + "', '" + userID + "', '" + description + "');",
+	  	function (err, result, fields) {
+	  	console.log("Server fetched the data from the db hah");
+	    // if (err) throw err;
+	    //res.json(result);
+	});
 });
 
 
-
-
+// app.get('/getRating', function (req, res) {
+// 	con.query("SELECT q.isPoll, q.title, q.subTitle, q.description " + 
+// 		"FROM KUser u, Question q, UserToQuestion uq WHERE u.username='" +
+// 		req.query.ratingName + "' AND uq.userID = u.userID AND uq.questionID = q.questionID;", 
+// 		function (err, result, fields) {
+// 			console.log("Server fetched the profile from the db");
+// 			if(err) throw err;
+// 			res.json(result);
+// 		});
+// });
 
 
 app.listen(8080);

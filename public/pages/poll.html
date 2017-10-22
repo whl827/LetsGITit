@@ -1,28 +1,52 @@
 <link rel="stylesheet" type="text/css" href="../style/style.css">
 
-<h1>Poll</h1>
-
-<form ng-app="poll" class="container"
-	ng-controller= "PollCtrl"
+<form class="container"
+	ng-controller= "PollCtrl" 
 >
 
-<p>Creator:</p> 
+<table>
+	<tr>
+		<td>Creator:</td>
+		<td>{{userID}}</td>
+	</tr>
+	<tr>
+		<td>Title:</td>
+		<td>{{title}}</td>
+	</tr>
+	<tr>
+		<td>Description:</td>
+		<td>{{description}}</td>
+	</tr>
+	<tr>
+		<td>End Date:</td>
+		<td>{{endDate}}</td>
+	</tr>
+	<tr>
+		<td>Comment:</td>
+	</tr>
+</table>
 
-<!-- 1. import the data of rating from database 
-	-Title
-	-Poll options
-	-Duration : startdate / end date
-	-Analymous
-		-if Yes, don't show creator's name
-		-if No, show 
-	make a <p> of poll info
+<textarea ng-model="descriptionInput" rows="4" cols="30"></textarea>
 
--->
-<h2>Title: </h2>
-<h3>{{x.title}}</h3>
+<div ng-controller="PollCtrl">
+	<p ng-repeat="comment in commentList">
+		------------------------------ <br>
+		{{comment.userID}} <br>
+		{{comment.description}} <br>
+		------------------------------ <br>
+	</p>
+</div>
 
-<h2>Duration: </h2>
-<h3>{{x.endDate}}</h3>
+
+<input type="submit" 
+		   value="submit"
+		   ng-click="createComment()"
+	>
+
+<!-- 
+ <h2>Duration: </h2>
+<h3>{{info.endDate}}</h3>
+</p>
 
 <table>
   <tr ng-repeat="x in options">
@@ -54,17 +78,17 @@
 Comment: 
 <textarea rows="4" cols="50">
 </textarea> 
-
+<! 
 <input type="submit" 
 	   value="submit"
 	   ng-click="Rating()"
->
+> 
 	<p>{{errorMessage}}</p>
 
-</form>
+</form> -->
 
 
-<script>
+<!-- script>
 
 con.query("SELECT q.isPoll, q.title, q.subTitle, q.description " + 
 	"FROM KUser u, Question q, UserToQuestion uq WHERE u.username='" +
@@ -76,4 +100,4 @@ con.query("SELECT q.isPoll, q.title, q.subTitle, q.description " +
 		res.json(result);
 	});
 
-</script>
+</script> -->
