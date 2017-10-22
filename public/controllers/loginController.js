@@ -16,8 +16,12 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 	    	
 	    	if(response.data.length == 0){
 	    		$scope.errorMessage = "The username and password combination is incorrect."
+	    		console.log(response.data[0]);
 	    	} else {
+	    		console.log("before setting cookies");
 	    		$scope.userData = response.data[0];
+	    		console.log("user data");
+	    		console.log(response.data[0]);
 	    		console.log("PASSWORD HASH IS: " + response.data[0].passwordHash);
 	    		$cookies.put('username', response.data[0].username);
 	    		$cookies.put('userID', response.data[0].userID);
@@ -36,7 +40,7 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 
     $scope.logout = function () {
     	$cookies.put("username", null);
-    	$cookies.put("userID", null);
+    	$cookies.put("userID", -1);
     	console.log("The user has logged out");
     	$scope.errorMessage = "You have logged out";
     }

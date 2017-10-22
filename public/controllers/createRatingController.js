@@ -1,4 +1,4 @@
-angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', function($scope, $http) {
+angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$cookies', function($scope, $http, $cookies) {
 	console.log("in create rating ctrl"); 
 
 	function validate(input){
@@ -60,8 +60,16 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', fun
 		var tag = $scope.tagInput; 
 		console.log("tag: " + tag);
 
-	
-		if(!validTitle){
+		// get cookies
+		var userID = $cookies.get("userID");
+		console.log("this is userID " + userID);
+
+
+		if (userID == -1) {
+			console.log("userID is -1!!");
+			$scope.errorMessage = "Please login.";
+		}
+		else if(!validTitle){
 			$scope.errorMessage = "Please provide a title for your rating.";
 		} 
 		else if (!validateDescription){ // option
@@ -82,7 +90,9 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', fun
 
 			$http.get('/insertRating?title=' + title + 
 				 "&subTitle=" + subtitle +
-				  "&description=" + description
+				  "&description=" + description +
+				  "&userID=" + userID +
+				  "&endDate=" + endDate
 				  ).then(function (response) {
     		console.log("user received from creaitng rating!");
 	    	//console.log(response.data);
