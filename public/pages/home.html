@@ -1,12 +1,23 @@
 <h1>Main Page</h1>
 
-Search Results: 
+Search Results: <br>
 
-<p ng-repeat="question in questionList">
-	------------------------------ <br>
-	<span>{{question.isPoll ? 'Poll' : 'Ranking'}}</span> <br>
-	{{question.title}} <br>
-	{{question.subTitle}} <br>
-	{{question.description}} <br>
-	------------------------------ <br>
-</p>
+<div ng-switch on="isQuestionList">
+	<div ng-switch-when="1">
+		<p ng-repeat="question in questionList">
+			------------------------------ <br>
+			<span>{{question.isPoll ? 'Poll' : 'Ranking'}}</span> <br>
+			{{question.title}} <br>
+			{{question.subTitle}} <br>
+			{{question.description}} <br>
+			------------------------------ <br>
+		</p>
+	</div>
+	<div ng-switch-default>
+		<p ng-repeat="user in userList">
+			------------------------------- <br>
+			{{user.username}} <br>
+			------------------------------- <br>
+		</p>
+	</div>
+</div>

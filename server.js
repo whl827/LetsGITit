@@ -20,50 +20,58 @@ var transporter = nodemailer.createTransport({
 });
 
 con.connect(function(err) {
-	//if (err) throw err;
+	if (err) throw err;
 	console.log("Sucessfully connected to the MySql Database");
 });
 
 app.use(express.static(__dirname + '/public'));
 
-// Get Search from navbar
-app.get('/questionList', function (req, res) {
-	console.log("The server recieved the GET request: ");
-
-	console.log("hi:", req.query.tagQuery);
+// Get Question Search from navbar
+app.get('/searchQuestions', function (req, res) {
+	console.log("The server recieved the questionList GET request");
 
 	con.query("SELECT q.isPoll, q.title, q.subtitle, q.description " + 
 		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
 		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
 		" tq.questionID = q.questionID;",
 	  function (err, result, fields) {
-	  	console.log("Server fetched the data from the db haha");
-	    // if (err) throw err;
+	  	console.log("Server fetched the questionList from the db");
+	    if (err) throw err;
 	    res.json(result);
 	});
+});
+
+// Get user search from navbar
+app.get('/searchUsers', function (req, res) {
+	console.log("The server recieved the userList GET request");
+
+	con.query("SELECT u.username FROM KUser u WHERE u.username='" 
+		+ req.query.userQuery + "';", 
+		function (err, result, fields) {
+			console.log("Server fetched user from the db");
+			if (err) throw err;
+			res.json(result);
+		});
 });
 
 //log in
 app.get('/user', function (req, res) {
 	
 	console.log("The server recieved the GET request for user: in log in");
-	console.log("SELECT u.userID, u.username, u.passwordHash FROM KUser u " +
-		"WHERE u.username='"+ req.query.username + 
-		"' and u.passwordHash=" + req.query.password);
 
 	con.query("SELECT u.userID, u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
 		"' and u.passwordHash=" + req.query.password,
 	  function (err, result, fields) {
-	  	console.log("Server fetched the data from the db !!!!!");
-	    //if (err) throw err;
+	  	console.log("Server fetched the user from db");
+	    if (err) throw err;
 	    res.json(result);
 	});
 });
 
 //sign up
 app.get('/signupFunction', function (req, res) {
-	console.log("The server recieved the GET request for user (for signing up)");
+	console.log("The server recieved the GET request for user: sign up");
 	
 	console.log("id: ", req.query.signupUsername);
 	console.log('pw: ', req.query.signupPassword);
@@ -72,7 +80,7 @@ app.get('/signupFunction', function (req, res) {
 	con.query("SELECT u.username FROM KUser u " +
 		"WHERE u.username='" + req.query.signupUsername + "'",
 	  function (err, result, fields) {
-	  	console.log("Server fetched the data from the db !!!!!");
+	  	console.log("Server fetched the user from db in sign up");
 	    if (err) throw err;
 	    res.json(result);
 	});
@@ -140,22 +148,14 @@ app.get('/insertPoll', function (req, res) {
 		"values(" + 1 + "," + 1 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '" + req.query.description 
 		+ "', '" + req.query.endDate + "'," + 0 + "," + 0 + ")",
 		function (err, result, fields) {
-			console.log("Server fetched the profile from the db from Creating Poll!! (inserting poll)");
-			//if(err) throw err;
-			//res.json(result);
+			console.log("Server fetched the profile from the db from Creating Poll!!");
 		});
 
 	//insert options
 	con.query("SELECT questionID from Question where title='" + req.query.title + "'",
 		function (err, result, fields) {
-			console.log("Server fetched the profile from the db from Creating Poll!! (inserting options)");
+			console.log("Server fetched the profile from the db from Creating Poll");
 			var questionID =  result[0].questionID;
-			console.log("HERE!!!: " + questionID);
-
-
-			console.log(req.query.randomArray); 
-			// console.log(req.query.randomArray[0].opt1);
-			console.log(req.query.randomArray.length);
 
 			var splitArr = req.query.randomArray[0].split(",");
 			console.log("size: " + splitArr.length ); 
@@ -164,8 +164,6 @@ app.get('/insertPoll', function (req, res) {
 				con.query("INSERT INTO pollOption(questionID, title, subTitle, description, votes) values (" +
 				questionID + " , '" + splitArr[i] + " ', " + " 'description'," + 0 + ")");
 			}
-			//ng-repeat option in req.query.optionArray
-
 		});
 });
 
@@ -176,8 +174,6 @@ app.get('/insertRating', function (req, res) {
 		+ "', '" + req.query.endDate + "', " + 0 + ")", 
 		function (err, result, fields) {
 			console.log("Server fetched the profile from the db from Creating Poll!!");
-			//if(err) throw err;
-			//res.json(result);
 		});
 	//insert the questions
 	con.query("SELECT questionID from Question where title='" + req.query.title + "'",
@@ -187,9 +183,6 @@ app.get('/insertRating', function (req, res) {
 			console.log("HERE!!!: " + questionID);
 
 			con.query("INSERT INTO RatingQuestionOption(questionID) values (" + questionID + ") ");
-			// console.log(req.query.randomArray); 
-			// // console.log(req.query.randomArray[0].opt1);
-			// console.log(req.query.randomArray.length);
 		});
 });
 
@@ -214,7 +207,7 @@ app.get('/commentList', function (req, res) {
 		"qc.questionID='" + req.query.questionID + "';",
 	  	function (err, result, fields) {
 	  	console.log("Server fetched the data from the db haha");
-	    // if (err) throw err;
+	    if (err) throw err;
 	    res.json(result);
 	});
 });
@@ -225,27 +218,12 @@ app.get('/insertComment', function (req, res) {
 	var userID = req.query.userID;
 	var description = req.query.description;
 
-	//console.log("insert comment:", req.query.questionID);
 	con.query("INSERT INTO QuestionComment (questionID, userID, description) " +
 			"VALUES('" + questionID + "', '" + userID + "', '" + description + "');",
 	  	function (err, result, fields) {
 	  	console.log("Server fetched the data from the db hah");
-	    // if (err) throw err;
-	    //res.json(result);
 	});
 });
-
-
-// app.get('/getRating', function (req, res) {
-// 	con.query("SELECT q.isPoll, q.title, q.subTitle, q.description " + 
-// 		"FROM KUser u, Question q, UserToQuestion uq WHERE u.username='" +
-// 		req.query.ratingName + "' AND uq.userID = u.userID AND uq.questionID = q.questionID;", 
-// 		function (err, result, fields) {
-// 			console.log("Server fetched the profile from the db");
-// 			if(err) throw err;
-// 			res.json(result);
-// 		});
-// });
 
 
 app.listen(8080);
