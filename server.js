@@ -47,11 +47,11 @@ app.get('/questionList', function (req, res) {
 app.get('/user', function (req, res) {
 	
 	console.log("The server recieved the GET request for user: in log in");
-	console.log("SELECT u.username, u.passwordHash FROM KUser u " +
+	console.log("SELECT u.userID, u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
 		"' and u.passwordHash=" + req.query.password);
 
-	con.query("SELECT u.username, u.passwordHash FROM KUser u " +
+	con.query("SELECT u.userID, u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
 		"' and u.passwordHash=" + req.query.password,
 	  function (err, result, fields) {
@@ -135,10 +135,13 @@ app.get('/profile', function (req, res) {
 
 app.get('/insertPoll', function (req, res) {
 
+
+
 	//insert the questions
-	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, totalVotes, positiveVotes) " +
+	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes) " +
 		"values(" + 1 + "," + 1 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '" + req.query.description 
-		+ "' ," + 0 + "," + 0 + ")",
+		+ "', '" + req.query.endDate + 
+ +		"', " + 0 + "," + 0 + ")",
 		function (err, result, fields) {
 			console.log("Server fetched the profile from the db from Creating Poll!!");
 			//if(err) throw err;
@@ -193,7 +196,7 @@ app.get('/insertRating', function (req, res) {
 		});
 });
 
-app.get('/getPoll', function (req, res) {
+app.get('/getQuestion', function (req, res) {
 	con.query("SELECT q.title, q.userID, q.description, q.endDate " + 
 		"FROM Question q WHERE q.questionID='" +
 		req.query.questionID + "';", 
@@ -235,6 +238,23 @@ app.get('/insertComment', function (req, res) {
 	});
 });
 
+
+app.get('/insertRatingValue', function (req, res) {
+	console.log("In server insert rating value ");
+	var questionID = req.query.questionID;
+	var userID = req.query.userID;
+	var ratingValue = req.query.ratingValue;
+	console.log("ratingvalue in server is " + ratingValue);
+
+	//console.log("insert comment:", req.query.questionID);
+	con.query("INSERT INTO RatingQuestionOption (questionID, userID, rating) " +
+			"VALUES('" + questionID + "', '" + userID + "', '" + ratingValue + "');",
+	  	function (err, result, fields) {
+	  	console.log("Server fetched the data from the db hah");
+	    // if (err) throw err;
+	    //res.json(result);
+	});
+});
 
 // app.get('/getRating', function (req, res) {
 // 	con.query("SELECT q.isPoll, q.title, q.subTitle, q.description " + 

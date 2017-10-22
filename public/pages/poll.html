@@ -26,8 +26,26 @@
 	</tr>
 </table>
 
-<textarea ng-model="descriptionInput" rows="4" cols="30"></textarea>
+<form ng-model="likeInput">
 
+<label>
+  <input type="radio" name="dis/like" value="like" />
+  <img src="img/like.png" width="50" height="50">
+</label>
+
+  
+<label>
+<input type="radio" name="dis/like" value="dislike" />
+<img src="img/dislike.png" width="50" height="50">
+</label>
+
+</form>
+
+<h3> Comment Anonymously </h3>
+<input type="checkbox" name="anonymous" ng-model="isAnonymousInput">
+<br>
+
+<textarea ng-model="descriptionInput" rows="4" cols="30"></textarea>
 <div ng-controller="PollCtrl">
 	<p ng-repeat="comment in commentList">
 		------------------------------ <br>
