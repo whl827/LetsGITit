@@ -14,6 +14,4 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', function(
 	    });
 
     }
-
-    
 }]);
