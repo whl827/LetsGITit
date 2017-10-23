@@ -2,7 +2,6 @@ angular.module("KnowItAll").controller('signUpController', ['$scope', '$http', '
     
     console.log("logging from signup controller");
 
-
     $scope.signupFunction = function () {
     	console.log("In get query function, username: " + $scope.signupUsername);
     	console.log("in get query, function, passwrd: " + $scope.signupPassword);

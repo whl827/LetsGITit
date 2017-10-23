@@ -97,6 +97,8 @@ app.get('/sendEmail', function (req, res) {
 	var username = req.query.newUsername;
 	var link = "localhost:8080/#!newUser/:" + username + "/:" + password;
 
+	console.log("EMAIL IS SENT TO: " + email);
+
 	var mailOptions = {
 		from: 'knowitall857@gmail.com',
 		to: email,

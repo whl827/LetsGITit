@@ -75,11 +75,17 @@
 	<div  class="search-wrapper" ng-controller="FeedCtrl">
 
 		<div class="search-bar-container row">
-			<input type="text" class="search-bar form-control" placeholder="Type tags" aria-describedby="basic-addon1" ng-model="query">
+
+			<select class = "drop-down-menu">
+				<option class="options" value="Tags">Tags</option>
+				<option class="options" value="User">User</option>
+			</select>
+
+			<input type="text" class="search-bar form-control" placeholder="Search" aria-describedby="basic-addon1" ng-model="query">
 			
-			<button type="button" class="search-button"  ng-click="queryQuestions()">SEARCH</button>
-			
-			<button type="button" class="btn btn-success" ng-click="queryUsers()">Search Users</button>
+			<button type="button" class="search-button"  ng-click="searchButton()">SEARCH</button>
+
+
 
 		</div>
 

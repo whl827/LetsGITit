@@ -2,6 +2,18 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', function(
 
 	$scope.isQuestionList = 1;
 
+    $scope.searchButton = function(){
+        var menu = document.querySelector(".drop-down-menu").value;
+        switch(menu){
+            case "Tags":{
+                $scope.queryQuestions(); break;
+            }
+            case "User":{
+                $scope.queryUsers(); break;
+            }
+        }
+    }
+
     $scope.queryQuestions = function () {
 
     	console.log("In get query Questions, tagQuery: " + $scope.query);
