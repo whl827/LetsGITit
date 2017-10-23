@@ -1,23 +1,71 @@
-<h1>Main Page</h1>
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Main Feed Page</title>
 
-Search Results: <br>
+	<style>
+		.table th, .table td {
+			text-align: center;
+			vertical-align: middle;
+		}
+		.mainLayout{
+			margin: auto;
+   	 		width: 75%;
+    		padding: 10px;
+		}
+
+	</style>
+</head>
+<body>
+
+
+
+<a class="search-result">Search Results:</a>
 
 <div ng-switch on="isQuestionList">
-	<div ng-switch-when="1">
-		<p ng-repeat="question in questionList">
-			------------------------------ <br>
-			<span>{{question.isPoll ? 'Poll' : 'Ranking'}}</span> <br>
-			{{question.title}} <br>
-			{{question.subTitle}} <br>
-			{{question.description}} <br>
-			------------------------------ <br>
-		</p>
+	<div class="" ng-switch-when="1">
+		
+		<table class="mainLayout table table-responsive table-striped col-12 mt-3">
+			
+			<thead>
+				<tr>
+					<th>Question</th>
+					<th>SubTitle</th>
+					<th>Description</th>
+					<th>Type</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr class="" ng-repeat="question in questionList">
+					<td>{{question.title}}</td>
+					<td>{{question.subTitle}}</td>
+					<td>{{question.description}} </td>
+					<td><span>{{question.isPoll ? 'Poll' : 'Rating'}}</span> </td>
+				</tr>
+			</tbody>
+		</table>
 	</div>
-	<div ng-switch-default>
-		<p ng-repeat="user in userList">
-			------------------------------- <br>
-			{{user.username}} <br>
-			------------------------------- <br>
-		</p>
+	<div ng-switch-on = "isQuestionList">
+		<div ng-switch-when = "2">
+
+			<table class="mainLayout table table-responsive table-striped col-12 mt-3">
+				
+				<thead>
+					<tr>
+						<th>User</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr class="" ng-repeat="user in userList">
+						<td>{{user.username}}</td>
+					</tr>
+				</tbody>
+			</table>
+		</div>
 	</div>
 </div>
+
+</body>
+</html>

@@ -51,9 +51,20 @@ values (
     0
 );
 
+insert into Question(userID, isPoll, title, subTitle, description, totalVotes) 
+values (
+	2, 
+    true,
+	"user2 question(1)",
+    "user2 subtitle(2)",
+    "",
+    0
+);
+
 
 insert into UserToQuestion(userID, questionID) values (1, 1);
 insert into UserToQuestion(userID, questionID) values (1, 2);
+insert into UserToQuestion(userID, questionID) values (1, 3);
 insert into UserToQuestion(userID, questionID) values (1, 4);
 
 insert into TagToQuestion(tagID, questionID) values (1, 1);

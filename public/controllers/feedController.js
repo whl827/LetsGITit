@@ -1,6 +1,6 @@
 angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', function($scope, $http) {
 
-	$scope.isQuestionList = 1;
+	// $scope.isQuestionList = 1;
 
     $scope.searchButton = function(){
         var menu = document.querySelector(".drop-down-menu").value;
@@ -33,8 +33,9 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', function(
     	$http.get('/searchUsers?userQuery=' + $scope.query).then(function (response) {
     		console.log("Users list received");
     		console.log(response.data);
-    		$scope.isQuestionList = 0;
+    		$scope.isQuestionList = 2;
     		$scope.userList = response.data;
     	});
     }
+
 }]);
