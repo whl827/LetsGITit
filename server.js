@@ -251,6 +251,22 @@ app.get('/insertRatingValue', function (req, res) {
 	});
 });
 
+app.get('/QuestionLike', function (req, res) {
+	console.log("In server insert rating value ");
+	var questionID = req.query.questionID;
+	var userID = req.query.userID;
+	var ratingValue = req.query.pollLike;
+	console.log("ratingvalue in server is " + ratingValue);
+
+	con.query("INSERT INTO QuestionLike (questionID, userID, rating) " +
+			"VALUES('" + questionID + "', '" + userID + "', '" + ratingValue + "');",
+	  	function (err, result, fields) {
+	  	console.log("Server fetched the data from the db hah");
+	    // if (err) throw err;
+	    //res.json(result);
+	});
+});
+
 // app.get('/getRating', function (req, res) {
 // 	con.query("SELECT q.isPoll, q.title, q.subTitle, q.description " + 
 // 		"FROM KUser u, Question q, UserToQuestion uq WHERE u.username='" +

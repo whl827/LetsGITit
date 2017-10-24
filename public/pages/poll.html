@@ -1,121 +1,54 @@
-<link rel="stylesheet" type="text/css" href="../style/style.css">
+<h2 class="heading">Title of Poll {{title}}</h2>
 
-<form class="container"
-	ng-controller= "PollCtrl" 
->
+<form class="display-survey-container" ng-controller= "PollCtrl" >
 
-<table>
-	<tr>
-		<td>Creator:</td>
-		<td>{{userID}}</td>
-	</tr>
-	<tr>
-		<td>Title:</td>
-		<td>{{title}}</td>
-	</tr>
-	<tr>
-		<td>Description:</td>
-		<td>{{description}}</td>
-	</tr>
-	<tr>
-		<td>End Date:</td>
-		<td>{{endDate}}</td>
-	</tr>
-	<tr>
-		<td>Comment:</td>
-	</tr>
-</table>
-
-<form ng-model="likeInput">
-
-<label>
-  <input type="radio" name="dis/like" value="like" />
-  <img src="img/like.png" width="50" height="50">
-</label>
-
- 
-<label>
-<input type="radio" name="dis/like" value="dislike" />
-<img src="img/dislike.png" width="50" height="50">
-</label>
+	<p> Created by {{userID}} </p>
+	<p> (description) {{description}} </p>
+	<p> Closes on {{endDate}} </p>
 
 </form>
 
-<h3> Comment Anonymously </h3>
-<input type="checkbox" name="anonymous" ng-model="isAnonymousInput">
-<br>
+<!-- Like/Dislike -->
+<form ng-controller= "pollRatingCtrl">	
+	<label>
+		<input ng-model="likeInput" type="radio" name="dis/like" value="like" />
+		<img src="img/like.png" width="50" height="50">
+	</label>
 
-<textarea ng-model="descriptionInput" rows="4" cols="30"></textarea>
-<div ng-controller="PollCtrl">
-	<p ng-repeat="comment in commentList">
-		------------------------------ <br>
-		{{comment.userID}} <br>
-		{{comment.description}} <br>
-		------------------------------ <br>
-	</p>
-</div>
-
-
-<input type="submit" 
-		   value="submit"
-		   ng-click="createComment()"
-	>
-
-<!-- 
- <h2>Duration: </h2>
-<h3>{{info.endDate}}</h3>
-</p>
-
-<table>
-  <tr ng-repeat="x in options">
-    <td>option:</td>
-    <td>{{ (pollOption).title }}</td>
-  </tr>
-</table>
-
-<h3> Post Anonymously </h3>
-<input type="checkbox" name="anonymous" ng-model="isAnonymousInput">
-<br>
-
-<form ng-model="likeInput">
-
-<label>
-  <input type="radio" name="dis/like" value="like" />
-  <img src="img/like.png" width="50" height="50">
-</label>
-
-  
-<label>
-<input type="radio" name="dis/like" value="dislike" />
-<img src="img/dislike.png" width="50" height="50">
-</label>
+	<label>
+		<input ng-model="likeInput" type="radio" name="dis/like" value="dislike" />
+		<img src="img/dislike.png" width="50" height="50">
+		<input type="submit" value="submit" ng-click="selectLikeOrDislike()">
+	</label>
+	<p>{{errorMessageLike}}</p>
 
 </form>
 
-<br>
-Comment: 
-<textarea rows="4" cols="50">
-</textarea> 
-<! 
-<input type="submit" 
-	   value="submit"
-	   ng-click="Rating()"
-> 
-	<p>{{errorMessage}}</p>
+<!-- Comment -->
+<form ng-controller= "pollRatingCtrl">	
 
-</form> -->
+	<h5> Comment Anonymously </h5>
+	<input type="checkbox" name="anonymous" ng-model="isAnonymousInput">
+	<br>
+	<h5> Comments: </h5>
+	<textarea ng-model="commentInput" rows="4" cols="30"></textarea>
+	<input type="submit" value="submit" ng-controller= "PollCtrl" ng-click="createComment()">
+	<br>
+	<p>{{errorMessageComment}}</p>
+	<br>
 
+</form>
 
-<!-- script>
+<form ng-controller= "PollCtrl">	
 
-con.query("SELECT q.isPoll, q.title, q.subTitle, q.description " + 
-	"FROM KUser u, Question q, UserToQuestion uq WHERE u.username='" +
-	req.query.username + "' AND uq.userID = u.userID AND uq.questionID = q.questionID;", 
+	<div ng-controller="PollCtrl">
+		<p ng-repeat="comment in commentList">
+			------------------------------ <br>
+			{{comment.userID}} <br>
+			{{comment.description}} <br>
+			------------------------------ <br>
+		</p>
+	</div>
 
-	function (err, result, fields) {
-		console.log("Server fetched the profile from the db");
-		if(err) throw err;
-		res.json(result);
-	});
+</form>
 
-</script> -->
