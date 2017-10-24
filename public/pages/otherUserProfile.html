@@ -1,0 +1,31 @@
+<div ng-controller="otherUserProfile">
+
+	<h1> Other User Profile Page </h1>
+
+	<div ng-switch="isLoggedIn">
+		<div ng-switch-when="true">
+			
+			<div ng-switch="isFollowing">
+				<div ng-switch-when="true">
+					<button ng-click="unfollow()">UnFollow</button>
+				</div>
+				<div ng-switch-default>
+					<button ng-click="follow()">Follow</button>
+				</div>
+			</div>
+
+			<p ng-repeat="question in questionList">
+				------------------------------ <br>
+				<span>{{question.isPoll ? 'Poll' : 'Ranking'}}</span> <br>
+				{{question.title}} <br>
+				{{question.subTitle}} <br>
+				{{question.description}} <br>
+				------------------------------ <br>
+			</p>
+
+		</div>
+		<div ng-switch-default>
+			You are not logged in
+		</div>
+	</div>
+</div>

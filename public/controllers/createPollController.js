@@ -36,20 +36,12 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 		//var validSubtitle = validate($scope.pollSubtitleInput); 
 		var subtitle = $scope.pollSubtitleInput; 
 		console.log("subtitle: " + subtitle);
-		//console.log("validSubtitle: " + validSubtitle);
-
-		//var validDescription = validate($scope.pollDescriptionInput); 
+		
 		var description = $scope.pollDescriptionInput; 
 		console.log("description: " + description);
-		//console.log("validDescription: " + validDescription);
 
-
-
-		//var validateOption1 = validate($scope.option1Input); 
-		//var validateOption2 = validate($scope.option2Input); 
 		var validOption; 
-		//if(validateOption1 && validateOption2) validOption = true; 
-		//else validOption = false; 
+	
 		// TODO: Go through all 10 options and check if 2 out of any 10 is inputed to validate
 
 
@@ -116,23 +108,6 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 		var endDate = new Date(dateStr_e).toMysqlFormat();
 		console.log(endDate); 
 
-
-
-
-
-
-		// var day_e   = new Intl.DateTimeFormat("en-GB", {day: "numeric"}).format(dateStr_e); 
-		// var month_e = new Intl.DateTimeFormat("en-GB", {month: "numeric"}).format(dateStr_e); 
-		// var year_e  = new Intl.DateTimeFormat("en-GB", {year: "numeric"}).format(dateStr_e); 
-		// var endDate = {
-		// 	day: day_e, 
-		// 	month: month_e, 
-		// 	year: year_e
-		// };
-		// console.log("endDate: " + endDate.day + " " + endDate.month + " " + endDate.year);
-		// TODO: Check if start date comes before end date
-
-
 		var openForever = $scope.openForeverInput;
 		console.log("openForever: " + openForever);
 
@@ -173,8 +148,6 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 			validOption = false; 
 		}
 
-
-
 		var userID = $cookies.get("userID");
 		console.log("this is userID " + userID);
 		//if($cookies.get("userID") === n)
@@ -202,20 +175,6 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 		} 
 		else { // allfields successfully filled in
 			// Insert data into SQL
-
-			//var arr = ["asdsa", "asdas", "ssad"];
-
-
-
-
-			
-
-			// var allOptions = {
-			// 	opt1:"Fiat", 
-			// 	opt2:"500", 
-			// 	opt3:"white"
-			// };
-
 
 			$http.get('/insertPoll?title=' + title + 
 				  "&subTitle=" + subtitle +

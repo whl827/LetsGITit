@@ -22,6 +22,9 @@ angular.module("KnowItAll").config(function($routeProvider) {
           templateUrl : "pages/newUser.html",
           controller : "createUser"
     })
+    .when("/userProfile/:username", {
+        templateUrl: "pages/otherUserProfile.html",
+    })
     .when("/rating", {
         templateUrl : "pages/rating.html"
     })

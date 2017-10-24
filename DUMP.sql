@@ -107,4 +107,4 @@ create table userToFollowers(
 -- I need to insert one dummy tag in order for my SQL command to work
 insert into tag (tagStr) 
 values('dummy');
-
+);

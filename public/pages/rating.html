@@ -1,73 +1,57 @@
 <h2 class="heading">Title of Rating {{title}}</h2>
 
 <form class="display-survey-container" ng-controller= "RatingCtrl">
+	
 	<p> Created by {{userID}} </p>
 	<p> (description) {{description}} </p>
 	<p> Closes on {{endDate}} </p>
 
+</form>
 
-<!-- 	<table>
-		<tr>
-			<td>Creator:</td>
-			<td>{{userID}}</td>
-		</tr>
-		<tr>
-			<td>Title:</td>
-			<td>{{title}}</td>
-		</tr>
-		<tr>
-			<td>Description:</td>
-			<td>{{description}}</td>
-		</tr>
-		<tr>
-			<td>End Date:</td>
-			<td>{{endDate}}</td>
-		</tr>
-	</table> -->
+<!-- Rating -->
+<form ng-controller="pollRatingCtrl">
 
-	<form ng-model="rateInput">
-		<input type="radio" name="rating" ng-model="rateInput" value="1"> 1<br>
-		<input type="radio" name="rating" ng-model="rateInput" value="2"> 2<br>
-		<input type="radio" name="rating" ng-model="rateInput" value="3"> 3<br>
-		<input type="radio" name="rating" ng-model="rateInput" value="4"> 4<br>
-		<input type="radio" name="rating" ng-model="rateInput" value="5"> 5<br>
-		<input type="submit" value="submit" ng-click="selectRate()">
-	</form>
+	<input type="radio" name="rating" ng-model="rateInput" value="1"> 1<br>
+	<input type="radio" name="rating" ng-model="rateInput" value="2"> 2<br>
+	<input type="radio" name="rating" ng-model="rateInput" value="3"> 3<br>
+	<input type="radio" name="rating" ng-model="rateInput" value="4"> 4<br>
+	<input type="radio" name="rating" ng-model="rateInput" value="5"> 5<br>
+	<input type="submit" value="submit" ng-click="selectRate()">
+	<p>{{errorMessageRate}}</p>
 
-	<!-- 
-	<input type="radio" name="dis/like" value="true" ng-model="likeInput" img src="img/like.png" width="50" height="50"/>
-	<input type="radio" name="dis/like" value="false" ng-model="likeInput" img src="img/dislike.png" width="50" height="50"/>
-	<input type="submit" value="submit" ng-click="selectLikeOrDislike()"> -->
+</form>
 
-	<form>
-
+<!-- Like/Dislike -->
+<form ng-controller= "pollRatingCtrl">
 	<label>
-	  <input type="radio" name="dis/like" value="like" />
-	  <img src="img/like.png" width="50" height="50">
+		<input ng-model="likeInput" type="radio" name="dis/like" value="like" />
+		<img src="img/like.png" width="50" height="50">
 	</label>
 
-	 
 	<label>
-	<input type="radio" name="dis/like" value="dislike" />
-	<img src="img/dislike.png" width="50" height="50">
+		<input ng-model="likeInput" type="radio" name="dis/like" value="dislike" />
+		<img src="img/dislike.png" width="50" height="50">
+		<input type="submit" value="submit" ng-click="selectLikeOrDislike()">
 	</label>
+	<p>{{errorMessageLike}}</p>
+</form>
 
-	</form>
+<!-- Comment -->
+<form ng-controller= "pollRatingCtrl">
 
-
-	<br>
-
-	<p> Comment Anonymously </p>
+	<h5> Comment Anonymously </h5>
 	<input type="checkbox" name="anonymous" ng-model="isAnonymousInput">
-
 	<br>
-	Comment: 
-	<textarea rows="4" cols="50"> </textarea> 
+	<h5> Comments: </h5>
+	<textarea ng-model="commentInput" rows="4" cols="30"></textarea>
+	<input type="submit" value="submit" ng-click="createComment()">
+	<br>
+	<p>{{errorMessageComment}}</p>
+	<br>
 
-	<input type="submit" 
-		   value="submit"
-		   ng-click="Rating()"
-	>
+</form>
+
+<form ng-controller= "RatingCtrl">
 
 	<div ng-controller="RatingCtrl">
 		<p ng-repeat="comment in commentList">
