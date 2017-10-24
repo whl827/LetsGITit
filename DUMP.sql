@@ -96,35 +96,3 @@ create table userToFollowing(
     foreign key fk1(mainUserID) references KUser(userID),
     foreign key fk2(followingUserID) references KUser(userID)
 );
-
-create table userToFollowers(
-	mainUserID int(8) not null,
-    followerUserID int(8) not null,
-    foreign key fk1(mainUserID) references KUser(userID),
-    foreign key fk2(followerUserID) references KUser(userID)
-);
-
-insert into kuser(username, passwordHash)
-values("user2", 1234);
-
-insert into kuser(username, passwordHash)
-values("user3", 1234);
-
-insert into kuser(username, passwordHash)
-values("user4", 1234);
-
-# user 1 follows 2, 3, and 4
-insert into userToFollowing(mainUserID, followingUserID)
-values(1,2);
-insert into userToFollowing(mainUserID, followingUserID)
-values(1,3);
-insert into userToFollowing(mainUserID, followingUserID)
-values(1,4);
-
-# 3 and 4 follows user 1
-insert into usertoFollowers(mainUserID, followerUserID)
-values(1,2);
-
-insert into usertoFollowers(mainUserID, followerUserID)
-values(1,3);
-

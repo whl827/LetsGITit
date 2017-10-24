@@ -209,8 +209,6 @@ app.get('/getQuestion', function (req, res) {
 app.get('/commentList', function (req, res) {
 	console.log("The server recieved the GET request: ");
 
-	console.log("hi:", req.query.questionID);
-
 	con.query("SELECT qc.userID, qc.description "+
 		"FROM QuestionComment qc WHERE " + 
 		"qc.questionID='" + req.query.questionID + "';",
@@ -232,6 +230,57 @@ app.get('/insertComment', function (req, res) {
 	  	function (err, result, fields) {
 	  	console.log("Server fetched the data from the db hah");
 	});
+});
+
+app.get('/isFollowing', function(req, res) {
+	console.log("In server isFollowing");
+	var user1 = req.query.user1;
+	var user2 = req.query.user2;
+
+	con.query("SELECT uf.mainUserID FROM KUser u, userToFollowing uf WHERE " + 
+		"uf.mainUserID=(SELECT u.userID FROM KUser u WHERE u.username='" + user1 + "') AND " +
+		"uf.followingUserID=(SELECT u.userID FROM KUser u WHERE u.username='" + user2 + "');",
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+		}
+	);
+});
+
+app.get('/follow', function(req, res) {
+	console.log("In server follow");
+	var currUser = req.query.currUser;
+	var userToFollow = req.query.userToFollow;
+
+	console.log("currUser: " + currUser);
+	console.log("userToFollow: " + userToFollow);
+
+	// WILL NOT WORK IF USER APPEARS MULTIPLE TIMES
+	con.query("INSERT INTO userToFollowing (mainUserID, followingUserID) " + 
+		"VALUES( (SELECT u.userID FROM KUser u WHERE u.username ='" + currUser +"'), " +
+		"(SELECT u.userID FROM KUser u WHERE u.username='" + userToFollow + "') );", 
+		function(err, result, fields) {
+			if (err) throw err;
+		}
+	);
+})
+
+app.get('/unfollow', function(req, res) {
+	console.log("In server follow");
+	var currUser = req.query.currUser;
+	var userToUnfollow = req.query.userToUnfollow;
+
+	console.log("currUser: " + currUser);
+	console.log("userToUnfollow: " + userToUnfollow);
+
+	// WILL NOT WORK IF USER APPEARS MULTIPLE TIMES
+	con.query("DELETE FROM userToFollowing " + 
+		"WHERE mainUserID = (SELECT u.userID FROM KUser u WHERE u.username ='" + currUser +"') " +
+		"AND followingUserID = (SELECT u.userID FROM KUser u WHERE u.username='" + userToUnfollow + "');", 
+		function(err, result, fields) {
+			if (err) throw err;
+		}
+	);
 });
 
 app.get('/insertRatingValue', function (req, res) {
@@ -277,7 +326,6 @@ app.get('/QuestionLike', function (req, res) {
 // 			res.json(result);
 // 		});
 // });
-
 
 app.listen(8080);
 console.log("Server running on port 8080");

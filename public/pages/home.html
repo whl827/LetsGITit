@@ -74,7 +74,9 @@
 				</thead>
 				<tbody>
 					<tr class="" ng-repeat="user in userList">
-						<td>{{user.username}}</td>
+						<a href="#!/userProfile/:{{user.username}}">
+							<td>{{user.username}}</td>
+						</a>
 					</tr>
 				</tbody>
 			</table>
