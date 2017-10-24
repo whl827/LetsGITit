@@ -1,4 +1,4 @@
-angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$cookies', '$routeParams' function($scope, $http, $cookies, $routeParams) {
+angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$cookies', '$routeParams', function($scope, $http, $cookies, $routeParams) {
 	
 	console.log("in poll/rate ctrl"); 
 	var questionID = "1";
