@@ -27,7 +27,6 @@ angular.module("KnowItAll").config(function($routeProvider) {
     })
     .when("/rating", {
         templateUrl : "pages/rating.html"
-        //controller: " 'controllers/ratingController"
     })
     .when("/poll", {
         templateUrl : "pages/poll.html"
