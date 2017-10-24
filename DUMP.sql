@@ -104,27 +104,7 @@ create table userToFollowers(
     foreign key fk2(followerUserID) references KUser(userID)
 );
 
-insert into kuser(username, passwordHash)
-values("user2", 1234);
-
-insert into kuser(username, passwordHash)
-values("user3", 1234);
-
-insert into kuser(username, passwordHash)
-values("user4", 1234);
-
-# user 1 follows 2, 3, and 4
-insert into userToFollowing(mainUserID, followingUserID)
-values(1,2);
-insert into userToFollowing(mainUserID, followingUserID)
-values(1,3);
-insert into userToFollowing(mainUserID, followingUserID)
-values(1,4);
-
-# 3 and 4 follows user 1
-insert into usertoFollowers(mainUserID, followerUserID)
-values(1,2);
-
-insert into usertoFollowers(mainUserID, followerUserID)
-values(1,3);
+-- I need to insert one dummy tag in order for my SQL command to work
+insert into tag (tagStr) 
+values('dummy');
 

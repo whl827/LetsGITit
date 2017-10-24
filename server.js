@@ -41,15 +41,16 @@ app.get('/searchQuestions', function (req, res) {
 	});
 });
 
-// Get user search from navbar
+// Get user search from navbar (It selects all user that have userinput in their name)
 app.get('/searchUsers', function (req, res) {
 	console.log("The server recieved the userList GET request");
 
-	con.query("SELECT u.username FROM KUser u WHERE u.username='" 
-		+ req.query.userQuery + "';", 
+	con.query("SELECT u.username FROM KUser u WHERE u.username like '%" 
+		+ req.query.userQuery + "%';", 
 		function (err, result, fields) {
 			console.log("Server fetched user from the db");
 			if (err) throw err;
+			console.log(result[0]);
 			res.json(result);
 		});
 });
@@ -148,32 +149,82 @@ app.get('/profile', function (req, res) {
 
 app.get('/insertPoll', function (req, res) {
 
+	console.log("userID: " + req.query.userID);
+	console.log("sub: " + req.query.subTitle.trim());
+	console.log("title: " + req.query.title.trim());
+	console.log("des: " + req.query.description.trim());
+	console.log("enddate: " + req.query.endDate);
+
 
 
 	//insert the questions
 	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes) " +
-		"values(" + 1 + "," + 1 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '" + req.query.description 
-		+ "', '" + req.query.endDate + 
- +		"', " + 0 + "," + 0 + ")",
+		"values(" + req.query.userID + "," + 1 + ", '" + req.query.title.trim() + "' , '" + req.query.subTitle.trim() + "', '" + req.query.description.trim() 
+		+ "', '" + req.query.endDate + "', " + 0 + "," + 0 + ")",
 
 		function (err, result, fields) {
 			console.log("Server fetched the profile from the db from Creating Poll!!");
 		});
 
 	//insert options
-	con.query("SELECT questionID from Question where title='" + req.query.title + "'",
+	con.query("SELECT questionID from Question where title='" + req.query.title.trim() + "'",
 		function (err, result, fields) {
-			console.log("Server fetched the profile from the db from Creating Poll");
+			console.log("QuestionID is fetched from SQL (in Insert Poll)");
+			
 			var questionID =  result[0].questionID;
 
-			var splitArr = req.query.randomArray[0].split(",");
-			console.log("size: " + splitArr.length ); 
-			for(var i=0; i<splitArr.length; i++){
-				console.log(splitArr[i]);
-				con.query("INSERT INTO pollOption(questionID, title, subTitle, description, votes) values (" +
-				questionID + " , '" + splitArr[i] + " ', " + " 'description'," + 0 + ")");
+			//connect user to question
+			con.query("INSERT INTO userToQuestion(userID, questionID) values( " +
+			req.query.userID + "," + questionID + ")");
+			console.log("connecting user and question (insert poll)\n");
+
+			//insert all options
+			var optionArray = req.query.optionArray[0].split(",");
+			console.log("size: " + optionArray.length ); 
+			for(var i=0; i<optionArray.length; i++){
+				console.log(optionArray[i]);
+				con.query("INSERT INTO pollOption(questionID, title, votes) values (" +
+				questionID + " , '" + optionArray[i].trim() + " ', " + 0 + ")");
 			}
-		});
+			console.log("inserting into poll option completed (insert poll)\n");
+
+			//split tags by comma an insert
+			var tagArray = req.query.tagArray[0].split(",");
+
+			//insert tags (only if it doesnt exists in tag table already)
+			for (var i = 0; i < tagArray.length; i++) {
+
+				if(tagArray[i].trim() != 'null' && tagArray[i].trim() != ""){
+					con.query("INSERT INTO Tag (tagStr) " +
+							"SELECT '" + tagArray[i].trim() + "' " +
+							"FROM tag WHERE NOT EXISTS( SELECT tagStr FROM tag " +
+							"WHERE tagStr = '" + tagArray[i].trim() + "') LIMIT 1");
+				}
+			};
+			console.log("inserting into tag completed (insert poll)\n");
+
+			//connect tags and question
+			for (var i = 0; i < tagArray.length; i++) {
+				
+				if(tagArray[i].trim() != 'null' && tagArray[i].trim() != ""){
+					con.query("Select tagID from Tag where tagStr = '" +
+					tagArray[i].trim() + "'",
+					function (err, result, fields) {
+						var tagID = result[0].tagID;
+
+						console.log("INSERT INTO TagToQuestion (tagID, questionID) values( " + 
+							tagID + "," + questionID + ")");
+
+						con.query("INSERT INTO TagToQuestion (tagID, questionID) values( " + 
+								tagID + "," + questionID + ")");
+					});
+				}
+			};
+			console.log("connecting tags and question ID completed (insert poll)\n");
+
+			res.json(result);
+	});
+
 });
 
 app.get('/insertRating', function (req, res) {

@@ -28,7 +28,11 @@ angular.module("KnowItAll").controller('signUpController', ['$scope', '$http', '
 	    		$cookies.put("newUsername", username);
 	    		$cookies.put("newPasswordHash", passwordHash);
 
+	    		$scope.signupErrorMessage = "Please check your email in order to complete your registration";	
+
 	    		console.log("Sending Email");
+
+
 	    		$http.get("/sendEmail?newUsername=" + username + 
 	    			"&newPasswordHash=" + passwordHash +
 	    			"&newEmail=" + signupEmail).then(function (response) {
@@ -39,6 +43,7 @@ angular.module("KnowItAll").controller('signUpController', ['$scope', '$http', '
 	    				$scope.signupErrorMessage = "Failed to send email, invalid address";
 	    			}
 	    		);
+
 	    	} 
 	    	else {
 	    		//user exists already
@@ -52,5 +57,3 @@ angular.module("KnowItAll").controller('signUpController', ['$scope', '$http', '
  
     }
 }]);
-
-

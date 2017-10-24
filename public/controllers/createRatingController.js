@@ -114,7 +114,7 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 	    	}
 		    },
 		    function (res) {
-		    	console.log("user NOT received from creaing rating");
+		    	console.log("user NOT received from creating rating");
 		    });
 
 

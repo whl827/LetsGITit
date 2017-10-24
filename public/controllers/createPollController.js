@@ -147,10 +147,13 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 		var isAnonymous = $scope.isAnonymousInput;
 		console.log("isAnonymous: " + isAnonymous);
 
-
 		var tag = $scope.tagInput; 
 		console.log("tag: " + tag);
-
+		var tagArray = null;
+		if(!(tag == undefined)){
+			tagArray = tag.split(",");
+		}
+		console.log(tagArray);
 
 		var allOptions = []; 
 		if(option1 != null && option1 != "") allOptions.push(option1);
@@ -217,10 +220,11 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 			$http.get('/insertPoll?title=' + title + 
 				  "&subTitle=" + subtitle +
 				  "&description=" + description +
-				  "&randomArray[]=" + allOptions +
-				  "&option1Input=" + option1 +
+				  "&optionArray[]=" + allOptions +
+				  "&tag=" + tag +
 				  "&userID=" + userID +
-				  "&endDate=" + endDate
+				  "&endDate=" + endDate +
+				  "&tagArray[]=" + tagArray
 				  ).then(function (response) {
 	    		console.log("user received from creaitng poll!");
 	    	//console.log(response.data);

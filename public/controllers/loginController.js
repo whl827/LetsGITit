@@ -34,7 +34,6 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 	    	$scope.errorMessage = "The username and password combination is incorrect."
 	    });
 
-
 		//$scope.errorMessage = "The username and password combination is incorrect."
     }
 
