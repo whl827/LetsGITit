@@ -96,11 +96,3 @@ create table userToFollowing(
     foreign key fk1(mainUserID) references KUser(userID),
     foreign key fk2(followingUserID) references KUser(userID)
 );
-
-create table userToFollowers(
-	mainUserID int(8) not null,
-    followerUserID int(8) not null,
-    foreign key fk1(mainUserID) references KUser(userID),
-    foreign key fk2(followerUserID) references KUser(userID)
-);
-

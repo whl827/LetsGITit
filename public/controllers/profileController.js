@@ -14,8 +14,8 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 	
 	if (loggedIn) {
 		$http.get('/profile?username=' + username).then(function (response) {
-		console.log("Got user feed");
-		console.log(response.data);
+			console.log("Got user feed");
+			console.log(response.data);
 		$scope.questionList = response.data;
 		}, function (response) {
 			console.log("Failed to get current user, not logged in");
