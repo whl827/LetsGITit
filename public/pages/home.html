@@ -15,9 +15,11 @@ Search Results: <br>
 	</div>
 	<div ng-switch-default>
 		<p ng-repeat="user in userList">
-			------------------------------- <br>
-			{{user.username}} <br>
-			------------------------------- <br>
+			<a href="#!/userProfile/:{{user.username}}">
+				------------------------------- <br>
+				{{user.username}} <br>
+				------------------------------- <br>
+			</a>
 		</p>
 	</div>
 </div>
