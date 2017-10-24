@@ -2,13 +2,18 @@ angular.module("KnowItAll").controller('signUpController', ['$scope', '$http', '
     
     console.log("logging from signup controller");
 
-
     $scope.signupFunction = function () {
     	console.log("In get query function, username: " + $scope.signupUsername);
     	console.log("in get query, function, passwrd: " + $scope.signupPassword);
     	var passwordHash = $scope.signupPassword.hashCode();
     	var username = $scope.signupUsername;
     	var signupEmail = $scope.signupEmail;
+
+    	var splitName = signupEmail.split("@");
+    	if(splitName[1] != "usc.edu"){
+    		$scope.signupErrorMessage = "Please use a usc.edu domain";
+    		return; 
+    	}
     
 		$http.get('/signupFunction?signupUsername=' + username + 
 				  "&signupPassword=" + passwordHash +

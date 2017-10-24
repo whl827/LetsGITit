@@ -5,13 +5,20 @@
 	<!-- Latest compiled and minified JavaScript -->
 	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
 
-	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-alpha.6/css/bootstrap.min.css" integrity="sha384-rwoIResjU2yc3z8GV/NPeZWAv56rSmLldC3R/AZzGRnGxQQKnKkoFVhFQhNUwEyJ" crossorigin="anonymous">
+	<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/css/bootstrap.min.css" integrity="sha384-PsH8R72JQ3SOdhVi3uxftmaW6Vc51MKb0q5P2rRUpPvrszuE4W1povHYgTpBfshb" crossorigin="anonymous">
 
 	<link rel="stylesheet" href="/style/style.css">
+	<link href='https://fonts.googleapis.com/css?family=Roboto' rel='stylesheet'>
 
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular.min.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-route.js"></script>
 	<script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.6.4/angular-cookies.js"></script>
+
+
+	<script src="https://code.jquery.com/jquery-3.2.1.slim.min.js" integrity="sha384-KJ3o2DKtIkvYIK3UENzmM7KCkRr/rE9/Qpg6aAZGJwFDMVNA/GpGFF93hXpG5KkN" crossorigin="anonymous"></script>
+	<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.12.3/umd/popper.min.js" integrity="sha384-vFJXuSJphROIrBnz7yo7oB41mKfc8JzQZiCq4NCceLEaO4IHwicKwpJf9c9IpFgh" crossorigin="anonymous"></script>
+	<script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta.2/js/bootstrap.min.js" integrity="sha384-alpBpkh1PFOepccYVYDB4do5UnbKysX5WZXm3XxPqe5iKTfUKjNkCk9SaVuEZflJ" crossorigin="anonymous"></script>
+	
 
 	<script src="hash.js"></script>
 	<script src="app.js"></script>
@@ -32,11 +39,15 @@
 </head>
 <body>
 
-	<nav class="navbar navbar-toggleable-md navbar-light bg-faded">
+	<nav class="navbar navbar-expand-lg navbar-light fixed-top">
 		
 		<a class="navbar-brand" href="#">KnowItAll!</a>
 
-		<div id="navbarSupportedContent">
+		 <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+    		<span class="navbar-toggler-icon"></span>
+  		</button>
+
+		<div class="collapse navbar-collapse" id="navbarSupportedContent">
 			<ul class="navbar-nav mr-auto">
 
 				<li class="nav-item">
@@ -66,16 +77,28 @@
 				<li class="nav-item">
 					<a class="nav-link" href="#!poll">Poll</a>
 				</li>
-	
+
 
 			</ul>
 		</div>
 	</nav>
 
-	<div ng-controller="FeedCtrl">
-		<input type="text" class="form-control" placeholder="tag" aria-describedby="basic-addon1" ng-model="query">
-		<button type="button" class="btn btn-success" ng-click="queryQuestions()">Search Questions</button>
-		<button type="button" class="btn btn-success" ng-click="queryUsers()">Search Users</button>
+	<div  class="search-wrapper" ng-controller="FeedCtrl">
+
+		<div class="search-bar-container row">
+
+			<select class = "drop-down-menu">
+				<option class="options" value="Tags">Tags</option>
+				<option class="options" value="User">User</option>
+			</select>
+
+			<input type="text" class="search-bar form-control" placeholder="Search" aria-describedby="basic-addon1" ng-model="query">
+			
+			<button type="button" class="search-button"  ng-click="searchButton()">SEARCH</button>
+
+
+
+		</div>
 
 		<div className = "navBar" ng-view></div>
 	</div>

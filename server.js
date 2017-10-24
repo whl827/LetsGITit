@@ -30,7 +30,7 @@ app.use(express.static(__dirname + '/public'));
 app.get('/searchQuestions', function (req, res) {
 	console.log("The server recieved the questionList GET request");
 
-	con.query("SELECT q.isPoll, q.title, q.subtitle, q.description " + 
+	con.query("SELECT q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
 		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
 		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
 		" tq.questionID = q.questionID;",
@@ -58,6 +58,9 @@ app.get('/searchUsers', function (req, res) {
 app.get('/user', function (req, res) {
 	
 	console.log("The server recieved the GET request for user: in log in");
+	console.log("SELECT u.userID, u.username, u.passwordHash FROM KUser u " +
+		"WHERE u.username='"+ req.query.username + 
+		"' and u.passwordHash=" + req.query.password);
 
 	con.query("SELECT u.userID, u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
@@ -93,6 +96,8 @@ app.get('/sendEmail', function (req, res) {
 	var password = req.query.newPasswordHash;
 	var username = req.query.newUsername;
 	var link = "localhost:8080/#!newUser/:" + username + "/:" + password;
+
+	console.log("EMAIL IS SENT TO: " + email);
 
 	var mailOptions = {
 		from: 'knowitall857@gmail.com',
@@ -143,10 +148,14 @@ app.get('/profile', function (req, res) {
 
 app.get('/insertPoll', function (req, res) {
 
+
+
 	//insert the questions
 	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes) " +
 		"values(" + 1 + "," + 1 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '" + req.query.description 
-		+ "', '" + req.query.endDate + "'," + 0 + "," + 0 + ")",
+		+ "', '" + req.query.endDate + 
+ +		"', " + 0 + "," + 0 + ")",
+
 		function (err, result, fields) {
 			console.log("Server fetched the profile from the db from Creating Poll!!");
 		});
@@ -186,7 +195,7 @@ app.get('/insertRating', function (req, res) {
 		});
 });
 
-app.get('/getPoll', function (req, res) {
+app.get('/getQuestion', function (req, res) {
 	con.query("SELECT q.title, q.userID, q.description, q.endDate " + 
 		"FROM Question q WHERE q.questionID='" +
 		req.query.questionID + "';", 
@@ -272,7 +281,24 @@ app.get('/unfollow', function(req, res) {
 			if (err) throw err;
 		}
 	);
-})
+});
+
+app.get('/insertRatingValue', function (req, res) {
+	console.log("In server insert rating value ");
+	var questionID = req.query.questionID;
+	var userID = req.query.userID;
+	var ratingValue = req.query.ratingValue;
+	console.log("ratingvalue in server is " + ratingValue);
+
+	//console.log("insert comment:", req.query.questionID);
+	con.query("INSERT INTO RatingQuestionOption (questionID, userID, rating) " +
+			"VALUES('" + questionID + "', '" + userID + "', '" + ratingValue + "');",
+	  	function (err, result, fields) {
+	  	console.log("Server fetched the data from the db hah");
+	    // if (err) throw err;
+	    //res.json(result);
+	});
+});
 
 app.listen(8080);
 console.log("Server running on port 8080");

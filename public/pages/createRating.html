@@ -1,52 +1,42 @@
-<script> 
-
-
-</script>
-
-<h1>Create Rating</h1>
+<h2 class="heading">Create a New Rating</h2>
 
 <!-- TODO: Getting rating datas -->
 
-<form class="container"
-	ng-controller="CreateRateCtrl"
->
+<form class="create-survey-container" ng-controller="CreateRateCtrl">
 
-<h3> Title </h3>
-<input type="text" name="title" ng-model="ratingTitleInput">
-<br>
+	<p> Title </p>
+	<input type="text" name="title" class="form-control" ng-model="ratingTitleInput">
+	<br>
 
-<h3> Subtitle </h3>
-<input type="text" name="subtitle" ng-model="pollSubtitleInput">
-<br>
+	<p> Subtitle </p>
+	<input type="text" name="subtitle" class="form-control" ng-model="pollSubtitleInput">
+	<br>
 
-<h3> Description </h3>
-<textarea rows="4" cols="50"name="description" ng-model="descriptionInput">
-</textarea> 
-<br>
-<!-- 
-<h3> Start Date </h3>
-<input type="date" name="startDate" ng-model="startDateInput">
-<br> -->
+	<p> Description </p>
+	<textarea rows="4" cols="50" name="description" class="form-control" ng-model="descriptionInput">
+	</textarea> 
+	<br>
 
-<h3> End Date </h3>
-<input type="date" name="endDate" ng-model="endDateInput">
+	<p> End Date </p>
+	<input type="date" name="endDate" class="form-control" ng-model="endDateInput">
 
-<h3> Open Forever </h3>
-<input type="checkbox" name="openForever" ng-model="openForeverInput">
+	<p><input type="checkbox" name="openForever" ng-model="openForeverInput">
+	Open Forever </p>
 
-<h3> Post Anonymously </h3>
-<input type="checkbox" name="anonymous" ng-model="isAnonymousInput">
+	<p><input type="checkbox" name="anonymous" ng-model="isAnonymousInput">
+	Post Anonymously </p>
 
-<h3> Tags </h3>
-<input type="text" name="tag" ng-model="tagInput">
-<br>
+	<p> Tags </p>
+	<input type="text" name="tag" class="form-control" ng-model="tagInput">
+	<br>
 
-<input type="submit" 
-	   value="submit"
-	   ng-click="createRating()"
->
+	<input type="submit" 
+		   value="CREATE"
+		   class = "create-button"
+		   ng-click="createRating()"
+	>
 
-<p>{{errorMessage}}</p>
+	<p>{{errorMessage}}</p>
 
 </form>
 
