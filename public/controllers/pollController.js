@@ -1,7 +1,7 @@
-angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', function($scope, $http, $cookies) {
+angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies', '$routeParams', function($scope, $http, $cookies, $routeParams) {
 	
-	console.log("inside of poll controller");
-
+	console.log("inside of poll controller"); 
+	var userID = $cookies.get("userID");
 	var questionID = "1";
 	var getPoll = true; //check if poll is selected
 	//when true, get info from database
@@ -33,48 +33,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', function(
 		$scope.commentList = response.data;
 		}, function (response) {
 			console.log("Failed to get current user, not logged in");
-		});
-		
-
+		});	
 	}
-
-	//On click create comment, insert data into SQL
-	$scope.createComment = function(){
-		console.log("in comment");
-		console.log("question ID:" + questionID);
-		var description =  $scope.descriptionInput;
-		console.log("description:"+ description);
- 		var userID = 1; //needs to be the current logged in User 
-
-		$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
-			+ "&description=" + description)
-			.then(function (response) {
-				console.log("inser into comment table");
- 
-		},function (response) {
-		    	console.log("Error");
-		});
-
-	}
-
-	// function validate(input){
-	// 	if(input == null || input == ""){
-	// 		//alert("error"); 
-	// 		return false; 
-	// 	}
-	// 	return true; // success
-	// }
-
-	// $scope.poll = function () { 
-	// 	console.log("inside rating function ");
-		
-	// 	var validRate = validate($scope.pollInput); 
-	// 	var like = $scope.likeInput;
-	// 	// var rate = $scope.rateInput;
-	// 	// console.log("rate is" +rate);
-	// 	var isAnonymous = $scope.isAnonymousInput;
-	// 	console.log("isAnonymous: " + isAnonymous);
-
-	// }
 	
 }]);
