@@ -156,6 +156,14 @@ app.get('/insertPoll', function (req, res) {
 	console.log("enddate: " + req.query.endDate);
 
 
+	// var endDate;
+	// console.log("open forever:" + req.query.openForever);
+	// if(req.query.openForever){
+	// 	endDate = "NaN-NaN-NaN NaN:NaN:NaN";
+	// 	console.log("end date is pen forever");
+	// }else{
+	// 	endDate = req.query.endDate;
+	// }
 
 	//insert the questions
 	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes) " +

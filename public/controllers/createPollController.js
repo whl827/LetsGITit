@@ -183,7 +183,8 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 				  "&tag=" + tag +
 				  "&userID=" + userID +
 				  "&endDate=" + endDate +
-				  "&tagArray[]=" + tagArray
+				  "&tagArray[]=" + tagArray +
+				  "&openForever=" + openForever
 				  ).then(function (response) {
 	    		console.log("user received from creaitng poll!");
 	    	//console.log(response.data);
