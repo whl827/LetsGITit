@@ -1,11 +1,9 @@
 angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cookies', '$routeParams', '$location', function($scope, $http, $cookies, $routeParams, $location) {
 	
-	//to extract USER ID url : use $routeParam
-	//to assign url:
-	//to assign url:
-	//$location.path('/rating/'+questionID);
 
-	var questionID = "1";
+	var questionID = $routeParams.questionID;
+
+	console.log("question ID is " + questionID);
 	var userID = $cookies.get("userID");
 	console.log("in rate ctrl"); 
 	var getRating = true;

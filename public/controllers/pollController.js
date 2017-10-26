@@ -1,8 +1,11 @@
 angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies', '$routeParams', function($scope, $http, $cookies, $routeParams) {
 	
+
+
 	console.log("inside of poll controller"); 
 	var userID = $cookies.get("userID");
-	var questionID = "1";
+	var questionID = $routeParams.questionID;
+	console.log("question ID is " + questionID);
 	var getPoll = true; //check if poll is selected
 	//when true, get info from database
 	//getting information from search page (Home)

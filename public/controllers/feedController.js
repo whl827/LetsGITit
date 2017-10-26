@@ -1,4 +1,4 @@
-angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', function($scope, $http) {
+angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
 
 	// $scope.isQuestionList = 1;
 
@@ -37,5 +37,21 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', function(
     		$scope.userList = response.data;
     	});
     }
+
+    
+    $scope.goToLink = function(question) {
+
+        console.log("In feed controller");
+        console.log(question.isPoll);
+        console.log(question.questionID);
+
+        if(question.isPoll){
+             $location.path('/poll/' + question.questionID);
+        }
+        else{
+            $location.path('/rating/' + question.questionID);
+        }
+
+    };
 
 }]);

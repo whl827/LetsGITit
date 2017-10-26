@@ -23,12 +23,14 @@ angular.module("KnowItAll").config(function($routeProvider) {
           controller : "createUser"
     })
     .when("/userProfile/:username", {
-        templateUrl: "pages/otherUserProfile.html",
+        templateUrl: "pages/otherUserProfile.html"
     })
-    .when("/rating", {
-        templateUrl : "pages/rating.html"
+    .when("/rating/:questionID", {
+        templateUrl : "pages/rating.html",
+        controller: "RatingCtrl"
     })
-    .when("/poll", {
-        templateUrl : "pages/poll.html"
+    .when("/poll/:questionID", {
+        templateUrl : "pages/poll.html",
+        controller : "PollCtrl"
     });
 });

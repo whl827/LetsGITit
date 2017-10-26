@@ -41,8 +41,9 @@
 					<th>Positive Votes</th>
 				</tr>
 			</thead>
-			<tbody>
-				<tr class="" ng-repeat="question in questionList">
+			<tbody ng-controller= "FeedCtrl" >
+
+				<tr class="" ng-repeat="question in questionList" ng-click="goToLink(question)">
 					<td>{{question.title}}</td>
 					<td>{{question.subtitle=="undefined" ? "" : question.subtitle}}</td>
 					<td>{{question.description=="undefined" ? "" : question.description}} </td>

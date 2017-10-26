@@ -13,6 +13,7 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 	}
 	
 	if (loggedIn) {
+	
 		$http.get('/profile?username=' + username).then(function (response) {
 			console.log("Got user feed");
 			console.log(response.data);
