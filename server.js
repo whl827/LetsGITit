@@ -30,7 +30,7 @@ app.use(express.static(__dirname + '/public'));
 app.get('/searchQuestions', function (req, res) {
 	console.log("The server recieved the questionList GET request");
 
-	con.query("SELECT q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
+	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
 		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
 		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
 		" tq.questionID = q.questionID;",
@@ -326,6 +326,17 @@ app.get('/getQuestion', function (req, res) {
 		function (err, result, fields) {
 			console.log("Server fetched the poll from the db");
 			if(err) throw err;
+			res.json(result);
+		});
+});
+
+app.get('/pollList', function (req, res) {
+	con.query("SELECT po.title " + 
+		"FROM PollOption po inner join Question q on po.questionID = q.questionID WHERE q.questionID='" +
+		req.query.questionID + "';", 
+		function (err, result, fields) {
+			console.log("Server fetched the poll from the db");
+			//if(err) throw err;
 			res.json(result);
 		});
 });
