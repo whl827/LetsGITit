@@ -1,7 +1,5 @@
 angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies', '$routeParams', function($scope, $http, $cookies, $routeParams) {
 	
-
-
 	console.log("inside of poll controller"); 
 	var userID = $cookies.get("userID");
 	var questionID = $routeParams.questionID;
@@ -35,8 +33,19 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 		console.log(response.data);
 		$scope.commentList = response.data;
 		}, function (response) {
-			console.log("Failed to get current user, not logged in");
+			
 		});	
+
+		console.log("question ID is " + questionID);
+		$http.get('/pollList?questionID=' + questionID).then(function (response) {
+		console.log("got options ");
+		console.log(response.data);
+		$scope.pollList = response.data;
+		}, function (response) {
+
+		});	
+
+
 	}
 	
 }]);

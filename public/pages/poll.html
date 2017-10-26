@@ -8,6 +8,16 @@
 
 </form>
 
+<form ng-controller= "PollCtrl">	
+
+	<div ng-controller="PollCtrl" >
+		<p ng-repeat="option in pollList">			
+			 <input type="radio">{{option.title}} <br>
+		</p>
+	</div>
+
+</form>
+
 <!-- ADD: like/dislike, rating, and comment are only for logged in user -->
 
 <!-- Like/Dislike -->
@@ -43,7 +53,7 @@
 
 <form ng-controller= "PollCtrl">	
 
-	<div ng-controller="PollCtrl">
+	<div ng-controller="PollCtrl" >
 		<p ng-repeat="comment in commentList">
 			------------------------------ <br>
 			{{comment.userID}} <br>

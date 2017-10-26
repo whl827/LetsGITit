@@ -2,7 +2,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 	
 
 	var questionID = $routeParams.questionID;
-
 	console.log("question ID is " + questionID);
 	var userID = $cookies.get("userID");
 	console.log("in rate ctrl"); 

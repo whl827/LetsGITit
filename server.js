@@ -265,6 +265,18 @@ app.get('/getQuestion', function (req, res) {
 		});
 });
 
+//working on 
+app.get('/pollList', function (req, res) {
+	con.query("SELECT po.title " + 
+		"FROM PollOption po inner join Question q on po.questionID = q.questionID WHERE q.questionID='" +
+		req.query.questionID + "';", 
+		function (err, result, fields) {
+			console.log("Server fetched the poll from the db");
+			//if(err) throw err;
+			res.json(result);
+		});
+});
+
 app.get('/commentList', function (req, res) {
 	console.log("The server recieved the GET request: ");
 
@@ -272,11 +284,13 @@ app.get('/commentList', function (req, res) {
 		"FROM QuestionComment qc WHERE " + 
 		"qc.questionID='" + req.query.questionID + "';",
 	  	function (err, result, fields) {
-	  	console.log("Server fetched the data from the db haha");
-	    if (err) throw err;
-	    res.json(result);
+		  	console.log("Server fetched the data from the db haha");
+		    if (err) throw err;
+		    res.json(result);
 	});
 });
+
+
 
 app.get('/insertComment', function (req, res) {
 	console.log("In server insert Comment");

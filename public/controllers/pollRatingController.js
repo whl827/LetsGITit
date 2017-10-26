@@ -1,12 +1,11 @@
-angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$cookies', '$routeParams', function($scope, $http, $cookies, $routeParams) {
+angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$cookies', '$routeParams', '$route', function($scope, $http, $cookies, $routeParams, $route) {
 	
 	var userID = $cookies.get("userID");
-	console.log("in poll/rate ctrl"); 
-	var questionID = "1";
+	var questionID = $routeParams.questionID;
 
 	$scope.createComment = function(){
 
-		if(!userID){
+		if(userID != -1){
 			var validComment = validate($scope.commentInput); 
 
 			if(!validComment){
@@ -15,20 +14,16 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 			else{ 
 				var Anonymous = $scope.isAnonymousInput;
 				var comment =  $scope.commentInput;
-				//var userID = 1; //needs to be the current logged in User 
-
-				console.log("question ID:" + questionID);
-				console.log("description:"+ comment);
-				console.log("Anonymous" +Anonymous);
 		 		
 				$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
 					+ "&description=" + comment)
 					.then(function (response) {
 						console.log("inser into comment table");
-		 
 				},function (response) {
 				    	console.log("Error");
 				});
+
+				 $route.reload();
 			}
 		}
 		else{
@@ -39,7 +34,7 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 
 	$scope.selectRate = function(){
 
-		if(!userID){
+		if(userID != -1){
 
 			var validRating = validate($scope.rateInput); 
 
@@ -66,7 +61,7 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 
 	$scope.selectLikeOrDislike = function(){
 
-		if(!userID){
+		if(userID != -1){
 
 			var validLike = validate($scope.likeInput); 
 
