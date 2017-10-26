@@ -6,6 +6,9 @@ body {
 	background-color: white; 
 }
 
+.pull-right {
+    float: right;
+}
 
 
 .drop-down-menu{

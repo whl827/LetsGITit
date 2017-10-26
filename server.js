@@ -365,7 +365,7 @@ app.get('/insertComment', function (req, res) {
 	con.query("INSERT INTO QuestionComment (questionID, userID, description) " +
 			"VALUES('" + questionID + "', '" + userID + "', '" + description + "');",
 	  	function (err, result, fields) {
-	  	console.log("Server fetched the data from the db hah");
+	  	console.log("Inserting comment success");
 	});
 });
 
@@ -424,30 +424,40 @@ app.get('/insertRatingValue', function (req, res) {
 	console.log("In server insert rating value ");
 	var questionID = req.query.questionID;
 	var userID = req.query.userID;
-	var ratingValue = req.query.ratingValue;
-	console.log("ratingvalue in server is " + ratingValue);
+	var ratingValue = req.query.rating;
+	console.log("---------inInsertRatingValue--------");
+	console.log("rating value in server is " + ratingValue);
+	console.log("--------------------------------------");
 
 	//console.log("insert comment:", req.query.questionID);
 	con.query("INSERT INTO RatingQuestionOption (questionID, userID, rating) " +
 			"VALUES('" + questionID + "', '" + userID + "', '" + ratingValue + "');",
 	  	function (err, result, fields) {
-	  	console.log("Server fetched the data from the db hah");
+	  	console.log("Inserting Rating success");
 	    // if (err) throw err;
 	    //res.json(result);
 	});
 });
 
-app.get('/QuestionLike', function (req, res) {
+app.get('/insertQuestionLike', function (req, res) {
 	console.log("In server insert rating value ");
 	var questionID = req.query.questionID;
 	var userID = req.query.userID;
-	var ratingValue = req.query.pollLike;
-	console.log("ratingvalue in server is " + ratingValue);
+	var likeDislikeValue = req.query.pollLike;
 
-	con.query("INSERT INTO QuestionLike (questionID, userID, rating) " +
-			"VALUES('" + questionID + "', '" + userID + "', '" + ratingValue + "');",
+	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
+	else{likeDislikeValue = 0;}
+
+	console.log("---------inInsertQuestionLike--------");
+	console.log("questionID in server is " + questionID);
+	console.log("userID in server is " + userID);
+	console.log("like/dislike in server is " + likeDislikeValue);
+
+
+	con.query("INSERT INTO QuestionLike (questionID, userID, pollLike) " +
+			"VALUES('" + questionID + "', '" + userID + "', '" + likeDislikeValue + "');",
 	  	function (err, result, fields) {
-	  	console.log("Server fetched the data from the db hah");
+	  	console.log("Inserting like/dislike success");
 	    // if (err) throw err;
 	    //res.json(result);
 	});

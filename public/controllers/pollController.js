@@ -35,6 +35,12 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 		    	console.log("Error");
 		});
 
+		// $http.get('/getLikeDislike??questionID=' + questionID).then(function (response) {
+		// 	$
+		// }, function (response) {
+		// 	//$scope.title = response.data[0].title;
+		// });	
+
 		$http.get('/commentList?questionID=' + questionID).then(function (response) {
 		console.log("got comments ");
 		console.log(response.data);
