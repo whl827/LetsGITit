@@ -48,7 +48,7 @@ app.get('/onPageLoad', function (req, res){
 			 " FROM Question q " +
 			 " ORDER BY q.startdate desc");
 
-	con.query("SELECT q.isPoll, q.title, q.subtitle, q.description, q.startDate, " +
+	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, " +
 					" q.endDate, q.totalVotes, q.positiveVotes " +
 			 " FROM Question q " +
 			 " ORDER BY q.startdate desc",
