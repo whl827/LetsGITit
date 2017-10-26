@@ -19,8 +19,15 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 			$scope.title = response.data[0].title;
 			$scope.userID = response.data[0].userID;
 			$scope.description = response.data[0].description;
-			$scope.endDate = response.data[0].endDate;
 
+			$scope.endDate = null;
+			if(response.data[0].endDate == "0000-00-00 00:00:00"){
+				$scope.endDate = "(Open Forever)";
+			}else{
+				$scope.endDate = response.data[0].endDate;
+			}
+			console.log("End DATE::::: " + $scope.endDate);
+		
 			if(response.data.length == 0){
 				console.log("response = 0");
 			}
