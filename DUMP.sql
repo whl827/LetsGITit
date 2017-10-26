@@ -19,6 +19,7 @@ create table Question (
     endDate datetime,
     totalVotes int(8) not null,
     positiveVotes int(8),			 #only for rating question
+    isAnonymous boolean not null,
     foreign key fk1(userID) references KUser(userID)
 );
 
@@ -26,7 +27,8 @@ create table QuestionComment (
 	questionCommentID int(8) primary key auto_increment,
     questionID int(8) not null,
     userID int(8) not null,
-    description varchar(500), 
+    description varchar(500),
+    isAnnonymous boolean not null,
     foreign key fk1(questionID) references Question(questionID),
     foreign key fk2(userID) references KUser(userID)
 );
@@ -107,4 +109,3 @@ create table userToFollowers(
 -- I need to insert one dummy tag in order for my SQL command to work
 insert into tag (tagStr) 
 values('dummy');
-);

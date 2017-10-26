@@ -119,7 +119,10 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 			validEndDate = false; 
 		}
 
-		var isAnonymous = $scope.isAnonymousInput;
+		var isAnonymous = false
+		if($scope.isAnonymousInput == true){
+			isAnonymous = true;
+		}
 		console.log("isAnonymous: " + isAnonymous);
 
 		var tag = $scope.tagInput; 
@@ -184,7 +187,8 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 				  "&userID=" + userID +
 				  "&endDate=" + endDate +
 				  "&tagArray[]=" + tagArray +
-				  "&openForever=" + openForever
+				  "&openForever=" + openForever +
+				  "&isAnonymous=" + isAnonymous
 				  ).then(function (response) {
 	    		console.log("user received from creaitng poll!");
 	    	//console.log(response.data);

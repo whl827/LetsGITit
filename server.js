@@ -30,12 +30,30 @@ app.use(express.static(__dirname + '/public'));
 app.get('/searchQuestions', function (req, res) {
 	console.log("The server recieved the questionList GET request");
 
-	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
+	con.query("SELECT q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
 		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
 		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
 		" tq.questionID = q.questionID;",
 	  function (err, result, fields) {
 	  	console.log("Server fetched the questionList from the db");
+	    if (err) throw err;
+	    res.json(result);
+	});
+});
+
+app.get('/onPageLoad', function (req, res){
+
+	console.log("SELECT q.isPoll, q.title, q.subtitle, q.description, q.startDate, " +
+					" q.endDate, q.totalVotes, q.positiveVotes " +
+			 " FROM Question q " +
+			 " ORDER BY q.startdate desc");
+
+	con.query("SELECT q.isPoll, q.title, q.subtitle, q.description, q.startDate, " +
+					" q.endDate, q.totalVotes, q.positiveVotes " +
+			 " FROM Question q " +
+			 " ORDER BY q.startdate desc",
+	  function (err, result, fields) {
+	  	console.log("server fetched from onPageLoad");
 	    if (err) throw err;
 	    res.json(result);
 	});
@@ -166,9 +184,9 @@ app.get('/insertPoll', function (req, res) {
 	// }
 
 	//insert the questions
-	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes) " +
+	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
 		"values(" + req.query.userID + "," + 1 + ", '" + req.query.title.trim() + "' , '" + req.query.subTitle.trim() + "', '" + req.query.description.trim() 
-		+ "', '" + req.query.endDate + "', " + 0 + "," + 0 + ")",
+		+ "', '" + req.query.endDate + "', " + 0 + "," + 0 + "," + req.query.isAnonymous + ")",
 
 		function (err, result, fields) {
 			console.log("Server fetched the profile from the db from Creating Poll!!");
@@ -236,10 +254,11 @@ app.get('/insertPoll', function (req, res) {
 });
 
 app.get('/insertRating', function (req, res) {
+
 	// insert the questions
-	con.query("INSERT INTO Question(userID, isPoll, title, subtitle, description, endDate, totalVotes) " +
+	con.query("INSERT INTO Question(userID, isPoll, title, subtitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
 		"values(" + req.query.userID + "," + 0 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '"+ req.query.description 
-		+ "', '" + req.query.endDate + "', " + 0 + ")", 
+		+ "', '" + req.query.endDate + "', " + 0 + "," + 0 + "," + req.query.isAnonymous + ")", 
 		function (err, result, fields) {
 			console.log("Server fetched the profile from the db from Creating Poll!!");
 		});
@@ -250,7 +269,53 @@ app.get('/insertRating', function (req, res) {
 			var questionID =  result[0].questionID;
 			console.log("HERE!!!: " + questionID);
 
-			con.query("INSERT INTO RatingQuestionOption(questionID) values (" + questionID + ") ");
+			//con.query("INSERT INTO RatingQuestionOption(questionID) values (" + questionID + ") ");
+
+			//connect user to question
+			con.query("INSERT INTO userToQuestion(userID, questionID) values( " +
+			req.query.userID + "," + questionID + ")");
+			console.log("connecting user and question (insert poll)\n");
+
+			//split tags by comma an insert
+			var tagArray = req.query.tagArray[0].split(",");
+
+			//insert tags (only if it doesnt exists in tag table already)
+			for (var i = 0; i < tagArray.length; i++) {
+
+				if(tagArray[i].trim() != 'null' && tagArray[i].trim() != ""){
+					con.query("INSERT INTO Tag (tagStr) " +
+							"SELECT '" + tagArray[i].trim() + "' " +
+							"FROM tag WHERE NOT EXISTS( SELECT tagStr FROM tag " +
+							"WHERE tagStr = '" + tagArray[i].trim() + "') LIMIT 1");
+				}
+			};
+			console.log("inserting into tag completed (insert poll)\n");
+
+			//connect tags and question
+			for (var i = 0; i < tagArray.length; i++) {
+				
+				if(tagArray[i].trim() != 'null' && tagArray[i].trim() != ""){
+					con.query("Select tagID from Tag where tagStr = '" +
+					tagArray[i].trim() + "'",
+					function (err, result, fields) {
+						var tagID = result[0].tagID;
+
+						console.log("INSERT INTO TagToQuestion (tagID, questionID) values( " + 
+							tagID + "," + questionID + ")");
+
+						con.query("INSERT INTO TagToQuestion (tagID, questionID) values( " + 
+								tagID + "," + questionID + ")");
+					});
+				}
+			};
+
+
+
+
+
+
+
+
 		});
 });
 
@@ -265,18 +330,6 @@ app.get('/getQuestion', function (req, res) {
 		});
 });
 
-//working on 
-app.get('/pollList', function (req, res) {
-	con.query("SELECT po.title " + 
-		"FROM PollOption po inner join Question q on po.questionID = q.questionID WHERE q.questionID='" +
-		req.query.questionID + "';", 
-		function (err, result, fields) {
-			console.log("Server fetched the poll from the db");
-			//if(err) throw err;
-			res.json(result);
-		});
-});
-
 app.get('/commentList', function (req, res) {
 	console.log("The server recieved the GET request: ");
 
@@ -284,13 +337,11 @@ app.get('/commentList', function (req, res) {
 		"FROM QuestionComment qc WHERE " + 
 		"qc.questionID='" + req.query.questionID + "';",
 	  	function (err, result, fields) {
-		  	console.log("Server fetched the data from the db haha");
-		    if (err) throw err;
-		    res.json(result);
+	  	console.log("Server fetched the data from the db haha");
+	    if (err) throw err;
+	    res.json(result);
 	});
 });
-
-
 
 app.get('/insertComment', function (req, res) {
 	console.log("In server insert Comment");

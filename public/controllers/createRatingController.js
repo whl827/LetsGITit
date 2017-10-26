@@ -53,12 +53,22 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 			validEndDate = false; 
 		}
 
-		var isAnonymous = $scope.isAnonymousInput;
+
+		console.log("SCOPE: " + $scope.isAnonymousInput);
+
+		var isAnonymous = false
+		if($scope.isAnonymousInput == true){
+			isAnonymous = true;
+		}
 		console.log("isAnonymous: " + isAnonymous);
 
 
 		var tag = $scope.tagInput; 
 		console.log("tag: " + tag);
+		var tagArray = null;
+		if(!(tag == undefined)){
+			tagArray = tag.split(",");
+		}
 
 		// get cookies
 		var userID = $cookies.get("userID");
@@ -92,7 +102,9 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 				 "&subTitle=" + subtitle +
 				  "&description=" + description +
 				  "&userID=" + userID +
-				  "&endDate=" + endDate
+				  "&endDate=" + endDate +
+				  "&isAnonymous=" + isAnonymous +
+				  "&tagArray[]=" + tagArray
 				  ).then(function (response) {
     		console.log("user received from creaitng rating!");
 	    	//console.log(response.data);
