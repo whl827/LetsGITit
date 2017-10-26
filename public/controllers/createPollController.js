@@ -156,8 +156,8 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 		//if($cookies.get("userID") === n)
 
 		//typeof $cookies.get("userID") === 'undefined'
-		if(userID == -1){
-			console.log("user id is null");
+		if(userID == -1 || userID == undefined){
+			console.log("user id is: " + userID);
 			$scope.errorMessage = "Please login to create a poll.";
 		}else if(!validTitle){
 			$scope.errorMessage = "Please provide a title for your survey.";

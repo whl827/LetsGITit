@@ -75,9 +75,9 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 		console.log("this is userID " + userID);
 
 
-		if (userID == -1) {
-			console.log("userID is -1!!");
-			$scope.errorMessage = "Please login.";
+		if (userID == -1 || userID == undefined) {
+			console.log("userID is: " + userID);
+			$scope.errorMessage = "Please login to create a rating.";
 		}
 		else if(!validTitle){
 			$scope.errorMessage = "Please provide a title for your rating.";
