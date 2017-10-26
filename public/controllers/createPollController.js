@@ -1,4 +1,4 @@
-angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$cookies', function($scope, $http, $cookies) {
+angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$cookies', '$window', function($scope, $http, $cookies, $window) {
 	console.log("in create poll ctrl"); 
 
 	function validate(input){
@@ -21,9 +21,7 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 
 
 	$scope.createPoll = function () { // handle submit
-		console.log("inside function ");
-
-
+		console.log("inside create poll function ");
 
 		console.log("FIRST CURRENT USER ID: " + $cookies.get("userID"));
 		console.log("FIRST CURRENT USER name: " + $cookies.get("username"));
@@ -43,63 +41,26 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 		var validOption; 
 	
 		// TODO: Go through all 10 options and check if 2 out of any 10 is inputed to validate
-
-
-
 		var option1 = $scope.option1Input; 
-		console.log("option1: " + option1);
-
-
+		//console.log("option1: " + option1);
 		var option2 = $scope.option2Input; 
-		console.log("option2: " + option2);
-
-
+		//console.log("option2: " + option2);
 		var option3 = $scope.option3Input; 
-		console.log("option3: " + option3);
+		//console.log("option3: " + option3);
 		var option4 = $scope.option4Input; 
-		console.log("option4: " + option4);
+		//console.log("option4: " + option4);
 		var option5 = $scope.option5Input; 
-		console.log("option5: " + option5);
+		//console.log("option5: " + option5);
 		var option6 = $scope.option6Input; 
-		console.log("option6: " + option6);
+		//console.log("option6: " + option6);
 		var option7 = $scope.option7Input; 
-		console.log("option7: " + option7);
+		//console.log("option7: " + option7);
 		var option8 = $scope.option8Input; 
-		console.log("option8: " + option8);
+		//console.log("option8: " + option8);
 		var option9 = $scope.option9Input; 
-		console.log("option9: " + option9);
+		//console.log("option9: " + option9);
 		var option10 = $scope.option10Input; 
-		console.log("option10: " + option10);
-
-
-
-
-		
-
-
-		// var validStartDate = validate($scope.startDateInput); 
-		// var dateStr_s = $scope.startDateInput; 
-		// console.log(dateStr_s); 
-		// var startDate = new Date(dateStr_s).toMysqlFormat();
-		// console.log(startDate); 
-
-
-
-		// var str = datepicker.formatDate('yy-mm-dd', d);
-		// console.log(str); 
-
-
-		// var day_s   = new Intl.DateTimeFormat("en-GB", {day: "numeric"}).format(dateStr_s); 
-		// var month_s = new Intl.DateTimeFormat("en-GB", {month: "numeric"}).format(dateStr_s); 
-		// var year_s  = new Intl.DateTimeFormat("en-GB", {year: "numeric"}).format(dateStr_s); 
-		// var startDate = {
-		// 	day: day_s, 
-		// 	month: month_s, 
-		// 	year: year_s
-		// };
-		// console.log("startDate: " + startDate.day + " " + startDate.month + " " + startDate.year);
-		// console.log("validStartDate: " + validStartDate);
-
+		//console.log("option10: " + option10);
 
 		var enteredEndDate = validate($scope.endDateInput); 
 		var dateStr_e = $scope.endDateInput; 
@@ -153,7 +114,6 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 
 		var userID = $cookies.get("userID");
 		console.log("this is userID " + userID);
-		//if($cookies.get("userID") === n)
 
 		//typeof $cookies.get("userID") === 'undefined'
 		if(userID == -1 || userID == undefined){
@@ -165,9 +125,6 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 		else if (!validOption){ // option
 			$scope.errorMessage = "Please provide at least two options for your poll.";
 		} 
-		// else if (!validStartDate){
-		// 	$scope.errorMessage = "Please provide a start date for your poll.";
-		// } 
 		else if (!validEndDate){
 			if(!enteredEndDate && !openForever) { 
 				$scope.errorMessage = "Please provide an end date for your poll.";
@@ -178,7 +135,6 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 		} 
 		else { // allfields successfully filled in
 			// Insert data into SQL
-
 			$http.get('/insertPoll?title=' + title + 
 				  "&subTitle=" + subtitle +
 				  "&description=" + description +
@@ -192,38 +148,21 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 				  ).then(function (response) {
 	    		console.log("user received from creaitng poll!");
 	    	//console.log(response.data);
+
+	    	//redirect after creating poll
+	    	$window.location.href = '../index.html';
 	    	
 	    	if(response.data.length == 0){
 	    		console.log(response.data);
 	    		console.log("response = 0");
-
-	    		//insert to the database
-	    		//console.log(response.data);
-	    		//var username = $scope.userData.username;
-	    		//var password = $scope.userData.passwordHash;
-	    		//$window.location.href = '../index.html
 	    	} 
 	    	else {
-	    		//user exists already
-	    		console.log("this is what we want");
 	    		console.log(response.data);
 	    	}
 		    },
 		    function (res) {
-		    	console.log("user NOT received from creaing poll");
+		    	console.log("user NOT received from creating poll");
 		    });
-
 		}
-
-		// $http.get('/questionList?tagQuery=' + $scope.tagQuery).then(function (response) {
-	 //    	console.log("Question list received");
-	 //    	console.log(response.data);
-	 //    	$scope.questionList = response.data;
-	 //    }, 
-	 //    function (res) {
-	 //    	console.log("error");
-	 //    });
-
 	}
-
 }]);

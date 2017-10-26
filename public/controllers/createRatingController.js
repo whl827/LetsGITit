@@ -1,4 +1,4 @@
-angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$cookies', function($scope, $http, $cookies) {
+angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$cookies', '$window', function($scope, $http, $cookies, $window) {
 	console.log("in create rating ctrl"); 
 
 	function validate(input){
@@ -95,9 +95,6 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 		} 
 		else { // allfields successfully filled in
 			// Insert data into SQL
-
-
-
 			$http.get('/insertRating?title=' + title + 
 				 "&subTitle=" + subtitle +
 				  "&description=" + description +
@@ -108,20 +105,14 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 				  ).then(function (response) {
     		console.log("user received from creaitng rating!");
 	    	//console.log(response.data);
+
+	    	$window.location.href = '../index.html';
 	    	
 	    	if(response.data.length == 0){
 	    		console.log(response.data);
 	    		console.log("response = 0");
-
-	    		//insert to the database
-	    		//console.log(response.data);
-	    		//var username = $scope.userData.username;
-	    		//var password = $scope.userData.passwordHash;
-	    		//$window.location.href = '../index.html
 	    	} 
 	    	else {
-	    		//user exists already
-	    		console.log("this is what we want");
 	    		console.log(response.data);
 	    	}
 		    },

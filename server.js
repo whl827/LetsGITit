@@ -310,18 +310,15 @@ app.get('/insertRating', function (req, res) {
 
 						con.query("INSERT INTO TagToQuestion (tagID, questionID) values( " + 
 								tagID + "," + questionID + ")");
+					
+
 					});
 				}
 			};
+		res.json(result);
 
-
-
-
-
-
-
-
-		});
+			
+	});
 });
 
 app.get('/getQuestion', function (req, res) {
