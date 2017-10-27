@@ -65,6 +65,10 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
 
     };
 
+    $scope.goToUser = function(username) {
+        $location.path('/userProfile/' + username);
+    }
+
 
 
 }]);
