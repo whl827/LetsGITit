@@ -61,9 +61,29 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
                 // $window.location.href = '../index.html';
             $scope.isQuestionList = 1;
             $scope.questionList = response.data;
+            document.querySelector(".keywords").innerHTML = "Top 5 Popular Tags: ";
         },
         function (res) {
            
+        });
+
+        $http.get('/getTopTags').then(function (response) {
+
+            console.log(response.data[0]);
+
+            var topTagsStr = "";
+            for(var i=0; i<response.data.length; i++){
+                topTagsStr = topTagsStr + response.data[i].tagStr;
+                if(i<response.data.length-1){
+                    topTagsStr += ", ";
+                }
+                console.log(response.data[i].tagStr);
+            }
+            console.log(topTagsStr);
+            document.querySelector(".keywords").innerHTML = "Popular Tags: " + topTagsStr;
+        },
+        function (res) {
+
         });
     }
 

@@ -61,7 +61,7 @@ app.get('/searchQuestions', function (req, res) {
 	    res.json(result);
 	});
 });
-
+//load questions by dates on page load
 app.get('/onPageLoad', function (req, res){
 
 	console.log("SELECT q.isPoll, q.title, q.subtitle, q.description, q.startDate, " +
@@ -77,6 +77,16 @@ app.get('/onPageLoad', function (req, res){
 	  	console.log("server fetched from onPageLoad");
 	    if (err) throw err;
 	    res.json(result);
+	});
+});
+//get array of 5 top popular tags
+app.get('/getTopTags', function (req, res){
+
+	con.query("SELECT tq.tagID, t.tagStr, count(tq.questionID) as NumberOfQuestions from tag t " +
+			  "JOIN tagToQuestion tq on t.tagId = tq.tagID GROUP BY tagID LIMIT 5",
+	  function (err, result, fields) {
+	  	console.log("server fetched from getTopTags");
+	   res.json(result);
 	});
 });
 

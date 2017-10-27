@@ -1,6 +1,13 @@
 body {
 	font-family: "Roboto";
 }
+.keywords{
+	margin-left: 100px;
+	margin-bottom: 50px;
+}
+.search-result{
+	margin-left: 100px;
+}
 
 .navbar {
 	background-color: white; 
