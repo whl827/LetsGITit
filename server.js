@@ -175,7 +175,7 @@ app.get('/insertUser', function (req, res) {
 
 // Get a users profile
 app.get('/profile', function (req, res) {
-	con.query("SELECT q.isPoll, q.title, q.subTitle, q.description " + 
+	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes  " + 
 		"FROM KUser u, Question q, UserToQuestion uq WHERE u.username='" +
 		req.query.username + "' AND uq.userID = u.userID AND uq.questionID = q.questionID;", 
 		function (err, result, fields) {
@@ -193,16 +193,6 @@ app.get('/insertPoll', function (req, res) {
 	console.log("title: " + req.query.title.trim());
 	console.log("des: " + req.query.description.trim());
 	console.log("enddate: " + req.query.endDate);
-
-
-	// var endDate;
-	// console.log("open forever:" + req.query.openForever);
-	// if(req.query.openForever){
-	// 	endDate = "NaN-NaN-NaN NaN:NaN:NaN";
-	// 	console.log("end date is pen forever");
-	// }else{
-	// 	endDate = req.query.endDate;
-	// }
 
 	//insert the questions
 	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +

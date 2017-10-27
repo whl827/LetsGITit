@@ -57,8 +57,6 @@
 
 					<td>{{question.totalVotes}} </td>
 					<td>{{question.positiveVotes}}</td>
-
-
 				</tr>
 			</tbody>
 		</table>
@@ -74,10 +72,8 @@
 					</tr>
 				</thead>
 				<tbody>
-					<tr class="" ng-repeat="user in userList">
-						<a href="#!/userProfile/:{{user.username}}">
-							<td>{{user.username}}</td>
-						</a>
+					<tr class="" ng-repeat="user in userList" ng-click="goToUser(user.username)">
+						<td>{{user.username}}</td>
 					</tr>
 				</tbody>
 			</table>
