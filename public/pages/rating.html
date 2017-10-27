@@ -24,12 +24,12 @@
 <!-- Like/Dislike -->
 <form ng-controller= "pollRatingCtrl">
 	<label>
-		<input ng-model="likeInput" type="radio" name="dis/like" value="like" />
+		<input ng-model="likeInput" type="radio" name="dis/like" value="true" />
 		<img src="img/like.png" width="50" height="50">
 	</label>
 
 	<label>
-		<input ng-model="likeInput" type="radio" name="dis/like" value="dislike" />
+		<input ng-model="likeInput" type="radio" name="dis/like" value="false" />
 		<img src="img/dislike.png" width="50" height="50">
 		<input type="submit" value="submit" ng-click="selectLikeOrDislike()">
 	</label>

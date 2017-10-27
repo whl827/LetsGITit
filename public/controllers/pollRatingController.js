@@ -3,6 +3,8 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 	var userID = $cookies.get("userID");
 	var questionID = $routeParams.questionID;
 
+	console.log("userID is " + userID);
+
 	$scope.createComment = function(){
 
 		if(userID != -1){
@@ -42,6 +44,7 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 				$scope.errorMessageRate = "Please choose the rating value";
 			}
 			else{
+
 				var ratingValue = $scope.rateInput;
 				//find Rating and put the value into RatingQuestionOption
 				$http.get("/insertRatingValue?questionID=" + questionID + "&userID=" + userID
@@ -74,7 +77,7 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 				console.log("Poll like/dislike value is " + likeorDisLike);
 				//var userID = 1; //needs to be the current logged in User 
 
-				$http.get("/QuestionLike?questionID=" + questionID + "&userID=" + userID
+				$http.get("/insertQuestionLike?questionID=" + questionID + "&userID=" + userID
 					+ "&pollLike=" + likeorDisLike)
 					.then(function (response) {
 						console.log("insert into questionlike table");
