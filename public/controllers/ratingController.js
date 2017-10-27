@@ -2,16 +2,13 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 	
 
 	var questionID = $routeParams.questionID;
-	console.log("question ID is " + questionID);
 	var userID = $cookies.get("userID");
-	console.log("in rate ctrl"); 
 	var getRating = true;
 
 	if (getRating) {
 		console.log("getting rating");
 
 		$http.get('/getQuestion?questionID=' + questionID).then(function (response) {
-			console.log("Got rating info");
 			console.log(response.data[0]);
 			$scope.title = response.data[0].title;
 			$scope.userID = response.data[0].userID;
@@ -32,13 +29,30 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 		    	console.log("Error");
 		});
 
+		$http.get('/getLike??questionID=' + questionID).then(function (response) {
+
+			$scope.totalLikeCount = response.data[0].num;
+
+		}, function (response) {
+			console.log("Error");
+		});	
+
+		$http.get('/getDislike??questionID=' + questionID).then(function (response) {
+
+			$scope.totalDislikeCount = response.data[0].num;
+
+		}, function (response) {
+			console.log("Error");
+		});	
+
 		$http.get('/commentList?questionID=' + questionID).then(function (response) {
-		console.log("got comments ");
-		console.log(response.data);
-		$scope.commentList = response.data;
+			
+			$scope.totalComment = response.data.length;
+			$scope.commentList = response.data;
 		}, function (response) {
 			console.log("Failed to get current user, not logged in");
 		});
+
 	
 	}
 	

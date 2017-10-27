@@ -18,8 +18,11 @@
 	<input type="radio" name="rating" ng-model="rateInput" value="5"> 5<br>
 	<input type="submit" value="submit" ng-click="selectRate()">
 	<p>{{errorMessageRate}}</p>
-
 </form>
+
+<!-- Show Number of Lies and Dislikes -->
+<p> Likes: {{totalLikeCount}} </p>
+<p> Dislikes: {{totalDislikeCount}} </p>
 
 <!-- Like/Dislike -->
 <form ng-controller= "pollRatingCtrl">
@@ -50,7 +53,7 @@
 	<br>
 
 </form>
-
+<p>Total comments: {{totalComment}} </p>
 <form ng-controller= "RatingCtrl">
 
 	<div ng-controller="RatingCtrl">
