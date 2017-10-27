@@ -14,14 +14,40 @@
 				</div>
 			</div>
 
-			<p ng-repeat="question in questionList">
-				------------------------------ <br>
-				<span>{{question.isPoll ? 'Poll' : 'Ranking'}}</span> <br>
-				{{question.title}} <br>
-				{{question.subTitle}} <br>
-				{{question.description}} <br>
-				------------------------------ <br>
-			</p>
+			<table class="mainLayout table table-responsive table-striped col-12 mt-3">
+				<thead>
+					<tr>
+						<th>Question</th>
+						<th>SubTitle</th>
+						<th>Description</th>
+						<th>Type</th>
+						<th>Start Date</th>
+						<th>End Date</th>
+						<th>Total Votes</th>
+						<th>Positive Votes</th>
+					</tr>
+				</thead>
+				<tbody ng-controller= "FeedCtrl" >
+
+					<tr class="" ng-repeat="question in questionList" ng-click="goToLink(question)">
+						<td>{{question.title}}</td>
+						<td>{{question.subtitle=="undefined" ? "" : question.subtitle}}</td>
+						<td>{{question.description=="undefined" ? "" : question.description}} </td>
+						<td><span>{{question.isPoll ? 'Poll' : 'Rating'}}</span> </td>
+
+						<td>{{question.startDate | date: 'yyyy-MM-dd'}}</td>
+						<!-- <td>{{question.endDate | date: 'yyyy-MM-dd'}}</td> -->
+
+						<td><span>{{ question.endDate!="0000-00-00 00:00:00" ?
+							(question.endDate | date: 'yyyy-MM-dd') : 'Open Forever'}}</span></td>
+
+						<td>{{question.totalVotes}} </td>
+						<td>{{question.positiveVotes}}</td>
+
+
+					</tr>
+				</tbody>
+			</table>
 
 		</div>
 		<div ng-switch-default>

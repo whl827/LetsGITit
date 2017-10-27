@@ -76,16 +76,6 @@
 					<a class="nav-link" href="#!createRating">Create Rating</a>
 				</li>
 
-
-<!-- 				
-				<li class="nav-item">
-					<a class="nav-link" href="#!rating">Rating</a>
-				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#!poll">Poll</a>
-				</li> -->
-
-
 			</ul>
 		</div>
 	</nav>
@@ -95,6 +85,8 @@
 		<div class="search-bar-container row">
 
 			<select class = "drop-down-menu">
+
+				<option class="options" value="Any Text">Any Text</option>
 				<option class="options" value="Tags">Tags</option>
 				<option class="options" value="User">User</option>
 			</select>
@@ -102,35 +94,16 @@
 			<input type="text" class="search-bar form-control" placeholder="Search" aria-describedby="basic-addon1" ng-model="query">
 			
 			<button type="button" class="search-button"  ng-click="searchButton()">SEARCH</button>
-
-
-
 		</div>
 
-
+		<div class="keywords"></div>
 
 		<div className = "navBar" ng-view></div>
 
 		<div data-ng-init="onloadFun()"></div>
 
-		<!-- <div data-ng-init="onloadFun()" data-ng-controller="pageLoadAppController"></div> -->
-
-		<!-- <div ng-app="KnowItAll" ng-controller="pageLoadAppController"> -->
-			
 		</div>
-
-
-
-
-
 	</div>
-
-
-	
-
   </div>
-
-
-
 </body>
 </html>

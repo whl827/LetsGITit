@@ -26,14 +26,20 @@ con.connect(function(err) {
 
 app.use(express.static(__dirname + '/public'));
 
-// Get Question Search from navbar
-app.get('/searchQuestions', function (req, res) {
+
+// Get Question Search from navbar (ANY TEXT)
+app.get('/searchQuestionsAnyText', function (req, res) {
+
+	console.log("ANY TEXT IS CALLED");
+
 	console.log("The server recieved the questionList GET request");
 
-	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
-		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
-		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
-		" tq.questionID = q.questionID;",
+	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, " +
+			          " q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
+		"FROM Question q WHERE " + 
+		"q.title LIKE '%" + req.query.tagQuery + "%' or " +
+		"q.subTitle LIKE '%" + req.query.tagQuery + "%' or " + 
+		"q.description LIKE '%" + req.query.tagQuery + "%' order by positiveVotes desc;",
 	  function (err, result, fields) {
 	  	console.log("Server fetched the questionList from the db");
 	    if (err) throw err;
@@ -41,6 +47,21 @@ app.get('/searchQuestions', function (req, res) {
 	});
 });
 
+// Get Question Search from navbar
+app.get('/searchQuestions', function (req, res) {
+	console.log("The server recieved the questionList GET request");
+
+	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
+		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
+		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
+		" tq.questionID = q.questionID Order by positiveVotes desc;",
+	  function (err, result, fields) {
+	  	console.log("Server fetched the questionList from the db");
+	    if (err) throw err;
+	    res.json(result);
+	});
+});
+//load questions by dates on page load
 app.get('/onPageLoad', function (req, res){
 
 	console.log("SELECT q.isPoll, q.title, q.subtitle, q.description, q.startDate, " +
@@ -56,6 +77,16 @@ app.get('/onPageLoad', function (req, res){
 	  	console.log("server fetched from onPageLoad");
 	    if (err) throw err;
 	    res.json(result);
+	});
+});
+//get array of 5 top popular tags
+app.get('/getTopTags', function (req, res){
+
+	con.query("SELECT tq.tagID, t.tagStr, count(tq.questionID) as NumberOfQuestions from tag t " +
+			  "JOIN tagToQuestion tq on t.tagId = tq.tagID GROUP BY tagID LIMIT 5",
+	  function (err, result, fields) {
+	  	console.log("server fetched from getTopTags");
+	   res.json(result);
 	});
 });
 
@@ -154,7 +185,7 @@ app.get('/insertUser', function (req, res) {
 
 // Get a users profile
 app.get('/profile', function (req, res) {
-	con.query("SELECT q.isPoll, q.title, q.subTitle, q.description " + 
+	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes  " + 
 		"FROM KUser u, Question q, UserToQuestion uq WHERE u.username='" +
 		req.query.username + "' AND uq.userID = u.userID AND uq.questionID = q.questionID;", 
 		function (err, result, fields) {
@@ -172,16 +203,6 @@ app.get('/insertPoll', function (req, res) {
 	console.log("title: " + req.query.title.trim());
 	console.log("des: " + req.query.description.trim());
 	console.log("enddate: " + req.query.endDate);
-
-
-	// var endDate;
-	// console.log("open forever:" + req.query.openForever);
-	// if(req.query.openForever){
-	// 	endDate = "NaN-NaN-NaN NaN:NaN:NaN";
-	// 	console.log("end date is pen forever");
-	// }else{
-	// 	endDate = req.query.endDate;
-	// }
 
 	//insert the questions
 	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
