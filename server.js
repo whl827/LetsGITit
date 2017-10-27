@@ -26,6 +26,27 @@ con.connect(function(err) {
 
 app.use(express.static(__dirname + '/public'));
 
+
+// Get Question Search from navbar (ANY TEXT)
+app.get('/searchQuestionsAnyText', function (req, res) {
+
+	console.log("ANY TEXT IS CALLED");
+
+	console.log("The server recieved the questionList GET request");
+
+	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, " +
+			          " q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
+		"FROM Question q WHERE " + 
+		"q.title LIKE '%" + req.query.tagQuery + "%' or " +
+		"q.subTitle LIKE '%" + req.query.tagQuery + "%' or " + 
+		"q.description LIKE '%" + req.query.tagQuery + "%' order by positiveVotes desc;",
+	  function (err, result, fields) {
+	  	console.log("Server fetched the questionList from the db");
+	    if (err) throw err;
+	    res.json(result);
+	});
+});
+
 // Get Question Search from navbar
 app.get('/searchQuestions', function (req, res) {
 	console.log("The server recieved the questionList GET request");
@@ -33,7 +54,7 @@ app.get('/searchQuestions', function (req, res) {
 	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
 		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
 		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
-		" tq.questionID = q.questionID;",
+		" tq.questionID = q.questionID Order by positiveVotes desc;",
 	  function (err, result, fields) {
 	  	console.log("Server fetched the questionList from the db");
 	    if (err) throw err;

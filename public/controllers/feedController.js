@@ -5,6 +5,9 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
     $scope.searchButton = function(){
         var menu = document.querySelector(".drop-down-menu").value;
         switch(menu){
+            case "Any Text":{
+                $scope.queryQuestionsAnyText(); break;
+            }
             case "Tags":{
                 $scope.queryQuestions(); break;
             }
@@ -12,6 +15,20 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
                 $scope.queryUsers(); break;
             }
         }
+    }
+
+    $scope.queryQuestionsAnyText = function () {
+
+        console.log("In get query Questions Any Text, tagQuery: " + $scope.query);
+        $http.get('/searchQuestionsAnyText?tagQuery=' + $scope.query).then(function (response) {
+            console.log("Question list received");
+            console.log(response.data);
+            $scope.isQuestionList = 1;
+            $scope.questionList = response.data;
+        }, 
+        function (res) {
+            console.log("Question list NOT received");
+        });
     }
 
     $scope.queryQuestions = function () {
