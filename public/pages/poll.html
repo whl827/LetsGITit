@@ -13,11 +13,15 @@
 
 	<div ng-controller="PollCtrl" >
 		<p ng-repeat="option in pollList">			
-			 <input type="radio">{{option.title}} <br>
+			 <input ng-model="voteInput" value = {{option.title}} type="radio">{{option.title}} <br>
 		</p>
 	</div>
-
 </form>
+
+<!-- Button 
+<input  ng-controller="pollRatingCtrl" type="submit" value="submit" ng-click="voteOption()"> -->
+
+
 <!-- After the poll period show result -->
 
 
@@ -25,8 +29,8 @@
 <!-- ADD: like/dislike, rating, and comment are only for logged in user -->
 
 <!-- Show Number of Lies and Dislikes -->
-<p> Likes: {{like}} </p>
-<p> Dislikes: {{dislike}} </p>
+<p> Likes: {{totalLikeCount}} </p>
+<p> Dislikes: {{totalDislikeCount}} </p>
 
 <!-- Like/Dislike -->
 <form ng-controller= "pollRatingCtrl">	
@@ -58,7 +62,7 @@
 	<br>
 
 </form>
-
+<p>Total comments: {{totalComment}} </p>
 <form ng-controller= "PollCtrl">	
 
 	<div ng-controller="PollCtrl" >
