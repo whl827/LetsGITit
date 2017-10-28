@@ -485,8 +485,11 @@ app.get('/insertQuestionLike', function (req, res) {
 });
 
 app.get('/getLike', function (req, res) {
+
+	console.log("question ID to test is " + req.query.questionID);
+
 	con.query("SELECT COUNT(*) as num " + 
-		"FROM QuestionLike ql inner join Question q on ql.questionID = q.questionID WHERE q.questionID='" +
+		"FROM QuestionLike ql WHERE ql.questionID='" +
 		req.query.questionID + "' and ql.pollLike = 1;", 
 		function (err, result, fields) {
 			console.log("Get number of likes succeed");
@@ -498,7 +501,7 @@ app.get('/getLike', function (req, res) {
 
 app.get('/getDislike', function (req, res) {
 	con.query("SELECT COUNT(*) as num " + 
-		"FROM QuestionLike ql inner join Question q on ql.questionID = q.questionID WHERE q.questionID='" +
+		"FROM QuestionLike ql WHERE ql.questionID='" +
 		req.query.questionID + "' and ql.pollLike = 0;", 
 		function (err, result, fields) {
 			console.log("Get number of dislike succeed");
@@ -554,8 +557,40 @@ app.get('/UpdateRating', function (req, res) {
 // var userID = req.query.userID;
 // var questionID = req.query.questionID;
 
-	con.query("UPDATE RatingQuestionOption. " + 
+	con.query("UPDATE RatingQuestionOption " + 
 		"SET rating='"+ req.query.rating + "' WHERE questionID='" +
+		req.query.questionID + "' and userID='" + req.query.userID + "';", 
+		function (err, result, fields) {
+			console.log("Server fetched the poll from the db");
+			if(err) throw err;
+			res.json(result);
+		});
+});
+
+app.get('/getAvgRating', function (req, res) {
+	console.log("getting average of rating");
+	console.log("==============================");
+
+	con.query("SELECT AVG(rating) as num " + 
+		"FROM RatingQuestionOption WHERE questionID='" +
+		req.query.questionID + "';", 
+		function (err, result, fields) {
+			console.log("Get AVg rating succeed");
+			//if(err) throw err;
+			res.json(result);
+		});
+});
+
+
+app.get('/UpdateVote', function (req, res) {
+
+	var likeDislikeValue = req.query.pollLike;
+	//convert boolean value 
+	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
+	else{likeDislikeValue = 0;}
+
+	con.query("UPDATE QuestionLike " + 
+		"SET pollLike='"+ likeDislikeValue + "' WHERE questionID='" +
 		req.query.questionID + "' and userID='" + req.query.userID + "';", 
 		function (err, result, fields) {
 			console.log("Server fetched the poll from the db");
