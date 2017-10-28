@@ -33,7 +33,8 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 			}
 
 			$scope.endDate = null;
-			if(response.data[0].endDate == "0000-00-00 00:00:00"){
+			if(response.data[0].endDate == "0000-00-00 00:00:00" ||
+				response.data[0].endDate == null){
 				$scope.endDate = "(Open Forever)";
 			}else{
 				$scope.endDate = response.data[0].endDate;

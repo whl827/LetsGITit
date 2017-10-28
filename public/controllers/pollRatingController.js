@@ -8,7 +8,7 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 
 	$scope.createComment = function(){
 
-		if(userID != -1){
+		if(userID != -1 && typeof(userID) !== 'undefined'){
 			var validComment = validate($scope.commentInput); 
 
 			if(!validComment){
