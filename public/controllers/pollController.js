@@ -48,15 +48,21 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 		    	console.log("Error");
 		});
 
-		$http.get('/getLike??questionID=' + questionID).then(function (response) {
+		$http.get('/getLike?questionID=' + questionID).then(function (response) {
+			console.log("============Likedata============");
+			// console.log("response.data[0]" + response.data[0]);
+			// console.log("esponse.data" + response.data);
+			// console.log("esponse.data.num" +response.data.num);
+			// console.log("esponse.data[0].num" +response.data[0].num); -> Only this works 
 
 			$scope.totalLikeCount = response.data[0].num;
+			// console.log("Total like in pollcontroller is " + totalLikeCount);
 
 		}, function (response) {
 			console.log("Error");
 		});	
 
-		$http.get('/getDislike??questionID=' + questionID).then(function (response) {
+		$http.get('/getDislike?questionID=' + questionID).then(function (response) {
 
 			$scope.totalDislikeCount = response.data[0].num;
 
@@ -81,6 +87,6 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 		});	
 
 
-	}
+	}//If
 	
 }]);
