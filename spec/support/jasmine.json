@@ -1,0 +1,18 @@
+{
+  "spec_dir": "spec",
+  "spec_files": [
+    "**/*[sS]pec.js"
+  ],
+  "helpers": [
+    "helpers/**/*.js"
+  ],
+  
+   // "files": [
+   //      "js/angular.js",
+   //      "js/controllers.js",
+   //      "js/angular-mocks.js"
+
+   //  ],
+  "stopSpecOnExpectationFailure": false,
+  "random": false
+}
