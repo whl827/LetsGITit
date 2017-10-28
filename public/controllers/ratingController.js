@@ -26,7 +26,8 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			}
 			
 			$scope.endDate = null;
-			if(response.data[0].endDate == "0000-00-00 00:00:00"){
+			if(response.data[0].endDate == "0000-00-00 00:00:00" ||
+				response.data[0].endDate == null){
 				$scope.endDate = "(Open Forever)";
 			}else{
 				$scope.endDate = response.data[0].endDate;
@@ -40,7 +41,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 		    	console.log("Error");
 		});
 
-		$http.get('/getLike??questionID=' + questionID).then(function (response) {
+		$http.get('/getLike?questionID=' + questionID).then(function (response) {
 
 			$scope.totalLikeCount = response.data[0].num;
 
@@ -48,9 +49,24 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			console.log("Error");
 		});	
 
-		$http.get('/getDislike??questionID=' + questionID).then(function (response) {
+		$http.get('/getDislike?questionID=' + questionID).then(function (response) {
 
 			$scope.totalDislikeCount = response.data[0].num;
+
+		}, function (response) {
+			console.log("Error");
+		});	
+
+
+		$http.get('/getAvgRating?questionID=' + questionID).then(function (response) {
+
+			console.log("ave rating is " + response.data[0].num);
+			if(response.data[0].num == null){
+				$scope.averageRating = 0;
+			}
+			else{
+				$scope.averageRating = response.data[0].num;
+			}
 
 		}, function (response) {
 			console.log("Error");

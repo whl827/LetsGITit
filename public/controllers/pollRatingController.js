@@ -99,16 +99,15 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 						}else {
 							$scope.errorMessageRate = "Already Rated. Edit rating value to " + ratingValue;
 
-							// //Update
-							// $http.get("/UpdateRating?questionID=" + questionID + "&userID=" + userID
-							// 	+ "&rating=" + ratingValue)
-							// 	.then(function (response) {
-							// 		console.log("inser into rating table");
-							// },function (response) {
-							//     	console.log("Error");
-							// });
+							$http.get("/UpdateRating?questionID=" + questionID + "&userID=" + userID
+								+ "&rating=" + ratingValue)
+								.then(function (response) {
+									console.log("inser into rating table");
+							},function (response) {
+							    	console.log("Error");
+							});
 
-							// $route.reload();
+							$route.reload();
 
 
 						}
@@ -155,8 +154,18 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 							});
 
 								$route.reload();
-						}else {
-							$scope.errorMessageLike = "Already voted";
+						}else {			
+
+							$http.get("/UpdateVote?questionID=" + questionID + "&userID=" + userID
+								+ "&pollLike=" + likeorDisLike)
+								.then(function (response) {
+									console.log("insert into questionlike table");
+							},function (response) {
+							    	console.log("Error");
+							});
+								$route.reload();
+								//$scope.errorMessageLike = "Already voted. Edit vote to " + likeorDisLike;
+
 						}
 					},function (response) {
 				    	console.log("Error");
