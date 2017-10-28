@@ -47,25 +47,34 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 		    	console.log("Error");
 		});
 
-		// $http.get('/getLikeDislike??questionID=' + questionID).then(function (response) {
-		// 	$
-		// }, function (response) {
-		// 	//$scope.title = response.data[0].title;
-		// });	
+		$http.get('/getLike??questionID=' + questionID).then(function (response) {
+
+			$scope.totalLikeCount = response.data[0].num;
+
+		}, function (response) {
+			console.log("Error");
+		});	
+
+		$http.get('/getDislike??questionID=' + questionID).then(function (response) {
+
+			$scope.totalDislikeCount = response.data[0].num;
+
+		}, function (response) {
+			console.log("Error");
+		});	
+		
 
 		$http.get('/commentList?questionID=' + questionID).then(function (response) {
-		console.log("got comments ");
-		console.log(response.data);
-		$scope.commentList = response.data;
+			$scope.totalComment = response.data.length;
+			$scope.commentList = response.data;
 		}, function (response) {
 			
 		});	
 
 		console.log("question ID is " + questionID);
+
 		$http.get('/pollList?questionID=' + questionID).then(function (response) {
-		console.log("got options ");
-		console.log(response.data);
-		$scope.pollList = response.data;
+			$scope.pollList = response.data;
 		}, function (response) {
 
 		});	

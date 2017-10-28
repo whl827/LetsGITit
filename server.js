@@ -449,9 +449,6 @@ app.get('/insertRatingValue', function (req, res) {
 	var questionID = req.query.questionID;
 	var userID = req.query.userID;
 	var ratingValue = req.query.rating;
-	console.log("---------inInsertRatingValue--------");
-	console.log("rating value in server is " + ratingValue);
-	console.log("--------------------------------------");
 
 	//console.log("insert comment:", req.query.questionID);
 	con.query("INSERT INTO RatingQuestionOption (questionID, userID, rating) " +
@@ -463,20 +460,16 @@ app.get('/insertRatingValue', function (req, res) {
 	});
 });
 
+
 app.get('/insertQuestionLike', function (req, res) {
 	console.log("In server insert rating value ");
 	var questionID = req.query.questionID;
 	var userID = req.query.userID;
 	var likeDislikeValue = req.query.pollLike;
 
+	//convert boolean value 
 	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
 	else{likeDislikeValue = 0;}
-
-	console.log("---------inInsertQuestionLike--------");
-	console.log("questionID in server is " + questionID);
-	console.log("userID in server is " + userID);
-	console.log("like/dislike in server is " + likeDislikeValue);
-
 
 	con.query("INSERT INTO QuestionLike (questionID, userID, pollLike) " +
 			"VALUES('" + questionID + "', '" + userID + "', '" + likeDislikeValue + "');",
@@ -486,6 +479,72 @@ app.get('/insertQuestionLike', function (req, res) {
 	    //res.json(result);
 	});
 });
+
+app.get('/getLike', function (req, res) {
+	con.query("SELECT COUNT(*) as num " + 
+		"FROM QuestionLike ql inner join Question q on ql.questionID = q.questionID WHERE q.questionID='" +
+		req.query.questionID + "' and ql.pollLike = 1;", 
+		function (err, result, fields) {
+			console.log("Get number of likes succeed");
+			//if(err) throw err;
+			res.json(result);
+
+		});
+});
+
+app.get('/getDislike', function (req, res) {
+	con.query("SELECT COUNT(*) as num " + 
+		"FROM QuestionLike ql inner join Question q on ql.questionID = q.questionID WHERE q.questionID='" +
+		req.query.questionID + "' and ql.pollLike = 0;", 
+		function (err, result, fields) {
+			console.log("Get number of dislike succeed");
+			//if(err) throw err;
+			res.json(result);
+		});
+});
+
+app.get('/checkUserExist', function (req, res) {
+var userID = req.query.userID;
+var questionID = req.query.questionID;
+
+	con.query("SELECT qc.userID " + 
+		"FROM QuestionComment qc WHERE qc.questionID='" +
+		req.query.questionID + "' and qc.userID='" + req.query.userID + "';", 
+		function (err, result, fields) {
+			console.log("Server fetched the poll from the db");
+			if(err) throw err;
+			res.json(result);
+		});
+});
+
+app.get('/checkUserRated', function (req, res) {
+var userID = req.query.userID;
+var questionID = req.query.questionID;
+
+	con.query("SELECT rq.userID " + 
+		"FROM RatingQuestionOption rq WHERE rq.questionID='" +
+		req.query.questionID + "' and rq.userID='" + req.query.userID + "';", 
+		function (err, result, fields) {
+			console.log("Server fetched the poll from the db");
+			if(err) throw err;
+			res.json(result);
+		});
+});
+
+app.get('/checkUserVoted', function (req, res) {
+var userID = req.query.userID;
+var questionID = req.query.questionID;
+
+	con.query("SELECT ql.userID " + 
+		"FROM QuestionLike ql WHERE ql.questionID='" +
+		req.query.questionID + "' and ql.userID='" + req.query.userID + "';", 
+		function (err, result, fields) {
+			console.log("Server fetched the poll from the db");
+			if(err) throw err;
+			res.json(result);
+		});
+});
+
 
 app.listen(8080);
 console.log("Server running on port 8080");
