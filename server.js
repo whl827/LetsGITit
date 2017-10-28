@@ -385,9 +385,10 @@ app.get('/insertComment', function (req, res) {
 	var questionID = req.query.questionID;
 	var userID = req.query.userID;
 	var description = req.query.description;
+	var isAnnonymous = req.query.isAnnonymous;
 
-	con.query("INSERT INTO QuestionComment (questionID, userID, description) " +
-			"VALUES('" + questionID + "', '" + userID + "', '" + description + "');",
+	con.query("INSERT INTO QuestionComment (questionID, userID, description, isAnnonymous) " +
+			"VALUES('" + questionID + "', '" + userID + "', '" + description + "', '" + isAnnonymous + "');",
 	  	function (err, result, fields) {
 	  	console.log("Inserting comment success");
 	});

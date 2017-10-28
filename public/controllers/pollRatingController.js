@@ -15,19 +15,25 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 				$scope.errorMessageComment = "Please leave a comment";
 			}
 			else{ 
-				var Anonymous = $scope.isAnonymousInput;
+				var isAnnonymous = $scope.isAnonymousInput;
 				var comment =  $scope.commentInput;
+				console.log("Usr comment is " + comment);
+				console.log("Anonymous is " + isAnnonymous);
 
+				if(isAnnonymous == 'ture'){isAnnonymous = 1;}
+				else{isAnnonymous = 0;}
 				//Insert Comment Only when User haven't submitted
 				$http.get("/checkUserExist?questionID=" + questionID + "&userID=" + userID
 					)
 					.then(function (response) {
+
+						console.log("User Exist ");
 					
 						if(typeof response.data[0] == 'undefined'){
 							//&& typeof response[0].userID !== 'undefined' 
 							
 							$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
-							+ "&description=" + comment)
+							+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous)
 							.then(function (response) {
 								console.log("inser into comment table");
 							},function (response) {
