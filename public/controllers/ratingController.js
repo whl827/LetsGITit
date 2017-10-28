@@ -16,6 +16,17 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			$scope.title = response.data[0].title;
 			$scope.userID = response.data[0].userID;
 			$scope.description = response.data[0].description;
+
+			$scope.isAnonymous = response.data[0].isAnonymous;
+			$scope.username = null;
+
+			if($scope.isAnonymous == 1){
+				
+				$scope.username = "ANONYMOUS";
+				//console.log("ANONYMOUS: " + $scope.username);
+			}else{
+				$scope.username = response.data[0].username;
+			}
 			
 			$scope.endDate = null;
 			if(response.data[0].endDate == "0000-00-00 00:00:00"){

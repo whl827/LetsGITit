@@ -2,9 +2,10 @@
 
 <form class="display-survey-container" ng-controller= "RatingCtrl">
 	
-	<p> Created by {{userID}} </p>
+	<p> Created by {{username}} </p>
 	<p> (description) {{description}} </p>
-	<p> Closes on {{endDate}} </p>
+	<p> Closes on {{ endDate=="Open Forever" ?
+						 endDate : (endDate | date: 'yyyy-MM-dd')}} </p>
 
 </form>
 

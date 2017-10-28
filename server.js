@@ -343,9 +343,12 @@ app.get('/insertRating', function (req, res) {
 });
 
 app.get('/getQuestion', function (req, res) {
-	con.query("SELECT q.title, q.userID, q.description, q.endDate " + 
-		"FROM Question q WHERE q.questionID='" +
-		req.query.questionID + "';", 
+	//fixed con qeury
+	con.query("SELECT q.title, q.userID, u.username, q.description, q.endDate, q.isAnonymous " + 
+		"FROM Question q " +
+		"JOIN kuser u on q.userID = u.userID " +
+		"WHERE q.questionID=" + req.query.questionID, 
+
 		function (err, result, fields) {
 			console.log("Server fetched the poll from the db");
 			if(err) throw err;
