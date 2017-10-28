@@ -1,6 +1,4 @@
 angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$window', '$cookies', function($scope, $http, $window, $cookies) {
-    
-	
 
     console.log("logging from logincontroller");
 
@@ -38,10 +36,18 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
     }
 
     $scope.logout = function () {
+    	var currUsername = $cookies.get('username');
+    	var currUserID = $cookies.get('userID');
     	$cookies.put("username", null);
     	$cookies.put("userID", -1);
-    	console.log("The user has logged out");
-    	$scope.errorMessage = "You have logged out";
+    	console.log("curr Username: " + currUsername);
+    	if (currUsername === undefined || currUserID == undefined) {
+    		$scope.errorMessage = "You were not logged in origonally";
+    	}
+    	else {
+    		console.log("The user has logged out");
+    		$scope.errorMessage = "You have logged out";
+    	}
     }
     
 }]);
