@@ -2,37 +2,54 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 
     console.log("logging from logincontroller");
 
+    hashCode = function(str) {
+	  var hash = 0, i, chr;
+	  if (str.length === 0) return hash;
+	  for (i = 0; i < str.length; i++) {
+	    chr   = str.charCodeAt(i);
+	    hash  = ((hash << 5) - hash) + chr;
+	    hash |= 0; // Convert to 32bit integer
+	  }
+	  return hash;
+	};
 
     $scope.userQuery = function () {
-    	var password = $scope.password.hashCode();
-    	console.log("password hash: " + password);
+    	console.log('In user query');
+
+    	var password = hashCode($scope.password);
+    	console.log("QUERY: " + '/user?username=' + $scope.username + "&password=" + 
+									  password);
+
+    	var newUsername = null;
+    	var newUserID = -1;
 
 		$http.get('/user?username=' + $scope.username + "&password=" + 
 									  password).then(function (response) {
-	    	console.log("user received");
-	    	console.log(response.data);
+	    	console.log("RESPONSE");
+	    	console.log(response);
+	    	console.log("Length: " + response.data.length);
 	    	
 	    	if(response.data.length == 0){
 	    		$scope.errorMessage = "The username and password combination is incorrect."
-	    		console.log(response.data[0]);
+	    		console.log("NOT logged in!");
 	    	} else {
-	    		console.log("before setting cookies");
-	    		$scope.userData = response.data[0];
+	    		console.log("Is logged in and setting cookies");
+	    		$scope.userData = response.data;
 	    		console.log("user data");
-	    		console.log(response.data[0]);
-	    		console.log("PASSWORD HASH IS: " + response.data[0].passwordHash);
-	    		$cookies.put('username', response.data[0].username);
-	    		$cookies.put('userID', response.data[0].userID);
+	    		console.log(response.data);
+	    		newUsername = "" + response.data[0].username;
+	    		newUserID = response.data[0].userID;
 
-	    		$window.location.href = '../index.html';
-	    	}	    	
+				console.log("Setting cookies to : " + newUsername + ", " + newUserID);
+				$cookies.put('username', newUsername);
+			    $cookies.put('userID', newUserID);
+	    		//$window.location.href = '../index.html';
+	    	}
 	    },
 	    function (res) {
 	    	console.log("user NOT received");
 	    	$scope.errorMessage = "The username and password combination is incorrect."
 	    });
-
-		//$scope.errorMessage = "The username and password combination is incorrect."
     }
 
     $scope.logout = function () {
@@ -42,6 +59,8 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
     	$cookies.put("userID", -1);
     	console.log("curr Username: " + currUsername);
     	if (currUsername === undefined || currUserID == undefined) {
+    		$scope.errorMessage = "You were not logged in origonally";
+    	} else if (currUsername == null || currUserID == -1) {
     		$scope.errorMessage = "You were not logged in origonally";
     	}
     	else {
