@@ -370,7 +370,7 @@ app.get('/pollList', function (req, res) {
 app.get('/commentList', function (req, res) {
 	console.log("The server recieved the GET request: ");
 
-	con.query("SELECT qc.userID, qc.description "+
+	con.query("SELECT qc.userIDAnnonymous, qc.description "+
 		"FROM QuestionComment qc WHERE " + 
 		"qc.questionID='" + req.query.questionID + "';",
 	  	function (err, result, fields) {
@@ -386,9 +386,12 @@ app.get('/insertComment', function (req, res) {
 	var userID = req.query.userID;
 	var description = req.query.description;
 	var isAnnonymous = req.query.isAnnonymous;
+	var userIDAnnonymous = req.query.userIDAnnonymous;
+	
+	console.log("userIDannonymous in insert comment is " + userIDAnnonymous);
 
-	con.query("INSERT INTO QuestionComment (questionID, userID, description, isAnnonymous) " +
-			"VALUES('" + questionID + "', '" + userID + "', '" + description + "', '" + isAnnonymous + "');",
+	con.query("INSERT INTO QuestionComment (questionID, userID, description, isAnnonymous, userIDAnnonymous) " +
+			"VALUES('" + questionID + "', '" + userID + "', '" + description + "', '" + isAnnonymous + "', '" + userIDAnnonymous + "');",
 	  	function (err, result, fields) {
 	  	console.log("Inserting comment success");
 	});
@@ -539,6 +542,21 @@ var questionID = req.query.questionID;
 	con.query("SELECT ql.userID " + 
 		"FROM QuestionLike ql WHERE ql.questionID='" +
 		req.query.questionID + "' and ql.userID='" + req.query.userID + "';", 
+		function (err, result, fields) {
+			console.log("Server fetched the poll from the db");
+			if(err) throw err;
+			res.json(result);
+		});
+});
+
+app.get('/UpdateRating', function (req, res) {
+// var rating = req.query.rating;
+// var userID = req.query.userID;
+// var questionID = req.query.questionID;
+
+	con.query("UPDATE RatingQuestionOption. " + 
+		"SET rating='"+ req.query.rating + "' WHERE questionID='" +
+		req.query.questionID + "' and userID='" + req.query.userID + "';", 
 		function (err, result, fields) {
 			console.log("Server fetched the poll from the db");
 			if(err) throw err;

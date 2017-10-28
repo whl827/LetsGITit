@@ -16,12 +16,20 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 			}
 			else{ 
 				var isAnnonymous = $scope.isAnonymousInput;
+				var userIDAnnonymous = "";
+
 				var comment =  $scope.commentInput;
 				console.log("Usr comment is " + comment);
 				console.log("Anonymous is " + isAnnonymous);
 
-				if(isAnnonymous == 'ture'){isAnnonymous = 1;}
+				if(isAnnonymous = 'true'){ userIDAnnonymous = "*****";}
+				else{ userIDAnnonymous = userID; }
+
+				if(isAnnonymous == 'true'){isAnnonymous = 1;}
 				else{isAnnonymous = 0;}
+
+				console.log("uuserIDAnnonymous in pollRatingCtrl" + userIDAnnonymous);
+
 				//Insert Comment Only when User haven't submitted
 				$http.get("/checkUserExist?questionID=" + questionID + "&userID=" + userID
 					)
@@ -33,7 +41,7 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 							//&& typeof response[0].userID !== 'undefined' 
 							
 							$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
-							+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous)
+							+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous + "&userIDAnnonymous=" + userIDAnnonymous)
 							.then(function (response) {
 								console.log("inser into comment table");
 							},function (response) {
@@ -89,7 +97,20 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 							$route.reload();
 
 						}else {
-							$scope.errorMessageRate = "Already Rated";
+							$scope.errorMessageRate = "Already Rated. Edit rating value to " + ratingValue;
+
+							// //Update
+							// $http.get("/UpdateRating?questionID=" + questionID + "&userID=" + userID
+							// 	+ "&rating=" + ratingValue)
+							// 	.then(function (response) {
+							// 		console.log("inser into rating table");
+							// },function (response) {
+							//     	console.log("Error");
+							// });
+
+							// $route.reload();
+
+
 						}
 					},function (response) {
 				    	console.log("Error");
