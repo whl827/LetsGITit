@@ -27,6 +27,7 @@ create table QuestionComment (
 	questionCommentID int(8) primary key auto_increment,
     questionID int(8) not null,
     userID int(8) not null,
+    userIDAnnonymous varchar(8) not null,
     description varchar(500),
     isAnnonymous boolean not null,
     foreign key fk1(questionID) references Question(questionID),
