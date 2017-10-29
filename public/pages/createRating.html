@@ -18,7 +18,7 @@
 	<br>
 
 	<p> End Date </p>
-	<input type="date" name="endDate" class="form-control" ng-model="endDateInput">
+	<input type="date" name="endDate" class="form-control" ng-model="endDateInput" min ="{{minDate | date:'yyyy-MM-dd'}}">
 
 	<p><input type="checkbox" name="openForever" ng-model="openForeverInput">
 	Open Forever </p>

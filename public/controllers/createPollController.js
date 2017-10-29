@@ -1,6 +1,8 @@
 angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$cookies', '$window', function($scope, $http, $cookies, $window) {
 	console.log("in create poll ctrl"); 
 
+	$scope.minDate = new Date();
+
 	function validate(input){
 		if(input == null || input == ""){
 			//alert("error"); 
