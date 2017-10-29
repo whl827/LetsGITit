@@ -25,7 +25,7 @@ describe('loginController', function() {
     }
   }));
 
-  describe('$rootScope.errorMessage tester should be you have not logged out', function() {
+  describe('$rootScope.errorMessage tester should be you have logged out', function() {
     it('Testing logout functionallity for correct errorMessage', function() {
       var controller = createController();
       $rootScope.logout();
@@ -93,6 +93,30 @@ describe('loginController', function() {
      $rootScope.userQuery();
      $httpBackend.flush();
      expect($rootScope.errorMessage).toBe('The username and password combination is incorrect.');
+   });
+
+    it('Login will not make cookies for bad login', function() {
+     $httpBackend.expectGET('/user?username=user2&password=111421');
+     $rootScope.username = 'user2'
+     $rootScope.password = 'pwd';
+     $cookieStore.remove('username');
+     $cookieStore.remove('userID');
+     var controller = createController();
+     $rootScope.userQuery();
+     expect($cookieStore.get('username')).toBe(undefined);
+     expect($cookieStore.get('userID')).toBe(undefined);
+     $httpBackend.flush();
+   });
+
+    it('Login will not change cookies for bad login', function() {
+     $httpBackend.expectGET('/user?username=user2&password=111421');
+     $rootScope.username = 'user2'
+     $rootScope.password = 'pwd';
+     var controller = createController();
+     $rootScope.userQuery();
+     expect($cookieStore.get('username')).toBe('user2');
+     expect($cookieStore.get('userID')).toBe(2);
+     $httpBackend.flush();
    });
 
   });
