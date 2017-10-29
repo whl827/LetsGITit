@@ -229,3 +229,14 @@ insert into TagToQuestion(tagID, questionID) values (1, 6);
 insert into TagToQuestion(tagID, questionID) values (2, 6);
 insert into TagToQuestion(tagID, questionID) values (3, 6);
 insert into TagToQuestion(tagID, questionID) values (4, 8);
+
+insert into QuestionToPollOption(questionID, pollOptionID) values(1, 1);
+insert into QuestionToPollOption(questionID, pollOptionID) values(1, 2);
+insert into QuestionToPollOption(questionID, pollOptionID) values(2, 3);
+insert into QuestionToPollOption(questionID, pollOptionID) values(4, 4);
+insert into QuestionToPollOption(questionID, pollOptionID) values(6, 5);
+insert into QuestionToPollOption(questionID, pollOptionID) values(6, 6);
+
+insert into QuestionToComment(questionID, questionCommentID) values(4, 1);
+insert into QuestionToComment(questionID, questionCommentID) values(5, 2);
+insert into QuestionToComment(questionID, questionCommentID) values(9, 3);
