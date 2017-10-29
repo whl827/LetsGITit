@@ -1,5 +1,4 @@
 angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$cookies', '$window', function($scope, $http, $cookies, $window) {
-	console.log("in create rating ctrl"); 
 
 	$scope.minDate = new Date();
 
@@ -22,32 +21,17 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 	};
 
 	$scope.createRating = function () { // handle submit
-		console.log("inside function ");
 		var validTitle = validate($scope.ratingTitleInput); 
  		var title = $scope.ratingTitleInput; 
-		console.log("title: " + title);
-		console.log("validTitle: " + validTitle);
-
 		var subtitle = $scope.pollSubtitleInput; 
-		console.log("subtitle: " + subtitle);
-
 		var validateDescription = validate($scope.descriptionInput); 
 		var description = $scope.descriptionInput; 
-
-
 		var enteredEndDate = validate($scope.endDateInput); 
 		var dateStr_e = $scope.endDateInput; 
-
-		var endDate = new Date(dateStr_e).toMysqlFormat();
-		console.log(endDate); 
-	
-
-
-
+		var endDate = new Date(dateStr_e).toMysqlFormat();	
 		var openForever = $scope.openForeverInput;
-		console.log("openForever: " + openForever);
-
 		var validEndDate; 
+
 		if((!enteredEndDate && openForever) || (enteredEndDate && !openForever)){
 			validEndDate = true; 
 		} 
@@ -55,18 +39,12 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 			validEndDate = false; 
 		}
 
-
-		console.log("SCOPE: " + $scope.isAnonymousInput);
-
 		var isAnonymous = false
 		if($scope.isAnonymousInput == true){
 			isAnonymous = true;
 		}
-		console.log("isAnonymous: " + isAnonymous);
-
 
 		var tag = $scope.tagInput; 
-		console.log("tag: " + tag);
 		var tagArray = null;
 		if(!(tag == undefined)){
 			tagArray = tag.split(",");
@@ -74,11 +52,8 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 
 		// get cookies
 		var userID = $cookies.get("userID");
-		console.log("this is userID " + userID);
-
 
 		if (userID == -1 || userID == undefined) {
-			console.log("userID is: " + userID);
 			$scope.errorMessage = "Please login to create a rating.";
 		}
 		else if(!validTitle){
@@ -105,13 +80,9 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 				  "&isAnonymous=" + isAnonymous +
 				  "&tagArray[]=" + tagArray
 				  ).then(function (response) {
-    		console.log("user received from creaitng rating!");
-	    	//console.log(response.data);
-
 	    	$window.location.href = '../index.html';
 	    	
 	    	if(response.data.length == 0){
-	    		console.log(response.data);
 	    		console.log("response = 0");
 	    	} 
 	    	else {
@@ -121,10 +92,6 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 		    function (res) {
 		    	console.log("user NOT received from creating rating");
 		    });
-
-
-
-			
 		}
  }
 

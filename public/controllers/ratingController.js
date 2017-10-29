@@ -6,10 +6,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 	var getRating = true;
 
 	if (getRating) {
-		console.log("getting rating");
-
 		$http.get('/getQuestion?questionID=' + questionID).then(function (response) {
-			console.log(response.data[0]);
 			$scope.title = response.data[0].title;
 			$scope.userID = response.data[0].userID;
 			$scope.description = response.data[0].description;
@@ -20,7 +17,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			if($scope.isAnonymous == 1){
 				
 				$scope.username = "ANONYMOUS";
-				//console.log("ANONYMOUS: " + $scope.username);
 			}else{
 				$scope.username = response.data[0].username;
 			}
@@ -32,8 +28,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			}else{
 				$scope.endDate = response.data[0].endDate;
 			}
-			console.log("End DATE::::: " + $scope.endDate);
-
 			if(response.data.length == 0){
 				console.log("response = 0");
 			}
@@ -59,8 +53,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 
 
 		$http.get('/getAvgRating?questionID=' + questionID).then(function (response) {
-
-			console.log("ave rating is " + response.data[0].num);
 			if(response.data[0].num == null){
 				$scope.averageRating = 0;
 			}
