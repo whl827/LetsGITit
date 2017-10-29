@@ -22,11 +22,15 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 				console.log("Usr comment is " + comment);
 				console.log("Anonymous is " + isAnnonymous);
 
-				if(isAnnonymous = 'true'){ userIDAnnonymous = "*****";}
+
+
+				if(isAnnonymous){ userIDAnnonymous = "Anonymous";}
 				else{ userIDAnnonymous = userID; }
 
-				if(isAnnonymous == 'true'){isAnnonymous = 1;}
+				if(isAnnonymous){isAnnonymous = 1;}
 				else{isAnnonymous = 0;}
+
+
 
 				console.log("uuserIDAnnonymous in pollRatingCtrl" + userIDAnnonymous);
 
@@ -68,7 +72,7 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 
 	$scope.selectRate = function(){
 
-		if(userID != -1){
+		if(userID != -1 && typeof(userID) !== 'undefined'){
 
 			var validRating = validate($scope.rateInput); 
 
@@ -123,7 +127,7 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 
 	$scope.selectLikeOrDislike = function(){
 
-		if(userID != -1){
+		if(userID != -1 && typeof(userID) !== 'undefined'){
 
 			var validLike = validate($scope.likeInput); 
 
