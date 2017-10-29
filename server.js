@@ -1,3 +1,4 @@
+
 var express = require('express');
 var app = express();
 var mysql = require('mysql');
@@ -30,10 +31,6 @@ app.use(express.static(__dirname + '/public'));
 // Get Question Search from navbar (ANY TEXT)
 app.get('/searchQuestionsAnyText', function (req, res) {
 
-	console.log("ANY TEXT IS CALLED");
-
-	console.log("The server recieved the questionList GET request");
-
 	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, " +
 			          " q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
 		"FROM Question q WHERE " + 
@@ -49,14 +46,12 @@ app.get('/searchQuestionsAnyText', function (req, res) {
 
 // Get Question Search from navbar
 app.get('/searchQuestions', function (req, res) {
-	console.log("The server recieved the questionList GET request");
 
 	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
 		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
 		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
 		" tq.questionID = q.questionID Order by positiveVotes desc;",
 	  function (err, result, fields) {
-	  	console.log("Server fetched the questionList from the db");
 	    if (err) throw err;
 	    res.json(result);
 	});
@@ -64,17 +59,12 @@ app.get('/searchQuestions', function (req, res) {
 //load questions by dates on page load
 app.get('/onPageLoad', function (req, res){
 
-	console.log("SELECT q.isPoll, q.title, q.subtitle, q.description, q.startDate, " +
-					" q.endDate, q.totalVotes, q.positiveVotes " +
-			 " FROM Question q " +
-			 " ORDER BY q.startdate desc");
 
 	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, " +
 					" q.endDate, q.totalVotes, q.positiveVotes " +
 			 " FROM Question q " +
 			 " ORDER BY q.startdate desc",
 	  function (err, result, fields) {
-	  	console.log("server fetched from onPageLoad");
 	    if (err) throw err;
 	    res.json(result);
 	});
@@ -85,38 +75,28 @@ app.get('/getTopTags', function (req, res){
 	con.query("SELECT tq.tagID, t.tagStr, count(tq.questionID) as NumberOfQuestions from tag t " +
 			  "JOIN tagToQuestion tq on t.tagId = tq.tagID GROUP BY tagID LIMIT 5",
 	  function (err, result, fields) {
-	  	console.log("server fetched from getTopTags");
 	   res.json(result);
 	});
 });
 
 // Get user search from navbar (It selects all user that have userinput in their name)
 app.get('/searchUsers', function (req, res) {
-	console.log("The server recieved the userList GET request");
 
 	con.query("SELECT u.username FROM KUser u WHERE u.username like '%" 
 		+ req.query.userQuery + "%';", 
 		function (err, result, fields) {
-			console.log("Server fetched user from the db");
 			if (err) throw err;
-			console.log(result[0]);
 			res.json(result);
 		});
 });
 
 //log in
 app.get('/user', function (req, res) {
-	
-	console.log("The server recieved the GET request for user: in log in");
-	console.log("SELECT u.userID, u.username, u.passwordHash FROM KUser u " +
-		"WHERE u.username='"+ req.query.username + 
-		"' and u.passwordHash=" + req.query.password);
 
 	con.query("SELECT u.userID, u.username, u.passwordHash FROM KUser u " +
 		"WHERE u.username='"+ req.query.username + 
 		"' and u.passwordHash=" + req.query.password,
 	  function (err, result, fields) {
-	  	console.log("Server fetched the user from db");
 	    if (err) throw err;
 	    res.json(result);
 	});
@@ -124,16 +104,10 @@ app.get('/user', function (req, res) {
 
 //sign up
 app.get('/signupFunction', function (req, res) {
-	console.log("The server recieved the GET request for user: sign up");
-	
-	console.log("id: ", req.query.signupUsername);
-	console.log('pw: ', req.query.signupPassword);
-	console.log('email: ', req.query.signupEmail);
 
 	con.query("SELECT u.username FROM KUser u " +
 		"WHERE u.username='" + req.query.signupUsername + "'",
 	  function (err, result, fields) {
-	  	console.log("Server fetched the user from db in sign up");
 	    if (err) throw err;
 	    res.json(result);
 	});
@@ -141,13 +115,10 @@ app.get('/signupFunction', function (req, res) {
 
 //send email sign up
 app.get('/sendEmail', function (req, res) {
-	console.log("In send email function in server");
 	var email = req.query.newEmail;
 	var password = req.query.newPasswordHash;
 	var username = req.query.newUsername;
 	var link = "localhost:8080/#!newUser/:" + username + "/:" + password;
-
-	console.log("EMAIL IS SENT TO: " + email);
 
 	var mailOptions = {
 		from: 'knowitall857@gmail.com',
@@ -168,13 +139,8 @@ app.get('/sendEmail', function (req, res) {
 
 //insert user to the database
 app.get('/insertUser', function (req, res) {
-	console.log("The server recieved the GET request for user (for inserting user)");
 	var username = req.query.username;
 	var password = req.query.passwordHash
-	console.log("id: ", username);
-	console.log('pw: ', password);
-	console.log("INSERT INTO KUser(username, passwordHash) " +
-			"values('" + username + "', " + password + ");");
 
 	con.query("INSERT INTO KUser(username, passwordHash) " +
 			"values('" + username + "', " + password + ");",
@@ -189,7 +155,6 @@ app.get('/profile', function (req, res) {
 		"FROM KUser u, Question q, UserToQuestion uq WHERE u.username='" +
 		req.query.username + "' AND uq.userID = u.userID AND uq.questionID = q.questionID;", 
 		function (err, result, fields) {
-			console.log("Server fetched the profile from the db");
 			if(err) throw err;
 			res.json(result);
 		});
@@ -198,42 +163,28 @@ app.get('/profile', function (req, res) {
 
 app.get('/insertPoll', function (req, res) {
 
-	console.log("userID: " + req.query.userID);
-	console.log("sub: " + req.query.subTitle.trim());
-	console.log("title: " + req.query.title.trim());
-	console.log("des: " + req.query.description.trim());
-	console.log("enddate: " + req.query.endDate);
-
 	//insert the questions
 	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
 		"values(" + req.query.userID + "," + 1 + ", '" + req.query.title.trim() + "' , '" + req.query.subTitle.trim() + "', '" + req.query.description.trim() 
 		+ "', '" + req.query.endDate + "', " + 0 + "," + 0 + "," + req.query.isAnonymous + ")",
 
 		function (err, result, fields) {
-			console.log("Server fetched the profile from the db from Creating Poll!!");
 		});
 
 	//insert options
 	con.query("SELECT questionID from Question where title='" + req.query.title.trim() + "'",
-		function (err, result, fields) {
-			console.log("QuestionID is fetched from SQL (in Insert Poll)");
-			
+		function (err, result, fields) {			
 			var questionID =  result[0].questionID;
 
 			//connect user to question
 			con.query("INSERT INTO userToQuestion(userID, questionID) values( " +
 			req.query.userID + "," + questionID + ")");
-			console.log("connecting user and question (insert poll)\n");
-
 			//insert all options
 			var optionArray = req.query.optionArray[0].split(",");
-			console.log("size: " + optionArray.length ); 
 			for(var i=0; i<optionArray.length; i++){
-				console.log(optionArray[i]);
 				con.query("INSERT INTO pollOption(questionID, title, votes) values (" +
 				questionID + " , '" + optionArray[i].trim() + " ', " + 0 + ")");
 			}
-			console.log("inserting into poll option completed (insert poll)\n");
 
 			//split tags by comma an insert
 			var tagArray = req.query.tagArray[0].split(",");
@@ -248,7 +199,6 @@ app.get('/insertPoll', function (req, res) {
 							"WHERE tagStr = '" + tagArray[i].trim() + "') LIMIT 1");
 				}
 			};
-			console.log("inserting into tag completed (insert poll)\n");
 
 			//connect tags and question
 			for (var i = 0; i < tagArray.length; i++) {
@@ -259,15 +209,11 @@ app.get('/insertPoll', function (req, res) {
 					function (err, result, fields) {
 						var tagID = result[0].tagID;
 
-						console.log("INSERT INTO TagToQuestion (tagID, questionID) values( " + 
-							tagID + "," + questionID + ")");
-
 						con.query("INSERT INTO TagToQuestion (tagID, questionID) values( " + 
 								tagID + "," + questionID + ")");
 					});
 				}
 			};
-			console.log("connecting tags and question ID completed (insert poll)\n");
 
 			res.json(result);
 	});
@@ -277,30 +223,22 @@ app.get('/insertPoll', function (req, res) {
 app.get('/insertRating', function (req, res) {
 
 
-	console.log("INSERT INTO Question(userID, isPoll, title, subtitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
-		"values(" + req.query.userID + "," + 0 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '"+ req.query.description 
-		+ "', '" + req.query.endDate + "', " + 0 + "," + 0 + "," + req.query.isAnonymous + ")");
 
 	// insert the questions
 	con.query("INSERT INTO Question(userID, isPoll, title, subtitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
 		"values(" + req.query.userID + "," + 0 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '"+ req.query.description 
 		+ "', '" + req.query.endDate + "', " + 0 + "," + 0 + "," + req.query.isAnonymous + ")", 
 		function (err, result, fields) {
-			console.log("Server fetched the profile from the db from Creating Poll!!");
 		});
 	//insert the questions
 	con.query("SELECT questionID from Question where title='" + req.query.title + "'",
 		function (err, result, fields) {
-			console.log("Server fetched the profile from the db from Creating Rating!!");
 			var questionID =  result[0].questionID;
-			console.log("HERE!!!: " + questionID);
-
 			//con.query("INSERT INTO RatingQuestionOption(questionID) values (" + questionID + ") ");
 
 			//connect user to question
 			con.query("INSERT INTO userToQuestion(userID, questionID) values( " +
 			req.query.userID + "," + questionID + ")");
-			console.log("connecting user and question (insert poll)\n");
 
 			//split tags by comma an insert
 			var tagArray = req.query.tagArray[0].split(",");
@@ -315,7 +253,6 @@ app.get('/insertRating', function (req, res) {
 							"WHERE tagStr = '" + tagArray[i].trim() + "') LIMIT 1");
 				}
 			};
-			console.log("inserting into tag completed (insert poll)\n");
 
 			//connect tags and question
 			for (var i = 0; i < tagArray.length; i++) {
@@ -325,9 +262,6 @@ app.get('/insertRating', function (req, res) {
 					tagArray[i].trim() + "'",
 					function (err, result, fields) {
 						var tagID = result[0].tagID;
-
-						console.log("INSERT INTO TagToQuestion (tagID, questionID) values( " + 
-							tagID + "," + questionID + ")");
 
 						con.query("INSERT INTO TagToQuestion (tagID, questionID) values( " + 
 								tagID + "," + questionID + ")");
@@ -350,7 +284,6 @@ app.get('/getQuestion', function (req, res) {
 		"WHERE q.questionID=" + req.query.questionID, 
 
 		function (err, result, fields) {
-			console.log("Server fetched the poll from the db");
 			if(err) throw err;
 			res.json(result);
 		});
@@ -361,44 +294,36 @@ app.get('/pollList', function (req, res) {
 		"FROM PollOption po inner join Question q on po.questionID = q.questionID WHERE q.questionID='" +
 		req.query.questionID + "';", 
 		function (err, result, fields) {
-			console.log("Server fetched the poll from the db");
 			//if(err) throw err;
 			res.json(result);
 		});
 });
 
 app.get('/commentList', function (req, res) {
-	console.log("The server recieved the GET request: ");
 
 	con.query("SELECT qc.userIDAnnonymous, qc.description "+
 		"FROM QuestionComment qc WHERE " + 
 		"qc.questionID='" + req.query.questionID + "';",
 	  	function (err, result, fields) {
-	  	console.log("Server fetched the data from the db haha");
 	    if (err) throw err;
 	    res.json(result);
 	});
 });
 
 app.get('/insertComment', function (req, res) {
-	console.log("In server insert Comment");
 	var questionID = req.query.questionID;
 	var userID = req.query.userID;
 	var description = req.query.description;
 	var isAnnonymous = req.query.isAnnonymous;
 	var userIDAnnonymous = req.query.userIDAnnonymous;
 	
-	console.log("userIDannonymous in insert comment is " + userIDAnnonymous);
-
 	con.query("INSERT INTO QuestionComment (questionID, userID, description, isAnnonymous, userIDAnnonymous) " +
 			"VALUES('" + questionID + "', '" + userID + "', '" + description + "', '" + isAnnonymous + "', '" + userIDAnnonymous + "');",
 	  	function (err, result, fields) {
-	  	console.log("Inserting comment success");
 	});
 });
 
 app.get('/isFollowing', function(req, res) {
-	console.log("In server isFollowing");
 	var user1 = req.query.user1;
 	var user2 = req.query.user2;
 
@@ -413,12 +338,8 @@ app.get('/isFollowing', function(req, res) {
 });
 
 app.get('/follow', function(req, res) {
-	console.log("In server follow");
 	var currUser = req.query.currUser;
 	var userToFollow = req.query.userToFollow;
-
-	console.log("currUser: " + currUser);
-	console.log("userToFollow: " + userToFollow);
 
 	// WILL NOT WORK IF USER APPEARS MULTIPLE TIMES
 	con.query("INSERT INTO userToFollowing (mainUserID, followingUserID) " + 
@@ -431,12 +352,8 @@ app.get('/follow', function(req, res) {
 })
 
 app.get('/unfollow', function(req, res) {
-	console.log("In server follow");
 	var currUser = req.query.currUser;
 	var userToUnfollow = req.query.userToUnfollow;
-
-	console.log("currUser: " + currUser);
-	console.log("userToUnfollow: " + userToUnfollow);
 
 	// WILL NOT WORK IF USER APPEARS MULTIPLE TIMES
 	con.query("DELETE FROM userToFollowing " + 
@@ -449,16 +366,13 @@ app.get('/unfollow', function(req, res) {
 });
 
 app.get('/insertRatingValue', function (req, res) {
-	console.log("In server insert rating value ");
 	var questionID = req.query.questionID;
 	var userID = req.query.userID;
 	var ratingValue = req.query.rating;
 
-	//console.log("insert comment:", req.query.questionID);
 	con.query("INSERT INTO RatingQuestionOption (questionID, userID, rating) " +
 			"VALUES('" + questionID + "', '" + userID + "', '" + ratingValue + "');",
 	  	function (err, result, fields) {
-	  	console.log("Inserting Rating success");
 	    // if (err) throw err;
 	    //res.json(result);
 	});
@@ -466,7 +380,6 @@ app.get('/insertRatingValue', function (req, res) {
 
 
 app.get('/insertQuestionLike', function (req, res) {
-	console.log("In server insert rating value ");
 	var questionID = req.query.questionID;
 	var userID = req.query.userID;
 	var likeDislikeValue = req.query.pollLike;
@@ -478,7 +391,6 @@ app.get('/insertQuestionLike', function (req, res) {
 	con.query("INSERT INTO QuestionLike (questionID, userID, pollLike) " +
 			"VALUES('" + questionID + "', '" + userID + "', '" + likeDislikeValue + "');",
 	  	function (err, result, fields) {
-	  	console.log("Inserting like/dislike success");
 	    // if (err) throw err;
 	    //res.json(result);
 	});
@@ -486,13 +398,11 @@ app.get('/insertQuestionLike', function (req, res) {
 
 app.get('/getLike', function (req, res) {
 
-	console.log("question ID to test is " + req.query.questionID);
 
 	con.query("SELECT COUNT(*) as num " + 
 		"FROM QuestionLike ql WHERE ql.questionID='" +
 		req.query.questionID + "' and ql.pollLike = 1;", 
 		function (err, result, fields) {
-			console.log("Get number of likes succeed");
 			//if(err) throw err;
 			res.json(result);
 
@@ -504,7 +414,6 @@ app.get('/getDislike', function (req, res) {
 		"FROM QuestionLike ql WHERE ql.questionID='" +
 		req.query.questionID + "' and ql.pollLike = 0;", 
 		function (err, result, fields) {
-			console.log("Get number of dislike succeed");
 			//if(err) throw err;
 			res.json(result);
 		});
@@ -518,7 +427,6 @@ var questionID = req.query.questionID;
 		"FROM QuestionComment qc WHERE qc.questionID='" +
 		req.query.questionID + "' and qc.userID='" + req.query.userID + "';", 
 		function (err, result, fields) {
-			console.log("Server fetched the poll from the db");
 			if(err) throw err;
 			res.json(result);
 		});
@@ -532,7 +440,6 @@ var questionID = req.query.questionID;
 		"FROM RatingQuestionOption rq WHERE rq.questionID='" +
 		req.query.questionID + "' and rq.userID='" + req.query.userID + "';", 
 		function (err, result, fields) {
-			console.log("Server fetched the poll from the db");
 			if(err) throw err;
 			res.json(result);
 		});
@@ -546,36 +453,28 @@ var questionID = req.query.questionID;
 		"FROM QuestionLike ql WHERE ql.questionID='" +
 		req.query.questionID + "' and ql.userID='" + req.query.userID + "';", 
 		function (err, result, fields) {
-			console.log("Server fetched the poll from the db");
 			if(err) throw err;
 			res.json(result);
 		});
 });
 
 app.get('/UpdateRating', function (req, res) {
-// var rating = req.query.rating;
-// var userID = req.query.userID;
-// var questionID = req.query.questionID;
 
 	con.query("UPDATE RatingQuestionOption " + 
 		"SET rating='"+ req.query.rating + "' WHERE questionID='" +
 		req.query.questionID + "' and userID='" + req.query.userID + "';", 
 		function (err, result, fields) {
-			console.log("Server fetched the poll from the db");
 			if(err) throw err;
 			res.json(result);
 		});
 });
 
 app.get('/getAvgRating', function (req, res) {
-	console.log("getting average of rating");
-	console.log("==============================");
 
 	con.query("SELECT AVG(rating) as num " + 
 		"FROM RatingQuestionOption WHERE questionID='" +
 		req.query.questionID + "';", 
 		function (err, result, fields) {
-			console.log("Get AVg rating succeed");
 			//if(err) throw err;
 			res.json(result);
 		});
@@ -593,7 +492,6 @@ app.get('/UpdateVote', function (req, res) {
 		"SET pollLike='"+ likeDislikeValue + "' WHERE questionID='" +
 		req.query.questionID + "' and userID='" + req.query.userID + "';", 
 		function (err, result, fields) {
-			console.log("Server fetched the poll from the db");
 			if(err) throw err;
 			res.json(result);
 		});

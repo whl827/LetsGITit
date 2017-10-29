@@ -17,12 +17,7 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 			else{ 
 				var isAnnonymous = $scope.isAnonymousInput;
 				var userIDAnnonymous = "";
-
 				var comment =  $scope.commentInput;
-				console.log("Usr comment is " + comment);
-				console.log("Anonymous is " + isAnnonymous);
-
-
 
 				if(isAnnonymous){ userIDAnnonymous = "Anonymous";}
 				else{ userIDAnnonymous = userID; }
@@ -30,16 +25,9 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 				if(isAnnonymous){isAnnonymous = 1;}
 				else{isAnnonymous = 0;}
 
-
-
-				console.log("uuserIDAnnonymous in pollRatingCtrl" + userIDAnnonymous);
-
 				//Insert Comment Only when User haven't submitted
-				$http.get("/checkUserExist?questionID=" + questionID + "&userID=" + userID
-					)
+				$http.get("/checkUserExist?questionID=" + questionID + "&userID=" + userID)
 					.then(function (response) {
-
-						console.log("User Exist ");
 					
 						if(typeof response.data[0] == 'undefined'){
 							//&& typeof response[0].userID !== 'undefined' 
@@ -137,15 +125,12 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 			else{
 				var likeorDisLike = $scope.likeInput;
 				//like ans true and dislike as false
-				console.log("Poll like/dislike value is " + likeorDisLike);
 				//var userID = 1; //needs to be the current logged in User 
 
 				//Check if user already voted
 				$http.get("/checkUserVoted?questionID=" + questionID + "&userID=" + userID
 					)
 					.then(function (response) {
-						console.log("================checking Vote=============")
-						console.log(typeof response.data[0] == 'undefined');
 						if(typeof response.data[0] == 'undefined'){
 							//&& typeof response[0].userID !== 'undefined' 
 

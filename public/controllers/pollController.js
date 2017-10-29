@@ -1,9 +1,7 @@
 angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies', '$routeParams', function($scope, $http, $cookies, $routeParams) {
 	
-	console.log("inside of poll controller"); 
 	var userID = $cookies.get("userID");
 	var questionID = $routeParams.questionID;
-	console.log("question ID is " + questionID);
 	var getPoll = true; //check if poll is selected
 	//when true, get info from database
 	//getting information from search page (Home)
@@ -12,10 +10,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 //Set Question ID as URL, and read it when pulling poll / rating information 
 
 	if (getPoll) {
-		console.log("getting poll");
 		$http.get('/getQuestion?questionID=' + questionID).then(function (response) {
-			console.log("Got poll info");
-			console.log(response.data[0]);
 			$scope.title = response.data[0].title;
 			$scope.userID = response.data[0].userID;
 			$scope.description = response.data[0].description;
@@ -27,7 +22,6 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 			if($scope.isAnonymous == 1){
 				
 				$scope.username = "ANONYMOUS";
-				//console.log("ANONYMOUS: " + $scope.username);
 			}else{
 				$scope.username = response.data[0].username;
 			}
@@ -39,7 +33,6 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 			}else{
 				$scope.endDate = response.data[0].endDate;
 			}
-			console.log("End DATE::::: " + $scope.endDate);
 		
 			if(response.data.length == 0){
 				console.log("response = 0");
@@ -49,14 +42,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 		});
 
 		$http.get('/getLike?questionID=' + questionID).then(function (response) {
-			console.log("============Likedata============");
-			// console.log("response.data[0]" + response.data[0]);
-			// console.log("esponse.data" + response.data);
-			// console.log("esponse.data.num" +response.data.num);
-			// console.log("esponse.data[0].num" +response.data[0].num); -> Only this works 
-
 			$scope.totalLikeCount = response.data[0].num;
-			// console.log("Total like in pollcontroller is " + totalLikeCount);
 
 		}, function (response) {
 			console.log("Error");
@@ -77,9 +63,6 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 		}, function (response) {
 			
 		});	
-
-		console.log("question ID is " + questionID);
-
 		$http.get('/pollList?questionID=' + questionID).then(function (response) {
 			$scope.pollList = response.data;
 		}, function (response) {
