@@ -5,7 +5,7 @@ angular.module("KnowItAll").controller('signUpController', ['$scope', '$http', '
     $scope.signupFunction = function () {
     	console.log("In get query function, username: " + $scope.signupUsername);
     	console.log("in get query, function, passwrd: " + $scope.signupPassword);
-    	var passwordHash = $scope.signupPassword.hashCode();
+    	var passwordHash = hashCode($scope.signupPassword);
     	var username = $scope.signupUsername;
     	var signupEmail = $scope.signupEmail;
 
@@ -26,19 +26,16 @@ angular.module("KnowItAll").controller('signUpController', ['$scope', '$http', '
 	    		console.log("user does not exist in database");
 
 	    		$cookies.put("newUsername", username);
-	    		$cookies.put("newPasswordHash", passwordHash);
-
-	    		$scope.signupErrorMessage = "Please check your email in order to complete your registration";	
+	    		$cookies.put("newPasswordHash", passwordHash);	
 
 	    		console.log("Sending Email");
-
 
 	    		$http.get("/sendEmail?newUsername=" + username + 
 	    			"&newPasswordHash=" + passwordHash +
 	    			"&newEmail=" + signupEmail).then(function (response) {
 	    				$scope.signupErrorMessage = "Email sent";
 	    			}, 
-	    			function (respons) {
+	    			function (response) {
 	    				console.log("Failed to send email");
 	    				$scope.signupErrorMessage = "Failed to send email, invalid address";
 	    			}
@@ -48,7 +45,7 @@ angular.module("KnowItAll").controller('signUpController', ['$scope', '$http', '
 	    	else {
 	    		//user exists already
 	    		console.log(response.data);
-	    		$scope.signupErrorMessage = "The username exists";	
+	    		$scope.signupErrorMessage = "This username already exists";	
 	    	}
 	    },
 	    function (res) {
