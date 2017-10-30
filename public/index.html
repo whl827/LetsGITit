@@ -82,11 +82,10 @@
 
 		<div class="search-bar-container row">
 
-			<select id = "drop_down" class = "drop-down-menu">
-
+			<select class = "drop-down-menu" id="TagUserDropDown">
 				<option class="options" value="Any Text">Any Text</option>
-				<option class="options" value="Tags">Tags</option>
-				<option class="options" value="User">User</option>
+				<option class="options" value="Tags" id="DropDownSelectTag">Tags</option>
+				<option class="options" value="User" id="DropDownSelectUser">User</option>
 			</select>
 
 			<input type="text" class="search-bar form-control" id="searchTextField" placeholder="Search" aria-describedby="basic-addon1" ng-model="query">
