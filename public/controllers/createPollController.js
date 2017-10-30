@@ -149,6 +149,11 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 
 			    	else{
 			    		// Insert data into SQL
+						if(openForever == 'true'){
+							openForever = 1;
+						}
+						else{openForever = 0;}
+
 						$http.get('/insertPoll?title=' + title + 
 							  "&subTitle=" + subtitle +
 							  "&description=" + description +

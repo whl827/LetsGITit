@@ -152,8 +152,8 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 							},function (response) {
 							    	console.log("Error");
 							});
-								$route.reload();
-								//$scope.errorMessageLike = "Already voted. Edit vote to " + likeorDisLike;
+								//$route.reload();
+								$scope.errorMessageLike = "Already voted. Updat vote value to " + likeorDisLike;
 
 						}
 					},function (response) {

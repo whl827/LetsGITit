@@ -182,7 +182,7 @@ app.get('/insertPoll', function (req, res) {
 	//insert options
 	con.query("SELECT questionID from Question where title='" + req.query.title.trim() + "'",
 		function (err, result, fields) {			
-			var questionID =  result[0].questionID;
+			var questionID =  result[0].questionID; // Undefined 
 
 			//connect user to question
 			con.query("INSERT INTO userToQuestion(userID, questionID) values( " +
@@ -230,7 +230,7 @@ app.get('/insertPoll', function (req, res) {
 
 app.get('/insertRating', function (req, res) {
 
-
+	
 
 	// insert the questions
 	con.query("INSERT INTO Question(userID, isPoll, title, subtitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
