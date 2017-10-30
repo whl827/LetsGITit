@@ -21,6 +21,7 @@ insert into KUser(username, passwordHash) values
 insert into Tag(tagStr) values ("t1");
 insert into Tag(tagStr) values ("t2");
 insert into Tag(tagStr) values ("t3");
+insert into Tag(tagStr) values ("t4");
 
 insert into Question(userID, isPoll, title, subTitle, description, totalVotes, isAnonymous) 
 values (

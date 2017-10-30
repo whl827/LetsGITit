@@ -106,7 +106,3 @@ create table userToFollowers(
     foreign key fk1(mainUserID) references KUser(userID),
     foreign key fk2(followerUserID) references KUser(userID)
 );
-
--- I need to insert one dummy tag in order for my SQL command to work
-insert into tag (tagStr) 
-values('dummy');

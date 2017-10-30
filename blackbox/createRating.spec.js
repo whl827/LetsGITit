@@ -1,15 +1,13 @@
 
 describe('Create Poll Page', function(){
 
-    var create_button;
-    var error_message;
+    var create_button = element(by.id('createButtonInRating'));
+    var error_message = element(by.id("errorMessageTextRating"));
 
 	beforeEach(function (){
 
         //go to poll page before each case starts
         browser.get('http://localhost:8080/#!/createRating');
-        create_button = element(by.id('createButtonInRating'));
-        error_message = element(by.id("errorMessageTextRating"));
 
         browser.manage().addCookie({name:'username', value: 'user2'});
         browser.manage().addCookie({name:'userID', value: '2'});
@@ -235,5 +233,8 @@ describe('Create Poll Page', function(){
 
     });
 
+    afterEach( function () {
+        browser.manage.deleteAllCookies();
+    });
 
 });
