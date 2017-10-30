@@ -29,6 +29,7 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 
 				$cookies.put('username', newUsername);
 			    $cookies.put('userID', newUserID);
+			    $scope.errorMessage = "Successfully logged in";
 	    		//$window.location.href = '../index.html';
 	    	}
 	    },
