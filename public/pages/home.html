@@ -46,7 +46,7 @@
 			<tbody ng-controller= "FeedCtrl" >
 
 				<tr class="" ng-repeat="question in questionList" ng-click="goToLink(question)">
-					<td>{{question.title}}</td>
+					<td id="current-question-title">{{question.title}}</td>
 					<td>{{question.subtitle=="undefined" ? "" : question.subtitle}}</td>
 					<td>{{question.description=="undefined" ? "" : question.description}} </td>
 					<td><span>{{question.isPoll ? 'Poll' : 'Rating'}}</span> </td>
@@ -75,7 +75,7 @@
 				</thead>
 				<tbody>
 					<tr class="" ng-repeat="user in userList" ng-click="goToUser(user.username)">
-						<td>{{user.username}}</td>
+						<td id="current-user">{{user.username}}</td>
 					</tr>
 				</tbody>
 			</table>

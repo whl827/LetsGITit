@@ -30,12 +30,13 @@
 	<input type="text" placeholder="Please Use Comma Separated Tags When Submitting (i.e T1, T2)" class="form-control" ng-model="tagInput">
 	<br>
 
-	<input type="submit" 
+	<input type="submit"
+			id="createButtonInRating" 
 		   value="CREATE"
 		   class = "create-button"
 		   ng-click="createRating()"
 	>
 
-	<p>{{errorMessage}}</p>
+	<p id="errorMessageTextRating">{{errorMessage}}</p>
 
 </form>

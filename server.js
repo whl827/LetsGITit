@@ -153,11 +153,19 @@ app.get('/insertUser', function (req, res) {
 app.get('/profile', function (req, res) {
 	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes  " + 
 		"FROM KUser u, Question q, UserToQuestion uq WHERE u.username='" +
-		req.query.username + "' AND uq.userID = u.userID AND uq.questionID = q.questionID;", 
+		req.query.username + "' AND uq.userID = u.userID AND uq.questionID = q.questionID ORDER BY q.startDate desc, q.questionID desc;", 
 		function (err, result, fields) {
 			if(err) throw err;
 			res.json(result);
 		});
+});
+
+app.get('/checkExistingTitle', function (req, res){
+	//insert the questions
+	con.query("SELECT * FROM Question where title ='" + req.query.title + "'",
+		function (err, result, fields) {
+		res.json(result);
+	});
 });
 
 

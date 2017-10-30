@@ -29,7 +29,7 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 
 				$cookies.put('username', newUsername);
 			    $cookies.put('userID', newUserID);
-	    		//$window.location.href = '../index.html';
+	    		$window.location.href = '../index.html';
 	    	}
 	    },
 	    function (res) {

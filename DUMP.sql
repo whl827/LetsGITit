@@ -12,7 +12,7 @@ create table Question (
 	questionID int(8) primary key auto_increment,
     userID int(8) not null,
     isPoll boolean not null,
-    title varchar(20) not null,
+    title varchar(50) not null,
     subTitle varchar(50),
     description varchar(500),
     startDate datetime not null default now(),

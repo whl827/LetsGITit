@@ -71,28 +71,44 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 			}
 		} 
 		else { // allfields successfully filled in
-			// Insert data into SQL
-			$http.get('/insertRating?title=' + title + 
-				 "&subTitle=" + subtitle +
-				  "&description=" + description +
-				  "&userID=" + userID +
-				  "&endDate=" + endDate +
-				  "&isAnonymous=" + isAnonymous +
-				  "&tagArray[]=" + tagArray
-				  ).then(function (response) {
-	    	$window.location.href = '../index.html';
-	    	
-	    	if(response.data.length == 0){
-	    		console.log("response = 0");
-	    	} 
-	    	else {
-	    		console.log(response.data);
-	    	}
-		    },
-		    function (res) {
-		    	console.log("user NOT received from creating rating");
-		    });
-		}
- }
 
+
+			//check if title exsits
+			$http.get('/checkExistingTitle?title='+title
+				).then(function (response){
+			    	if(response.data.length != 0){
+			    		console.log("TITLE EXISTS");
+			    		$scope.errorMessage = "Title already exists. Please choose another one.";
+			    		return;
+			    	}
+
+			    	else{
+						// Insert data into SQL
+						$http.get('/insertRating?title=' + title + 
+							 "&subTitle=" + subtitle +
+							  "&description=" + description +
+							  "&userID=" + userID +
+							  "&endDate=" + endDate +
+							  "&isAnonymous=" + isAnonymous +
+							  "&tagArray[]=" + tagArray
+							  ).then(function (response) {
+				    	$window.location.href = '../index.html';
+				    	
+				    	if(response.data.length == 0){
+				    		console.log("response = 0");
+				    	} 
+				    	else {
+				    		console.log(response.data);
+				    	}
+					    },
+					    function (res) {
+					    	console.log("user NOT received from creating rating");
+					    });
+			    	}
+			    },
+			    function (res) {
+			    	console.log("did not recevie from check exsitn title");
+		   		});
+		}
+ 	}
 }]);

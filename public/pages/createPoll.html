@@ -2,7 +2,7 @@
 <form class="create-survey-container" ng-controller="CreatePollCtrl">
 
 	<p> Title </p>
-	<input type="text" class="form-control" name="title" ng-model="pollTitleInput">
+	<input id = "pollTitle" type="text" class="form-control" name="title" ng-model="pollTitleInput">
 	<br>
 
 	<p> Subtitle </p>
@@ -69,14 +69,13 @@
 
 
 	<input type="submit" 
+			id="createButtonInPoll"
 		   value="CREATE"
 		   class = "create-button"
 		   ng-click="createPoll()"
 	>
 
 
-	<p class="error-message">{{errorMessage}}</p>
-
-	<p id="vienfusdkfsnb" value="testValue">TESTVALUE</p>
+	<p id="errorMessageText" class="error-message">{{errorMessage}}</p>
 
 </form>
