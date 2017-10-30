@@ -157,7 +157,7 @@ describe('Create Poll Page', function(){
         //get instances of search button, textfield and drop down
         var search_button = element(by.id('searchButton'));
         var search_textField = element(by.id('searchTextField'));
-        var drop_down_menu = element(by.id("drop_down"));
+        var drop_down_menu = element(by.id("TagUserDropDown"));
         
         //select the drop box, write on textfield, click search button
         drop_down_menu.sendKeys("User");
@@ -195,7 +195,7 @@ describe('Create Poll Page', function(){
         //get instances of search button, textfield and drop down
         var search_button = element(by.id('searchButton'));
         var search_textField = element(by.id('searchTextField'));
-        var drop_down_menu = element(by.id("drop_down"));
+        var drop_down_menu = element(by.id("TagUserDropDown"));
         
         //select the drop box, write on textfield, click search button
         drop_down_menu.sendKeys("Tags");
