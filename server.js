@@ -38,7 +38,6 @@ app.get('/searchQuestionsAnyText', function (req, res) {
 		"q.subTitle LIKE '%" + req.query.tagQuery + "%' or " + 
 		"q.description LIKE '%" + req.query.tagQuery + "%' order by positiveVotes desc;",
 	  function (err, result, fields) {
-	  	console.log("Server fetched the questionList from the db");
 	    if (err) throw err;
 	    res.json(result);
 	});
@@ -50,7 +49,7 @@ app.get('/searchQuestions', function (req, res) {
 	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
 		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
 		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
-		" tq.questionID = q.questionID Order by positiveVotes desc;",
+		" tq.questionID = q.questionID",
 	  function (err, result, fields) {
 	    if (err) throw err;
 	    res.json(result);
