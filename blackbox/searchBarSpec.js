@@ -29,6 +29,7 @@ describe('Search Testing\n', function () {
 
 	it('Click search with invalid tag query of "invalidTag", num elements should be 0 \n', function () {
 		queryTextFeild.sendKeys('invalidTag');
+		DropDownSelectTag.click();
 		searchButton.click();
 		expect(resultsTableQuery.count()).toEqual(0);
 	});
@@ -107,6 +108,24 @@ describe('Search Testing\n', function () {
 		expect(resultsTableUser.count()).toEqual(1);
 		resultsTableUser.first().click();
 	});
+
+	it('Search for t1 and click on poll1 when logged out\n', function () {
+		browser.manage().deleteAllCookies();
+		queryTextFeild.sendKeys('t1');
+		DropDownSelectTag.click();
+		searchButton.click();
+		resultsTableQuery.first().click();
+		expect(browser.getCurrentUrl()).toContain('poll');
+	})
+
+	it('Load the home page while logged in\n', function () {
+		expect(resultsTableQuery.count() != 0).toBeTruthy();
+	})
+
+	it('Load the home page while logged out\n', function () {
+		browser.manage().deleteAllCookies();
+		expect(resultsTableQuery.count() != 0).toBeTruthy();
+	})
 
 	afterEach( function () {
 		browser.manage().deleteAllCookies();
