@@ -234,7 +234,7 @@ describe('Create Poll Page', function(){
     });
 
     afterEach( function () {
-        browser.manage.deleteAllCookies();
+        browser.manage().deleteAllCookies();
     });
 
 });

@@ -12,8 +12,8 @@ create table Question (
 	questionID int(8) primary key auto_increment,
     userID int(8) not null,
     isPoll boolean not null,
-    title varchar(50) not null,
-    subTitle varchar(50),
+    title varchar(200) not null,
+    subTitle varchar(200),
     description varchar(500),
     startDate datetime not null default now(),
     endDate datetime,
@@ -37,7 +37,7 @@ create table QuestionComment (
 create table PollOption (
 	pollOptionID int(8) primary key auto_increment,
     questionID int(8) not null,
-    title varchar(20) not null,
+    title varchar(200) not null,
     votes int(8) not null,
 	foreign key fk1(questionID) references Question(questionID)
 );
@@ -53,7 +53,7 @@ create table RatingQuestionOption (
 
 create table Tag(
 	tagID int(8) primary key auto_increment,
-    tagStr varchar(50) not null
+    tagStr varchar(200) not null
 );
 
 create table TagToQuestion (
