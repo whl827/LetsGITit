@@ -4,7 +4,7 @@
 	
 	<p> Created by {{username}} </p>
 	<p> (description) {{description}} </p>
-	<p> Closes on {{ endDate=="Open Forever" ?
+	<p id = "closes_on_rating" > Closes on {{ endDate=="Open Forever" ?
 						 endDate : (endDate | date: 'yyyy-MM-dd')}} </p>
 
 </form>

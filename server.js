@@ -170,11 +170,10 @@ app.get('/checkExistingTitle', function (req, res){
 
 
 app.get('/insertPoll', function (req, res) {
-
 	//insert the questions
 	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
 		"values(" + req.query.userID + "," + 1 + ", '" + req.query.title.trim() + "' , '" + req.query.subTitle.trim() + "', '" + req.query.description.trim() 
-		+ "', '" + req.query.endDate + "', " + 0 + "," + 0 + "," + req.query.isAnonymous + ")",
+		+ "', '" + req.query.endDate + "' , " + 0 + "," + 0 + "," + req.query.isAnonymous + ")",
 
 		function (err, result, fields) {
 		});
@@ -207,7 +206,6 @@ app.get('/insertPoll', function (req, res) {
 							"WHERE tagStr = '" + tagArray[i].trim() + "') LIMIT 1");
 				}
 			};
-
 			//connect tags and question
 			for (var i = 0; i < tagArray.length; i++) {
 				
@@ -222,15 +220,68 @@ app.get('/insertPoll', function (req, res) {
 					});
 				}
 			};
+			res.json(result);
+	});
 
+});
+
+app.get('/insertPollWithoutEndDate', function (req, res) {
+	//insert the questions
+	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
+		"values(" + req.query.userID + "," + 1 + ", '" + req.query.title.trim() + "' , '" + req.query.subTitle.trim() + "', '" + req.query.description.trim() 
+		+ "', " + req.query.endDate + ", " + 0 + "," + 0 + "," + req.query.isAnonymous + ")",
+
+		function (err, result, fields) {
+		});
+
+	//insert options
+	con.query("SELECT questionID from Question where title='" + req.query.title.trim() + "'",
+		function (err, result, fields) {			
+			var questionID =  result[0].questionID;
+
+			//connect user to question
+			con.query("INSERT INTO userToQuestion(userID, questionID) values( " +
+			req.query.userID + "," + questionID + ")");
+			//insert all options
+			var optionArray = req.query.optionArray[0].split(",");
+			for(var i=0; i<optionArray.length; i++){
+				con.query("INSERT INTO pollOption(questionID, title, votes) values (" +
+				questionID + " , '" + optionArray[i].trim() + " ', " + 0 + ")");
+			}
+
+			//split tags by comma an insert
+			var tagArray = req.query.tagArray[0].split(",");
+
+			//insert tags (only if it doesnt exists in tag table already)
+			for (var i = 0; i < tagArray.length; i++) {
+
+				if(tagArray[i].trim() != 'null' && tagArray[i].trim() != ""){
+					con.query("INSERT INTO Tag (tagStr) " +
+							"SELECT '" + tagArray[i].trim() + "' " +
+							"FROM tag WHERE NOT EXISTS( SELECT tagStr FROM tag " +
+							"WHERE tagStr = '" + tagArray[i].trim() + "') LIMIT 1");
+				}
+			};
+			//connect tags and question
+			for (var i = 0; i < tagArray.length; i++) {
+				
+				if(tagArray[i].trim() != 'null' && tagArray[i].trim() != ""){
+					con.query("Select tagID from Tag where tagStr = '" +
+					tagArray[i].trim() + "'",
+					function (err, result, fields) {
+						var tagID = result[0].tagID;
+
+						con.query("INSERT INTO TagToQuestion (tagID, questionID) values( " + 
+								tagID + "," + questionID + ")");
+					});
+				}
+			};
 			res.json(result);
 	});
 
 });
 
 app.get('/insertRating', function (req, res) {
-
-
 
 	// insert the questions
 	con.query("INSERT INTO Question(userID, isPoll, title, subtitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
@@ -274,7 +325,6 @@ app.get('/insertRating', function (req, res) {
 						con.query("INSERT INTO TagToQuestion (tagID, questionID) values( " + 
 								tagID + "," + questionID + ")");
 					
-
 					});
 				}
 			};
@@ -283,6 +333,64 @@ app.get('/insertRating', function (req, res) {
 			
 	});
 });
+
+app.get('/insertRatingWithoutEndDate', function (req, res) {
+
+	// insert the questions
+	con.query("INSERT INTO Question(userID, isPoll, title, subtitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
+		"values(" + req.query.userID + "," + 0 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '"+ req.query.description 
+		+ "', " + req.query.endDate + ", " + 0 + "," + 0 + "," + req.query.isAnonymous + ")", 
+		function (err, result, fields) {
+		});
+	//insert the questions
+	con.query("SELECT questionID from Question where title='" + req.query.title + "'",
+		function (err, result, fields) {
+			var questionID =  result[0].questionID;
+			//con.query("INSERT INTO RatingQuestionOption(questionID) values (" + questionID + ") ");
+
+			//connect user to question
+			con.query("INSERT INTO userToQuestion(userID, questionID) values( " +
+			req.query.userID + "," + questionID + ")");
+
+			//split tags by comma an insert
+			var tagArray = req.query.tagArray[0].split(",");
+
+			//insert tags (only if it doesnt exists in tag table already)
+			for (var i = 0; i < tagArray.length; i++) {
+
+				if(tagArray[i].trim() != 'null' && tagArray[i].trim() != ""){
+					con.query("INSERT INTO Tag (tagStr) " +
+							"SELECT '" + tagArray[i].trim() + "' " +
+							"FROM tag WHERE NOT EXISTS( SELECT tagStr FROM tag " +
+							"WHERE tagStr = '" + tagArray[i].trim() + "') LIMIT 1");
+				}
+			};
+
+			//connect tags and question
+			for (var i = 0; i < tagArray.length; i++) {
+				
+				if(tagArray[i].trim() != 'null' && tagArray[i].trim() != ""){
+					con.query("Select tagID from Tag where tagStr = '" +
+					tagArray[i].trim() + "'",
+					function (err, result, fields) {
+						var tagID = result[0].tagID;
+
+						con.query("INSERT INTO TagToQuestion (tagID, questionID) values( " + 
+								tagID + "," + questionID + ")");
+					
+					});
+				}
+			};
+		res.json(result);
+
+			
+	});
+});
+
+
+
+
+
 
 app.get('/getQuestion', function (req, res) {
 	//fixed con qeury

@@ -1,5 +1,19 @@
 angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies', '$routeParams', function($scope, $http, $cookies, $routeParams) {
 	
+
+
+	function twoDigits(d) {
+	    if(0 <= d && d < 10) return "0" + d.toString();
+	    if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+	    return d.toString();
+	}
+
+	Date.prototype.toMysqlFormat = function() {
+    	return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
+	};
+
+
+
 	var userID = $cookies.get("userID");
 	var questionID = $routeParams.questionID;
 	var getPoll = true; //check if poll is selected
@@ -13,8 +27,12 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 		$http.get('/getQuestion?questionID=' + questionID).then(function (response) {
 			$scope.title = response.data[0].title;
 			$scope.userID = response.data[0].userID;
-			$scope.description = response.data[0].description;
-
+			
+			$scope.description = null;
+			if(response.data[0].description != 'undefined'){
+				$scope.description = response.data[0].description;
+							
+			}
 
 			$scope.isAnonymous = response.data[0].isAnonymous;
 			$scope.username = null;
@@ -27,11 +45,25 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 			}
 
 			$scope.endDate = null;
-			if(response.data[0].endDate == "0000-00-00 00:00:00" ||
-				response.data[0].endDate == null){
+			if(response.data[0].endDate == null){
 				$scope.endDate = "(Open Forever)";
 			}else{
-				$scope.endDate = response.data[0].endDate;
+
+				//get current time
+				var date = new Date().toMysqlFormat();
+				//convert close time to match convert time format
+				var closeDate = (response.data[0].endDate).replace(".000Z", "");
+				var finalCloseDate = closeDate.replace("T", " ");
+				console.log("now date: " + date);
+				console.log("close date: " + finalCloseDate);
+				//compare and check
+				if(date < finalCloseDate){
+					console.log("ITS NOT CLOSED YET");
+					$scope.endDate = response.data[0].endDate;
+				}else{
+					console.log("IT' CLOSED");
+					$scope.endDate = "(CLOSED)";
+				}
 			}
 		
 			if(response.data.length == 0){

@@ -1,6 +1,24 @@
 angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cookies', '$routeParams', '$location', function($scope, $http, $cookies, $routeParams, $location) {
 	
 
+
+
+
+	function twoDigits(d) {
+	    if(0 <= d && d < 10) return "0" + d.toString();
+	    if(-10 < d && d < 0) return "-0" + (-1*d).toString();
+	    return d.toString();
+	}
+
+	Date.prototype.toMysqlFormat = function() {
+    	return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
+	};
+
+
+
+
+
+
 	var questionID = $routeParams.questionID;
 	var userID = $cookies.get("userID");
 	var getRating = true;
@@ -22,11 +40,26 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			}
 			
 			$scope.endDate = null;
-			if(response.data[0].endDate == "0000-00-00 00:00:00" ||
-				response.data[0].endDate == null){
+			if(response.data[0].endDate == null){
 				$scope.endDate = "(Open Forever)";
 			}else{
-				$scope.endDate = response.data[0].endDate;
+				
+				//get current time
+				var date = new Date().toMysqlFormat();
+				//convert close time to match convert time format
+				var closeDate = (response.data[0].endDate).replace(".000Z", "");
+				var finalCloseDate = closeDate.replace("T", " ");
+				console.log("now date: " + date);
+				console.log("close date: " + finalCloseDate);
+				//compare and check
+				if(date < finalCloseDate){
+					console.log("ITS NOT CLOSED YET");
+					$scope.endDate = response.data[0].endDate;
+				}else{
+					console.log("IT' CLOSED");
+					$scope.endDate = "(CLOSED)";
+				}
+
 			}
 			if(response.data.length == 0){
 				console.log("response = 0");
