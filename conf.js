@@ -6,7 +6,7 @@ exports.config = {
   'blackbox/login.spec.js',
   'blackbox/searchBar.spec.js',
   'blackbox/createPoll.spec.js',
-  'blackbox/createRating.spec.js'
+  'blackbox/createRating.spec.js',
   'blackbox/pollRating.spec.js'
   ]
 }
