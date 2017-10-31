@@ -160,7 +160,7 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 
 			    	else{
 
-
+			    		// Insert data into SQL
 						if(endDate == null)
 						{		
 				    		// Insert data into SQL

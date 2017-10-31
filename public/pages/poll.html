@@ -1,10 +1,10 @@
-<h2 class="heading">Title of Poll {{title}}</h2>
+<h2 class="heading" id = "title">Title of Poll {{title}}</h2>
 
 <form class="display-survey-container" ng-controller= "PollCtrl" >
 
-	<p> Created by {{username}} </p>
-	<p> (description) {{description}} </p>
-	<p> Closes on {{ endDate=="Open Forever" ?
+	<p id = "username"> Created by {{username}} </p>
+	<p id = "description"> (description) {{description}} </p>
+	<p id = "endDate"> Closes on {{ endDate=="Open Forever" ?
 						 endDate : (endDate | date: 'yyyy-MM-dd')}} </p>
 
 </form>
@@ -30,22 +30,22 @@
 <!-- ADD: like/dislike, rating, and comment are only for logged in user -->
 
 <!-- Show Number of Lies and Dislikes -->
-<p> Likes: {{totalLikeCount}} </p>
-<p> Dislikes: {{totalDislikeCount}} </p>
+<p id = "numLikes"> Likes: {{totalLikeCount}} </p>
+<p id = "numDislikes"> Dislikes: {{totalDislikeCount}} </p>
 
 <!-- Like/Dislike -->
 <form ng-controller= "pollRatingCtrl">	
 	<label>
-		<input ng-model="likeInput" type="radio" name="dis/like" value="true" />
+		<input id= "likeRadioButton" ng-model="likeInput" type="radio" name="like" value="true" />
 		<img src="img/like.png" width="50" height="50">
 	</label>
 
 	<label>
-		<input ng-model="likeInput" type="radio" name="dis/like" value="false" />
+		<input id = "dislikeRadioButton" ng-model="likeInput" type="radio" name="dislike" value="false" />
 		<img src="img/dislike.png" width="50" height="50">
-		<input type="submit" value="submit" ng-click="selectLikeOrDislike()">
+		<input id = "LikeDislikeButton" type="submit" value="submit" ng-click="selectLikeOrDislike()">
 	</label>
-	<p>{{errorMessageLike}}</p>
+	<p id = "LikeDislikeErrorMessage">{{errorMessageLike}}</p>
 
 </form>
 
@@ -53,24 +53,24 @@
 <form ng-controller= "pollRatingCtrl">	
 
 	<h5> Comment Anonymously </h5>
-	<input type="checkbox" name="anonymous" ng-model="isAnonymousInput">
+	<input id="anonymous" type="checkbox" name="anonymous" ng-model="isAnonymousInput">
 	<br>
 	<h5> Comments: </h5>
 	<textarea ng-model="commentInput" rows="4" cols="30"></textarea>
-	<input type="submit" value="submit" ng-controller= "PollCtrl" ng-click="createComment()">
+	<input id = "CommentButton" type="submit" value="submit" ng-controller= "PollCtrl" ng-click="createComment()">
 	<br>
-	<p>{{errorMessageComment}}</p>
+	<p id = "CommentErrorMessage">{{errorMessageComment}}</p>
 	<br>
 
 </form>
-<p>Total comments: {{totalComment}} </p>
+<p id = "totalComment">Total comments: {{totalComment}} </p>
 <form ng-controller= "PollCtrl">	
 
 	<div ng-controller="PollCtrl" >
 		<p ng-repeat="comment in commentList">
 			------------------------------ <br>
-			{{comment.userIDAnnonymous}} <br>
-			{{comment.description}} <br>
+		<p id = "commentUserID"> {{comment.userIDAnnonymous}} </p><br>
+		<p id = "commentDescription"> {{comment.description}} </p><br>
 			------------------------------ <br>
 		</p>
 	</div>
