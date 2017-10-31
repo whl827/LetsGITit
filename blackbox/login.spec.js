@@ -59,6 +59,28 @@ describe('Login Testing\n', function () {
 		});
 	});
 
+	it('Login as user 1 while logged in as user 1, expect same cookies\n', function() {
+		loginAsUser1();
+		// To make sure login function is working
+		browser.manage().getCookie('username').then(function (cookie) {
+			expect(cookie.value).toBe('user1');
+		});
+		browser.manage().getCookie('userID').then(function (cookie) {
+			expect(cookie.value).toBe('1');
+		});
+
+		usernameTextFeild.sendKeys('user1');
+		passwordTextFeild.sendKeys('pwd');
+		loginButton.click();
+
+		browser.manage().getCookie('username').then(function (cookie) {
+			expect(cookie.value).toBe('user1');
+		});
+		browser.manage().getCookie('userID').then(function (cookie) {
+			expect(cookie.value).toBe('1');
+		});
+	});
+
 	afterEach(function () {
 		browser.manage().deleteAllCookies();
 	})

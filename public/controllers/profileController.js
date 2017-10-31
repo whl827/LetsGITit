@@ -2,6 +2,8 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 	var username = null;
 	var loggedIn = true;
 
+	console.log("In profile controller");
+
 	if ($cookies.get("user") != null) {
 		username = $cookies.get("username");
 	} else {
@@ -11,6 +13,8 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 	
 	if (loggedIn) {
 	
+		console.log("You are logged in");
+
 		$http.get('/profile?username=' + username).then(function (response) {
 		$scope.questionList = response.data;
 		}, function (response) {
