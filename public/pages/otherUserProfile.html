@@ -1,16 +1,16 @@
 <div ng-controller="otherUserProfile">
 
-	<h1> Other User Profile Page </h1>
+	<h1 id="othersProfileTitle"> Other User Profile Page </h1>
 
 	<div ng-switch="isLoggedIn">
 		<div ng-switch-when="true">
 			
-			<div ng-switch="isFollowing">
-				<div ng-switch-when="true">
-					<button ng-click="unfollow()">UnFollow</button>
+			<div id="btnContainer" ng-switch="isFollowing">
+				<div id="btnDiv" ng-switch-when="true">
+					<button id="unfollowBtn" ng-click="unfollow()">UnFollow</button>
 				</div>
-				<div ng-switch-default>
-					<button ng-click="follow()">Follow</button>
+				<div id="btnDiv2" ng-switch-default>
+					<button id="followBtn" ng-click="follow()">Follow</button>
 				</div>
 			</div>
 
@@ -50,7 +50,7 @@
 			</table>
 
 		</div>
-		<div id="errorMessage" ng-switch-default>
+		<div id="userProfileError" ng-switch-default>
 			You are not logged in
 		</div>
 	</div>
