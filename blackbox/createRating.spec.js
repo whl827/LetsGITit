@@ -124,7 +124,7 @@ describe('Create Poll Page', function(){
 
         var insertedTitle = element(by.repeater('question in questionList').
         row(0).column('question.title'));
-        expect(insertedTitle.getText()).toEqual('My New Rating Title');;
+        expect(insertedTitle.getText()).toEqual('My New Rating Title');
 
         var insertedDescription = element(by.repeater('question in questionList').
         row(0).column('question.description'));

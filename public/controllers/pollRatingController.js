@@ -1,14 +1,12 @@
 angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$cookies', '$routeParams', '$route', function($scope, $http, $cookies, $routeParams, $route) {
 	
-	var userID = $cookies.get("userID");
 	var questionID = $routeParams.questionID;
-
-
-	console.log("userID is " + userID);
 
 	$scope.createComment = function(){
 
-		if(userID != -1 && typeof(userID) !== 'undefined'){
+		var userID = $cookies.get("userID");
+
+		if(userID !== -1 && typeof(userID) !== 'undefined'){
 			var validComment = validate($scope.commentInput); 
 
 			if(!validComment){
@@ -60,7 +58,9 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 
 	$scope.selectRate = function(){
 
-		if(userID != -1 && typeof(userID) !== 'undefined'){
+		var userID = $cookies.get("userID");
+
+		if(userID !== -1 && typeof(userID) !== 'undefined'){
 
 			var validRating = validate($scope.rateInput); 
 
@@ -89,7 +89,7 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 							$route.reload();
 
 						}else {
-							$scope.errorMessageRate = "Already Rated. Edit rating value to " + ratingValue;
+							
 
 							$http.get("/UpdateRating?questionID=" + questionID + "&userID=" + userID
 								+ "&rating=" + ratingValue)
@@ -99,7 +99,9 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 							    	console.log("Error");
 							});
 
-							$route.reload();
+							$scope.errorMessageRate = "Already rated. Updating your rating" ;
+
+							//$route.reload();
 
 
 						}
@@ -115,7 +117,9 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 
 	$scope.selectLikeOrDislike = function(){
 
-		if(userID != -1 && typeof(userID) !== 'undefined'){
+		var userID = $cookies.get("userID");
+
+		if(userID !== -1 && typeof(userID) !== 'undefined'){
 
 			var validLike = validate($scope.likeInput); 
 
@@ -153,7 +157,7 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 							    	console.log("Error");
 							});
 								//$route.reload();
-								$scope.errorMessageLike = "Already voted. Updat vote value to " + likeorDisLike;
+								$scope.errorMessageLike = "Already voted. Updating your like/dislike";
 
 						}
 					},function (response) {
