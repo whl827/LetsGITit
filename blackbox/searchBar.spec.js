@@ -35,7 +35,7 @@ describe('Search Testing\n', function () {
 	});
 
 	it('Click search with invalid user query of "invalidUser", num elements 0 \n', function () {
-		queryTextFeild.sendKeys('invalidUser');
+		queryTextFeild.sendKeys('t1');
 		DropDownSelectUser.click();
 		searchButton.click();
 		expect(resultsTableUser.count()).toEqual(0);

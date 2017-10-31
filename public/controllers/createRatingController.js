@@ -26,9 +26,35 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 		var subtitle = $scope.pollSubtitleInput; 
 		var validateDescription = validate($scope.descriptionInput); 
 		var description = $scope.descriptionInput; 
+		
+
+
+		console.log("FIRST ENDDATE: " + $scope.endDateInput);
+		if($scope.endDateInput == undefined){
+			console.log("UNCLICKED DATE IS UNDEFINED");
+		}
+
 		var enteredEndDate = validate($scope.endDateInput); 
-		var dateStr_e = $scope.endDateInput; 
-		var endDate = new Date(dateStr_e).toMysqlFormat();	
+
+
+		var endDate = null;
+		if($scope.endDateInput != null && $scope.endDateInput != undefined){
+			console.log("NOT NULL OR NOT UNDEFINED");
+			endDate = new Date($scope.endDateInput).toMysqlFormat();
+			console.log("CONVERTED ENDDATE: " + endDate);
+		}
+		console.log("FINAL ENDDATE: " + endDate);
+
+
+
+
+
+
+
+
+
+
+
 		var openForever = $scope.openForeverInput;
 		var validEndDate; 
 
@@ -83,27 +109,61 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 			    	}
 
 			    	else{
-						// Insert data into SQL
-						$http.get('/insertRating?title=' + title + 
-							 "&subTitle=" + subtitle +
-							  "&description=" + description +
-							  "&userID=" + userID +
-							  "&endDate=" + endDate +
-							  "&isAnonymous=" + isAnonymous +
-							  "&tagArray[]=" + tagArray
-							  ).then(function (response) {
-				    	$window.location.href = '../index.html';
-				    	
-				    	if(response.data.length == 0){
-				    		console.log("response = 0");
-				    	} 
-				    	else {
-				    		console.log(response.data);
-				    	}
-					    },
-					    function (res) {
-					    	console.log("user NOT received from creating rating");
-					    });
+
+			    		if(endDate == null)
+
+			    		{
+		    				// Insert data into SQL
+							$http.get('/insertRatingWithoutEndDate?title=' + title + 
+								 "&subTitle=" + subtitle +
+								  "&description=" + description +
+								  "&userID=" + userID +
+								  "&endDate=" + endDate +
+								  "&isAnonymous=" + isAnonymous +
+								  "&tagArray[]=" + tagArray
+								  ).then(function (response) {
+					    	$window.location.href = '../index.html';
+					    	
+					    	if(response.data.length == 0){
+					    		console.log("response = 0");
+					    	} 
+					    	else {
+					    		console.log(response.data);
+					    	}
+						    },
+						    function (res) {
+						    	console.log("user NOT received from creating rating");
+						    });
+
+			    		}
+
+			    		else
+
+			    		{
+			    			// Insert data into SQL
+							$http.get('/insertRating?title=' + title + 
+								 "&subTitle=" + subtitle +
+								  "&description=" + description +
+								  "&userID=" + userID +
+								  "&endDate=" + endDate +
+								  "&isAnonymous=" + isAnonymous +
+								  "&tagArray[]=" + tagArray
+								  ).then(function (response) {
+					    	$window.location.href = '../index.html';
+					    	
+					    	if(response.data.length == 0){
+					    		console.log("response = 0");
+					    	} 
+					    	else {
+					    		console.log(response.data);
+					    	}
+						    },
+						    function (res) {
+						    	console.log("user NOT received from creating rating");
+						    });
+
+			    		}
+						
 			    	}
 			    },
 			    function (res) {

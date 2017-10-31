@@ -64,12 +64,22 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 		var option10 = $scope.option10Input; 
 		//console.log("option10: " + option10);
 
-		var enteredEndDate = validate($scope.endDateInput); 
-		var dateStr_e = $scope.endDateInput; 
-		console.log(dateStr_e);
 
-		var endDate = new Date(dateStr_e).toMysqlFormat();
-		console.log(endDate); 
+		console.log("FIRST ENDDATE: " + $scope.endDateInput);
+		if($scope.endDateInput == undefined){
+			console.log("UNCLICKED DATE IS UNDEFINED");
+		}
+
+		var enteredEndDate = validate($scope.endDateInput); 
+
+
+		var endDate = null;
+		if($scope.endDateInput != null && $scope.endDateInput != undefined){
+			console.log("NOT NULL OR NOT UNDEFINED");
+			endDate = new Date($scope.endDateInput).toMysqlFormat();
+			console.log("CONVERTED ENDDATE: " + endDate);
+		}
+		console.log("FINAL ENDDATE: " + endDate);
 
 		var openForever = $scope.openForeverInput;
 		console.log("openForever: " + openForever);
@@ -138,6 +148,7 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 		else { // allfields successfully filled in
 
 
+
 			//check if title exsits
 			$http.get('/checkExistingTitle?title='+title
 				).then(function (response){
@@ -148,13 +159,44 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 			    	}
 
 			    	else{
-			    		// Insert data into SQL
-						if(openForever == 'true'){
-							openForever = 1;
-						}
-						else{openForever = 0;}
 
-						$http.get('/insertPoll?title=' + title + 
+			    		// Insert data into SQL
+						if(endDate == null)
+						{		
+				    		// Insert data into SQL
+							$http.get('/insertPollWithoutEndDate?title=' + title + 
+							  "&subTitle=" + subtitle +
+							  "&description=" + description +
+							  "&optionArray[]=" + allOptions +
+							  "&tag=" + tag +
+							  "&userID=" + userID +
+							  "&endDate=" + endDate +
+							  "&tagArray[]=" + tagArray +
+							  "&openForever=" + openForever +
+							  "&isAnonymous=" + isAnonymous
+							  ).then(function (response) {
+				    		console.log("user received from creaitng poll without end date!");
+					    	//console.log(response.data);
+
+					    	//redirect after creating poll
+					    	$window.location.href = '../index.html';
+					    	
+					    	if(response.data.length == 0){
+					    		console.log(response.data);
+					    		console.log("response = 0");
+					    	} 
+					    	else {
+					    		console.log(response.data);
+					    	}
+						    },
+						    function (res) {
+						    	console.log("user NOT received from creating poll wihtout end date");
+						    });
+						}
+						else
+						{
+				    		// Insert data into SQL
+							$http.get('/insertPoll?title=' + title + 
 							  "&subTitle=" + subtitle +
 							  "&description=" + description +
 							  "&optionArray[]=" + allOptions +
@@ -182,6 +224,7 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 						    function (res) {
 						    	console.log("user NOT received from creating poll");
 						    });
+						}
 			    	}
 				},
 			    function (res) {
