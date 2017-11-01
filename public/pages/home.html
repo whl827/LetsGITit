@@ -20,67 +20,84 @@
 </head>
 <body>
 
+<div  class="search-wrapper" ng-controller="FeedCtrl">
 
+	<div class="search-bar-container row">
 
-<a class="search-result">{{questionList.length}} result(s)</a>
+		<select class = "drop-down-menu" id="TagUserDropDown">
+			<option class="options" value="Any Text">Any Text</option>
+			<option class="options" value="Tags" id="DropDownSelectTag">Tags</option>
+			<option class="options" value="User" id="DropDownSelectUser">User</option>
+		</select>
 
-<h2 id="Title" class="heading">Home Page</h1>
-
-<div ng-switch on="isQuestionList">
-	<div class="" ng-switch-when="1">
+		<input type="text" class="search-bar form-control" id="searchTextField" placeholder="Search" aria-describedby="basic-addon1" ng-model="query">
 		
-		<table class="mainLayout table table-responsive table-striped col-12 mt-3">
-			
-			<thead>
-				<tr>
-					<th>Question</th>
-					<th>SubTitle</th>
-					<th>Description</th>
-					<th>Type</th>
-					<th>Start Date</th>
-					<th>End Date</th>
-					<th>Total Votes</th>
-					<th>Positive Votes</th>
-				</tr>
-			</thead>
-			<tbody ng-controller= "FeedCtrl" >
-
-				<tr class="" ng-repeat="question in questionList" ng-click="goToLink(question)">
-					<td id="current-question-title">{{question.title}}</td>
-					<td>{{question.subtitle=="undefined" ? "" : question.subtitle}}</td>
-					<td>{{question.description=="undefined" ? "" : question.description}} </td>
-					<td><span>{{question.isPoll ? 'Poll' : 'Rating'}}</span> </td>
-
-					<td>{{question.startDate | date: 'yyyy-MM-dd'}}</td>
-					<!-- <td>{{question.endDate | date: 'yyyy-MM-dd'}}</td> -->
-
-					<td><span>{{ question.endDate!=null ?
-						(question.endDate | date: 'yyyy-MM-dd') : 'Open Forever'}}<span></td>
-
-					<td>{{question.totalVotes}} </td>
-					<td>{{question.positiveVotes}}</td>
-				</tr>
-			</tbody>
-		</table>
+		<button type="button" class="search-button" id="searchButton" ng-click="searchButton()">SEARCH</button>
 	</div>
-	<div ng-switch-on = "isQuestionList">
-		<div ng-switch-when = "2">
 
+	<a class="search-result">{{questionList.length}} result(s)</a>
+
+	<h2 id="Title" class="heading">Home Page</h1>
+
+	<div data-ng-init="onloadFun()"></div>
+
+	<div ng-switch on="isQuestionList">
+		<div class="" ng-switch-when="1">
+			
 			<table class="mainLayout table table-responsive table-striped col-12 mt-3">
 				
 				<thead>
 					<tr>
-						<th>User</th>
+						<th>Question</th>
+						<th>SubTitle</th>
+						<th>Description</th>
+						<th>Type</th>
+						<th>Start Date</th>
+						<th>End Date</th>
+						<th>Total Votes</th>
+						<th>Positive Votes</th>
 					</tr>
 				</thead>
-				<tbody>
-					<tr class="" ng-repeat="user in userList" ng-click="goToUser(user.username)">
-						<td id="current-user">{{user.username}}</td>
+				<tbody ng-controller= "FeedCtrl" >
+
+					<tr class="" ng-repeat="question in questionList" ng-click="goToLink(question)">
+						<td id="current-question-title">{{question.title}}</td>
+						<td>{{question.subtitle=="undefined" ? "" : question.subtitle}}</td>
+						<td>{{question.description=="undefined" ? "" : question.description}} </td>
+						<td><span>{{question.isPoll ? 'Poll' : 'Rating'}}</span> </td>
+
+						<td>{{question.startDate | date: 'yyyy-MM-dd'}}</td>
+						<!-- <td>{{question.endDate | date: 'yyyy-MM-dd'}}</td> -->
+
+						<td><span>{{ question.endDate!=null ?
+							(question.endDate | date: 'yyyy-MM-dd') : 'Open Forever'}}<span></td>
+
+						<td>{{question.totalVotes}} </td>
+						<td>{{question.positiveVotes}}</td>
 					</tr>
 				</tbody>
 			</table>
 		</div>
+		<div ng-switch-on = "isQuestionList">
+			<div ng-switch-when = "2">
+
+				<table class="mainLayout table table-responsive table-striped col-12 mt-3">
+					
+					<thead>
+						<tr>
+							<th>User</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr class="" ng-repeat="user in userList" ng-click="goToUser(user.username)">
+							<td id="current-user">{{user.username}}</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
 	</div>
+
 </div>
 
 </body>
