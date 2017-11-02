@@ -150,6 +150,9 @@ app.get('/insertUser', function (req, res) {
 
 // Get a users profile
 app.get('/profile', function (req, res) {
+
+	console.log("Getting users feed");
+
 	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes  " + 
 		"FROM KUser u, Question q, UserToQuestion uq WHERE u.username='" +
 		req.query.username + "' AND uq.userID = u.userID AND uq.questionID = q.questionID ORDER BY q.startDate desc, q.questionID desc;", 

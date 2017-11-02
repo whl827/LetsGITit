@@ -4,10 +4,11 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 
 	console.log("In profile controller");
 
-	if ($cookies.get("user") != null) {
+	if ($cookies.get("username") != null && $cookies.get("username") != 'null') {
+		$scope.loggedInMessage = "";
 		username = $cookies.get("username");
 	} else {
-		$scope.loggedIn = "You must be logged in to access your profile";
+		$scope.loggedInMessage = "You must be logged in to access your profile";
 		loggedIn = false;
 	}
 	

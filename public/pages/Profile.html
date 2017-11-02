@@ -1,6 +1,10 @@
 <h1 id="myProfileTitle">This is Profile.</h1>
 
 <div ng-controller="ProfileCtrl">
+
+	<span style="color: red">{{loggedInMessage}}</span>
+	<br>
+
 	<table class="mainLayout table table-responsive table-striped col-12 mt-3">
 		
 		<thead>
@@ -15,7 +19,7 @@
 				<th>Positive Votes</th>
 			</tr>
 		</thead>
-		<tbody ng-controller= "FeedCtrl" >
+		<tbody>
 
 			<tr class="" ng-repeat="question in questionList" ng-click="goToLink(question)">
 				<td>{{question.title}}</td>
