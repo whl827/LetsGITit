@@ -108,19 +108,16 @@
 			<br>
 		</div>
 
-
-
-
-
 		<div class="all-comments-cont">
 			<p class="section-heading" id = "totalComment">ALL REVIEWS ({{totalComment}}) </p>
 			<form ng-controller= "RatingCtrl">
 				<div ng-controller="RatingCtrl">
 					<p ng-repeat="comment in commentList">
 						------------------------------ <br>
-						<p id = "commentUserID"> {{comment.userIDAnnonymous}} </p><br>
-						<p id = "commentDescription"> {{comment.description}} </p><br>
+						{{comment.userIDAnnonymous}}<br>
+						{{comment.description}}<br>
 						------------------------------ <br>
+						<button class="btn" ng-show="comment.userID==loggedInuserID" ng-click="editComment()"> Edit</button>
 					</p>
 				</div>
 			</form>

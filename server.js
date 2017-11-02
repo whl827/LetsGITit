@@ -419,7 +419,7 @@ app.get('/pollList', function (req, res) {
 
 app.get('/commentList', function (req, res) {
 
-	con.query("SELECT qc.userIDAnnonymous, qc.description "+
+	con.query("SELECT qc.userID, qc.userIDAnnonymous, qc.description "+
 		"FROM QuestionComment qc WHERE " + 
 		"qc.questionID='" + req.query.questionID + "';",
 	  	function (err, result, fields) {

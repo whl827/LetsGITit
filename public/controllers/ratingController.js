@@ -1,9 +1,5 @@
 angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cookies', '$routeParams', '$location', function($scope, $http, $cookies, $routeParams, $location) {
 	
-
-
-
-
 	function twoDigits(d) {
 	    if(0 <= d && d < 10) return "0" + d.toString();
 	    if(-10 < d && d < 0) return "-0" + (-1*d).toString();
@@ -14,13 +10,8 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
     	return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
 	};
 
-
-
-
-
-
 	var questionID = $routeParams.questionID;
-	var userID = $cookies.get("userID");
+	var loggedInuserID = $cookies.get("userID");
 	var getRating = true;
 
 	if (getRating) {
