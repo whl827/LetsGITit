@@ -1,79 +1,120 @@
-<h2 class="heading" id = "title">Title of Poll {{title}}</h2>
+<div class="display-survey-container cont">
+	<p class="survey-heading" id = "title">{{title}}</p>
+	<div class="sub-cont">
 
-<form class="display-survey-container" ng-controller= "PollCtrl" >
+		<div class="info-cont" ng-controller= "PollCtrl" >
+			<p class="username"  id = "username"> Created by {{username}} </p>
+			<p class="description" id = "description"> {{description}} </p>
+			<p class="end-date" id = "endDate"> 
+				Closes on {{ endDate=="Open Forever" ?
+				endDate : (endDate | date: 'yyyy-MM-dd')}} </p>
+		</div>
 
-	<p id = "username"> Created by {{username}} </p>
-	<p id = "description"> (description) {{description}} </p>
-	<p id = "endDate"> Closes on {{ endDate=="Open Forever" ?
-						 endDate : (endDate | date: 'yyyy-MM-dd')}} </p>
 
-</form>
+		<div class="row">
+			<!-- ONLY show During Poll Period After show Result  -->
+			<div class="col-lg-8 col-md-8 col-sm-12">
+				<p class="section-heading vote-heading"> CAST VOTE </p>
+				
+				<form class="vote-cont" ng-controller= "PollCtrl">	
+					<div ng-controller="PollCtrl" >
+						<p ng-repeat="option in pollList">			
+							 <input class="option-choice" ng-model="voteInput" value = {{option.title}} type="radio"> {{option.title}} 
+						</p>
+					</div>
+				</form>
 
-<!-- ONLY show During Poll Period After show Result  -->
-<form ng-controller= "PollCtrl">	
 
-	<div ng-controller="PollCtrl" >
-		<p ng-repeat="option in pollList">			
-			 <input ng-model="voteInput" value = {{option.title}} type="radio">{{option.title}} <br>
-		</p>
+			</div>
+
+			<!-- Button 
+			<input  ng-controller="pollRatingCtrl" type="submit" value="submit" ng-click="voteOption()"> -->
+			<!-- After the poll period show result -->
+			<!-- ADD: like/dislike, rating, and comment are only for logged in user -->
+			
+			<div class="rank-cont col-lg-4 col-md-4 col-sm-12">
+				<!-- Show Number of Lies and Dislikes -->
+
+				<div class="rank-display-cont row">
+					<div class="col-lg-5 col-md-4 col-sm-12 num-likes">
+						<p class="rank-num" id = "numLikes"> {{totalLikeCount}} </p>
+						<p class="rank-label"> LIKES </p>
+					</div>
+
+					<div class="col-lg-5 col-md-4 col-sm-12 num-likes">
+						<p class="rank-num" id = "numDislikes"> {{totalDislikeCount}} </p>
+						<p class="rank-label"> DISLIKES </p>
+					</div>
+				</div>
+
+
+				<!-- Like/Dislike -->
+				<form class="rank-cont" ng-controller= "pollRatingCtrl">
+					<div class="row">
+						<div class="col-lg-5 col-md-5 col-sm-12 num-likes">
+							<input class="like" id= "likeRadioButton" ng-model="likeInput" type="radio" name="like" value="true" /> LIKE
+							<!-- <img src="img/like.png" width="50" height="50"> -->
+						</div>
+						<div class="col-lg-5 col-md-5 col-sm-12 num-likes">
+							<input class="dislike" id = "dislikeRadioButton" ng-model="likeInput" type="radio" name="dislike" value="false" /> DISLIKE
+							<!-- <img src="img/dislike.png" width="50" height="50"> -->
+						</div>
+					</div>
+
+					
+					<div class="rank-btn-cont col-lg-10 col-md-10 col-sm-12">
+						<input class="button rank-button" id = "LikeDislikeButton" type="submit" value="RANK" ng-click="selectLikeOrDislike()">
+					</div>	
+
+					<p id = "LikeDislikeErrorMessage">{{errorMessageLike}}</p>
+				</form>
+			</div>
+
+
+		</div>
+
+
+
+		<!-- Comment -->
+		<div class="comments-cont" ng-controller= "pollRatingCtrl">	
+			<textarea ng-model="commentInput" rows="4" cols="50" class="form-control" placeholder="Write a review"></textarea>
+
+			<div class="row comment-cntrl-cont">
+
+				<div class="comment-ann-cont col-lg-6 col-md-5">
+					<p class="comment-ann">
+						<input id="anonymous" type="checkbox" name="anonymous" ng-model="isAnonymousInput"> Comment Anonymously 
+					</p>
+				</div>
+
+
+				<div class="col-lg-6 col-md-6">
+					<input class="comment-button pull-right" id = "CommentButton" type="submit" value="SUBMIT" ng-controller= "PollCtrl" ng-click="createComment()">
+				</div>
+			</div>
+			<br>
+			<p id = "CommentErrorMessage">{{errorMessageComment}}</p>
+			<br>
+		</div>
+
+
+
+
+
+		<div class="all-comments-cont">
+			<p class="section-heading" id = "totalComment">ALL REVIEWS ({{totalComment}}) </p>
+			<form ng-controller= "PollCtrl">	
+				<div ng-controller="PollCtrl" >
+					<p ng-repeat="comment in commentList">
+						------------------------------ <br>
+						<p id = "commentUserID">  {{comment.userIDAnnonymous}} </p><br>
+						<p id = "commentDescription">  {{comment.description}} </p><br>
+						------------------------------ <br>
+					</p>
+				</div>
+			</form>
+		</div>
+
+
 	</div>
-</form>
-
-<!-- Button 
-<input  ng-controller="pollRatingCtrl" type="submit" value="submit" ng-click="voteOption()"> -->
-
-
-<!-- After the poll period show result -->
-
-
-
-<!-- ADD: like/dislike, rating, and comment are only for logged in user -->
-
-<!-- Show Number of Lies and Dislikes -->
-<p id = "numLikes"> Likes: {{totalLikeCount}} </p>
-<p id = "numDislikes"> Dislikes: {{totalDislikeCount}} </p>
-
-<!-- Like/Dislike -->
-<form ng-controller= "pollRatingCtrl">	
-	<label>
-		<input id= "likeRadioButton" ng-model="likeInput" type="radio" name="like" value="true" />
-		<img src="img/like.png" width="50" height="50">
-	</label>
-
-	<label>
-		<input id = "dislikeRadioButton" ng-model="likeInput" type="radio" name="dislike" value="false" />
-		<img src="img/dislike.png" width="50" height="50">
-		<input id = "LikeDislikeButton" type="submit" value="submit" ng-click="selectLikeOrDislike()">
-	</label>
-	<p id = "LikeDislikeErrorMessage">{{errorMessageLike}}</p>
-
-</form>
-
-<!-- Comment -->
-<form ng-controller= "pollRatingCtrl">	
-
-	<h5> Comment Anonymously </h5>
-	<input id="anonymous" type="checkbox" name="anonymous" ng-model="isAnonymousInput">
-	<br>
-	<h5> Comments: </h5>
-	<textarea ng-model="commentInput" rows="4" cols="30"></textarea>
-	<input id = "CommentButton" type="submit" value="submit" ng-controller= "PollCtrl" ng-click="createComment()">
-	<br>
-	<p id = "CommentErrorMessage">{{errorMessageComment}}</p>
-	<br>
-
-</form>
-<p id = "totalComment">Total comments: {{totalComment}} </p>
-<form ng-controller= "PollCtrl">	
-
-	<div ng-controller="PollCtrl" >
-		<p ng-repeat="comment in commentList">
-			------------------------------ <br>
-		<p id = "commentUserID"> {{comment.userIDAnnonymous}} </p><br>
-		<p id = "commentDescription"> {{comment.description}} </p><br>
-			------------------------------ <br>
-		</p>
-	</div>
-
-</form>
-
+</div>
