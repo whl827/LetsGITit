@@ -50,7 +50,7 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
         $http.get('/onPageLoad').then(function (response) {
             $scope.isQuestionList = 1;
             $scope.questionList = response.data;
-            document.querySelector(".keywords").innerHTML = "Top 5 Popular Tags: ";
+            //document.querySelector(".keywords").innerHTML = "Top 5 Popular Tags: ";
         },
         function (res) {
            
