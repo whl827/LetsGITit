@@ -10,8 +10,9 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
     	return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
 	};
 
-	var questionID = $routeParams.questionID;
 	var loggedInuserID = $cookies.get("userID");
+	$scope.loggedInuserID=loggedInuserID;
+	var questionID = $routeParams.questionID;
 	var getRating = true;
 
 	if (getRating) {
