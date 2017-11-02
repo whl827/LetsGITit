@@ -12,9 +12,8 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
     	return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
 	};
 
-
-
-	var userID = $cookies.get("userID");
+	var loggedInuserID = $cookies.get("userID");
+	$scope.loggedInuserID=loggedInuserID;
 	var questionID = $routeParams.questionID;
 	var getPoll = true; //check if poll is selected
 	//when true, get info from database
@@ -115,7 +114,17 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 
 		});	
 
-
 	}//If
+
+
+	//**********************Edit button***********************
+	// $scope.editComment = function(){
+	// 	console.log("in edit comment");
+
+
+	//*********************Delete BUtton**********************
+
+	// }
+
 	
 }]);

@@ -1,6 +1,8 @@
 angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$cookies', '$routeParams', '$route', function($scope, $http, $cookies, $routeParams, $route) {
 	
 	var questionID = $routeParams.questionID;
+	$scope.loggedInuserID = $cookies.get("userID");
+
 
 	$scope.createComment = function(){
 
@@ -27,7 +29,8 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 				$http.get("/checkUserExist?questionID=" + questionID + "&userID=" + userID)
 					.then(function (response) {
 					
-						if(typeof response.data[0] == 'undefined'){
+						//
+						//if(typeof response.data[0] == 'undefined'){
 							//&& typeof response[0].userID !== 'undefined' 
 							
 							$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
@@ -40,9 +43,9 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 
 					 		$route.reload();
 
-						}else {
-							$scope.errorMessageComment = "Already commented";
-						}
+						// }else {
+						// 	$scope.errorMessageComment = "Already commented. Please press Edit to continue";
+						// }
 
 				},function (response) {
 				    	console.log("Error");
