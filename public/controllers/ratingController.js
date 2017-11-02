@@ -58,6 +58,19 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 				}else{
 					console.log("IT' CLOSED");
 					$scope.endDate = "(CLOSED)";
+					//disable everything when it's closed
+					var nodes = document.querySelector(".comments-cont").getElementsByTagName('*');
+					for(var i = 0; i < nodes.length; i++){
+					     nodes[i].disabled = true;
+					}
+					var nodes = document.querySelector(".rank-cont").getElementsByTagName('*');
+					for(var i = 0; i < nodes.length; i++){
+					     nodes[i].disabled = true;
+					}					
+					var nodes = document.querySelector(".vote-cont").getElementsByTagName('*');
+					for(var i = 0; i < nodes.length; i++){
+					     nodes[i].disabled = true;
+					}
 				}
 
 			}
