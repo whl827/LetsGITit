@@ -1,4 +1,3 @@
-
 var express = require('express');
 var app = express();
 var mysql = require('mysql');
@@ -408,11 +407,11 @@ app.get('/getQuestion', function (req, res) {
 });
 
 app.get('/pollList', function (req, res) {
-	con.query("SELECT po.title " + 
+	con.query("SELECT po.title, po.pollOptionID " + 
 		"FROM PollOption po inner join Question q on po.questionID = q.questionID WHERE q.questionID='" +
 		req.query.questionID + "';", 
 		function (err, result, fields) {
-			//if(err) throw err;
+			if(err) throw err;
 			res.json(result);
 		});
 });
@@ -483,7 +482,7 @@ app.get('/unfollow', function(req, res) {
 	);
 });
 
-app.get('/insertRatingValue', function (req, res) {
+app.get('/insertRatingValue', function (req, res) { // also inserts poll optionvote
 	var questionID = req.query.questionID;
 	var userID = req.query.userID;
 	var ratingValue = req.query.rating;
@@ -491,9 +490,10 @@ app.get('/insertRatingValue', function (req, res) {
 	con.query("INSERT INTO RatingQuestionOption (questionID, userID, rating) " +
 			"VALUES('" + questionID + "', '" + userID + "', '" + ratingValue + "');",
 	  	function (err, result, fields) {
-	    // if (err) throw err;
-	    //res.json(result);
-	});
+	    	if (err) throw err;
+	    	res.json(result);
+		}
+	);
 });
 
 

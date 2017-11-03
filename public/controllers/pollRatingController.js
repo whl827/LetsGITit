@@ -118,6 +118,51 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 		}
 	}
 
+
+
+	$scope.selectPollOption = function(index, pollList){
+		var userID = $cookies.get("userID");
+		if(userID !== -1 && typeof(userID) !== 'undefined' && userID !== "-1"){
+			// Check if user already voted
+			$http.get("/checkUserRated?questionID=" + questionID + "&userID=" + userID)
+			 	.then(function (response) {
+			 	// str = JSON.stringify(pollList);
+				// console.log(str); 
+			 	// console.log("index is: " + index); 
+				// console.log("option title is: " + pollList[index].title);
+				// console.log("optionID is: " + pollList[index].pollOptionID);
+				var optionID = pollList[index].pollOptionID; 
+
+		 		if(typeof response.data[0] == 'undefined'){
+		 			// Insert into database
+		 			console.log("hasnt voted yet");
+		 			$http.get("/insertRatingValue?questionID=" + questionID + "&userID=" + userID + "&rating=" + optionID)
+						.then(function (response) {
+							console.log("Inserted into RatingQuestionOption Table");
+						}, function (response) {
+						    console.log("Insert failed");
+		 			});
+			 		$route.reload();
+
+		 		} else {
+		 			// Update vote input
+					console.log("already voted");
+		 			$http.get("/UpdateRating?questionID=" + questionID + "&userID=" + userID + "&rating=" + optionID)
+		 				.then(function (response) {
+		 					console.log("Update: Inserted into RatingQuestionOption Table");
+		 				},function (response) {
+		 			    	console.log("Insert failed");
+		 			});
+
+			 		$scope.errorMessagePoll = "Already voted. Updating your vote" ;
+			 		//$route.reload();
+				}
+				
+			}, function (response) { console.log("Error"); });
+
+		} else { $scope.errorMessagePoll = "Please log in to vote"; }
+	}
+
 	$scope.selectLikeOrDislike = function(){
 
 		var userID = $cookies.get("userID");

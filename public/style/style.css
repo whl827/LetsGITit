@@ -1,10 +1,15 @@
 body {
 	font-family: "Roboto";
-	background-color: #FFC914; 
-background: #642B73;  /* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #C6426E, #642B73);  /* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #C6426E, #642B73); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+background: #EB3349;  /* fallback for old browsers */
+background: -webkit-linear-gradient(to right, #F45C43, #EB3349);  /* Chrome 10-25, Safari 5.1-6 */
+background: linear-gradient(to right, #F45C43, #EB3349); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
 
+}
+
+.navbar {
+-webkit-box-shadow: 0px 17px 64px -6px rgba(0,0,0,0.26);
+-moz-box-shadow: 0px 17px 64px -6px rgba(0,0,0,0.26);
+box-shadow: 0px 17px 64px -6px rgba(0,0,0,0.26);
 }
 
 
@@ -193,13 +198,66 @@ create-button, .submit-button, .login-button, .signup-button{
 }
 
 .vote-heading{
-	margin-bottom: 2px; 
+	margin-bottom: 7px; 
 
 }
 
 .option-choice{
 	margin-right: 10px;
 }
+
+
+
+
+.poll-option{
+	width: 50%;
+
+
+
+
+	border: 0;
+	border-radius: 5px;
+
+	cursor: pointer;
+
+	font-family: "Roboto";
+	letter-spacing: 3px;
+	font-size: 15px; 
+
+	padding-left: 25px;
+	padding-right: 25px;
+	padding-bottom: 10px;
+	padding-top: 10px;
+
+	color:  #e53935;
+	background-color: white;
+	border: 1px solid #e53935;
+
+
+
+
+    -webkit-transition-duration: 0.6s; /* Safari */
+    transition-duration: 0.6s;
+}
+
+
+
+
+.poll-option:hover{
+	background-color: #e53935;
+/*	background: -webkit-linear-gradient(to right, #e53935, #e35d5b);
+	background: linear-gradient(to right, #e53935, #e35d5b);*/
+
+    color: white;
+	-webkit-box-shadow: 4px 18px 82px -9px rgba(0,0,0,0.59);
+	-moz-box-shadow: 4px 18px 82px -9px rgba(0,0,0,0.59);
+	box-shadow: 4px 18px 82px -9px rgba(0,0,0,0.59);
+}
+
+
+
+
+
 
 
 .vote-button{
