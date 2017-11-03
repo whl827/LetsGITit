@@ -9,7 +9,9 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 	}
 
 	Date.prototype.toMysqlFormat = function() {
-    	return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
+    	return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + 
+    		   twoDigits(this.getUTCDate()) + " " + twoDigits(this.getHours()) + ":" + 
+    		   twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
 	};
 
 	var loggedInuserID = $cookies.get("userID");
@@ -51,8 +53,13 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 				//get current time
 				var date = new Date().toMysqlFormat();
 				//convert close time to match convert time format
-				var closeDate = (response.data[0].endDate).replace(".000Z", "");
-				var finalCloseDate = closeDate.replace("T", " ");
+				var finalCloseDate = new Date(response.data[0].endDate).toMysqlFormat();
+
+				//newEndDate.setHours(newEndDate.getHours() - newEndDate.getTimezoneOffset() / 60);
+				//console.log("NEW END DATE (A): " + newEndDate);
+				//var closeDate = (response.data[0].endDate).replace(".000Z", "");
+				//var finalCloseDate = closeDate.replace("T", " ");
+
 				console.log("now date: " + date);
 				console.log("close date: " + finalCloseDate);
 				//compare and check
