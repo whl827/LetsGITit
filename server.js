@@ -454,6 +454,16 @@ app.get('/isFollowing', function(req, res) {
 	);
 });
 
+app.get('/numFollowers', function(req, res) {
+	var username = req.query.username;
+
+	con.query("SELECT numFollowers FROM KUser WHERE username='" + username + "'", 
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
+});
+
 app.get('/follow', function(req, res) {
 	var currUser = req.query.currUser;
 	var userToFollow = req.query.userToFollow;

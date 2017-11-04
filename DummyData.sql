@@ -3,7 +3,7 @@ use KnowItAll;
 insert into KUser(username, passwordHash) values 
 (
 	"user1",
-    111421	# actual password is pwd
+    111421 		# actual password is pwd
 );
 
 insert into KUser(username, passwordHash) values
@@ -209,6 +209,9 @@ insert into userToFollowing(mainUserID, followingUserID)
 values(1,2);
 insert into userToFollowing(mainUserID, followingUserID)
 values(2,1);
+
+update KUser set numFollowers = 1 where userID = 1;
+update KUser set numFollowers = 1 where userID = 2;
 
 insert into UserToQuestion(userID, questionID) values (1, 1);
 insert into UserToQuestion(userID, questionID) values (1, 2);
