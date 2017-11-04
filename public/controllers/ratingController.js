@@ -39,9 +39,9 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			}else{
 				
 				//get current time
-				var date = new Date().toMysqlFormat();
+				var date = new Date();
 
-				var finalCloseDate = new Date(response.data[0].endDate).toMysqlFormat();
+				var finalCloseDate = new Date(response.data[0].endDate);
 
 
 				//convert close time to match convert time format

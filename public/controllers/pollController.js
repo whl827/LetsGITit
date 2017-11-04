@@ -50,11 +50,14 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 				$scope.endDate = "(Open Forever)";
 			}else{
 
-				//get current time
-				var date = new Date().toMysqlFormat();
-				//convert close time to match convert time format
-				var finalCloseDate = new Date(response.data[0].endDate).toMysqlFormat();
 
+				console.log("NOW: " + new Date());
+				console.log("CLOSING: " + new Date(response.data[0].endDate));
+
+				//get current time
+				var date = new Date();
+				//convert close time to match convert time format
+				var finalCloseDate = new Date(response.data[0].endDate);
 				//newEndDate.setHours(newEndDate.getHours() - newEndDate.getTimezoneOffset() / 60);
 				//console.log("NEW END DATE (A): " + newEndDate);
 				//var closeDate = (response.data[0].endDate).replace(".000Z", "");
