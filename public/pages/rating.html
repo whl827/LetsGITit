@@ -37,9 +37,6 @@
 
 
 
-			
-
-
 
 			<div class="rank-cont col-lg-4 col-md-4 col-sm-12">
 				<!-- Show Number of Lies and Dislikes -->
@@ -63,11 +60,11 @@
 					<div class="row">
 						<div class="col-lg-5 col-md-5 col-sm-12 num-likes">
 							<input class="like" ng-model="likeInput" type="radio" name='like' value="true" /> LIKE
-							<!-- <img src="img/like.png" width="50" height="50"> -->
+					
 						</div>
 						<div class="col-lg-5 col-md-5 col-sm-12 num-likes">
 							<input ng-model="likeInput" type="radio" name='dislike' value="false" /> DISLIKE
-							<!-- <img src="img/dislike.png" width="50" height="50"> -->
+					
 						</div>
 					</div>
 
@@ -119,20 +116,33 @@
 							 <div ng-show="visible">
 
 			                    <label>Review:</label>
-			                   <textarea rows="4" cols="50" 
-			                    placeholder= {{comment.description}}></textarea>
+
+			                    <div ng-controller="RatingCtrl">
+
+			                   <textarea rows="4" cols="50" ng-model="comment.newComment" placeholder= {{comment.description}} class="form-control" ng-required> </textarea>
+
+			               		</div>
 			             
 			                    <button class="btn" type="submit" 
-			                    ng-click ="visible=false; editComment()">Save</button>
+			                    ng-click ="visible=false; editComment(comment)">Save</button>
 
 			                 </div>
-			              </li>
 
-			               <button class="btn" ng-show="comment.userID==loggedInuserID" 
+
+			                 <button class="btn" ng-show="comment.userID==loggedInuserID" 
 							ng-click="visible=true"> Edit</button>
 
-							 <button class="btn" ng-show="comment.userID==loggedInuserID" 
-							ng-click="deleteComment"> delete</button>     
+							<button class="btn" ng-show="comment.userID==loggedInuserID" 
+							ng-click="deleteComment(comment)"> delete</button>  
+
+							<a href="" ng-model="commentLikeInput" value = "true" onclick="commentLikeOrDislike()">LIKE </a>{{commentLikeCount}}
+							<a href="" ng-model="commentLikeInput" value = "false" onclick="commentLikeOrDislike()">DISLIKE </a>{{commentDislikeCount}}
+
+							{{errorMessageCommentLike}}
+
+			              </li>
+
+			               
 			         <ul>
 				</div>
 			</form>

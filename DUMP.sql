@@ -30,6 +30,7 @@ create table QuestionComment (
     userIDAnnonymous varchar(8) not null,
     description varchar(500),
     isAnnonymous boolean not null,
+    pollLike boolean not null,
     foreign key fk1(questionID) references Question(questionID),
     foreign key fk2(userID) references KUser(userID)
 );

@@ -102,15 +102,46 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			console.log("Error");
 		});	
 
-		$http.get('/commentList?questionID=' + questionID).then(function (response) {
-			
+		$http.get('/commentList?questionID=' + questionID).then(function (response) {		
 			$scope.totalComment = response.data.length;
 			$scope.commentList = response.data;
 		}, function (response) {
 			console.log("Failed to get current user, not logged in");
 		});
-
-	
 	}
+
+	$scope.editComment = function(comment){
+
+		console.log("in edit comment");
+		//var original = $scope.commentList.indexOf(field);
+		var currentComment = angular.copy(comment).description;
+		var newComment = comment.newComment;
+		console.log(" currentComment is " + currentComment);
+		console.log("New comment is " + newComment);
+
+		$http.get("/editComment?questionID=" + questionID + "&userID=" + loggedInuserID
+			+ "&currentComment=" + currentComment + "&newComment=" + newComment)
+			.then(function (response) {
+				$route.reload();
+				console.log("inser into edit comment table");
+			},function (response) {
+		    	console.log("Error");
+		});
+	}
+
+	// $scope.deleteComment = function(comment){
+	// 	var currentComment = angular.copy(comment).description;
+	// 	var questionCommentID = angular.copy(comment).questionCommentID;
+
+	// $http.get('deleteComment?&questionID=' + questionID + "&userID=" + loggedInuserID +
+	// 	"&description=" + currentComment + "&questionCommentID=" + questionCommentID)
+	// 	.then(function (response) {
+	// 			$route.reload();
+	// 			console.log("comment succesfully deleted");
+	// 		},function (response) {
+	// 	    	console.log("Error");
+	// });
+
+	// }
 	
 }]);

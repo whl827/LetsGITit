@@ -391,9 +391,6 @@ app.get('/insertRatingWithoutEndDate', function (req, res) {
 
 
 
-
-
-
 app.get('/getQuestion', function (req, res) {
 	//fixed con qeury
 	con.query("SELECT q.title, q.userID, u.username, q.description, q.endDate, q.isAnonymous " + 
@@ -436,9 +433,11 @@ app.get('/insertComment', function (req, res) {
 	var userIDAnnonymous = req.query.userIDAnnonymous;
 	
 	con.query("INSERT INTO QuestionComment (questionID, userID, description, isAnnonymous, userIDAnnonymous) " +
-			"VALUES('" + questionID + "', '" + userID + "', '" + description + "', '" + isAnnonymous + "', '" + userIDAnnonymous + "');",
+			"VALUES('" + questionID + "', '" + userID + "', '" + description + "', '"
+			 + isAnnonymous + "', '" + userIDAnnonymous + "');",
 	  	function (err, result, fields) {
 	});
+
 });
 
 app.get('/isFollowing', function(req, res) {
@@ -507,12 +506,30 @@ app.get('/insertQuestionLike', function (req, res) {
 	else{likeDislikeValue = 0;}
 
 	con.query("INSERT INTO QuestionLike (questionID, userID, pollLike) " +
-			"VALUES('" + questionID + "', '" + userID + "', '" + likeDislikeValue + "');",
+		"VALUES('" + questionID + "', '" + userID + "', '" + likeDislikeValue + "');",
 	  	function (err, result, fields) {
 	    // if (err) throw err;
 	    //res.json(result);
 	});
 });
+
+// app.get('/insertQuestionCommentike', function (req, res) {
+// 	var questionID = req.query.questionID;
+// 	var userID = req.query.userID;
+// 	var likeDislikeValue = req.query.pollLike;
+
+// 	//convert boolean value 
+// 	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
+// 	else{likeDislikeValue = 0;}
+
+// 	con.query("INSERT INTO QuestionToComment (questionID) " + "VALUES('" + questionID 
+// 		+ "'; INSERT INTO QuestionLike (questionID, userID, pollLike) " +
+// 		"VALUES('" + questionID + "', '" + userID + "', '" + likeDislikeValue + "');",
+// 	  	function (err, result, fields) {
+// 	    // if (err) throw err;
+// 	    //res.json(result);
+// 	});
+// });
 
 app.get('/getLike', function (req, res) {
 
@@ -614,6 +631,56 @@ app.get('/UpdateVote', function (req, res) {
 			res.json(result);
 		});
 });
+
+app.get('/editComment', function (req, res) {
+
+	var questionID = req.query.questionID;
+	var userID = req.query.userID;
+	var currentComment = req.query.currentComment;
+	var newComment = req.query.newComment;
+
+	con.query("UPDATE QuestionComment " + 
+		"SET description='"+ newComment + "' WHERE questionID='" +
+		req.query.questionID + "' and userID='" + req.query.userID + 
+		"' and description='" + currentComment +"';", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+		});
+});
+
+// app.get('/deleteComment', function (req, res) {
+
+// 	con.query("DELETE FROM QuestionToComment WHERE questionID='" + req.query.questionID +
+// 		   "'; DELETE FROM QuestionComment "
+// 		+ "WHERE questionID='" + req.query.questionID
+// 		+ "' and questionCommentID='" + req.query.questionCommentID 
+// 		+ "' and userID='" + req.query.userID 
+// 		+ "' and description='" + req.query.description + "';" +
+// 		", ALTER TABLE QuestionComment AUTO_INCREMENT = 1;",
+// 		function (err, result, fields) {
+// 			if(err) throw err;
+// 			res.json(result);
+// 		});
+// });
+
+// app.get('/deleteComment', function (req, res) {
+
+// 	con.query("DELETE FROM QuestionToComment WHERE questionCommentID='" + req.query.questionCommentID +
+// 		   "'; DELETE FROM QuestionComment " + "WHERE questionCommentID='" + req.query.questionCommentID +
+// 			 "' questionID='" + req.query.questionID + 
+// 			"'' and userID='" + req.query.userID +
+// 			"' and userIDAnnonymous='" + req.query.userIDAnnonymous +
+// 			"' and description='" + req.query.description + "';" +
+// 			", ALTER TABLE QuestionComment AUTO_INCREMENT = 1;",
+// 		function (err, result, fields) {
+// 			if(err) throw err;
+// 			res.json(result);
+// 		});
+// });
+
+
+
 
 
 app.listen(8080);

@@ -1,7 +1,7 @@
 angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$cookies', '$routeParams', '$route', function($scope, $http, $cookies, $routeParams, $route) {
 	
 	var questionID = $routeParams.questionID;
-	$scope.loggedInuserID = $cookies.get("userID");
+	$scope.userID = $cookies.get("userID");
 
 
 	$scope.createComment = function(){
@@ -34,7 +34,8 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 							//&& typeof response[0].userID !== 'undefined' 
 							
 							$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
-							+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous + "&userIDAnnonymous=" + userIDAnnonymous)
+							+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous 
+							+ "&userIDAnnonymous=" + userIDAnnonymous)
 							.then(function (response) {
 								console.log("inser into comment table");
 							},function (response) {
@@ -62,18 +63,15 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 	$scope.selectRate = function(){
 
 		var userID = $cookies.get("userID");
-
 		if(userID !== -1 && typeof(userID) !== 'undefined'){
 
 			var validRating = validate($scope.rateInput); 
-
 			if(!validRating){
 				$scope.errorMessageRate = "Please choose the rating value";
 			}
 			else{
 				var ratingValue = $scope.rateInput;
 				//find Rating and put the value into RatingQuestionOption
-
 				//check if user already rated
 				$http.get("/checkUserRated?questionID=" + questionID + "&userID=" + userID
 					)
@@ -121,7 +119,6 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 	$scope.selectLikeOrDislike = function(){
 
 		var userID = $cookies.get("userID");
-
 		if(userID !== -1 && typeof(userID) !== 'undefined'){
 
 			var validLike = validate($scope.likeInput); 
@@ -170,6 +167,45 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 		}else{
 			$scope.errorMessageLike = "Please log In to like/dislike";
 		}
+	}
+
+	$scope.commentLikeOrDislike = function(){
+		var likeorDisLike = $scope.commentLikeInput;
+
+
+		$http.get("/checkUserVoted?questionID=" + questionID + "&userID=" + userID)
+			.then(function (response) {
+				if(typeof response.data[0] == 'undefined'){
+					//&& typeof response[0].userID !== 'undefined' 
+
+					$http.get("/insertQuestionCommentike?questionID=" + questionID + "&userID=" + userID
+						+ "&pollLike=" + likeorDisLike)
+						.then(function (response) {
+							console.log("insert into questionlike table");
+					},function (response) {
+					    	console.log("Error");
+					});
+
+						$route.reload();
+				}else {			
+
+					$http.get("/UpdateCommentVote?questionID=" + questionID + "&userID=" + userID
+						+ "&pollLike=" + likeorDisLike)
+						.then(function (response) {
+							console.log("insert into questionlike table");
+					},function (response) {
+					    	console.log("Error");
+					});
+						$route.reload();
+						//$scope.errorMessageLike = "Already voted. Updating your like/dislike";
+
+				}
+			},function (response) {
+		    	console.log("Error");
+		});
+
+
+
 	}
 
 	function validate(input){
