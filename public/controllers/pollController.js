@@ -102,7 +102,6 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 		}, function (response) {
 			console.log("Error");
 		});	
-
 		$http.get('/getDislike?questionID=' + questionID).then(function (response) {
 
 			$scope.totalDislikeCount = response.data[0].num;
@@ -124,6 +123,12 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 
 		});	
 
+		$http.get('/getPollResults?questionID=' + questionID).then(function (response) {
+				$scope.pollResults = response.data;
+			}, function (response) {
+				console.log("FAILED getting poll results");
+			}
+		);	
 	}//If
 
 

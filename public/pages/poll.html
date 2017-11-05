@@ -13,48 +13,28 @@
 
 		<div class="row">
 			<!-- ONLY show During Poll Period After show Result  -->
-
-
 			<div class="col-lg-8 col-md-8 col-sm-12">
 				
 				<p class="section-heading vote-heading"> CAST VOTE </p>
 				
 				<form class="vote-cont" ng-controller= "pollRatingCtrl">	
-
-					
 					<p ng-repeat="option in pollList track by $index">	
-
-
-		<!-- 				<input class="option-choice" 
-						 		ng-model="voteInput.newOption[$index]" 
-						 		value = {{option.title}} 
-						 		type="radio"> {{option.title}} 
- -->
-
-
 						<input class="poll-option" 
 						 		id ="RatingButton" 
 						 		type="submit" 
 						 		value = {{option.title}}  
 						 		ng-click="selectPollOption($index, pollList)">
-
-
-
 					</p>
-
-			
-<!-- 					<input class="button vote-button" 
-								ng-model="voteInput.newOption[$index]"
-						 		id ="RatingButton" 
-						 		type="submit" 
-						 		value="VOTE" 
-						 		ng-click="selectPollOption($index)"> -->
-
-					
-
 					<p id="PollErrorMessage">{{errorMessagePoll}}</p>
-
 				</form>
+
+				<div class="poll-results" ng-controller= "PollCtrl">
+					<p> Results </p>
+					<div ng-repeat="option in pollResults">
+						<p> Option: {{option.title}} </p>
+						<p> Vote: {{option.votes}} </p>			
+					</div>
+				</div>
 
 
 			</div>

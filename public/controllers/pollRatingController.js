@@ -122,6 +122,8 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 
 	$scope.selectPollOption = function(index, pollList){
 		var userID = $cookies.get("userID");
+		console.log("userID is " + userID); 
+
 		if(userID !== -1 && typeof(userID) !== 'undefined' && userID !== "-1"){
 			// Check if user already voted
 			$http.get("/checkUserRated?questionID=" + questionID + "&userID=" + userID)
@@ -134,28 +136,76 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 				var optionID = pollList[index].pollOptionID; 
 
 		 		if(typeof response.data[0] == 'undefined'){
+		 			//console.log("hasnt voted yet");
 		 			// Insert into database
-		 			console.log("hasnt voted yet");
 		 			$http.get("/insertRatingValue?questionID=" + questionID + "&userID=" + userID + "&rating=" + optionID)
 						.then(function (response) {
-							console.log("Inserted into RatingQuestionOption Table");
+							//console.log("Inserted into RatingQuestionOption Table");
 						}, function (response) {
-						    console.log("Insert failed");
+						    console.log("FAILED Inserted into RatingQuestionOption Table");
 		 			});
+
+					// update PollOption table: for polloptionID and questionID, increment vote
+					$http.get("/addPollVote?questionID=" + questionID + "&pollOptionID=" + optionID)
+						.then(function (response) {
+							//console.log("Updated PollOption Table");
+						}, function (response) {
+						    console.log("FAILED Updated PollOption Table");
+		 			});
+
+
 			 		$route.reload();
 
 		 		} else {
 		 			// Update vote input
-					console.log("already voted");
+					//console.log("already voted");
+					$http.get("/findPrevVote?questionID=" + questionID + "&userID=" + userID)
+					 	.then(function (response) { 
+					 		var prevVoteOptionID = response.data[0].rating; 
+							//console.log("prevVoteOptionID: " + prevVoteOptionID);
+							//console.log("Selected from PollOption Table");
+							return $http.get("/removePollVote?questionID=" + questionID + "&pollOptionID=" + prevVoteOptionID);
+					 	}, function (response) {
+					 	    console.log("Selection failed");
+		 				})
+
+					 	.then(function (response) {
+							//console.log("Updated PollOption Table: removed vote");
+							return $http.get("/UpdateRating?questionID=" + questionID + "&userID=" + userID + "&rating=" + optionID); 
+						}, function (response) {
+						    console.log("FAILED Updated PollOption Table: removed vote");
+		 				})
+
+					 	.then(function (response) {
+		 					//console.log("Update: Inserted into RatingQuestionOption Table");
+		 					return $http.get("/addPollVote?questionID=" + questionID + "&pollOptionID=" + optionID); 
+		 				},function (response) {
+		 			    	console.log("FAILED Update: Inserted into RatingQuestionOption Table");
+		 				})
+
+					 	.then(function (response) {
+							//console.log("Updated PollOption Table: added vote");
+						}, function (response) {
+						    console.log("FAILED Updated PollOption Table: added vote");
+		 			});
+					/*
+					// Update RatingQuestionOption table
 		 			$http.get("/UpdateRating?questionID=" + questionID + "&userID=" + userID + "&rating=" + optionID)
 		 				.then(function (response) {
 		 					console.log("Update: Inserted into RatingQuestionOption Table");
 		 				},function (response) {
 		 			    	console.log("Insert failed");
 		 			});
-
+		 			//update PollOption table: add new vote
+		 			$http.get("/addPollVote?questionID=" + questionID + "&pollOptionID=" + optionID)
+						.then(function (response) {
+							console.log("Updated PollOption Table: added vote");
+						}, function (response) {
+						    console.log("FAILED Update: Inserted into RatingQuestionOption Table");
+		 			});
+		 			*/
 			 		$scope.errorMessagePoll = "Already voted. Updating your vote" ;
-			 		//$route.reload();
+			 		$route.reload();
 				}
 				
 			}, function (response) { console.log("Error"); });

@@ -586,6 +586,7 @@ var questionID = req.query.questionID;
 		});
 });
 
+
 app.get('/UpdateRating', function (req, res) {
 
 	con.query("UPDATE RatingQuestionOption " + 
@@ -607,6 +608,58 @@ app.get('/getAvgRating', function (req, res) {
 			res.json(result);
 		});
 });
+
+
+
+
+
+app.get('/getPollResults', function (req, res) {
+	con.query("SELECT title, votes FROM PollOption WHERE questionID='" +
+		req.query.questionID + "';", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+	});
+});
+
+
+
+
+app.get('/addPollVote', function (req, res) {
+	con.query("UPDATE PollOption SET votes=votes+1 WHERE questionID='" +
+		req.query.questionID + "' AND pollOptionID='" + req.query.pollOptionID + "';", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+	});
+});
+
+app.get('/findPrevVote', function (req, res) {
+	con.query("SELECT rating FROM RatingQuestionOption WHERE questionID='" +
+		req.query.questionID + "' AND userID='" + req.query.userID + "';", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+	});
+});
+
+app.get('/removePollVote', function (req, res) {
+	con.query("UPDATE PollOption SET votes=votes-1 WHERE questionID='" +
+		req.query.questionID + "' AND pollOptionID='" + req.query.pollOptionID + "';", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+	});
+});
+
+
+
+
+
+
+
+
+
 
 
 app.get('/UpdateVote', function (req, res) {
