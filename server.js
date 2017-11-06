@@ -35,7 +35,7 @@ app.get('/searchQuestionsAnyText', function (req, res) {
 		"FROM Question q WHERE " + 
 		"q.title LIKE '%" + req.query.tagQuery + "%' or " +
 		"q.subTitle LIKE '%" + req.query.tagQuery + "%' or " + 
-		"q.description LIKE '%" + req.query.tagQuery + "%' order by positiveVotes desc;",
+		"q.description LIKE '%" + req.query.tagQuery + "%' order by q.numLikes desc;",
 	  function (err, result, fields) {
 	    if (err) throw err;
 	    res.json(result);
@@ -48,7 +48,7 @@ app.get('/searchQuestions', function (req, res) {
 	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " + 
 		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
 		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
-		" tq.questionID = q.questionID",
+		" tq.questionID = q.questionID ORDER BY q.numLikes DESC;",
 	  function (err, result, fields) {
 	    if (err) throw err;
 	    res.json(result);
@@ -61,7 +61,7 @@ app.get('/onPageLoad', function (req, res){
 	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, " +
 					" q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " +
 			 " FROM Question q " +
-			 " ORDER BY q.startdate desc",
+			 " ORDER BY q.numLikes desc",
 	  function (err, result, fields) {
 	    if (err) throw err;
 	    res.json(result);
