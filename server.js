@@ -431,6 +431,8 @@ app.get('/insertComment', function (req, res) {
 	var description = req.query.description;
 	var isAnnonymous = req.query.isAnnonymous;
 	var userIDAnnonymous = req.query.userIDAnnonymous;
+
+	console.log(questionID, userID, description, isAnnonymous, userIDAnnonymous);
 	
 	con.query("INSERT INTO QuestionComment (questionID, userID, description, isAnnonymous, userIDAnnonymous) " +
 			"VALUES('" + questionID + "', '" + userID + "', '" + description + "', '"
@@ -513,23 +515,22 @@ app.get('/insertQuestionLike', function (req, res) {
 	});
 });
 
-// app.get('/insertQuestionCommentike', function (req, res) {
-// 	var questionID = req.query.questionID;
-// 	var userID = req.query.userID;
-// 	var likeDislikeValue = req.query.pollLike;
+app.get('/insertQuestionCommentike', function (req, res) {
+	var questionID = req.query.questionID;
+	var userID = req.query.userID;
+	var likeDislikeValue = req.query.pollLike;
 
-// 	//convert boolean value 
-// 	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
-// 	else{likeDislikeValue = 0;}
+	//convert boolean value 
+	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
+	else{likeDislikeValue = 0;}
 
-// 	con.query("INSERT INTO QuestionToComment (questionID) " + "VALUES('" + questionID 
-// 		+ "'; INSERT INTO QuestionLike (questionID, userID, pollLike) " +
-// 		"VALUES('" + questionID + "', '" + userID + "', '" + likeDislikeValue + "');",
-// 	  	function (err, result, fields) {
-// 	    // if (err) throw err;
-// 	    //res.json(result);
-// 	});
-// });
+	con.query("INSERT INTO QuestionLike (questionID, userID, pollLike) " +
+		"VALUES('" + questionID + "', '" + userID + "', '" + likeDislikeValue + "');",
+	  	function (err, result, fields) {
+	    // if (err) throw err;
+	    //res.json(result);
+	});
+});
 
 app.get('/getLike', function (req, res) {
 
@@ -649,37 +650,17 @@ app.get('/editComment', function (req, res) {
 		});
 });
 
-// app.get('/deleteComment', function (req, res) {
+app.get('/deleteComment', function (req, res) {
 
-// 	con.query("DELETE FROM QuestionToComment WHERE questionID='" + req.query.questionID +
-// 		   "'; DELETE FROM QuestionComment "
-// 		+ "WHERE questionID='" + req.query.questionID
-// 		+ "' and questionCommentID='" + req.query.questionCommentID 
-// 		+ "' and userID='" + req.query.userID 
-// 		+ "' and description='" + req.query.description + "';" +
-// 		", ALTER TABLE QuestionComment AUTO_INCREMENT = 1;",
-// 		function (err, result, fields) {
-// 			if(err) throw err;
-// 			res.json(result);
-// 		});
-// });
-
-// app.get('/deleteComment', function (req, res) {
-
-// 	con.query("DELETE FROM QuestionToComment WHERE questionCommentID='" + req.query.questionCommentID +
-// 		   "'; DELETE FROM QuestionComment " + "WHERE questionCommentID='" + req.query.questionCommentID +
-// 			 "' questionID='" + req.query.questionID + 
-// 			"'' and userID='" + req.query.userID +
-// 			"' and userIDAnnonymous='" + req.query.userIDAnnonymous +
-// 			"' and description='" + req.query.description + "';" +
-// 			", ALTER TABLE QuestionComment AUTO_INCREMENT = 1;",
-// 		function (err, result, fields) {
-// 			if(err) throw err;
-// 			res.json(result);
-// 		});
-// });
-
-
+	con.query("DELETE FROM QuestionComment "
+		+ "WHERE questionID='" + req.query.questionID
+		+ "' and userID='" + req.query.userID 
+		+ "' and description='" + req.query.description + "';", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+		});
+});
 
 
 

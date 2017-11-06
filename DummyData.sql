@@ -168,40 +168,48 @@ values (
     1
 );
 
-insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous) 
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, pollLike) 
 values (
 	4,
     1,
     0,
     "question comment 1",
-    false
+    false,
+    0,
+    0
 );
 
-insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous) 
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, pollLike) 
 values (
 	9,
     1,
     0,
     "question comment 2",
-    false
+    false,
+    0,
+    0
 );
 
-insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous) 
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, pollLike) 
 values (
 	5,
     2,
     0,
     "question comment 3",
-    false
+    false,
+    0,
+    0
 );
 
-insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous) 
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, pollLike) 
 values (
 	4,
     2,
     0,
     "question comment 1",
-    false
+    false,
+    0,
+    0
 );
 
 # users 1 and 2 follow eachother
@@ -238,6 +246,3 @@ insert into QuestionToPollOption(questionID, pollOptionID) values(4, 4);
 insert into QuestionToPollOption(questionID, pollOptionID) values(6, 5);
 insert into QuestionToPollOption(questionID, pollOptionID) values(6, 6);
 
-insert into QuestionToComment(questionID, questionCommentID) values(4, 1);
-insert into QuestionToComment(questionID, questionCommentID) values(5, 2);
-insert into QuestionToComment(questionID, questionCommentID) values(9, 3);

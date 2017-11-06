@@ -35,7 +35,8 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 							
 							$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
 							+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous 
-							+ "&userIDAnnonymous=" + userIDAnnonymous)
+							+ "&userIDAnnonymous=" + userIDAnnonymous + "&pollLike=" + 0 + 
+							"&pollDisLike=" + 0)
 							.then(function (response) {
 								console.log("inser into comment table");
 							},function (response) {
