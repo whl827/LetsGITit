@@ -31,7 +31,7 @@ app.use(express.static(__dirname + '/public'));
 app.get('/searchQuestionsAnyText', function (req, res) {
 
 	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, " +
-			          " q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
+			          " q.startDate, q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " + 
 		"FROM Question q WHERE " + 
 		"q.title LIKE '%" + req.query.tagQuery + "%' or " +
 		"q.subTitle LIKE '%" + req.query.tagQuery + "%' or " + 
@@ -45,7 +45,7 @@ app.get('/searchQuestionsAnyText', function (req, res) {
 // Get Question Search from navbar
 app.get('/searchQuestions', function (req, res) {
 
-	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
+	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " + 
 		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
 		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
 		" tq.questionID = q.questionID",
@@ -59,7 +59,7 @@ app.get('/onPageLoad', function (req, res){
 
 
 	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, " +
-					" q.endDate, q.totalVotes, q.positiveVotes " +
+					" q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " +
 			 " FROM Question q " +
 			 " ORDER BY q.startdate desc",
 	  function (err, result, fields) {
@@ -519,9 +519,13 @@ app.get('/insertQuestionLike', function (req, res) {
 	con.query("INSERT INTO QuestionLike (questionID, userID, pollLike) " +
 			"VALUES('" + questionID + "', '" + userID + "', '" + likeDislikeValue + "');",
 	  	function (err, result, fields) {
-	    // if (err) throw err;
-	    //res.json(result);
+	    if (err) throw err;
 	});
+
+	con.query("UPDATE question SET numLikes = numLikes + 1 WHERE questionID = " + questionID, 
+		function (err, result, fields) {
+			if (err) throw err;
+		});
 });
 
 app.get('/getLike', function (req, res) {
