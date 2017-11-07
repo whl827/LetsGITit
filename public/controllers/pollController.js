@@ -168,54 +168,88 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 
 	}
 
-	$scope.commentLikeOrDislike = function(comment){
+
+	//User likes the comment 
+	$scope.commentLike = function(comment){
 		var questionCommentID = angular.copy(comment).questionCommentID;
 		var userID = $cookies.get("userID");
 		if(userID !== -1 && typeof(userID) !== 'undefined'){
 
-				var likeorDisLike = $scope.comment.commentLikeInput;
+			//Check if user already voted
+			$http.get("/checkUserVotedComment?questionCommentID=" + questionCommentID + "&userID=" + userID
+				)
+				.then(function (response) {
+					if(typeof response.data[0] == 'undefined'){
+						//&& typeof response[0].userID !== 'undefined' 
+						//if user clicked Like 
+						$http.get("/UpdateCommentLike?questionCommentID=" + questionCommentID + "&questionID=" + questionID)
+							.then(function (response) {
+								console.log("insert into questionlike table");
+						},function (response) {
+						    	console.log("Error");
+						});
 
-				//var userID = 1; //needs to be the current logged in User 
+							$route.reload();
+					}else {			
+						//
+						// $http.get("/UpdateCommentVote?questionCommentID=" + questionCommentID + "&userID=" + userID
+						// 	+ "&pollLike=" + likeorDisLike)
+						// 	.then(function (response) {
+						// 		console.log("insert into questionlike table");
+						// },function (response) {
+						//     	console.log("Error");
+						// });
+						// 	//$route.reload();
+						 	$scope.errorMessageCommentLike = "Already voted.";
 
-				//Check if user already voted
-				$http.get("/checkUserVotedComment?questionCommentID=" + questionCommentID + "&userID=" + userID
-					)
-					.then(function (response) {
-						if(typeof response.data[0] == 'undefined'){
-							//&& typeof response[0].userID !== 'undefined' 
-
-							$http.get("/insertCommentLike?questionCommentID=" + questionCommentID + "&userID=" + userID
-								+ "&pollLike=" + likeorDisLike)
-								.then(function (response) {
-									console.log("insert into questionlike table");
-							},function (response) {
-							    	console.log("Error");
-							});
-
-								$route.reload();
-						}else {			
-
-							$http.get("/UpdateCommentVote?questionCommentID=" + questionCommentID + "&userID=" + userID
-								+ "&pollLike=" + likeorDisLike)
-								.then(function (response) {
-									console.log("insert into questionlike table");
-							},function (response) {
-							    	console.log("Error");
-							});
-								//$route.reload();
-								$scope.errorMessageLike = "Already voted. Updating your like/dislike";
-
-						}
-					},function (response) {
-				    	console.log("Error");
-				});
+					}
+				},function (response) {
+			    	console.log("Error");
+			});
 		}else{
 			$scope.errorMessageCommentLike = "Please log In to vote comment";
 		}
 
 	}
 
+	//User Disliked the comment
+	$scope.commentDislike = function(comment){
+		var questionCommentID = angular.copy(comment).questionCommentID;
+		var userID = $cookies.get("userID");
+		if(userID !== -1 && typeof(userID) !== 'undefined'){
 
+			//Check if user already voted
+			$http.get("/checkUserVotedComment?questionCommentID=" + questionCommentID + "&userID=" + userID
+				)
+				.then(function (response) {
+					if(typeof response.data[0] == 'undefined'){
+						//&& typeof response[0].userID !== 'undefined' 
 
-	
+						//If user clicked Dislike
+						$http.get("/UpdateCommentDisLike?questionCommentID=" + questionCommentID + "&questionID=" + questionID + "&userID=" + userID)
+							.then(function (response) {
+								console.log("insert into questionlike table");
+						},function (response) {
+						    	console.log("Error");
+						});
+							$route.reload();
+					}else {			
+						// $http.get("/UpdateCommentVote?questionCommentID=" + questionCommentID + "&userID=" + userID
+						// 	+ "&pollLike=" + likeorDisLike)
+						// 	.then(function (response) {
+						// 		console.log("insert into questionlike table");
+						// },function (response) {
+						//     	console.log("Error");
+						// });
+						// 	//$route.reload();
+						 	$scope.errorMessageCommentLike = "Already voted. ";
+
+					}
+				},function (response) {
+			    	console.log("Error");
+			});
+		}else{
+			$scope.errorMessageCommentLike = "Please log In to vote comment";
+		}
+	}	
 }]);

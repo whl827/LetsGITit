@@ -186,7 +186,6 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 					},function (response) {
 					    	console.log("Error");
 					});
-
 						$route.reload();
 				}else {			
 
@@ -204,9 +203,6 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 			},function (response) {
 		    	console.log("Error");
 		});
-
-
-
 	}
 
 	function validate(input){

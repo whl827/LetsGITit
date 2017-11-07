@@ -673,61 +673,59 @@ app.get('/checkUserVotedComment', function (req, res) {
 		});
 });
 
-app.get('/insertCommentLike', function (req, res) {
-	// var questionID = req.query.questionCommentID;
-	// var userID = req.query.userID;
-	var likeDislikeValue = req.query.pollLike;
+app.get('/UpdateCommentLike', function (req, res) {
 
-	//convert boolean value 
-	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
-	else{likeDislikeValue = 0;}
+	con.query("UPDATE QuestionComment " + 
+		"SET commentLikeCount= commentLikeCount+1 WHERE questionID='" +
+		req.query.questionID + "' and questionCommentID='" + req.query.questionCommentID + "';", 
+	  	function (err, result, fields) {
+	    // if (err) throw err;
+	    //res.json(result);
+	});
 
-	con.query("INSERT INTO CommentLike (questionCommentID, userID, pollLike) " +
-		"VALUES('" + req.query.questionCommentID + "', '" + req.query.userID 
-		+ "', '" + likeDislikeValue + "');",
+		con.query("INSERT INTO CommentLike (questionCommentID, userID)" +
+		"VALUES('" + req.query.questionCommentID + "', '" + req.query.userID + "');",
 	  	function (err, result, fields) {
 	    // if (err) throw err;
 	    //res.json(result);
 	});
 });
 
-app.get('/UpdateCommentLike', function (req, res) {
+app.get('/UpdateCommentDisLike', function (req, res) {
 
-	var likeDislikeValue = req.query.pollLike;
-	//convert boolean value 
-	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
-	else{likeDislikeValue = 0;}
+	con.query("UPDATE QuestionComment " + 
+		"SET commentDislikeCount= commentDislikeCount+1 WHERE questionID='" +
+		req.query.questionID + "' and questionCommentID='" + req.query.questionCommentID + "';", 
+	  	function (err, result, fields) {
+	    // if (err) throw err;
+	    //res.json(result);
+	});
 
-	con.query("UPDATE QuestionLike " + 
-		"SET pollLike='"+ likeDislikeValue + "' WHERE questionCommentID='" +
-		req.query.questionCommentID + "' and userID='" + req.query.userID + "';", 
-		function (err, result, fields) {
-			if(err) throw err;
-			res.json(result);
-		});
+	con.query("INSERT INTO CommentLike (questionCommentID, userID)" +
+		"VALUES('" + req.query.questionCommentID + "', '" + req.query.userID + "');",
+	  	function (err, result, fields) {
+	    // if (err) throw err;
+	    //res.json(result);
+	});
 });
 
-app.get('/getCommentLike', function (req, res) {
-	con.query("SELECT COUNT(*) as num " + 
-		"FROM CommentLike cl WHERE cl.questionCommentID='" +
-		req.query.questionCommentID + "' and cl.pollLike = 1;", 
-		function (err, result, fields) {
-			//if(err) throw err;
-			res.json(result);
 
-		});
-});
+// app.get('/UpdateCommentLike', function (req, res) {
 
-app.get('/getCommentDisLike', function (req, res) {
-	con.query("SELECT COUNT(*) as num " + 
-		"FROM CommentLike cl WHERE cl.questionCommentID='" +
-		req.query.questionCommentID + "' and cl.pollLike = 1;", 
-		function (err, result, fields) {
-			//if(err) throw err;
-			res.json(result);
+// 	var likeDislikeValue = req.query.pollLike;
+// 	//convert boolean value 
+// 	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
+// 	else{likeDislikeValue = 0;}
 
-		});
-});
+// 	con.query("UPDATE QuestionLike " + 
+// 		"SET pollLike='"+ likeDislikeValue + "' WHERE questionID='" +
+// 		req.query.questionID + "' and userID='" + req.query.userID + "';", 
+// 		function (err, result, fields) {
+// 			if(err) throw err;
+// 			res.json(result);
+// 		});
+// });
+
 
 app.listen(8080);
 console.log("Server running on port 8080");
