@@ -416,7 +416,7 @@ app.get('/pollList', function (req, res) {
 
 app.get('/commentList', function (req, res) {
 
-	con.query("SELECT qc.userID, qc.userIDAnnonymous, qc.description "+
+	con.query("SELECT qc.questionCommentID, qc.userID, qc.userIDAnnonymous, qc.description, qc.commentLikeCount, qc.commentDislikeCount "+
 		"FROM QuestionComment qc WHERE " + 
 		"qc.questionID='" + req.query.questionID + "';",
 	  	function (err, result, fields) {
@@ -662,7 +662,72 @@ app.get('/deleteComment', function (req, res) {
 		});
 });
 
+app.get('/checkUserVotedComment', function (req, res) {
 
+	con.query("SELECT cl.userID " + 
+		"FROM CommentLike cl WHERE cl.questionCommentID='" +
+		req.query.questionCommentID + "' and cl.userID='" + req.query.userID + "';", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+		});
+});
+
+app.get('/insertCommentLike', function (req, res) {
+	// var questionID = req.query.questionCommentID;
+	// var userID = req.query.userID;
+	var likeDislikeValue = req.query.pollLike;
+
+	//convert boolean value 
+	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
+	else{likeDislikeValue = 0;}
+
+	con.query("INSERT INTO CommentLike (questionCommentID, userID, pollLike) " +
+		"VALUES('" + req.query.questionCommentID + "', '" + req.query.userID 
+		+ "', '" + likeDislikeValue + "');",
+	  	function (err, result, fields) {
+	    // if (err) throw err;
+	    //res.json(result);
+	});
+});
+
+app.get('/UpdateCommentLike', function (req, res) {
+
+	var likeDislikeValue = req.query.pollLike;
+	//convert boolean value 
+	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
+	else{likeDislikeValue = 0;}
+
+	con.query("UPDATE QuestionLike " + 
+		"SET pollLike='"+ likeDislikeValue + "' WHERE questionCommentID='" +
+		req.query.questionCommentID + "' and userID='" + req.query.userID + "';", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+		});
+});
+
+app.get('/getCommentLike', function (req, res) {
+	con.query("SELECT COUNT(*) as num " + 
+		"FROM CommentLike cl WHERE cl.questionCommentID='" +
+		req.query.questionCommentID + "' and cl.pollLike = 1;", 
+		function (err, result, fields) {
+			//if(err) throw err;
+			res.json(result);
+
+		});
+});
+
+app.get('/getCommentDisLike', function (req, res) {
+	con.query("SELECT COUNT(*) as num " + 
+		"FROM CommentLike cl WHERE cl.questionCommentID='" +
+		req.query.questionCommentID + "' and cl.pollLike = 1;", 
+		function (err, result, fields) {
+			//if(err) throw err;
+			res.json(result);
+
+		});
+});
 
 app.listen(8080);
 console.log("Server running on port 8080");

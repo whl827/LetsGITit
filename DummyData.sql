@@ -168,7 +168,7 @@ values (
     1
 );
 
-insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, pollLike) 
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
 	4,
     1,
@@ -179,7 +179,7 @@ values (
     0
 );
 
-insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, pollLike) 
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
 	9,
     1,
@@ -190,7 +190,7 @@ values (
     0
 );
 
-insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, pollLike) 
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
 	5,
     2,
@@ -201,7 +201,7 @@ values (
     0
 );
 
-insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, pollLike) 
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
 	4,
     2,

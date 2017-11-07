@@ -127,10 +127,10 @@
 							 <button class="btn" ng-show="comment.userID==loggedInuserID" 
 							ng-click="deleteComment(comment)"> delete</button>   
 
-							<a href="" ng-model="commentLikeInput" value = "true" onclick="commentLikeOrDislike()">LIKE </a>{{commentLikeCount}}
-							<a href="" ng-model="commentLikeInput" value = "false" onclick="commentLikeOrDislike()">DISLIKE </a>{{commentDislikeCount}}
+							<a href="" ng-model="commentLikeInput" value = "true" onclick="commentLikeOrDislike(comment)">LIKE </a>{{comment.commentLikeCount}}
+							<a href="" ng-model="commentLikeInput" value = "false" onclick="commentLikeOrDislike(comment)">DISLIKE </a>{{comment.commentDislikeCount}}
 
-							{{errorMessageCommentLike}}  
+							{{errorMessageCommentLike}}
 							
 			              </li>
 

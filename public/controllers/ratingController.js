@@ -1,4 +1,4 @@
-angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cookies', '$routeParams', '$location', function($scope, $http, $cookies, $routeParams, $location) {
+angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cookies', '$routeParams', '$location', '$route', function($scope, $http, $cookies, $routeParams, $location, $route) {
 	
 	function twoDigits(d) {
 	    if(0 <= d && d < 10) return "0" + d.toString();
@@ -129,18 +129,32 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 		});
 	}
 
-	// $scope.deleteComment = function(comment){
-	// 	var currentComment = angular.copy(comment).description;
+	$scope.deleteComment = function(comment){
+		var currentComment = angular.copy(comment).description;
+		var questionCommentID = angular.copy(comment).questionCommentID;
+
+		$http.get('/deleteComment?&questionID=' + questionID + "&userID=" + loggedInuserID +
+			"&description=" + currentComment + "&questionCommentID=" + questionCommentID)
+			.then(function (response) {
+					$route.reload();
+					console.log("comment succesfully deleted");
+				},function (response) {
+			    	console.log("Error");
+		});
+
+	}
+
+	// $scope.commentLikeOrDislike = function(comment){
 	// 	var questionCommentID = angular.copy(comment).questionCommentID;
 
-	// $http.get('deleteComment?&questionID=' + questionID + "&userID=" + loggedInuserID +
-	// 	"&description=" + currentComment + "&questionCommentID=" + questionCommentID)
-	// 	.then(function (response) {
-	// 			$route.reload();
-	// 			console.log("comment succesfully deleted");
-	// 		},function (response) {
-	// 	    	console.log("Error");
-	// });
+	// 	$http.get('/deleteComment?&questionID=' + questionID + "&userID=" + loggedInuserID +
+	// 			"&questionCommentID=" + questionCommentID)
+	// 			.then(function (response) {
+	// 					$route.reload();
+	// 					console.log("comment succesfully deleted");
+	// 				},function (response) {
+	// 			    	console.log("Error");
+	// 		});
 
 	// }
 	
