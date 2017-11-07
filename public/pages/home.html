@@ -34,7 +34,7 @@
 			<option class="options" value="User" id="DropDownSelectUser">User</option>
 		</select>
 
-		<input type="text" class="search-bar form-control" id="searchTextField" placeholder="Search" aria-describedby="basic-addon1" ng-model="query">
+		<input type="text" class="search-bar form-control" id="searchTextField" placeholder="Search" aria-describedby="basic-addon1" ng-model="query" ng-keyup="$event.keyCode == 13 && searchButton()">
 		
 		<button type="button" class="search-button" id="searchButton" ng-click="searchButton()">SEARCH</button>
 	</div>
