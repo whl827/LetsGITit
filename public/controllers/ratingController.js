@@ -1,4 +1,4 @@
-angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cookies', '$routeParams', '$location', function($scope, $http, $cookies, $routeParams, $location) {
+angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cookies', '$routeParams', '$location', '$route', function($scope, $http, $cookies, $routeParams, $location, $route) {
 	
 	function twoDigits(d) {
 	    if(0 <= d && d < 10) return "0" + d.toString();
@@ -108,15 +108,132 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			console.log("Error");
 		});	
 
-		$http.get('/commentList?questionID=' + questionID).then(function (response) {
-			
+		$http.get('/commentList?questionID=' + questionID).then(function (response) {		
 			$scope.totalComment = response.data.length;
 			$scope.commentList = response.data;
 		}, function (response) {
 			console.log("Failed to get current user, not logged in");
 		});
-
-	
 	}
+
+	$scope.editComment = function(comment){
+
+		console.log("in edit comment");
+		//var original = $scope.commentList.indexOf(field);
+		var currentComment = angular.copy(comment).description;
+		var newComment = comment.newComment;
+		console.log(" currentComment is " + currentComment);
+		console.log("New comment is " + newComment);
+
+		$http.get("/editComment?questionID=" + questionID + "&userID=" + loggedInuserID
+			+ "&currentComment=" + currentComment + "&newComment=" + newComment)
+			.then(function (response) {
+				$route.reload();
+				console.log("inser into edit comment table");
+			},function (response) {
+		    	console.log("Error");
+		});
+	}
+
+	$scope.deleteComment = function(comment){
+		var currentComment = angular.copy(comment).description;
+		var questionCommentID = angular.copy(comment).questionCommentID;
+
+		$http.get('/deleteComment?&questionID=' + questionID + "&userID=" + loggedInuserID +
+			"&description=" + currentComment + "&questionCommentID=" + questionCommentID)
+			.then(function (response) {
+					$route.reload();
+					console.log("comment succesfully deleted");
+				},function (response) {
+			    	console.log("Error");
+		});
+
+	}
+
+		//User likes the comment 
+	$scope.commentLike = function(comment){
+		var questionCommentID = angular.copy(comment).questionCommentID;
+		var userID = $cookies.get("userID");
+		if(userID !== -1 && typeof(userID) !== 'undefined'){
+
+			//Check if user already voted
+			$http.get("/checkUserVotedComment?questionCommentID=" + questionCommentID + "&userID=" + userID
+				)
+				.then(function (response) {
+					if(typeof response.data[0] == 'undefined'){
+						//&& typeof response[0].userID !== 'undefined' 
+						//if user clicked Like 
+						$http.get("/UpdateCommentLike?questionCommentID=" + questionCommentID + "&questionID=" + questionID+ "&userID=" + userID)
+							.then(function (response) {
+								console.log("insert into questionlike table");
+						},function (response) {
+						    	console.log("Error");
+						});
+
+							$route.reload();
+					}else {			
+						//
+						// $http.get("/UpdateCommentVote?questionCommentID=" + questionCommentID + "&userID=" + userID
+						// 	+ "&pollLike=" + likeorDisLike)
+						// 	.then(function (response) {
+						// 		console.log("insert into questionlike table");
+						// },function (response) {
+						//     	console.log("Error");
+						// });
+						// 	//$route.reload();
+						 	$scope.errorMessageCommentLike = "Already voted.";
+
+					}
+				},function (response) {
+			    	console.log("Error");
+			});
+		}else{
+			$scope.errorMessageCommentLike = "Please log In to vote comment";
+		}
+
+	}
+
+	//User Disliked the comment
+	$scope.commentDislike = function(comment){
+		var questionCommentID = angular.copy(comment).questionCommentID;
+		var userID = $cookies.get("userID");
+		if(userID !== -1 && typeof(userID) !== 'undefined'){
+
+			//Check if user already voted
+			$http.get("/checkUserVotedComment?questionCommentID=" + questionCommentID + "&userID=" + userID
+				)
+				.then(function (response) {
+					if(typeof response.data[0] == 'undefined'){
+						//&& typeof response[0].userID !== 'undefined' 
+
+						//If user clicked Dislike
+						$http.get("/UpdateCommentDisLike?questionCommentID=" + questionCommentID + "&questionID=" + questionID + "&userID=" + userID)
+							.then(function (response) {
+								console.log("insert into questionlike table");
+						},function (response) {
+						    	console.log("Error");
+						});
+							$route.reload();
+					}else {			
+						// $http.get("/UpdateCommentVote?questionCommentID=" + questionCommentID + "&userID=" + userID
+						// 	+ "&pollLike=" + likeorDisLike)
+						// 	.then(function (response) {
+						// 		console.log("insert into questionlike table");
+						// },function (response) {
+						//     	console.log("Error");
+						// });
+						// 	//$route.reload();
+						$scope.errorMessageCommentLike = "Already voted. ";
+
+					}
+				},function (response) {
+			    	console.log("Error");
+			});
+		}else{
+			$scope.errorMessageCommentLike = "Please log In to vote comment";
+		}
+	}	
+
+
 	
 }]);

@@ -32,6 +32,8 @@ create table QuestionComment (
     userIDAnnonymous varchar(8) not null,
     description varchar(500),
     isAnnonymous boolean not null,
+    commentLikeCount int(8) not null,
+    commentDislikeCount int(8) not null,
     foreign key fk1(questionID) references Question(questionID),
     foreign key fk2(userID) references KUser(userID)
 );
@@ -72,13 +74,6 @@ create table UserToQuestion (
     foreign key fk2(questionID) references Question(questionID)
 );
 
-create table QuestionToComment (
-	questionID int(8) not null,
-    questionCommentID int(8) not null,
-    foreign key fk1(questionID) references Question(questionID),
-    foreign key fk2(questionCommentID) references QuestionComment(questionCommentID)
-);
-
 create table QuestionToPollOption (
 	questionID int(8) not null,
     pollOptionID int(8) not null,
@@ -92,6 +87,14 @@ create table QuestionLike (
     userID int(8) not null,
     pollLike boolean not null,
     foreign key fk1(questionID) references Question(questionID),
+    foreign key fk2(userID) references KUser(userID)
+);
+
+create table CommentLike (
+    CommentLikeID int(8) primary key auto_increment,
+    questionCommentID int(8) not null,
+    userID int(8) not null,
+    foreign key fk1(questionCommentID) references QuestionComment(questionCommentID),
     foreign key fk2(userID) references KUser(userID)
 );
 
