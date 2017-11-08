@@ -595,19 +595,51 @@ create-button, .submit-button, .login-button, .signup-button{
 	float: right;
 }
 
+.profile-cont {
+	position: fixed;
+	margin-top: 80px;  
+	background-color: white; 
+	width: 23%;
+	left: 20px;
+
+
+
+	padding: 20px; 
+
+	-webkit-box-shadow: -1px 10px 39px -5px rgba(0,0,0,0.75);
+	-moz-box-shadow: -1px 10px 39px -5px rgba(0,0,0,0.75);
+	box-shadow: -1px 10px 39px -5px rgba(0,0,0,0.75);
+}
+
+.my-posts-container {
+	margin-top: 0px; 
+}
 
 
 
 
-@media only screen and (max-width: 784px) {
-	.login-container, .signup-container {
+
+@media only screen and (max-width: 1024px) {
+/*	.login-container, .signup-container {
 		padding-left: 75px;
 		padding-right: 75px;
 		padding-top: 30px;
 		padding-bottom: 50px;
+	}*/
+
+	.users-cont, .create-cont {
+		margin-top: 0px; 
+		margin-left: 10px; 
+		margin-right: 10px;
 	}
 
-   .login-heading, .signup-heading{
+	.login-container, .signup-container, .create-survey-container {
+		padding-left: 25px; 
+		padding-right: 25px; 
+	}
+
+
+   .login-heading, .signup-heading, .heading{
 		margin-left: 50px;
 	}
 
@@ -622,5 +654,68 @@ create-button, .submit-button, .login-button, .signup-button{
 	.signup-button {
 		margin-left: 75%;
 	}
+
+
+
+	.feed {
+		margin-top: 230px; 
+		margin-left: auto; 
+		margin-right: auto; 
+	}
+
+	.popular-cont {
+		margin-top: 110px; 
+		z-index: 999;
+		width: 98%; 
+		left: 50%;
+		margin-left: -49%; 
+
+	}
+
+	.search-bar-container {
+		width: 98%;
+	}
+
+	.drop-down-menu {
+		height: 20px;
+		width: 80px;
+		font-size: 12px; 
+	}
+
+	.search-bar {
+		font-size: 12px; 
+		height: 40px;
+		padding-left: 20px; 
+		padding-right: 10px; 
+		padding-top: 10px; 
+		padding-bottom: 10px; 
+
+
+	}
+
+	.search-button {
+		font-size: 12px; 
+		height: 40px; 
+		width: 150px;
+		margin-left: -150px;
+		margin-top: -1px; 
+	}
+
+	.profile-cont {
+		margin-top: -40px; 
+		z-index: 999;
+		width: 98%; 
+		left: 50%;
+		margin-left: -49%; 
+	}
+
+
+	.my-posts-container {
+		margin-top: 180px; 
+	}
+
+
+
+
 }
 

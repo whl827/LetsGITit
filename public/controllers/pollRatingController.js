@@ -184,6 +184,9 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 
 					 	.then(function (response) {
 							//console.log("Updated PollOption Table: added vote");
+							$route.reload();
+							$scope.errorMessagePoll = "Already voted. Updating your vote" ; // doesnt show up for some reason
+							
 						}, function (response) {
 						    console.log("FAILED Updated PollOption Table: added vote");
 		 			});
@@ -203,8 +206,8 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 						    console.log("FAILED Update: Inserted into RatingQuestionOption Table");
 		 			});
 		 			*/
-			 		$scope.errorMessagePoll = "Already voted. Updating your vote" ;
-			 		$route.reload();
+			 		//$scope.errorMessagePoll = "Already voted. Updating your vote" ;
+			 		//$route.reload();
 				}
 				
 			}, function (response) { console.log("Error"); });
