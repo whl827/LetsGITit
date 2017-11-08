@@ -157,7 +157,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 					if(typeof response.data[0] == 'undefined'){
 						//&& typeof response[0].userID !== 'undefined' 
 						//if user clicked Like 
-						$http.get("/UpdateCommentLike?questionCommentID=" + questionCommentID + "&questionID=" + questionID)
+						$http.get("/UpdateCommentLike?questionCommentID=" + questionCommentID + "&questionID=" + questionID+ "&userID=" + userID)
 							.then(function (response) {
 								console.log("insert into questionlike table");
 						},function (response) {

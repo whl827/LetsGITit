@@ -26,32 +26,32 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 				else{isAnnonymous = 0;}
 
 				//Insert Comment Only when User haven't submitted
-				$http.get("/checkUserExist?questionID=" + questionID + "&userID=" + userID)
-					.then(function (response) {
+				// $http.get("/checkUserExist?questionID=" + questionID + "&userID=" + userID)
+				// 	.then(function (response) {
 					
-						//
-						//if(typeof response.data[0] == 'undefined'){
-							//&& typeof response[0].userID !== 'undefined' 
+						
+				// 		if(typeof response.data[0] == 'undefined'){
+				// 			&& typeof response[0].userID !== 'undefined' 
 							
-							$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
-							+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous 
-							+ "&userIDAnnonymous=" + userIDAnnonymous + "&pollLike=" + 0 + 
-							"&pollDisLike=" + 0)
-							.then(function (response) {
-								console.log("inser into comment table");
-							},function (response) {
-						    	console.log("Error");
-							});
-
-					 		$route.reload();
-
-						// }else {
-						// 	$scope.errorMessageComment = "Already commented. Please press Edit to continue";
-						// }
-
-				},function (response) {
+					$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
+					+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous 
+					+ "&userIDAnnonymous=" + userIDAnnonymous + "&commentLikeCount=0" + 
+					"&commentDislikeCount=0")
+					.then(function (response) {
+						console.log("inser into comment table");
+					},function (response) {
 				    	console.log("Error");
-				});
+					});
+
+			 		$route.reload();
+
+				// 		}else {
+				// 			$scope.errorMessageComment = "Already commented. Please press Edit to continue";
+				// 		}
+
+				// },function (response) {
+				//     	console.log("Error");
+				// });
 
 				//Inser comment only when user have not commentent
 			}
