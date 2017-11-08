@@ -2,6 +2,7 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 	console.log("in create poll ctrl"); 
 
 	$scope.minDate = new Date();
+	$scope.minDate.setDate($scope.minDate.getDate() + 1);
 
 	function validate(input){
 		if(input == null || input == ""){
@@ -18,9 +19,10 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 	}
 
 	Date.prototype.toMysqlFormat = function() {
-    	return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
+    	return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + 
+    			twoDigits(this.getUTCDate()) + " " + twoDigits(this.getHours()) + ":"
+    			twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
 	};
-
 
 	$scope.createPoll = function () { // handle submit
 		console.log("inside create poll function ");

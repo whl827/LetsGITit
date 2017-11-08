@@ -1,4 +1,4 @@
-angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cookies', function($scope, $http, $cookies) {
+angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cookies', '$location', function($scope, $http, $cookies, $location) {
 	var username = null;
 	var loggedIn = true;
 
@@ -22,5 +22,17 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 			console.log("Failed to get current user, not logged in");
 		});
 	}
+
+	$scope.goToLink = function(question) {
+
+		console.log("In go to link in ProfileCtrl");
+        if(question.isPoll){
+             $location.path('/poll/' + question.questionID);
+        }
+        else{
+            $location.path('/rating/' + question.questionID);
+        }
+
+    };
 	
 }]);

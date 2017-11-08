@@ -5,6 +5,7 @@ use KnowItAll;
 create table KUser (
 	userID int(8) primary key auto_increment,
     username varchar(8) not null,
+    numFollowers int(8) default 0 not null,
     passwordHash int(12) not null
 );  
 
@@ -19,6 +20,7 @@ create table Question (
     endDate datetime,
     totalVotes int(8) not null,
     positiveVotes int(8),			 #only for rating question
+    numLikes int(8) default 0 not null,
     isAnonymous boolean not null,
     foreign key fk1(userID) references KUser(userID)
 );

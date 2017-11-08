@@ -7,7 +7,9 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 	}
 
 	Date.prototype.toMysqlFormat = function() {
-    	return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
+    	return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + 
+    		   twoDigits(this.getUTCDate()) + " " + twoDigits(this.getHours()) + ":" + 
+    		   twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
 	};
 
 	var loggedInuserID = $cookies.get("userID");
@@ -47,11 +49,19 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 				$scope.endDate = "(Open Forever)";
 			}else{
 
+
+				console.log("NOW: " + new Date());
+				console.log("CLOSING: " + new Date(response.data[0].endDate));
+
 				//get current time
-				var date = new Date().toMysqlFormat();
+				var date = new Date();
 				//convert close time to match convert time format
-				var closeDate = (response.data[0].endDate).replace(".000Z", "");
-				var finalCloseDate = closeDate.replace("T", " ");
+				var finalCloseDate = new Date(response.data[0].endDate);
+				//newEndDate.setHours(newEndDate.getHours() - newEndDate.getTimezoneOffset() / 60);
+				//console.log("NEW END DATE (A): " + newEndDate);
+				//var closeDate = (response.data[0].endDate).replace(".000Z", "");
+				//var finalCloseDate = closeDate.replace("T", " ");
+
 				console.log("now date: " + date);
 				console.log("close date: " + finalCloseDate);
 				//compare and check
@@ -91,7 +101,6 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 		}, function (response) {
 			console.log("Error");
 		});	
-
 		$http.get('/getDislike?questionID=' + questionID).then(function (response) {
 
 			$scope.totalDislikeCount = response.data[0].num;
@@ -113,23 +122,12 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 
 		});	
 
-		// var questionCommentID = response.data[1].questionCommentID;
-		// //need to get questionCommentID
-
-		// $http.get('/getCommentLike?questionCommentID=' + questionCommentID).then(function (response) {
-		// $scope.commentLikeCount = response.data[0].num;
-
-		// }, function (response) {
-		// 	console.log("Error");
-		// });	
-
-		// $http.get('/getCommentLike?questionCommentID=' + questionCommentID).then(function (response) {
-		// $scope.commentDislikeCount = response.data[0].num;
-
-		// }, function (response) {
-		// 	console.log("Error");
-		// });	
-
+		$http.get('/getPollResults?questionID=' + questionID).then(function (response) {
+				$scope.pollResults = response.data;
+			}, function (response) {
+				console.log("FAILED getting poll results");
+			}
+		);	
 	}//If
 
 

@@ -1,6 +1,7 @@
 angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$cookies', '$window', function($scope, $http, $cookies, $window) {
 
 	$scope.minDate = new Date();
+	$scope.minDate.setDate($scope.minDate.getDate() + 1);
 
 	function validate(input){
 		if(input == null || input == ""){
@@ -17,7 +18,9 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 	}
 
 	Date.prototype.toMysqlFormat = function() {
-    	return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
+    	return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + 
+    			twoDigits(this.getUTCDate()) + " " + twoDigits(this.getHours()) + ":"
+    			twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
 	};
 
 	$scope.createRating = function () { // handle submit
@@ -44,16 +47,6 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 			console.log("CONVERTED ENDDATE: " + endDate);
 		}
 		console.log("FINAL ENDDATE: " + endDate);
-
-
-
-
-
-
-
-
-
-
 
 		var openForever = $scope.openForeverInput;
 		var validEndDate; 

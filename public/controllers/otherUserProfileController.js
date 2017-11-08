@@ -22,6 +22,10 @@ angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '
 		 		$scope.isFollowing = false;
 		 	}
 		 });
+
+		 $http.get('/numFollowers?username=' + otherUsername).then(function (response) {
+		 	$scope.numFollowers = response.data[0].numFollowers;
+		 });
 	}
 
 	$scope.follow = function() {
