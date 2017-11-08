@@ -27,9 +27,9 @@ insert into Question(userID, isPoll, title, subTitle, description, totalVotes, i
 values (
 	1, 
     true,
-	"Poll 1",
-    "poll subtitle user 1",
-    "has tags 1",
+	"Best Pizza",
+    "around USC",
+    "What's the best pizza around the campus?",
     0,
     false
 );
@@ -38,9 +38,9 @@ insert into Question(userID, isPoll, title, subTitle, description, totalVotes, i
 values (
 	1, 
     true,
-	"Poll 2",
-    "poll subtitle user 1",
-    "has tags 1 and 2",
+	"Best CS Course",
+    "USC",
+    "What is the best CS Course you've taken?",
     0,
     true
 );
@@ -49,9 +49,9 @@ insert into Question(userID, isPoll, title, subTitle, description, totalVotes, i
 values (
 	1, 
     true,
-	"Rating Question 1",
-    "subtitle user 1",
-    "has tags t2",
+	"Movie to watch",
+    "nothing",
+    "Which movie should I watch?",
     0,
     false
 );
@@ -60,9 +60,9 @@ insert into Question(userID, isPoll, title, subTitle, description, totalVotes, p
 values (
 	2, 
     true,
-	"Poll 3",
-    "subtitle user 2",
-    "has tags 3",
+	"CS Course recommendation",
+    "USC",
+    "Please help me w my schedule next semester!",
     0, 
     0,
     false
@@ -72,10 +72,10 @@ insert into Question(userID, isPoll, title, subTitle, endDate, description, tota
 values (
 	2,
     false,
-	"Rating 2",
-    "subtitle user 2",
+	"USC Football",
+    "USC",
     "2017-10-17",
-    "has NO tags",
+    "How are we doing this year?! ",
     0,
     false
 );
@@ -84,10 +84,10 @@ insert into Question(userID, isPoll, title, subTitle, endDate, description, tota
 values (
 	3,
     true,
-	"Poll 4",
-    "subtitle user 3",
+	"The most study friendly coffee shop around campus",
+    "USC",
     "2017-10-17",
-    "has tags t3",
+    "What do u guys think?",
     0,
     false
 );
@@ -96,10 +96,10 @@ insert into Question(userID, isPoll, title, subTitle, endDate, description, tota
 values (
 	3,
     false,
-	"Rating 3",
-    "subtitle user 3",
+	"Leavey library",
+    "USC",
     "2017-10-17",
-    "has tags t1 t2 t3",
+    "how do u guys think about leavey?",
     0,
     false
 );
@@ -108,9 +108,9 @@ insert into Question(userID, isPoll, title, subTitle, description, totalVotes, i
 values (
 	3, 
     false,
-	"Rating 4",
-    "subtitle user 3",
-    "has NO tags",
+	"What do u guys think about USC Village?",
+    "USC",
+    "Good? Bad?",
     0,
     true
 );
@@ -119,9 +119,9 @@ insert into Question(userID, isPoll, title, subTitle, description, totalVotes, i
 values (
 	3, 
     false,
-	"Rating 5",
-    "subtitle user 3",
-    "has tags t4",
+	"Rate CS310",
+    "USC",
+    "What do you guys think about CS310?",
     0,
     false
 );
@@ -173,7 +173,7 @@ values (
 	4,
     1,
     0,
-    "question comment 1",
+    "Helpful Poll!!",
     false,
     0,
     0
@@ -184,7 +184,7 @@ values (
 	9,
     1,
     0,
-    "question comment 2",
+    "Helpful",
     false,
     0,
     0
@@ -195,7 +195,7 @@ values (
 	5,
     2,
     0,
-    "question comment 3",
+    "Helpful",
     false,
     0,
     0
@@ -206,7 +206,7 @@ values (
 	4,
     2,
     0,
-    "question comment 1",
+    "Thanks!",
     false,
     0,
     0
