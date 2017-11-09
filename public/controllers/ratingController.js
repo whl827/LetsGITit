@@ -223,7 +223,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 						//     	console.log("Error");
 						// });
 						// 	//$route.reload();
-						$scope.errorMessageCommentLike = "Already voted. ";
+						//$scope.errorMessageCommentLike = "Already voted. ";
 
 					}
 				},function (response) {

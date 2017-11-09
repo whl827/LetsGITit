@@ -3,8 +3,8 @@ create database KnowItAll;
 use KnowItAll;
 
 create table KUser (
-	userID int(8) primary key auto_increment,
-    username varchar(8) not null,
+	userID int(10) primary key auto_increment,
+    username varchar(10) not null,
     numFollowers int(8) default 0 not null,
     passwordHash int(12) not null
 );  
@@ -29,7 +29,7 @@ create table QuestionComment (
 	questionCommentID int(8) primary key auto_increment,
     questionID int(8) not null,
     userID int(8) not null,
-    userIDAnnonymous varchar(8) not null,
+    userIDAnnonymous varchar(10) not null,
     description varchar(500),
     isAnnonymous boolean not null,
     commentLikeCount int(8) not null,
