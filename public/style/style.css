@@ -524,6 +524,7 @@ create-button, .submit-button, .login-button, .signup-button{
 
 }
 
+
 .post-container:hover{	
 	-webkit-box-shadow: 4px 15px 82px 11px rgba(0,0,0,0.5);
 	-moz-box-shadow: 4px 15px 82px 11px rgba(0,0,0,0.5);
@@ -626,6 +627,10 @@ create-button, .submit-button, .login-button, .signup-button{
 }
 
 
+
+#profile-pic{
+	border-radius: 50%; 
+}
 
 
 
