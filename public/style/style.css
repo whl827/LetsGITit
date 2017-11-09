@@ -411,3 +411,9 @@ create-button, .submit-button, .login-button, .signup-button{
 	}
 }
 
+	.img-circle {
+		margin-left: 5%;
+		margin-top: 1%
+		border-radius: 75px;
+	}
+

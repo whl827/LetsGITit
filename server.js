@@ -441,6 +441,22 @@ app.get('/insertComment', function (req, res) {
 	});
 });
 
+
+// app.get('/deleteComment', function (req, res) {
+
+// 	con.query("DELETE FROM QuestionToComment WHERE questionCommentID='" + req.query.questionCommentID +
+// 		   "'; DELETE FROM QuestionComment " + "WHERE questionCommentID='" + req.query.questionCommentID +
+// 													      "' questionID='" + req.query.questionID + 
+// 													     "'' and userID='" + req.query.userID +
+// 											    "' and userIDAnnonymous='" + req.query.userIDAnnonymous +
+// 											 	     "' and description='" + req.query.description + "';" +
+// 			", ALTER TABLE QuestionComment AUTO_INCREMENT = 1;",
+// 		function (err, result, fields) {
+// 			if(err) throw err;
+// 			res.json(result);
+// 		});
+// });
+
 app.get('/isFollowing', function(req, res) {
 	var user1 = req.query.user1;
 	var user2 = req.query.user2;

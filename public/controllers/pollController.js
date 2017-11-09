@@ -12,6 +12,10 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
     	return this.getUTCFullYear() + "-" + twoDigits(1 + this.getUTCMonth()) + "-" + twoDigits(this.getUTCDate()) + " " + twoDigits(this.getUTCHours()) + ":" + twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
 	};
 
+	// var questionCommentID = $routeParams.questionCommentID;
+	// var userID = $routeParams.userID;
+	// var userIDAnnonymous = $routeParams.userIDAnnonymous;
+
 	var loggedInuserID = $cookies.get("userID");
 	$scope.loggedInuserID=loggedInuserID;
 	var questionID = $routeParams.questionID;
@@ -112,7 +116,16 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 			$scope.pollList = response.data;
 		}, function (response) {
 
-		});	
+		});
+
+		// deleting comments, idk if this works right now
+		// $http.get('deleteComment?questionCommentID=' + questionCommentID +
+		// 							  '&questionID=' + questionID +
+		// 							      "&userID=" + userID +
+		// 						"&userIDAnnonymous=" + userIDAnnonymous +
+		// 							 "&description=" + description).then(function (response) {
+		// 		console.log("comment succesfully deleted");
+		// 	});
 
 	}//If
 
@@ -123,8 +136,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 
 
 	//*********************Delete BUtton**********************
-
-	// }
-
-	
+	// $scope.deleteComment = function() {
+		
+	// }	
 }]);
