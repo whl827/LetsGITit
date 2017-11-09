@@ -642,13 +642,13 @@ create-button, .submit-button, .login-button, .signup-button{
 		padding-bottom: 50px;
 	}*/
 
-	.users-cont, .create-cont {
+	.users-cont, .create-cont, .display-survey-container  {
 		margin-top: 0px; 
 		margin-left: 10px; 
 		margin-right: 10px;
 	}
 
-	.login-container, .signup-container, .create-survey-container {
+	.login-container, .signup-container, .create-survey-container{
 		padding-left: 25px; 
 		padding-right: 25px; 
 	}
