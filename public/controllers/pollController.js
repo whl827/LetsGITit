@@ -211,7 +211,8 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 						//     	console.log("Error");
 						// });
 						// 	//$route.reload();
-						 	$scope.errorMessageCommentLike = "Already voted.";
+
+						 //	$scope.comment.errorMessageCommentLike = "Already voted.";
 
 					}
 				},function (response) {
