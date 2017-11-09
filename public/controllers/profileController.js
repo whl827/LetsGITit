@@ -46,8 +46,6 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 		document.querySelector("#profile-pic").src = "../img/blankprofile.png";
 		console.log("dynamically creating profile pic");
 	}
-<<<<<<< HEAD
-=======
 
 	$scope.goToLink = function(question) {
 
@@ -60,6 +58,4 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
         }
 
     };
-	
->>>>>>> 3d3577ce8bf97aeaf6af5147c5c12fe2f4b4fc65
 }]);
