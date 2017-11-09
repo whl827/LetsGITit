@@ -554,33 +554,33 @@ app.get('/insertQuestionLike', function (req, res) {
 	}
 });
 
-app.get('/insertQuestionCommentike', function (req, res) {
-	var questionID = req.query.questionID;
-	var userID = req.query.userID;
-	var likeDislikeValue = req.query.pollLike;
+// app.get('/insertQuestionCommentike', function (req, res) {
+// 	var questionID = req.query.questionID;
+// 	var userID = req.query.userID;
+// 	var likeDislikeValue = req.query.pollLike;
 
-	//convert boolean value 
-	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
-	else{likeDislikeValue = 0;}
+// 	//convert boolean value 
+// 	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
+// 	else{likeDislikeValue = 0;}
 
-	con.query("INSERT INTO QuestionLike (questionID, userID, pollLike) " +
-		"VALUES('" + questionID + "', '" + userID + "', '" + likeDislikeValue + "');",
-	  	function (err, result, fields) {
-	    if (err) throw err;
-	});
+// 	con.query("INSERT INTO QuestionLike (questionID, userID, pollLike) " +
+// 		"VALUES('" + questionID + "', '" + userID + "', '" + likeDislikeValue + "');",
+// 	  	function (err, result, fields) {
+// 	    if (err) throw err;
+// 	});
 
-	if (likeDislikeValue) {
-		con.query("UPDATE QuestionComment SET commentLikeCount = commentLikeCount + 1 WHERE questionID = " + questionID, 
-		function (err, result, fields) {
-			if (err) throw err;
-		});
-	} else {
-		con.query("UPDATE QuestionComment SET commentLikeCount = commentLikeCount - 1 WHERE questionID = " + questionID, 
-		function (err, result, fields) {
-			if (err) throw err;
-		});
-	}
-});
+// 	if (likeDislikeValue) {
+// 		con.query("UPDATE QuestionComment SET commentLikeCount = commentLikeCount + 1 WHERE questionID = " + questionID, 
+// 		function (err, result, fields) {
+// 			if (err) throw err;
+// 		});
+// 	} else {
+// 		con.query("UPDATE QuestionComment SET commentLikeCount = commentLikeCount - 1 WHERE questionID = " + questionID, 
+// 		function (err, result, fields) {
+// 			if (err) throw err;
+// 		});
+// 	}
+// });
 
 app.get('/getLike', function (req, res) {
 
