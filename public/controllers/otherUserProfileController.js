@@ -5,6 +5,7 @@ angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '
 
 	var isLoggedIn = currUsername != "null"; // Because javascript is werid
 	$scope.isLoggedIn = isLoggedIn;	
+	$scope.otherUsername = otherUsername
 
 	if (isLoggedIn) {
 

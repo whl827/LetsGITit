@@ -567,6 +567,18 @@ app.get('/insertQuestionCommentike', function (req, res) {
 	  	function (err, result, fields) {
 	    if (err) throw err;
 	});
+
+	if (likeDislikeValue) {
+		con.query("UPDATE QuestionComment SET commentLikeCount = commentLikeCount + 1 WHERE questionID = " + questionID, 
+		function (err, result, fields) {
+			if (err) throw err;
+		});
+	} else {
+		con.query("UPDATE QuestionComment SET commentLikeCount = commentLikeCount - 1 WHERE questionID = " + questionID, 
+		function (err, result, fields) {
+			if (err) throw err;
+		});
+	}
 });
 
 app.get('/getLike', function (req, res) {
