@@ -7,6 +7,7 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 	if ($cookies.get("username") != null && $cookies.get("username") != 'null') {
 		$scope.loggedInMessage = "";
 		username = $cookies.get("username");
+		$scope.username = username
 	} else {
 		$scope.loggedInMessage = "You must be logged in to access your profile";
 		loggedIn = false;
@@ -20,6 +21,10 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 		$scope.questionList = response.data;
 		}, function (response) {
 			console.log("Failed to get current user, not logged in");
+		});
+
+		$http.get('/numFollowers?username=' + username).then(function(response) {
+			$scope.numFollowers = response.data[0].numFollowers;
 		});
 	}
 
