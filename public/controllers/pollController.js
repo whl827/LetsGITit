@@ -153,12 +153,6 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 		console.log(" currentComment is " + currentComment);
 		console.log("New comment is " + newComment);
 
-<<<<<<< HEAD
-	//*********************Delete BUtton**********************
-	// $scope.deleteComment = function() {
-		
-	// }	
-=======
 		$http.get("/editComment?questionID=" + questionID + "&userID=" + loggedInuserID
 			+ "&currentComment=" + currentComment + "&newComment=" + newComment)
 			.then(function (response) {
@@ -269,5 +263,4 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 			$scope.errorMessageCommentLike = "Please log In to vote comment";
 		}
 	}	
->>>>>>> 3d3577ce8bf97aeaf6af5147c5c12fe2f4b4fc65
 }]);
