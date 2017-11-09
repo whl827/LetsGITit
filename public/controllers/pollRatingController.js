@@ -269,40 +269,6 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 		}
 	}
 
-	$scope.commentLikeOrDislike = function(){
-		var likeorDisLike = $scope.commentLikeInput;
-
-
-		$http.get("/checkUserVoted?questionID=" + questionID + "&userID=" + userID)
-			.then(function (response) {
-				if(typeof response.data[0] == 'undefined'){
-					//&& typeof response[0].userID !== 'undefined' 
-
-					$http.get("/insertQuestionCommentike?questionID=" + questionID + "&userID=" + userID
-						+ "&pollLike=" + likeorDisLike)
-						.then(function (response) {
-							console.log("insert into questionlike table");
-					},function (response) {
-					    	console.log("Error");
-					});
-						$route.reload();
-				}else {			
-
-					$http.get("/UpdateCommentVote?questionID=" + questionID + "&userID=" + userID
-						+ "&pollLike=" + likeorDisLike)
-						.then(function (response) {
-							console.log("insert into questionlike table");
-					},function (response) {
-					    	console.log("Error");
-					});
-						$route.reload();
-						//$scope.errorMessageLike = "Already voted. Updating your like/dislike";
-
-				}
-			},function (response) {
-		    	console.log("Error");
-		});
-	}
 
 	function validate(input){
 		if(input == null || input == ""){
