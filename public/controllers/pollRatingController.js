@@ -2,7 +2,7 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 	
 	var questionID = $routeParams.questionID;
 	$scope.userID = $cookies.get("userID");
-
+	
 
 	$scope.createComment = function(){
 
@@ -15,15 +15,44 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 				$scope.errorMessageComment = "Please leave a comment";
 			}
 			else{ 
-				var isAnnonymous = $scope.isAnonymousInput;
-				var userIDAnnonymous = "";
-				var comment =  $scope.commentInput;
 
-				if(isAnnonymous){ userIDAnnonymous = "Anonymous";}
-				else{ userIDAnnonymous = userID; }
+				//getting UserName
+				$http.get("/getUserName?userID=" + userID)
+					.then(function (response) {
 
-				if(isAnnonymous){isAnnonymous = 1;}
-				else{isAnnonymous = 0;}
+						var username = response.data[0].username;
+						var isAnnonymous = $scope.isAnonymousInput;
+						var userIDAnnonymous = "";
+						var comment =  $scope.commentInput;
+
+						if(isAnnonymous){ userIDAnnonymous = "Anonymous";}
+						else{ userIDAnnonymous = username; }
+						debugger;
+
+						if(isAnnonymous){isAnnonymous = 1;}
+						else{isAnnonymous = 0;}
+
+
+						console.log(questionID, userID, username, isAnnonymous,userIDAnnonymous, comment);
+
+						$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
+						+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous 
+						+ "&userIDAnnonymous=" + userIDAnnonymous + "&commentLikeCount=0" + 
+						"&commentDislikeCount=0")
+						.then(function (response) {
+							console.log("inser into comment table");
+						},function (response) {
+					    	console.log("Error");
+						});
+
+		 				$route.reload();
+					
+					console.log("Getting userName");
+				},function (response) {
+			    	console.log("Error");
+				});
+
+
 
 				//Insert Comment Only when User haven't submitted
 				// $http.get("/checkUserExist?questionID=" + questionID + "&userID=" + userID)
@@ -33,17 +62,7 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 				// 		if(typeof response.data[0] == 'undefined'){
 				// 			&& typeof response[0].userID !== 'undefined' 
 							
-					$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
-					+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous 
-					+ "&userIDAnnonymous=" + userIDAnnonymous + "&commentLikeCount=0" + 
-					"&commentDislikeCount=0")
-					.then(function (response) {
-						console.log("inser into comment table");
-					},function (response) {
-				    	console.log("Error");
-					});
-
-			 		$route.reload();
+					
 
 				// 		}else {
 				// 			$scope.errorMessageComment = "Already commented. Please press Edit to continue";
@@ -103,7 +122,7 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 
 							$scope.errorMessageRate = "Already rated. Updating your rating" ;
 
-							//$route.reload();
+							$route.reload();
 
 
 						}
@@ -237,7 +256,7 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 							},function (response) {
 							    	console.log("Error");
 							});
-								//$route.reload();
+								$route.reload();
 								$scope.errorMessageLike = "Already voted. Updating your like/dislike";
 
 						}

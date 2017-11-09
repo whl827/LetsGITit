@@ -88,6 +88,7 @@ app.get('/searchUsers', function (req, res) {
 		});
 });
 
+
 //log in
 app.get('/user', function (req, res) {
 
@@ -811,6 +812,15 @@ app.get('/UpdateCommentDisLike', function (req, res) {
 	    // if (err) throw err;
 	    //res.json(result);
 	});
+});
+
+app.get('/getUserName', function (req, res) {
+
+	con.query("SELECT u.username FROM KUser u WHERE u.userID='" + req.query.userID + "';",  
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
 });
 
 

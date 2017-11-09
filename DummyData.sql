@@ -14,7 +14,7 @@ insert into KUser(username, passwordHash) values
 
 insert into KUser(username, passwordHash) values
 (
-	"SummerSeo",
+	"Summer",
     111421
 );
 
@@ -294,8 +294,8 @@ values (
 insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
 	1,
-    1,
-    0,
+    5,
+    "WoongHee",
     "I like CPK! it's the best",
     false,
     0,
@@ -305,8 +305,8 @@ values (
 insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
 	1,
-    2,
-    0,
+    4,
+    "Robert",
     "We need another pizza place....",
     false,
     0,
@@ -316,8 +316,8 @@ values (
 insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
 	2,
-    2,
-    0,
+    3,
+    "Summer",
     "Take 310!!!",
     false,
     0,
@@ -327,8 +327,8 @@ values (
 insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
 	3,
-    1,
-    0,
+    2,
+    "Joyce",
     "Helpful Poll!!",
     false,
     0,
@@ -339,7 +339,7 @@ insert into QuestionComment(questionID, userID, userIDAnnonymous, description, i
 values (
 	4,
     1,
-    0,
+    "user1",
     "Hey! I like this poll",
     false,
     0,
@@ -350,7 +350,7 @@ insert into QuestionComment(questionID, userID, userIDAnnonymous, description, i
 values (
 	5,
     2,
-    0,
+    "Joyce",
     "Go USC",
     false,
     0,
@@ -361,12 +361,24 @@ insert into QuestionComment(questionID, userID, userIDAnnonymous, description, i
 values (
 	6,
     2,
-    0,
+    "Anonymous",
     "Dulce is coming soon!",
+    true,
+    0,
+    0
+);
+
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
+values (
+	6,
+    2,
+    "Edward",
+    "starbucks at cafe84 is 24hrs!",
     false,
     0,
     0
 );
+
 
 # users 1 and 2 follow eachother
 insert into userToFollowing(mainUserID, followingUserID)
