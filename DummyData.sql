@@ -3,20 +3,41 @@ use KnowItAll;
 insert into KUser(username, passwordHash) values 
 (
 	"user1",
-    111421	# actual password is pwd
+    111421 		# actual password is pwd
 );
 
 insert into KUser(username, passwordHash) values
 (
-	"user2",
+	"Joyce",
     111421
 );
 
 insert into KUser(username, passwordHash) values
 (
-	"user3",
+	"SummerSeo",
     111421
 );
+
+insert into KUser(username, passwordHash) values
+(
+	"Robert",
+    111421
+);
+
+
+insert into KUser(username, passwordHash) values
+(
+	"WoongHee",
+    111421
+);
+
+
+insert into KUser(username, passwordHash) values
+(
+	"Edward",
+	111421
+);
+
 
 insert into Tag(tagStr) values ("t1");
 insert into Tag(tagStr) values ("t2");
@@ -27,9 +48,9 @@ insert into Question(userID, isPoll, title, subTitle, description, totalVotes, i
 values (
 	1, 
     true,
-	"Poll 1",
-    "poll subtitle user 1",
-    "has tags 1",
+	"Best Pizza",
+    "around USC",
+    "What's the best pizza around the campus?",
     0,
     false
 );
@@ -38,9 +59,9 @@ insert into Question(userID, isPoll, title, subTitle, description, totalVotes, i
 values (
 	1, 
     true,
-	"Poll 2",
-    "poll subtitle user 1",
-    "has tags 1 and 2",
+	"Best CS Course",
+    "USC",
+    "What is the best CS Course you've taken?",
     0,
     true
 );
@@ -49,9 +70,9 @@ insert into Question(userID, isPoll, title, subTitle, description, totalVotes, i
 values (
 	1, 
     true,
-	"Rating Question 1",
-    "subtitle user 1",
-    "has tags t2",
+	"Movie to watch",
+    "nothing",
+    "Which movie should I watch?",
     0,
     false
 );
@@ -60,9 +81,9 @@ insert into Question(userID, isPoll, title, subTitle, description, totalVotes, p
 values (
 	2, 
     true,
-	"Poll 3",
-    "subtitle user 2",
-    "has tags 3",
+	"CS Course recommendation",
+    "USC",
+    "Please help me w my schedule next semester!",
     0, 
     0,
     false
@@ -72,10 +93,10 @@ insert into Question(userID, isPoll, title, subTitle, endDate, description, tota
 values (
 	2,
     false,
-	"Rating 2",
-    "subtitle user 2",
+	"USC Football",
+    "USC",
     "2017-10-17",
-    "has NO tags",
+    "How are we doing this year?! ",
     0,
     false
 );
@@ -84,10 +105,10 @@ insert into Question(userID, isPoll, title, subTitle, endDate, description, tota
 values (
 	3,
     true,
-	"Poll 4",
-    "subtitle user 3",
+	"The most study friendly coffee shop around campus",
+    "USC",
     "2017-10-17",
-    "has tags t3",
+    "What do u guys think?",
     0,
     false
 );
@@ -96,10 +117,10 @@ insert into Question(userID, isPoll, title, subTitle, endDate, description, tota
 values (
 	3,
     false,
-	"Rating 3",
-    "subtitle user 3",
+	"Leavey library",
+    "USC",
     "2017-10-17",
-    "has tags t1 t2 t3",
+    "how do u guys think about leavey?",
     0,
     false
 );
@@ -108,9 +129,9 @@ insert into Question(userID, isPoll, title, subTitle, description, totalVotes, i
 values (
 	3, 
     false,
-	"Rating 4",
-    "subtitle user 3",
-    "has NO tags",
+	"What do u guys think about USC Village?",
+    "USC",
+    "Good? Bad?",
     0,
     true
 );
@@ -119,9 +140,9 @@ insert into Question(userID, isPoll, title, subTitle, description, totalVotes, i
 values (
 	3, 
     false,
-	"Rating 5",
-    "subtitle user 3",
-    "has tags t4",
+	"Rate CS310",
+    "USC",
+    "What do you guys think about CS310?",
     0,
     false
 );
@@ -129,79 +150,222 @@ values (
 insert into PollOption(questionID, title, votes) 
 values (
 	1,
-    "O1",
-    0
+    "California Pizza Kitchen",
+    10
+);
+
+insert into PollOption(questionID, title, votes) 
+values (
+	1,
+    "Pizza Studio",
+    16
+);
+
+insert into PollOption(questionID, title, votes) 
+values (
+	1,
+    "Domino",
+    23
+);
+
+insert into PollOption(questionID, title, votes) 
+values (
+	1,
+    "Papa john's",
+    10
 );
 
 insert into PollOption(questionID, title, votes) 
 values (
 	2,
-    "O2",
-    1
+    "CS310",
+    20
 );
 
 insert into PollOption(questionID, title, votes) 
 values (
 	2,
-    "O3",
-    4
+    "CS104",
+    10
+);
+
+insert into PollOption(questionID, title, votes) 
+values (
+	2,
+    "CS201",
+    14
+);
+
+insert into PollOption(questionID, title, votes) 
+values (
+	2,
+    "CS360",
+    8
+);
+
+
+
+insert into PollOption(questionID, title, votes) 
+values (
+	3,
+    "Frozen",
+    6
+);
+
+insert into PollOption(questionID, title, votes) 
+values (
+	3,
+    "Thor, Ragnarok",
+    10
+);
+
+insert into PollOption(questionID, title, votes) 
+values (
+	3,
+    "It",
+    2
+);
+
+insert into PollOption(questionID, title, votes) 
+values (
+	3,
+    "Despicable Me 3",
+    17
 );
 
 insert into PollOption(questionID, title, votes) 
 values (
 	4,
-    "O4",
+    "CS103",
+    10
+);
+
+insert into PollOption(questionID, title, votes) 
+values (
+	4,
+    "CS104",
+    8
+);
+
+insert into PollOption(questionID, title, votes) 
+values (
+	4,
+    "CS109",
+    7
+);
+
+insert into PollOption(questionID, title, votes) 
+values (
+	4,
+    "ITP115",
+    13
+);
+
+
+insert into PollOption(questionID, title, votes) 
+values (
+	6,
+    "Starbucks next to leavey",
     0
 );
 
 insert into PollOption(questionID, title, votes) 
 values (
 	6,
-    "O5",
+    "Nature's Brew",
     0
 );
 
 insert into PollOption(questionID, title, votes) 
 values (
-	1,
-    "O6",
-    1
+	6,
+    "Startbucks - UV",
+    0
 );
 
-insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous) 
+insert into PollOption(questionID, title, votes) 
+values (
+	6,
+    "Starbucks - Cafe84",
+    0
+);
+
+
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
+values (
+	1,
+    1,
+    0,
+    "I like CPK! it's the best",
+    false,
+    0,
+    0
+);
+
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
+values (
+	1,
+    2,
+    0,
+    "We need another pizza place....",
+    false,
+    0,
+    0
+);
+
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
+values (
+	2,
+    2,
+    0,
+    "Take 310!!!",
+    false,
+    0,
+    0
+);
+
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
+values (
+	3,
+    1,
+    0,
+    "Helpful Poll!!",
+    false,
+    0,
+    0
+);
+
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
 	4,
     1,
     0,
-    "question comment 1",
-    false
-);
-
-insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous) 
-values (
-	9,
-    1,
+    "Hey! I like this poll",
+    false,
     0,
-    "question comment 2",
-    false
+    0
 );
 
-insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous) 
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
 	5,
     2,
     0,
-    "question comment 3",
-    false
+    "Go USC",
+    false,
+    0,
+    0
 );
 
-insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous) 
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
-	4,
+	6,
     2,
     0,
-    "question comment 1",
-    false
+    "Dulce is coming soon!",
+    false,
+    0,
+    0
 );
 
 # users 1 and 2 follow eachother
@@ -209,6 +373,9 @@ insert into userToFollowing(mainUserID, followingUserID)
 values(1,2);
 insert into userToFollowing(mainUserID, followingUserID)
 values(2,1);
+
+update KUser set numFollowers = 1 where userID = 1;
+update KUser set numFollowers = 1 where userID = 2;
 
 insert into UserToQuestion(userID, questionID) values (1, 1);
 insert into UserToQuestion(userID, questionID) values (1, 2);
@@ -238,6 +405,3 @@ insert into QuestionToPollOption(questionID, pollOptionID) values(4, 4);
 insert into QuestionToPollOption(questionID, pollOptionID) values(6, 5);
 insert into QuestionToPollOption(questionID, pollOptionID) values(6, 6);
 
-insert into QuestionToComment(questionID, questionCommentID) values(4, 1);
-insert into QuestionToComment(questionID, questionCommentID) values(5, 2);
-insert into QuestionToComment(questionID, questionCommentID) values(9, 3);

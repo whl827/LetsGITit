@@ -14,6 +14,10 @@
 				</div>
 			</div>
 
+			<div>
+				Number of Followers: {{numFollowers}}
+			</div>
+
 			<table class="mainLayout table table-responsive table-striped col-12 mt-3">
 				<thead>
 					<tr>
@@ -38,7 +42,7 @@
 						<td>{{question.startDate | date: 'yyyy-MM-dd'}}</td>
 						<!-- <td>{{question.endDate | date: 'yyyy-MM-dd'}}</td> -->
 
-						<td><span>{{ question.endDate!="0000-00-00 00:00:00" ?
+						<td><span>{{ question.endDate!=null ?
 							(question.endDate | date: 'yyyy-MM-dd') : 'Open Forever'}}</span></td>
 
 						<td>{{question.totalVotes}} </td>

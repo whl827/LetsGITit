@@ -1,4 +1,3 @@
-
 var express = require('express');
 var app = express();
 var mysql = require('mysql');
@@ -32,11 +31,11 @@ app.use(express.static(__dirname + '/public'));
 app.get('/searchQuestionsAnyText', function (req, res) {
 
 	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, " +
-			          " q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
+			          " q.startDate, q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " + 
 		"FROM Question q WHERE " + 
 		"q.title LIKE '%" + req.query.tagQuery + "%' or " +
 		"q.subTitle LIKE '%" + req.query.tagQuery + "%' or " + 
-		"q.description LIKE '%" + req.query.tagQuery + "%' order by positiveVotes desc;",
+		"q.description LIKE '%" + req.query.tagQuery + "%' order by q.numLikes desc;",
 	  function (err, result, fields) {
 	    if (err) throw err;
 	    res.json(result);
@@ -46,10 +45,10 @@ app.get('/searchQuestionsAnyText', function (req, res) {
 // Get Question Search from navbar
 app.get('/searchQuestions', function (req, res) {
 
-	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes " + 
+	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " + 
 		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
 		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
-		" tq.questionID = q.questionID",
+		" tq.questionID = q.questionID ORDER BY q.numLikes DESC;",
 	  function (err, result, fields) {
 	    if (err) throw err;
 	    res.json(result);
@@ -60,9 +59,9 @@ app.get('/onPageLoad', function (req, res){
 
 
 	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, " +
-					" q.endDate, q.totalVotes, q.positiveVotes " +
+					" q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " +
 			 " FROM Question q " +
-			 " ORDER BY q.startdate desc",
+			 " ORDER BY q.numLikes desc",
 	  function (err, result, fields) {
 	    if (err) throw err;
 	    res.json(result);
@@ -391,9 +390,6 @@ app.get('/insertRatingWithoutEndDate', function (req, res) {
 
 
 
-
-
-
 app.get('/getQuestion', function (req, res) {
 	//fixed con qeury
 	con.query("SELECT q.title, q.userID, u.username, q.description, q.endDate, q.isAnonymous " + 
@@ -408,18 +404,18 @@ app.get('/getQuestion', function (req, res) {
 });
 
 app.get('/pollList', function (req, res) {
-	con.query("SELECT po.title " + 
+	con.query("SELECT po.title, po.pollOptionID " + 
 		"FROM PollOption po inner join Question q on po.questionID = q.questionID WHERE q.questionID='" +
 		req.query.questionID + "';", 
 		function (err, result, fields) {
-			//if(err) throw err;
+			if(err) throw err;
 			res.json(result);
 		});
 });
 
 app.get('/commentList', function (req, res) {
 
-	con.query("SELECT qc.userID, qc.userIDAnnonymous, qc.description "+
+	con.query("SELECT qc.questionCommentID, qc.userID, qc.userIDAnnonymous, qc.description, qc.commentLikeCount, qc.commentDislikeCount "+
 		"FROM QuestionComment qc WHERE " + 
 		"qc.questionID='" + req.query.questionID + "';",
 	  	function (err, result, fields) {
@@ -434,11 +430,15 @@ app.get('/insertComment', function (req, res) {
 	var description = req.query.description;
 	var isAnnonymous = req.query.isAnnonymous;
 	var userIDAnnonymous = req.query.userIDAnnonymous;
+
+	//onsole.log(questionID, userID, description, isAnnonymous, userIDAnnonymous, commentLikeCount, commentDislikeCount );
 	
-	con.query("INSERT INTO QuestionComment (questionID, userID, description, isAnnonymous, userIDAnnonymous) " +
-			"VALUES('" + questionID + "', '" + userID + "', '" + description + "', '" + isAnnonymous + "', '" + userIDAnnonymous + "');",
+	con.query("INSERT INTO QuestionComment (questionID, userID, description, isAnnonymous, userIDAnnonymous, commentLikeCount, commentDislikeCount) " +
+			"VALUES('" + questionID + "', '" + userID + "', '" + description + "', '"
+			 + isAnnonymous + "', '" + userIDAnnonymous + "', '" + req.query.commentLikeCount+ "', '" + req.query.commentDislikeCount + "');",
 	  	function (err, result, fields) {
 	});
+
 });
 
 
@@ -471,6 +471,16 @@ app.get('/isFollowing', function(req, res) {
 	);
 });
 
+app.get('/numFollowers', function(req, res) {
+	var username = req.query.username;
+
+	con.query("SELECT numFollowers FROM KUser WHERE username='" + username + "'", 
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
+});
+
 app.get('/follow', function(req, res) {
 	var currUser = req.query.currUser;
 	var userToFollow = req.query.userToFollow;
@@ -499,7 +509,7 @@ app.get('/unfollow', function(req, res) {
 	);
 });
 
-app.get('/insertRatingValue', function (req, res) {
+app.get('/insertRatingValue', function (req, res) { // also inserts poll optionvote
 	var questionID = req.query.questionID;
 	var userID = req.query.userID;
 	var ratingValue = req.query.rating;
@@ -507,9 +517,10 @@ app.get('/insertRatingValue', function (req, res) {
 	con.query("INSERT INTO RatingQuestionOption (questionID, userID, rating) " +
 			"VALUES('" + questionID + "', '" + userID + "', '" + ratingValue + "');",
 	  	function (err, result, fields) {
-	    // if (err) throw err;
-	    //res.json(result);
-	});
+	    	if (err) throw err;
+	    	res.json(result);
+		}
+	);
 });
 
 
@@ -523,11 +534,39 @@ app.get('/insertQuestionLike', function (req, res) {
 	else{likeDislikeValue = 0;}
 
 	con.query("INSERT INTO QuestionLike (questionID, userID, pollLike) " +
-			"VALUES('" + questionID + "', '" + userID + "', '" + likeDislikeValue + "');",
+		"VALUES('" + questionID + "', '" + userID + "', '" + likeDislikeValue + "');",
 	  	function (err, result, fields) {
 	    // if (err) throw err;
 	    //res.json(result);
 	});
+});
+
+app.get('/insertQuestionCommentike', function (req, res) {
+	var questionID = req.query.questionID;
+	var userID = req.query.userID;
+	var likeDislikeValue = req.query.pollLike;
+
+	//convert boolean value 
+	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
+	else{likeDislikeValue = 0;}
+
+	con.query("INSERT INTO QuestionLike (questionID, userID, pollLike) " +
+		"VALUES('" + questionID + "', '" + userID + "', '" + likeDislikeValue + "');",
+	  	function (err, result, fields) {
+	    if (err) throw err;
+	});
+
+	if (likeDislikeValue) {
+		con.query("UPDATE question SET numLikes = numLikes - 1 WHERE questionID = " + questionID, 
+		function (err, result, fields) {
+			if (err) throw err;
+		});
+	} else {
+		con.query("UPDATE question SET numLikes = numLikes + 1 WHERE questionID = " + questionID, 
+		function (err, result, fields) {
+			if (err) throw err;
+		});
+	}
 });
 
 app.get('/getLike', function (req, res) {
@@ -592,6 +631,7 @@ var questionID = req.query.questionID;
 		});
 });
 
+
 app.get('/UpdateRating', function (req, res) {
 
 	con.query("UPDATE RatingQuestionOption " + 
@@ -615,6 +655,58 @@ app.get('/getAvgRating', function (req, res) {
 });
 
 
+
+
+
+app.get('/getPollResults', function (req, res) {
+	con.query("SELECT title, votes FROM PollOption WHERE questionID='" +
+		req.query.questionID + "';", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+	});
+});
+
+
+
+
+app.get('/addPollVote', function (req, res) {
+	con.query("UPDATE PollOption SET votes=votes+1 WHERE questionID='" +
+		req.query.questionID + "' AND pollOptionID='" + req.query.pollOptionID + "';", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+	});
+});
+
+app.get('/findPrevVote', function (req, res) {
+	con.query("SELECT rating FROM RatingQuestionOption WHERE questionID='" +
+		req.query.questionID + "' AND userID='" + req.query.userID + "';", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+	});
+});
+
+app.get('/removePollVote', function (req, res) {
+	con.query("UPDATE PollOption SET votes=votes-1 WHERE questionID='" +
+		req.query.questionID + "' AND pollOptionID='" + req.query.pollOptionID + "';", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+	});
+});
+
+
+
+
+
+
+
+
+
+
+
 app.get('/UpdateVote', function (req, res) {
 
 	var likeDislikeValue = req.query.pollLike;
@@ -630,6 +722,101 @@ app.get('/UpdateVote', function (req, res) {
 			res.json(result);
 		});
 });
+
+app.get('/editComment', function (req, res) {
+
+	var questionID = req.query.questionID;
+	var userID = req.query.userID;
+	var currentComment = req.query.currentComment;
+	var newComment = req.query.newComment;
+
+	con.query("UPDATE QuestionComment " + 
+		"SET description='"+ newComment + "' WHERE questionID='" +
+		req.query.questionID + "' and userID='" + req.query.userID + 
+		"' and description='" + currentComment +"';", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+		});
+});
+
+app.get('/deleteComment', function (req, res) {
+
+	console.log(req.query.userID, req.query.questionCommentID, req.query.questionID, req.query.userID, req.query.description);
+
+	// con.query("SET foreign_key_checks = 0;", 
+	// 	function (err, result, fields) {
+	// 		if(err) throw err;
+	// 		res.json(result);
+	// 	});
+
+	con.query("DELETE FROM CommentLike WHERE userID='" + req.query.userID  + 
+		"' and questionCommentID='" + req.query.questionCommentID + "';");
+
+	con.query("DELETE FROM QuestionComment WHERE questionID='" 
+		+ req.query.questionID + "' and userID='" + req.query.userID 
+		+ "' and description='" + req.query.description + "';", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+		});
+});
+
+app.get('/checkUserVotedComment', function (req, res) {
+
+	con.query("SELECT cl.userID " + 
+		"FROM CommentLike cl WHERE cl.questionCommentID='" +
+		req.query.questionCommentID + "' and cl.userID='" + req.query.userID + "';", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+		});
+});
+
+app.get('/UpdateCommentLike', function (req, res) {
+
+	con.query("UPDATE QuestionComment " + 
+		"SET commentLikeCount= commentLikeCount+1 WHERE questionID='" +
+		req.query.questionID + "' and questionCommentID='" + req.query.questionCommentID + "';");
+
+	con.query("INSERT INTO CommentLike (questionCommentID, userID)" +
+		"VALUES('" + req.query.questionCommentID + "', '" + req.query.userID + "');",
+	  	function (err, result, fields) {
+	    // if (err) throw err;
+	    //res.json(result);
+	});
+});
+
+app.get('/UpdateCommentDisLike', function (req, res) {
+
+	con.query("UPDATE QuestionComment " + 
+		"SET commentDislikeCount= commentDislikeCount+1 WHERE questionID='" +
+		req.query.questionID + "' and questionCommentID='" + req.query.questionCommentID + "';");
+
+	con.query("INSERT INTO CommentLike (questionCommentID, userID)" +
+		"VALUES('" + req.query.questionCommentID + "', '" + req.query.userID + "');",
+	  	function (err, result, fields) {
+	    // if (err) throw err;
+	    //res.json(result);
+	});
+});
+
+
+// app.get('/UpdateCommentLike', function (req, res) {
+
+// 	var likeDislikeValue = req.query.pollLike;
+// 	//convert boolean value 
+// 	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
+// 	else{likeDislikeValue = 0;}
+
+// 	con.query("UPDATE QuestionLike " + 
+// 		"SET pollLike='"+ likeDislikeValue + "' WHERE questionID='" +
+// 		req.query.questionID + "' and userID='" + req.query.userID + "';", 
+// 		function (err, result, fields) {
+// 			if(err) throw err;
+// 			res.json(result);
+// 		});
+// });
 
 
 app.listen(8080);
