@@ -4,6 +4,13 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 
 	console.log("In profile controller");
 
+	$scope.createProfilePic = function() {
+
+		console.log("ITS CALLED");
+		var picURL = document.querySelector("#pictureURL").value;
+		document.querySelector("#profile-pic").src = picURL;
+	}
+
 	if ($cookies.get("username") != null && $cookies.get("username") != 'null') {
 		$scope.loggedInMessage = "";
 		username = $cookies.get("username");
@@ -11,10 +18,23 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 	} else {
 		$scope.loggedInMessage = "You must be logged in to access your profile";
 		loggedIn = false;
+		var image = document.getElementById("profile-pic");
+		image.style.display = "none";
+		var imageTextField = document.getElementById("pictureURL");
+		imageTextField.style.display = "none";
+		var imageButton = document.getElementById("imageButton");
+		imageButton.style.display = "none";
 	}
 	
 	if (loggedIn) {
 	
+		var image = document.getElementById("profile-pic");
+		image.style.display = "intial";
+		var imageTextField = document.getElementById("pictureURL");
+		imageTextField.style.display = "initial";
+		var imageButton = document.getElementById("imageButton");
+		imageButton.style.display = "initial";
+
 		console.log("You are logged in");
 
 		$http.get('/profile?username=' + username).then(function (response) {
@@ -26,6 +46,9 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 		$http.get('/numFollowers?username=' + username).then(function(response) {
 			$scope.numFollowers = response.data[0].numFollowers;
 		});
+
+		document.querySelector("#profile-pic").src = "../img/blankprofile.png";
+		console.log("dynamically creating profile pic");
 	}
 
 	$scope.goToLink = function(question) {
@@ -39,5 +62,4 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
         }
 
     };
-	
 }]);

@@ -524,6 +524,7 @@ create-button, .submit-button, .login-button, .signup-button{
 
 }
 
+
 .post-container:hover{	
 	-webkit-box-shadow: 4px 15px 82px 11px rgba(0,0,0,0.5);
 	-moz-box-shadow: 4px 15px 82px 11px rgba(0,0,0,0.5);
@@ -627,6 +628,10 @@ create-button, .submit-button, .login-button, .signup-button{
 
 
 
+#profile-pic{
+	border-radius: 50%; 
+}
+
 
 
 @media only screen and (max-width: 1024px) {
@@ -728,4 +733,10 @@ create-button, .submit-button, .login-button, .signup-button{
 
 
 }
+
+	.img-circle {
+		margin-left: 5%;
+		margin-top: 1%
+		border-radius: 75px;
+	}
 
