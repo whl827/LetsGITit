@@ -3,8 +3,9 @@ create database KnowItAll;
 use KnowItAll;
 
 create table KUser (
-	userID int(10) primary key auto_increment,
-    username varchar(10) not null,
+
+	 userID int(8) primary key auto_increment,
+    username varchar(12) not null,
     numFollowers int(8) default 0 not null,
     passwordHash int(12) not null
 );  

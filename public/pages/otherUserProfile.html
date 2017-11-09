@@ -1,6 +1,6 @@
 <div ng-controller="otherUserProfile">
 
-	<h1 id="othersProfileTitle"> Other User Profile Page </h1>
+	<h1 id="othersProfileTitle"> {{otherUsername}}'s Profile Page </h1>
 
 	<div ng-switch="isLoggedIn">
 		<div ng-switch-when="true">
@@ -18,40 +18,33 @@
 				Number of Followers: {{numFollowers}}
 			</div>
 
-			<table class="mainLayout table table-responsive table-striped col-12 mt-3">
-				<thead>
-					<tr>
-						<th>Question</th>
-						<th>SubTitle</th>
-						<th>Description</th>
-						<th>Type</th>
-						<th>Start Date</th>
-						<th>End Date</th>
-						<th>Total Votes</th>
-						<th>Positive Votes</th>
-					</tr>
-				</thead>
-				<tbody ng-controller= "FeedCtrl" >
+			<div class="post-container" ng-repeat="question in questionList" ng-click="goToLink(question)">
+				<p class="feed-question-title" id="current-question-title">{{question.title}}</p>
 
-					<tr class="" ng-repeat="question in questionList" ng-click="goToLink(question)">
-						<td>{{question.title}}</td>
-						<td>{{question.subtitle=="undefined" ? "" : question.subtitle}}</td>
-						<td>{{question.description=="undefined" ? "" : question.description}} </td>
-						<td><span>{{question.isPoll ? 'Poll' : 'Rating'}}</span> </td>
+				<div class="row">
+					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+						<p class="feed-user"> Created by (username) on {{question.startDate | date: 'yyyy-MM-dd'}}</p>
+						<p class="feed-subtitle">{{question.subtitle=="undefined" ? "" : question.subtitle}} </p> 
+				 		<p class="feed-description">{{question.description=="undefined" ? "" : question.description}} </p> 
 
-						<td>{{question.startDate | date: 'yyyy-MM-dd'}}</td>
-						<!-- <td>{{question.endDate | date: 'yyyy-MM-dd'}}</td> -->
+					</div>
+					<div class="feed-stats col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+						<!-- <p class="feed-survey-type">{{question.isPoll ? 'Poll' : 'Rating'}} </p> -->
+						<p class="feed-end-date">Closes on {{ question.endDate!=null ?
+							(question.endDate | date: 'yyyy-MM-dd') : 'Open Forever'}}</p>
+						<p class="feed-total-votes">{{question.totalVotes}} VOTES</p>
+						<!-- <p class="feed-positive-votes"> {{question.positiveVotes}}</p> -->
+						<p class="feed-num-likes"> {{question.numLikes}} LIKES</p>
 
-						<td><span>{{ question.endDate!=null ?
-							(question.endDate | date: 'yyyy-MM-dd') : 'Open Forever'}}</span></td>
+						<!-- add tags  -->
+						<div class="tags-container row">
+							<div class="tag"> Food </div>
+							<div class="tag"> Fruit </div>
+						</div>
 
-						<td>{{question.totalVotes}} </td>
-						<td>{{question.positiveVotes}}</td>
-
-
-					</tr>
-				</tbody>
-			</table>
+					</div>
+				</div>
+			</div>
 
 		</div>
 		<div id="userProfileError" ng-switch-default>

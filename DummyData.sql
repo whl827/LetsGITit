@@ -8,13 +8,13 @@ insert into KUser(username, passwordHash) values
 
 insert into KUser(username, passwordHash) values
 (
-	"JoyceWang",
+	"Joyce",
     111421
 );
 
 insert into KUser(username, passwordHash) values
 (
-	"SummerSeo",
+	"Summer",
     111421
 );
 
@@ -317,7 +317,7 @@ insert into QuestionComment(questionID, userID, userIDAnnonymous, description, i
 values (
 	2,
     3,
-    "SummerSeo",
+    "Summer",
     "Take 310!!!",
     false,
     0,
@@ -328,7 +328,7 @@ insert into QuestionComment(questionID, userID, userIDAnnonymous, description, i
 values (
 	3,
     2,
-    "JoyceWang",
+    "Joyce",
     "Helpful Poll!!",
     false,
     0,
@@ -350,7 +350,7 @@ insert into QuestionComment(questionID, userID, userIDAnnonymous, description, i
 values (
 	5,
     2,
-    "JoyceWang",
+    "Joyce",
     "Go USC",
     false,
     0,

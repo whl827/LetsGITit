@@ -442,6 +442,22 @@ app.get('/insertComment', function (req, res) {
 
 });
 
+
+// app.get('/deleteComment', function (req, res) {
+
+// 	con.query("DELETE FROM QuestionToComment WHERE questionCommentID='" + req.query.questionCommentID +
+// 		   "'; DELETE FROM QuestionComment " + "WHERE questionCommentID='" + req.query.questionCommentID +
+// 													      "' questionID='" + req.query.questionID + 
+// 													     "'' and userID='" + req.query.userID +
+// 											    "' and userIDAnnonymous='" + req.query.userIDAnnonymous +
+// 											 	     "' and description='" + req.query.description + "';" +
+// 			", ALTER TABLE QuestionComment AUTO_INCREMENT = 1;",
+// 		function (err, result, fields) {
+// 			if(err) throw err;
+// 			res.json(result);
+// 		});
+// });
+
 app.get('/isFollowing', function(req, res) {
 	var user1 = req.query.user1;
 	var user2 = req.query.user2;
@@ -524,6 +540,18 @@ app.get('/insertQuestionLike', function (req, res) {
 	    // if (err) throw err;
 	    //res.json(result);
 	});
+
+	if (likeDislikeValue) {
+		con.query("UPDATE question SET numLikes = numLikes + 1 WHERE questionID = " + questionID, 
+		function (err, result, fields) {
+			if (err) throw err;
+		});
+	} else {
+		con.query("UPDATE question SET numLikes = numLikes - 1 WHERE questionID = " + questionID, 
+		function (err, result, fields) {
+			if (err) throw err;
+		});
+	}
 });
 
 app.get('/insertQuestionCommentike', function (req, res) {
@@ -542,12 +570,12 @@ app.get('/insertQuestionCommentike', function (req, res) {
 	});
 
 	if (likeDislikeValue) {
-		con.query("UPDATE question SET numLikes = numLikes - 1 WHERE questionID = " + questionID, 
+		con.query("UPDATE QuestionComment SET commentLikeCount = commentLikeCount + 1 WHERE questionID = " + questionID, 
 		function (err, result, fields) {
 			if (err) throw err;
 		});
 	} else {
-		con.query("UPDATE question SET numLikes = numLikes + 1 WHERE questionID = " + questionID, 
+		con.query("UPDATE QuestionComment SET commentLikeCount = commentLikeCount - 1 WHERE questionID = " + questionID, 
 		function (err, result, fields) {
 			if (err) throw err;
 		});

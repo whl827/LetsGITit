@@ -1,10 +1,11 @@
-angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '$cookies', '$routeParams', function($scope, $http, $cookies, $routeParams) {
+angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '$cookies', '$routeParams', '$location', function($scope, $http, $cookies, $routeParams, $location) {
 
 	var otherUsername = $routeParams.username.replace(":", "");
 	var currUsername = $cookies.get("username");
 
 	var isLoggedIn = currUsername != "null"; // Because javascript is werid
 	$scope.isLoggedIn = isLoggedIn;	
+	$scope.otherUsername = otherUsername
 
 	if (isLoggedIn) {
 
@@ -46,4 +47,16 @@ angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '
 		});
 	}
 	
+	$scope.goToLink = function(question) {
+
+        if(question.isPoll){
+             $location.path('/poll/' + question.questionID);
+        }
+        else{
+            $location.path('/rating/' + question.questionID);
+        }
+
+    };
+
+
 }]);

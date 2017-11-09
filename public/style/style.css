@@ -13,9 +13,6 @@ body {
 }
 
 
-.search-result{
-	margin-left: 100px;
-}
 
 
 
@@ -395,7 +392,7 @@ create-button, .submit-button, .login-button, .signup-button{
 .search-bar-wrapper{
 	background-color: white;
 	padding-top: 30px; 
-	padding-bottom: 30px; 
+	padding-bottom: 20px; 
 	position: fixed;
 	width: 98%;
 	z-index: 999;
@@ -458,6 +455,15 @@ create-button, .submit-button, .login-button, .signup-button{
 
 .search-button:focus {outline:0;}
 
+.search-result{
+	text-align: center; 
+	margin-bottom: 0px;
+	margin-top: 10px; 
+	letter-spacing: 2px; 
+	color: #BB298B;
+}
+
+
 .popular-cont{
 	position: fixed;
 	margin-top: 160px;  
@@ -518,6 +524,7 @@ create-button, .submit-button, .login-button, .signup-button{
 
 }
 
+
 .post-container:hover{	
 	-webkit-box-shadow: 4px 15px 82px 11px rgba(0,0,0,0.5);
 	-moz-box-shadow: 4px 15px 82px 11px rgba(0,0,0,0.5);
@@ -527,7 +534,7 @@ create-button, .submit-button, .login-button, .signup-button{
 .feed-question-title {
 	font-size: 30px; 
 	letter-spacing: 1px; 
-	margin-bottom: 9px;
+	margin-bottom: 6px;
 }
 
 .feed-user{
@@ -537,11 +544,13 @@ create-button, .submit-button, .login-button, .signup-button{
 
 .feed-subtitle {
 	color: grey;
+	font-size: 12px;
 	margin-bottom: 6px;
 }
 
 .feed-description {
 	color: grey;
+	font-size: 12px; 
 	margin-bottom: 6px;
 }
 
@@ -554,14 +563,16 @@ create-button, .submit-button, .login-button, .signup-button{
 }
 
 .feed-total-votes {
+	font-size: 12px; 
 	margin-bottom: 6px;
 }
 
-.feed-positive-votes {
+/*.feed-positive-votes {
 	margin-bottom: 6px;
-}
+}*/
 
 .feed-num-likes {
+	font-size: 12px; 
 	margin-bottom: 6px;
 }
 
@@ -595,19 +606,55 @@ create-button, .submit-button, .login-button, .signup-button{
 	float: right;
 }
 
+.profile-cont {
+	position: fixed;
+	margin-top: 80px;  
+	background-color: white; 
+	width: 23%;
+	left: 20px;
 
 
 
+	padding: 20px; 
 
-@media only screen and (max-width: 784px) {
-	.login-container, .signup-container {
+	-webkit-box-shadow: -1px 10px 39px -5px rgba(0,0,0,0.75);
+	-moz-box-shadow: -1px 10px 39px -5px rgba(0,0,0,0.75);
+	box-shadow: -1px 10px 39px -5px rgba(0,0,0,0.75);
+}
+
+.my-posts-container {
+	margin-top: 0px; 
+}
+
+
+
+#profile-pic{
+	border-radius: 50%; 
+}
+
+
+
+@media only screen and (max-width: 1024px) {
+/*	.login-container, .signup-container {
 		padding-left: 75px;
 		padding-right: 75px;
 		padding-top: 30px;
 		padding-bottom: 50px;
+	}*/
+
+	.users-cont, .create-cont, .display-survey-container  {
+		margin-top: 0px; 
+		margin-left: 10px; 
+		margin-right: 10px;
 	}
 
-   .login-heading, .signup-heading{
+	.login-container, .signup-container, .create-survey-container{
+		padding-left: 25px; 
+		padding-right: 25px; 
+	}
+
+
+   .login-heading, .signup-heading, .heading{
 		margin-left: 50px;
 	}
 
@@ -622,5 +669,74 @@ create-button, .submit-button, .login-button, .signup-button{
 	.signup-button {
 		margin-left: 75%;
 	}
+
+
+
+	.feed {
+		margin-top: 230px; 
+		margin-left: auto; 
+		margin-right: auto; 
+	}
+
+	.popular-cont {
+		margin-top: 110px; 
+		z-index: 999;
+		width: 98%; 
+		left: 50%;
+		margin-left: -49%; 
+
+	}
+
+	.search-bar-container {
+		width: 98%;
+	}
+
+	.drop-down-menu {
+		height: 20px;
+		width: 80px;
+		font-size: 12px; 
+	}
+
+	.search-bar {
+		font-size: 12px; 
+		height: 40px;
+		padding-left: 20px; 
+		padding-right: 10px; 
+		padding-top: 10px; 
+		padding-bottom: 10px; 
+
+
+	}
+
+	.search-button {
+		font-size: 12px; 
+		height: 40px; 
+		width: 150px;
+		margin-left: -150px;
+		margin-top: -1px; 
+	}
+
+	.profile-cont {
+		margin-top: -40px; 
+		z-index: 999;
+		width: 98%; 
+		left: 50%;
+		margin-left: -49%; 
+	}
+
+
+	.my-posts-container {
+		margin-top: 180px; 
+	}
+
+
+
+
 }
+
+	.img-circle {
+		margin-left: 5%;
+		margin-top: 1%
+		border-radius: 75px;
+	}
 
