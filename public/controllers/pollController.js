@@ -12,6 +12,10 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
     		   twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
 	};
 
+	// var questionCommentID = $routeParams.questionCommentID;
+	// var userID = $routeParams.userID;
+	// var userIDAnnonymous = $routeParams.userIDAnnonymous;
+
 	var loggedInuserID = $cookies.get("userID");
 	$scope.loggedInuserID=loggedInuserID;
 	var questionID = $routeParams.questionID;
@@ -120,7 +124,16 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 			$scope.pollList = response.data;
 		}, function (response) {
 
-		});	
+		});
+
+		// deleting comments, idk if this works right now
+		// $http.get('deleteComment?questionCommentID=' + questionCommentID +
+		// 							  '&questionID=' + questionID +
+		// 							      "&userID=" + userID +
+		// 						"&userIDAnnonymous=" + userIDAnnonymous +
+		// 							 "&description=" + description).then(function (response) {
+		// 		console.log("comment succesfully deleted");
+		// 	});
 
 		$http.get('/getPollResults?questionID=' + questionID).then(function (response) {
 				$scope.pollResults = response.data;
@@ -140,6 +153,12 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 		console.log(" currentComment is " + currentComment);
 		console.log("New comment is " + newComment);
 
+<<<<<<< HEAD
+	//*********************Delete BUtton**********************
+	// $scope.deleteComment = function() {
+		
+	// }	
+=======
 		$http.get("/editComment?questionID=" + questionID + "&userID=" + loggedInuserID
 			+ "&currentComment=" + currentComment + "&newComment=" + newComment)
 			.then(function (response) {
@@ -250,4 +269,5 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 			$scope.errorMessageCommentLike = "Please log In to vote comment";
 		}
 	}	
+>>>>>>> 3d3577ce8bf97aeaf6af5147c5c12fe2f4b4fc65
 }]);
