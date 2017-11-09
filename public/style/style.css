@@ -13,9 +13,6 @@ body {
 }
 
 
-.search-result{
-	margin-left: 100px;
-}
 
 
 
@@ -395,7 +392,7 @@ create-button, .submit-button, .login-button, .signup-button{
 .search-bar-wrapper{
 	background-color: white;
 	padding-top: 30px; 
-	padding-bottom: 30px; 
+	padding-bottom: 20px; 
 	position: fixed;
 	width: 98%;
 	z-index: 999;
@@ -457,6 +454,15 @@ create-button, .submit-button, .login-button, .signup-button{
 }
 
 .search-button:focus {outline:0;}
+
+.search-result{
+	text-align: center; 
+	margin-bottom: 0px;
+	margin-top: 10px; 
+	letter-spacing: 2px; 
+	color: #BB298B;
+}
+
 
 .popular-cont{
 	position: fixed;
@@ -527,7 +533,7 @@ create-button, .submit-button, .login-button, .signup-button{
 .feed-question-title {
 	font-size: 30px; 
 	letter-spacing: 1px; 
-	margin-bottom: 9px;
+	margin-bottom: 6px;
 }
 
 .feed-user{
@@ -537,11 +543,13 @@ create-button, .submit-button, .login-button, .signup-button{
 
 .feed-subtitle {
 	color: grey;
+	font-size: 12px;
 	margin-bottom: 6px;
 }
 
 .feed-description {
 	color: grey;
+	font-size: 12px; 
 	margin-bottom: 6px;
 }
 
@@ -554,14 +562,16 @@ create-button, .submit-button, .login-button, .signup-button{
 }
 
 .feed-total-votes {
+	font-size: 12px; 
 	margin-bottom: 6px;
 }
 
-.feed-positive-votes {
+/*.feed-positive-votes {
 	margin-bottom: 6px;
-}
+}*/
 
 .feed-num-likes {
+	font-size: 12px; 
 	margin-bottom: 6px;
 }
 

@@ -185,29 +185,11 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 					 	.then(function (response) {
 							//console.log("Updated PollOption Table: added vote");
 							$route.reload();
-							$scope.errorMessagePoll = "Already voted. Updating your vote" ; // doesnt show up for some reason
+							//$scope.errorMessagePoll = "Already voted. Updating your vote" ; // doesnt show up for some reason
 							
 						}, function (response) {
 						    console.log("FAILED Updated PollOption Table: added vote");
 		 			});
-					/*
-					// Update RatingQuestionOption table
-		 			$http.get("/UpdateRating?questionID=" + questionID + "&userID=" + userID + "&rating=" + optionID)
-		 				.then(function (response) {
-		 					console.log("Update: Inserted into RatingQuestionOption Table");
-		 				},function (response) {
-		 			    	console.log("Insert failed");
-		 			});
-		 			//update PollOption table: add new vote
-		 			$http.get("/addPollVote?questionID=" + questionID + "&pollOptionID=" + optionID)
-						.then(function (response) {
-							console.log("Updated PollOption Table: added vote");
-						}, function (response) {
-						    console.log("FAILED Update: Inserted into RatingQuestionOption Table");
-		 			});
-		 			*/
-			 		//$scope.errorMessagePoll = "Already voted. Updating your vote" ;
-			 		//$route.reload();
 				}
 				
 			}, function (response) { console.log("Error"); });
