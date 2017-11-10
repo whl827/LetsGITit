@@ -134,7 +134,6 @@ app.get('/sendEmail', function (req, res) {
 			console.log('Email sent: ' + info.response);
 			res.json(info);
 		}
-
 	});
 });
 
@@ -147,7 +146,12 @@ app.get('/insertUser', function (req, res) {
 			"values('" + username + "', " + password + ");",
 	  function (err, result, fields) {
 	  	if (err) throw err;
-	  	res.json(result);
+	});
+	con.query("SELECT * FROM KUser WHERE username = '" + username + "'",
+	  function (err,result,fields){
+		if(err)throw err;
+		console.log(result);
+		res.json(result);
 	});
 });
 
