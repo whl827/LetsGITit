@@ -29,7 +29,9 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 
 				$cookies.put('username', newUsername);
 			    $cookies.put('userID', newUserID);
-			    $scope.errorMessage = "Successfully logged in";
+			    // $scope.errorMessage = "Successfully logged in";
+			    //redirect to home page
+			    $window.location.replace("../index.html");
 	    	}
 	    },
 	    function (res) {
@@ -38,18 +40,27 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
     }
 
     $scope.logout = function () {
-    	var currUsername = $cookies.get('username');
-    	var currUserID = $cookies.get('userID');
+    	// var currUsername = $cookies.get('username');
+    	// var currUserID = $cookies.get('userID');
     	$cookies.put("username", null);
     	$cookies.put("userID", -1);
-    	if (currUsername === undefined || currUserID == undefined) {
-    		$scope.errorMessage = "You were not logged in origonally";
-    	} else if (currUsername == null || currUserID == -1) {
-    		$scope.errorMessage = "You were not logged in origonally";
+    	
+    	// if (currUsername === undefined || currUserID == undefined) {
+    	// 	$scope.errorMessage = "You were not logged in origonally";
+    	// } else if (currUsername == null || currUserID == -1) {
+    	// 	$scope.errorMessage = "You were not logged in origonally";
+    	// }
+    	// else {
+    	// 	$scope.errorMessage = "You have logged out";
+    	// }
+    }
+
+    $scope.userIsLoggedIn = function(){
+    	if($cookies.get('userID') != -1 && $cookies.get('userID') != undefined){
+    		$scope.username = $cookies.get('username');
+    		return true;
     	}
-    	else {
-    		$scope.errorMessage = "You have logged out";
-    	}
+    	return false;
     }
     
 }]);

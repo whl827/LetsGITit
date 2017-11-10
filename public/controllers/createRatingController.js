@@ -115,7 +115,8 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 								  "&isAnonymous=" + isAnonymous +
 								  "&tagArray[]=" + tagArray
 								  ).then(function (response) {
-					    	$window.location.href = '../index.html';
+					    	//$window.location.href = '../index.html';
+					    	$window.location.replace("../index.html");
 					    	
 					    	if(response.data.length == 0){
 					    		console.log("response = 0");

@@ -213,7 +213,8 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 					    	//console.log(response.data);
 
 					    	//redirect after creating poll
-					    	$window.location.href = '../index.html';
+					    	//$window.location.href = '../index.html';
+					    	$window.location.replace("../index.html");
 					    	
 					    	if(response.data.length == 0){
 					    		console.log(response.data);

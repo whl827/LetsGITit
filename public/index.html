@@ -56,25 +56,32 @@
 					<a class="nav-link" href="#!">Home</a>
 				</li> -->
 
-				<li class="nav-item">
-					<a class="nav-link" href="#!profile">Profile</a>
+				<li class="nav-item" ng-controller="loginController" >
+					<a class="nav-link" ng-if="userIsLoggedIn()" href="">Welcome {{username}}!</a>
+				</li>		
+
+				<li class="nav-item" ng-controller="loginController">
+					<a class="nav-link" ng-if="userIsLoggedIn()" href="#!profile">Profile</a>
 				</li>
 
-				
-				<li class="nav-item">
-					<a class="nav-link" href="#!createPoll">Create Poll</a>
+				<li class="nav-item" ng-controller="loginController" >
+					<a class="nav-link" ng-if="userIsLoggedIn()" href="#!createPoll">Create Poll</a>
 				</li>
-				<li class="nav-item">
-					<a class="nav-link" href="#!createRating">Create Rating</a>
-				</li>
-
-				<li class="nav-item">
-					<a class="nav-link" href="#!login">Login</a>
+				<li class="nav-item" ng-controller="loginController" >
+					<a class="nav-link" ng-if="userIsLoggedIn()" href="#!createRating">Create Rating</a>
 				</li>
 
 				<li class="nav-item">
-					<a class="nav-link" href="#!signup">SignUp</a>
+						<a class="nav-link" href="#!signup">SignUp</a>
+
+				<li class="nav-item" ng-controller="loginController" >
+					<a class="nav-link"  ng-if="userIsLoggedIn()" ng-click="logout()" href="#!login">Logout</a>
+				</li>		
+
+				<li class="nav-item" ng-controller="loginController" >
+					<a class="nav-link" ng-if="!userIsLoggedIn()" href="#!login">Login</a>
 				</li>
+
 
 			</ul>
 		</div>

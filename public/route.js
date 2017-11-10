@@ -20,6 +20,7 @@ angular.module("KnowItAll").config(function($routeProvider) {
     })
     .when("/newUser/:username/:password", {
           templateUrl : "pages/newUser.html",
+          controller : "createUser"
     })
     .when("/userProfile/:username", {
         templateUrl: "pages/otherUserProfile.html"
