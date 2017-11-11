@@ -42,9 +42,13 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
     $scope.logout = function () {
     	// var currUsername = $cookies.get('username');
     	// var currUserID = $cookies.get('userID');
-    	$cookies.put("username", null);
-    	$cookies.put("userID", -1);
-    	
+        if($window.confirm("Are you sure you want to log out?")){
+            $cookies.put("username", null);
+            $cookies.put("userID", -1);
+            $window.location.replace("#!login");
+        }else{
+            $window.location.replace("#!");
+        }
     	// if (currUsername === undefined || currUserID == undefined) {
     	// 	$scope.errorMessage = "You were not logged in origonally";
     	// } else if (currUsername == null || currUserID == -1) {
