@@ -2,6 +2,15 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 	
 	var questionID = $routeParams.questionID;
 	$scope.userID = $cookies.get("userID");
+
+
+	$scope.userIsLoggedIn = function(){
+    	if($cookies.get('userID') != -1 && $cookies.get('userID') != undefined){
+    		return true;
+    	}
+    	return false;
+    }
+
 	
 
 	$scope.createComment = function(){
