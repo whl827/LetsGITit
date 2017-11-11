@@ -1,5 +1,5 @@
-angular.module("KnowItAll").controller('adminCtrl', ['$scope', '$http', '$location', '$cookies',
-                                     function($scope, $http, $location, $cookies) {
+angular.module("KnowItAll").controller('adminCtrl', ['$scope', '$http', '$location', '$cookies', '$routeParams',
+                                     function($scope, $http, $location, $cookies, $routeParams) {
 
     hashCode = function(str) {
       var hash = 0, i, chr;
@@ -22,18 +22,25 @@ angular.module("KnowItAll").controller('adminCtrl', ['$scope', '$http', '$locati
     $scope.input = {adminPassword : ""};
 
     $scope.authenticate = function() {
-        console.log("password: " + $scope.input.adminPassword);
-        console.log("username: " + $cookies.get('username'));
         $http.get('/user?username=' + $cookies.get('username')
             + '&password=' + hashCode($scope.input.adminPassword)).then(function (response) {
-                console.log("response: ");
-                console.log(response);
                 if (response.data.length != 0 && $cookies.get("isAdmin")) {
                     $scope.adminData = {AdminErrorMessage : "You are authenticated", auth : true};
                 } else {
                     $scope.adminData = {AdminErrorMessage : "You are not logged in as admin", auth : false};
                 }
         });
+    }
+
+    $scope.loadQFlag = function (isFlagged) {
+
+        var questionID = $routeParams.questionID;
+        $scope.flag = {flagInfo : "", isFlagged : false};
+        if ($cookies.get('isAdmin')) {
+            if (isFlagged) {
+                $scope.flag = {flagInfo : "This Content Is FLAGGED", isFlagged : true};
+            }
+        }
     }
 
 }]);

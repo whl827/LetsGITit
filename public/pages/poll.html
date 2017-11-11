@@ -10,6 +10,12 @@
 				endDate : (endDate | date: 'short')}}</p>
 		</div>
 
+		<div ng-controller="adminController"  data-ng-init="loadQFlag(isFlagged)"> 
+			<h3>{{flag.flagInfo}}</h3>
+			<div ng-if="flag.isFlagged">
+				<button ng-click="unFlag">UNFLAG</button>
+			</div>
+		</div>
 
 		<div class="row">
 			<div class="col-lg-8 col-md-8 col-sm-12">

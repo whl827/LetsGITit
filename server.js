@@ -404,7 +404,7 @@ app.get('/insertRatingWithoutEndDate', function (req, res) {
 
 app.get('/getQuestion', function (req, res) {
 	//fixed con qeury
-	con.query("SELECT q.title, q.userID, u.username, q.description, q.endDate, q.isAnonymous " + 
+	con.query("SELECT q.title, q.userID, u.username, q.description, q.endDate, q.isAnonymous, q.isFlagged " + 
 		"FROM Question q " +
 		"JOIN kuser u on q.userID = u.userID " +
 		"WHERE q.questionID=" + req.query.questionID, 
