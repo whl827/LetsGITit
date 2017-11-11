@@ -32,6 +32,7 @@
 	<script src="controllers/ratingController.js"></script>
 	<script src="controllers/pollRatingController.js"></script>
 	<script src="controllers/otherUserProfileController.js"></script>
+	<script src="controllers/adminController.js"></script>
 
 	<script src="controllers/pageLoadAppController.js"></script>
 
@@ -56,6 +57,9 @@
 					<a class="nav-link" href="#!">Home</a>
 				</li> -->
 
+				<li class="nav-item" ng-controller="loginController">
+					<a class="nav-link" ng-if="userIsAdmin()" href="#!adminPage">Admin Page</a>
+				</li>
 				<li class="nav-item" ng-controller="loginController" >
 					<a class="nav-link" ng-if="userIsLoggedIn()" href="">Welcome {{username}}!</a>
 				</li>		

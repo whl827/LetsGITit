@@ -1,4 +1,4 @@
-angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+angular.module("KnowItAll").controller('AdminCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
 
     // $scope.isQuestionList = 1;
 

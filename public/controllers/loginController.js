@@ -26,9 +26,11 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 	    		$scope.userData = response.data;
 	    		newUsername = "" + response.data[0].username;
 	    		newUserID = response.data[0].userID;
+                isAdmin = response.data[0].isAdmin;
 
 				$cookies.put('username', newUsername);
 			    $cookies.put('userID', newUserID);
+                $cookies.put('isAdmin', isAdmin);
 			    // $scope.errorMessage = "Successfully logged in";
 			    //redirect to home page
 			    $window.location.replace("../index.html");
@@ -61,6 +63,13 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
     		return true;
     	}
     	return false;
+    }
+
+    $scope.userIsAdmin = function() {
+        if ($cookies.get('isAdmin') != undefined && $cookies.get('isAdmin') == 1) {
+            return true;
+        }
+        return false;
     }
 
 

@@ -26,7 +26,6 @@ con.connect(function(err) {
 
 app.use(express.static(__dirname + '/public'));
 
-
 // Get Question Search from navbar (ANY TEXT)
 app.get('/searchQuestionsAnyText', function (req, res) {
 
@@ -92,9 +91,14 @@ app.get('/searchUsers', function (req, res) {
 //log in
 app.get('/user', function (req, res) {
 
-	con.query("SELECT u.userID, u.username, u.passwordHash FROM KUser u " +
-		"WHERE u.username='"+ req.query.username + 
-		"' and u.passwordHash=" + req.query.password,
+	console.log("user query:");
+	console.log("SELECT * FROM KUser " +
+		"WHERE username='"+ req.query.username + 
+		"' and passwordHash=" + req.query.password);
+
+	con.query("SELECT * FROM KUser " +
+		"WHERE username='"+ req.query.username + 
+		"' and passwordHash=" + req.query.password,
 	  function (err, result, fields) {
 	    if (err) throw err;
 	    res.json(result);
