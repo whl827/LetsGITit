@@ -20,6 +20,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 	$scope.loggedInuserID=loggedInuserID;
 	var questionID = $routeParams.questionID;
 	var getPoll = true; //check if poll is selected
+	var title;
 	//when true, get info from database
 	//getting information from search page (Home)
 	//(search result controller)
@@ -30,6 +31,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 	if (getPoll) {
 		$http.get('/getQuestion?questionID=' + questionID).then(function (response) {
 			$scope.title = response.data[0].title;
+			title = response.data[0].title;
 			$scope.userID = response.data[0].userID;
 			
 			$scope.description = null;
@@ -132,6 +134,24 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 				console.log("FAILED getting poll results");
 			}
 		);	
+
+   	
+   		//add get tag for the questoin => 
+   		$http.get('/getTag?questionID=' + questionID).then(function (response) {
+           // $scope.isQuestionList = 1;
+            var tag = response.data[0].tagStr;
+            //create tag query !! 
+	        $http.get('/searchQuestions?tagQuery=' + tag).then(function (response) {
+	            $scope.questionList = response.data;
+		        }, 
+		        function (res) {
+		            console.log("Question list NOT received");
+		        });
+	        }, 
+	        function (res) {
+	            console.log("Question list NOT received");
+	        });
+
 	}//If
 
 

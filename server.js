@@ -933,6 +933,18 @@ app.get('/UndoCommentVote', function (req, res) {
 	}
 });
 
+app.get('/getTag', function (req, res) {
+
+	con.query("SELECT t.tagStr FROM Tag t INNER JOIN TagToQuestion ttq" +
+		" ON t.tagID = ttq.tagID WHERE ttq.questionID='" +
+		req.query.questionID + "' LIMIT 1;", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+		});
+});
+
+
 
 
 
