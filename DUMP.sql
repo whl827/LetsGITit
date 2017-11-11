@@ -95,6 +95,7 @@ create table CommentLike (
     CommentLikeID int(8) primary key auto_increment,
     questionCommentID int(8) not null,
     userID int(8) not null,
+    pollLike boolean not null,
     foreign key fk1(questionCommentID) references QuestionComment(questionCommentID),
     foreign key fk2(userID) references KUser(userID)
 );
