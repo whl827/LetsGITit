@@ -150,7 +150,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 
 	}
 
-		//User likes the comment 
+	//User likes the comment 
 	$scope.commentLike = function(comment){
 		var questionCommentID = angular.copy(comment).questionCommentID;
 		var userID = $cookies.get("userID");
@@ -163,7 +163,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 					if(typeof response.data[0] == 'undefined'){
 						//&& typeof response[0].userID !== 'undefined' 
 						//if user clicked Like 
-						$http.get("/UpdateCommentLike?questionCommentID=" + questionCommentID + "&questionID=" + questionID+ "&userID=" + userID)
+						$http.get("/UpdateCommentLike?questionCommentID=" + questionCommentID + "&questionID=" + questionID + "&userID=" + userID)
 							.then(function (response) {
 								console.log("insert into questionlike table");
 						},function (response) {
@@ -171,18 +171,35 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 						});
 
 							$route.reload();
-					}else {			
-						//
-						// $http.get("/UpdateCommentVote?questionCommentID=" + questionCommentID + "&userID=" + userID
-						// 	+ "&pollLike=" + likeorDisLike)
-						// 	.then(function (response) {
-						// 		console.log("insert into questionlike table");
-						// },function (response) {
-						//     	console.log("Error");
-						// });
-						// 	//$route.reload();
-						// 	$scope.comment.errorMessageCommentLike = "Already voted.";
+					}else {		
 
+						var pollLike = response.data[0].pollLike;
+						if(pollLike == 0){ //if previous poll was DisLike, update to Like
+							//dislike value -= 1  like value += 1
+
+							$http.get("/UpdateCommentVote?questionCommentID=" + questionCommentID + "&questionID=" + questionID 
+								+ "&userID=" + userID + "&pollLike=" + pollLike)
+								.then(function (response) {
+									console.log("insert into questionlike table");
+							},function (response) {
+							    	console.log("Error");
+							});
+
+							$route.reload();
+						}
+						else{ //undo poll 
+
+							$http.get("/UndoCommentVote?questionCommentID=" + questionCommentID 
+								+ "&questionID=" + questionID + "&userID=" + userID
+								+ "&pollLike=" + pollLike)
+								.then(function (response) {
+									console.log("insert into questionlike table");
+							},function (response) {
+							    	console.log("Error");
+							});
+
+							$route.reload();
+						}	
 					}
 				},function (response) {
 			    	console.log("Error");
@@ -198,7 +215,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 		var questionCommentID = angular.copy(comment).questionCommentID;
 		var userID = $cookies.get("userID");
 		if(userID !== -1 && typeof(userID) !== 'undefined'){
-
 			//Check if user already voted
 			$http.get("/checkUserVotedComment?questionCommentID=" + questionCommentID + "&userID=" + userID
 				)
@@ -214,17 +230,36 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 						    	console.log("Error");
 						});
 							$route.reload();
-					}else {			
-						// $http.get("/UpdateCommentVote?questionCommentID=" + questionCommentID + "&userID=" + userID
-						// 	+ "&pollLike=" + likeorDisLike)
-						// 	.then(function (response) {
-						// 		console.log("insert into questionlike table");
-						// },function (response) {
-						//     	console.log("Error");
-						// });
-						// 	//$route.reload();
-						//$scope.errorMessageCommentLike = "Already voted. ";
+					}else {		
+						var pollLike = response.data[0].pollLike;
+						//if previous poll was Like, update to dislike 
+						if(pollLike == 1){
 
+							$http.get("/UpdateCommentVote?questionCommentID=" + questionCommentID 
+								+ "&questionID=" + questionID + "&userID=" + userID
+								+ "&pollLike=" + pollLike)
+								.then(function (response) {
+									console.log("insert into questionlike table");
+							},function (response) {
+							    	console.log("Error");
+							});
+
+							$route.reload();
+						}
+						else{ //else undo poll 
+
+							$http.get("/UndoCommentVote?questionCommentID=" + questionCommentID 
+								+ "&questionID=" + questionID + "&userID=" + userID
+								+ "&pollLike=" + pollLike)
+								.then(function (response) {
+									console.log("insert into questionlike table");
+							},function (response) {
+							    	console.log("Error");
+							});
+
+							$route.reload();
+
+						}
 					}
 				},function (response) {
 			    	console.log("Error");
