@@ -46,8 +46,6 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
             $cookies.put("username", null);
             $cookies.put("userID", -1);
             $window.location.replace("#!login");
-        }else{
-            $window.location.replace("#!");
         }
     	// if (currUsername === undefined || currUserID == undefined) {
     	// 	$scope.errorMessage = "You were not logged in origonally";
