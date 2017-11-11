@@ -31,7 +31,6 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http','$cookies'
 		$http.get('/getQuestion?questionID=' + questionID).then(function (response) {
 			$scope.title = response.data[0].title;
 			$scope.userID = response.data[0].userID;
-			$scope.isFlagged = response.data[0].isFlagged;
 			
 			$scope.description = null;
 			if(response.data[0].description != 'undefined'){

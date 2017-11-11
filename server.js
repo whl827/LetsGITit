@@ -87,14 +87,16 @@ app.get('/searchUsers', function (req, res) {
 		});
 });
 
+app.get('/toggleFlag', function (req, res) {
+	console.log('UPDATE question SET isFlagged =' + req.query.flag + ' WHERE questionID=' + req.query.questionID);
+	con.query('UPDATE question SET isFlagged =' + req.query.flag + ' WHERE questionID=' + req.query.questionID, 
+		function(err, result, feilds) {
+			if (err) throw err;
+		});
+});
 
 //log in
 app.get('/user', function (req, res) {
-
-	console.log("user query:");
-	console.log("SELECT * FROM KUser " +
-		"WHERE username='"+ req.query.username + 
-		"' and passwordHash=" + req.query.password);
 
 	con.query("SELECT * FROM KUser " +
 		"WHERE username='"+ req.query.username + 

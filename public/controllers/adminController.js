@@ -32,15 +32,4 @@ angular.module("KnowItAll").controller('adminCtrl', ['$scope', '$http', '$locati
         });
     }
 
-    $scope.loadQFlag = function (isFlagged) {
-
-        var questionID = $routeParams.questionID;
-        $scope.flag = {flagInfo : "", isFlagged : false};
-        if ($cookies.get('isAdmin')) {
-            if (isFlagged) {
-                $scope.flag = {flagInfo : "This Content Is FLAGGED", isFlagged : true};
-            }
-        }
-    }
-
 }]);

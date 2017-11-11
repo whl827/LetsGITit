@@ -57,13 +57,12 @@
 					<a class="nav-link" href="#!">Home</a>
 				</li> -->
 
-				<li class="nav-item" ng-controller="loginController">
-					<a class="nav-link" ng-if="userIsAdmin()" href="#!adminPage">Admin Page</a>
-				</li>
 				<li class="nav-item" ng-controller="loginController" >
 					<a style="pointer-events: none; cursor: default;" class="nav-link" ng-if="userIsLoggedIn()" href="">Welcome {{username}}!</a>
 				</li>		
-
+				<li class="nav-item" ng-controller="loginController">
+					<a class="nav-link" ng-if="userIsAdmin()" href="#!adminPage">Admin Page</a>
+				</li>
 				<li class="nav-item" ng-controller="loginController">
 					<a class="nav-link" ng-if="userIsLoggedIn()" href="#!profile">Profile</a>
 				</li>

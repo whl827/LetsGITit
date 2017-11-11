@@ -8,12 +8,12 @@
 			<p class="end-date" id = "endDate"> 
 				Closes on {{ endDate=="Open Forever" ?
 				endDate : (endDate | date: 'short')}}</p>
-		</div>
 
-		<div ng-controller="adminController"  data-ng-init="loadQFlag(isFlagged)"> 
-			<h3>{{flag.flagInfo}}</h3>
-			<div ng-if="flag.isFlagged">
-				<button ng-click="unFlag">UNFLAG</button>
+			<div data-ng-init="loadQFlag()"> 
+				<h3 style="color:red">{{flag.flagInfo}}</h3>
+				<div ng-if="flag.isFlagged">
+					<button ng-click="toggleFlag(0)">UNFLAG</button>
+				</div>
 			</div>
 		</div>
 
@@ -151,6 +151,11 @@
 
 				</div>
 			</form>
+		</div>
+
+		<div ng-controller= "pollRatingCtrl">
+			Flag post for inappropriate content <br>
+			<button ng-click='toggleFlag(1)'>FLAG</button>
 		</div>
 
 

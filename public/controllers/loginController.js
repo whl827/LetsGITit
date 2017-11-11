@@ -47,6 +47,7 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
         if($window.confirm("Are you sure you want to log out?")){
             $cookies.put("username", null);
             $cookies.put("userID", -1);
+            $cookies.put('isAdmin', false);
             $window.location.replace("#!login");
         }
     	// if (currUsername === undefined || currUserID == undefined) {
