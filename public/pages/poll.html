@@ -115,50 +115,75 @@
 		</div>
 
 		<div class="all-comments-cont">
-			<p class="section-heading" id = "totalComment">ALL REVIEWS ({{totalComment}}) </p>
+			<p class="section-heading total-comments-heading" id = "totalComment">ALL REVIEWS ({{totalComment}}) </p>
+
 			<form ng-controller= "PollCtrl">
+				<div class="comments-list" ng-controller="PollCtrl" >
+					
+					<div ng-model= "commentInfo" ng-repeat="comment in commentList">
+						<div class="comment-cont"> 
 
-				<div ng-controller="PollCtrl" >
-					<ul ng-model= "commentInfo" ng-repeat="comment in commentList">
-						<li> 
-							<span ng-hide="visible">{{comment.userIDAnnonymous}}: <br> {{comment.description}}</span>
-							
+							<div ng-hide="visible">
+								<div class="row">
+									<div class= "col-lg-9 col-md-9 col-sm-12">
+										<p class="comment-username"> {{comment.userIDAnnonymous}} </p>
+									</div>
+									<div class="col-lg-3 col-md-3 col-sm-12">
+										<div class="action-buttons-container">
+											<button class="action-buttons edit-comment-button" ng-show="comment.userID==loggedInuserID" ng-click="visible=true">
+							                	EDIT
+							                </button>
+											<button class="action-buttons delete-comment-button" ng-show="comment.userID==loggedInuserID" ng-click="deleteComment(comment)"> 
+												DELETE
+											</button> 
+										</div> 
+									</div>
+								</div>
+								<p class="comment-description"> {{comment.description}} </p>
+							</div>
 
-							 <div ng-show="visible">
+							<div ng-show="visible">
+			                   	<div class="row">
+									<div class= "col-lg-9 col-md-9 col-sm-12">
+										<p class="comment-username"> {{comment.userIDAnnonymous}} </p>
+									</div>
+									<div class= "col-lg-3 col-md-3 col-sm-12">
+										<div class="action-buttons-container">
+											<button class="action-buttons save-comment-button" type="submit" ng-click ="visible=false; editComment(comment)">
+												SAVE
+											</button>
+											<button class="action-buttons delete-comment-button" ng-show="comment.userID==loggedInuserID" ng-click="deleteComment(comment)"> 
+												DELETE
+											</button>   
+										</div>
+									</div>
+								</div>
 
-			                   <label>Review:</label>
-
-			                   <div ng-controller="PollCtrl">
-
-			                   <textarea rows="4" cols="50" ng-model="comment.newComment" placeholder= {{comment.description}} class="form-control" ng-required> </textarea>
-
+			                  	<div ng-controller="PollCtrl">
+			                   		<textarea rows="4" cols="40" ng-model="comment.newComment" placeholder= {{comment.description}} class="form-control" ng-required> </textarea>
 			               		</div>
-			             
-			                    <button class="btn" type="submit" 
-			                    ng-click ="visible=false; editComment(comment)">Save</button>
+			                </div>
 
-			                 </div>
 
-			                <button class="btn" ng-show="comment.userID==loggedInuserID" 
-							ng-click="visible=true"> Edit</button>
-							<button class="btn" ng-show="comment.userID==loggedInuserID" 
-							ng-click="deleteComment(comment)"> delete</button>   
+			                <div class="row comment-rating-cont">
+								<button class="like-comment" ng-model="comment.commentLikeInput" ng-value = "true" ng-click="commentLike(comment)" ng-required ng-if="hideInputFields()"> LIKE </button>
+								<p class="like-comment-num"> {{comment.commentLikeCount}} </p>
 
-							<a href="" ng-model="comment.commentLikeInput" ng-value = "true" ng-click="commentLike(comment)" ng-required ng-if="hideInputFields()">LIKE</a>{{comment.commentLikeCount}}
-
-							<a href="" ng-model="comment.commentLikeInput" ng-click="commentDislike(comment)" ng-required ng-if="hideInputFields()">DISLIKE </a>{{comment.commentDislikeCount}}
+								<button class="dislike-comment" ng-model="comment.commentLikeInput" ng-click="commentDislike(comment)" ng-required ng-if="hideInputFields()">DISLIKE </button>
+								<p class="dislike-comment-num"> {{comment.commentDislikeCount}} </p>
+							</div>
 
 							{{errorMessageCommentLike}}
 							
-			              </li>
-			         <ul>		 
+			             </div>
+			        </div>		 
 
 				</div>
 			</form>
 		</div>
 
 		<div ng-controller="PollCtrl" > 
-			<h5>Recommended Poll or Rating</h5>
+			<p class="section-heading" id = "totalComment">RECOMMENDED FOR YOU </p>
 				<div ng-repeat="option in questionList" ng-click="goToLink(option)">
 						<p> {{option.title}} </p>			
 						<p> {{option.description}} </p>	
