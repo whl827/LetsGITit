@@ -722,6 +722,16 @@ app.get('/removePollVote', function (req, res) {
 	});
 });
 
+app.get('/checkQuestionDate', function (req, res) {
+	con.query("SELECT endDate FROM Question WHERE questionID='" +
+		req.query.questionID + "';", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+	});
+});
+
+
 
 
 
