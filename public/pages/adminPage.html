@@ -1,0 +1,11 @@
+<div>
+<h1>Administrator Home Page</h1>
+
+<div ng-controller="adminCtrl">
+    {{adminData.AdminErrorMessage}}
+    <div ng-if="adminData.auth == 0">
+        <input type="password" ng-model="input.adminPassword">
+        <div data-ng-init="loadFlagged()"></div>
+        <button type="button" ng-click="authenticate()">AUTHENTICATE</button>
+    </div>
+</div>

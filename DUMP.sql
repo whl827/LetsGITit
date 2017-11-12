@@ -4,10 +4,11 @@ use KnowItAll;
 
 create table KUser (
 
-	 userID int(8) primary key auto_increment,
+	userID int(8) primary key auto_increment,
     username varchar(12) not null,
     numFollowers int(8) default 0 not null,
-    passwordHash int(12) not null
+    passwordHash int(12) not null,
+    isAdmin boolean default false
 );  
 
 create table Question (
@@ -23,6 +24,7 @@ create table Question (
     positiveVotes int(8),			 #only for rating question
     numLikes int(8) default 0 not null,
     isAnonymous boolean not null,
+    isFlagged boolean default false,
     foreign key fk1(userID) references KUser(userID)
 );
 
@@ -35,6 +37,7 @@ create table QuestionComment (
     isAnnonymous boolean not null,
     commentLikeCount int(8) not null,
     commentDislikeCount int(8) not null,
+	isFlagged boolean default false,
     foreign key fk1(questionID) references Question(questionID),
     foreign key fk2(userID) references KUser(userID)
 );

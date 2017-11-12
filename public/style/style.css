@@ -1,8 +1,10 @@
 body {
 	font-family: "Roboto";
-	background: #EB3349;  /* fallback for old browsers */
-	background: -webkit-linear-gradient(to right, #F45C43, #EB3349);  /* Chrome 10-25, Safari 5.1-6 */
-	background: linear-gradient(to right, #F45C43, #EB3349); /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+	background: #EB3349;  
+	background: -webkit-linear-gradient(to right, #F45C43, #EB3349);  
+	background: linear-gradient(to right, #F45C43, #EB3349); 
+	
+
 }
 
 /* Nav Bar */
@@ -606,16 +608,19 @@ create-button, .submit-button, .login-button, .signup-button{
 	float: right;
 }
 
+
+/*************** PROFILE *****************/
 .profile-cont {
 	position: fixed;
-	margin-top: 80px;  
+	margin-top: 17px;  
 	background-color: white; 
 	width: 23%;
 	left: 20px;
 
-
-
-	padding: 20px; 
+	padding-left: 20px; 
+	padding-right: 20px; 
+	padding-top: 30px; 
+	padding-bottom: 30px; 
 
 	-webkit-box-shadow: -1px 10px 39px -5px rgba(0,0,0,0.75);
 	-moz-box-shadow: -1px 10px 39px -5px rgba(0,0,0,0.75);
@@ -626,13 +631,68 @@ create-button, .submit-button, .login-button, .signup-button{
 	margin-top: 0px; 
 }
 
-
-
 #profile-pic{
 	border-radius: 50%; 
+	display: block;
+    margin: 0 auto;
 }
 
 
+
+
+.profile-username {
+	font-size: 40px; 
+	text-align: center; 
+	margin-bottom: 5px; 
+}
+
+.bio {
+	font-size: 15px; 
+	color: #616161;
+	margin-bottom: 25px;
+	text-align: center; 
+}
+
+.following-cont {
+
+}
+
+.followers, .followers-heading, .following, .following-heading {
+	text-align: center; 
+}
+
+.followers, .following {
+	margin-bottom: 0px; 
+	font-size: 25px; 
+	font-weight: bold;
+}
+
+.followers-heading, .following-heading  {
+	font-size: 13px; 
+	letter-spacing: 2px; 
+	color: #616161;
+}
+
+.profile-button {
+	display:block; 
+    width:40%;
+    margin-left: auto;
+    margin-right: auto; 
+    margin-top: 20px; 
+
+ 
+
+	border: 0;
+    color: #e53935;
+    cursor: pointer;
+    font-family: "Roboto";
+	letter-spacing: 2px;
+	background: white; 
+}
+
+
+
+/************ MEDIA QUERIES ***************/
 
 @media only screen and (max-width: 1024px) {
 /*	.login-container, .signup-container {
@@ -734,9 +794,4 @@ create-button, .submit-button, .login-button, .signup-button{
 
 }
 
-	.img-circle {
-		margin-left: 5%;
-		margin-top: 1%
-		border-radius: 75px;
-	}
 

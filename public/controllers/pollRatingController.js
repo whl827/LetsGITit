@@ -2,7 +2,38 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 	
 	var questionID = $routeParams.questionID;
 	$scope.userID = $cookies.get("userID");
-	
+
+
+	$scope.userIsLoggedIn = function(){
+    	if($cookies.get('userID') != -1 && $cookies.get('userID') != undefined){
+    		return true;
+    	}
+    	return false;
+    }
+
+	$scope.toggleFlag = function (flag) {
+		console.log('flagging question: ' + questionID);
+		$http.get('/toggleFlag?questionID=' + questionID + '&flag=' + flag);
+	}
+
+	$scope.loadQFlag = function () {
+
+        var questionID = $routeParams.questionID;
+        $scope.flag = {flagInfo : "", isFlagged : false};
+
+        console.log("is Admin: " + ($cookies.get('isAdmin') == true));
+
+        if ($cookies.get('isAdmin') == true) {
+        	console.log("Entering the admin only if condition");
+        	$http.get('/getQuestion?questionID=' + questionID)
+        		.then( function(response) {
+        			if (response.data.length == 1 && response.data[0].isFlagged) {
+        				$scope.flag = {flagInfo : "This Content Is FLAGGED", isFlagged : true};
+        			}
+        		}
+        	);
+        }
+    }
 
 	$scope.createComment = function(){
 

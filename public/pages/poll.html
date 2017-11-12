@@ -1,4 +1,4 @@
-<div class="display-survey-container cont">
+<div class="display-survey-container cont" ng-controller= "pollRatingCtrl">
 	<p class="survey-heading" id = "title">{{title}}</p>
 	<div class="sub-cont">
 
@@ -8,41 +8,43 @@
 			<p class="end-date" id = "endDate"> 
 				Closes on {{ endDate=="Open Forever" ?
 				endDate : (endDate | date: 'short')}}</p>
+
+			<div data-ng-init="loadQFlag()"> 
+				<h3 style="color:red">{{flag.flagInfo}}</h3>
+				<div ng-if="flag.isFlagged">
+					<button ng-click="toggleFlag(0)">UNFLAG</button>
+				</div>
+			</div>
 		</div>
 
-
 		<div class="row">
-			<!-- ONLY show During Poll Period After show Result  -->
 			<div class="col-lg-8 col-md-8 col-sm-12">
-				
-				<p class="section-heading vote-heading"> CAST VOTE </p>
-				
-				<form class="vote-cont" ng-controller= "pollRatingCtrl">	
-					<p ng-repeat="option in pollList track by $index">	
-						<input class="poll-option" 
-						 		id ="RatingButton" 
-						 		type="submit" 
-						 		value = {{option.title}}  
-						 		ng-click="selectPollOption($index, pollList)">
-					</p>
-					<p id="PollErrorMessage">{{errorMessagePoll}}</p>
-				</form>
+				<div ng-if="userIsLoggedIn()">
+					<p class="section-heading vote-heading"> CAST VOTE </p>
+					
+					<form class="vote-cont" ng-controller= "pollRatingCtrl">	
+						<p ng-repeat="option in pollList track by $index">	
+							<input class="poll-option" 
+							 		id ="RatingButton" 
+							 		type="submit" 
+							 		value = {{option.title}}  
+							 		ng-click="selectPollOption($index, pollList)">
+						</p>
+						<p id="PollErrorMessage">{{errorMessagePoll}}</p>
+					</form>
+				</div>
 
 				<div class="poll-results" ng-controller= "PollCtrl">
-					<p> Results </p>
+					<p class="section-heading vote-heading"> RESULTS </p>
 					<div ng-repeat="option in pollResults">
-						<p> Option: {{option.title}} </p>
-						<p> Vote: {{option.votes}} </p>			
+						<p> {{option.title}} : {{option.votes}}</p>
+
 					</div>
 				</div>
 
 
 			</div>
 
-			<!-- Button 
-			<input  ng-controller="pollRatingCtrl" type="submit" value="submit" ng-click="voteOption()"> -->
-			<!-- After the poll period show result -->
-			<!-- ADD: like/dislike, rating, and comment are only for logged in user -->
 			
 			<div class="rank-cont col-lg-4 col-md-4 col-sm-12">
 				<!-- Show Number of Lies and Dislikes -->
@@ -61,7 +63,7 @@
 
 
 				<!-- Like/Dislike -->
-				<form class="rank-cont" ng-controller= "pollRatingCtrl">
+				<form class="rank-cont" ng-controller= "pollRatingCtrl" ng-if="userIsLoggedIn()">
 					<div class="row">
 						<div class="col-lg-5 col-md-5 col-sm-12 num-likes">
 							<input class="like" id= "likeRadioButton" ng-model="likeInput" type="radio" name="like" value="true" /> LIKE
@@ -88,7 +90,7 @@
 
 
 		<!-- Comment -->
-		<div class="comments-cont" ng-controller= "pollRatingCtrl">	
+		<div class="comments-cont" ng-controller= "pollRatingCtrl" ng-if="userIsLoggedIn()">	
 			<textarea ng-model="commentInput" rows="4" cols="50" class="form-control" placeholder="Write a review"></textarea>
 
 			<div class="row comment-cntrl-cont">
@@ -138,9 +140,9 @@
 							<button class="btn" ng-show="comment.userID==loggedInuserID" 
 							ng-click="deleteComment(comment)"> delete</button>   
 
-							<a href="" ng-model="comment.commentLikeInput" ng-value = "true" ng-click="commentLike(comment)" ng-required>LIKE</a>{{comment.commentLikeCount}}
+							<a href="" ng-model="comment.commentLikeInput" ng-value = "true" ng-click="commentLike(comment)" ng-required ng-if="userIsLoggedIn()">LIKE</a>{{comment.commentLikeCount}}
 
-							<a href="" ng-model="comment.commentLikeInput" ng-click="commentDislike(comment)" ng-required>DISLIKE </a>{{comment.commentDislikeCount}}
+							<a href="" ng-model="comment.commentLikeInput" ng-click="commentDislike(comment)" ng-required ng-if="userIsLoggedIn()">DISLIKE </a>{{comment.commentDislikeCount}}
 
 							{{errorMessageCommentLike}}
 							
@@ -160,6 +162,9 @@
 				</div>
 				{{errorMessageRecommendedQuestion}}
 				
+		<div ng-controller= "pollRatingCtrl">
+			Flag post for inappropriate content <br>
+			<button ng-click='toggleFlag(1)'>FLAG</button>
 		</div>
 
 

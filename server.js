@@ -26,7 +26,6 @@ con.connect(function(err) {
 
 app.use(express.static(__dirname + '/public'));
 
-
 // Get Question Search from navbar (ANY TEXT)
 app.get('/searchQuestionsAnyText', function (req, res) {
 
@@ -88,13 +87,20 @@ app.get('/searchUsers', function (req, res) {
 		});
 });
 
+app.get('/toggleFlag', function (req, res) {
+	console.log('UPDATE question SET isFlagged =' + req.query.flag + ' WHERE questionID=' + req.query.questionID);
+	con.query('UPDATE question SET isFlagged =' + req.query.flag + ' WHERE questionID=' + req.query.questionID, 
+		function(err, result, feilds) {
+			if (err) throw err;
+		});
+});
 
 //log in
 app.get('/user', function (req, res) {
 
-	con.query("SELECT u.userID, u.username, u.passwordHash FROM KUser u " +
-		"WHERE u.username='"+ req.query.username + 
-		"' and u.passwordHash=" + req.query.password,
+	con.query("SELECT * FROM KUser " +
+		"WHERE username='"+ req.query.username + 
+		"' and passwordHash=" + req.query.password,
 	  function (err, result, fields) {
 	    if (err) throw err;
 	    res.json(result);
@@ -400,7 +406,7 @@ app.get('/insertRatingWithoutEndDate', function (req, res) {
 
 app.get('/getQuestion', function (req, res) {
 	//fixed con qeury
-	con.query("SELECT q.title, q.userID, u.username, q.description, q.endDate, q.isAnonymous " + 
+	con.query("SELECT q.title, q.userID, u.username, q.description, q.endDate, q.isAnonymous, q.isFlagged " + 
 		"FROM Question q " +
 		"JOIN kuser u on q.userID = u.userID " +
 		"WHERE q.questionID=" + req.query.questionID, 

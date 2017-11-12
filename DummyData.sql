@@ -38,6 +38,12 @@ insert into KUser(username, passwordHash) values
 	111421
 );
 
+insert into KUser(username, passwordHash, isAdmin) values
+(
+	"Admin1",
+    111421,
+    true
+);
 
 insert into Tag(tagStr) values ("t1");
 insert into Tag(tagStr) values ("t2");

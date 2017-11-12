@@ -32,6 +32,7 @@
 	<script src="controllers/ratingController.js"></script>
 	<script src="controllers/pollRatingController.js"></script>
 	<script src="controllers/otherUserProfileController.js"></script>
+	<script src="controllers/adminController.js"></script>
 
 	<script src="controllers/pageLoadAppController.js"></script>
 
@@ -57,9 +58,11 @@
 				</li> -->
 
 				<li class="nav-item" ng-controller="loginController" >
-					<a class="nav-link" ng-if="userIsLoggedIn()" href="">Welcome {{username}}!</a>
+					<a style="pointer-events: none; cursor: default;" class="nav-link" ng-if="userIsLoggedIn()" href="">Welcome {{username}}!</a>
 				</li>		
-
+				<li class="nav-item" ng-controller="loginController">
+					<a class="nav-link" ng-if="userIsAdmin()" href="#!adminPage">Admin Page</a>
+				</li>
 				<li class="nav-item" ng-controller="loginController">
 					<a class="nav-link" ng-if="userIsLoggedIn()" href="#!profile">Profile</a>
 				</li>
@@ -74,9 +77,8 @@
 				<li class="nav-item">
 						<a class="nav-link" href="#!signup">SignUp</a>
 
-				<li class="nav-item" ng-controller="loginController" >
-					<a class="nav-link"  ng-if="userIsLoggedIn()" href="#!login"
-					 ng-confirm-click="Are you sure you want to log out ?" confirmed-click="logout()">Logout</a>
+				<li class="nav-item" ng-controller="loginController">
+					<a class="nav-link" ng-if="userIsLoggedIn()" ng-click="logout()" href="">Logout</a>
 				</li>		
 
 				<li class="nav-item" ng-controller="loginController" >
