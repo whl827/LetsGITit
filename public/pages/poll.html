@@ -153,6 +153,15 @@
 			</form>
 		</div>
 
+		<div ng-controller="PollCtrl" > 
+			<h5>Recommended Poll or Rating</h5>
+				<div ng-repeat="option in questionList" ng-click="goToLink(option)">
+						<p> {{option.title}} </p>			
+						<p> {{option.description}} </p>	
+						<br>
+				</div>
+				{{errorMessageRecommendedQuestion}}
+				
 		<div ng-controller= "pollRatingCtrl">
 			Flag post for inappropriate content <br>
 			<button ng-click='toggleFlag(1)'>FLAG</button>

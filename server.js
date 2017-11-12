@@ -939,8 +939,30 @@ app.get('/UndoCommentVote', function (req, res) {
 	}
 });
 
+app.get('/getTag', function (req, res) {
 
+	con.query("SELECT t.tagStr FROM Tag t INNER JOIN TagToQuestion ttq" +
+		" ON t.tagID = ttq.tagID WHERE ttq.questionID='" +
+		req.query.questionID + "' LIMIT 1;", 
+		function (err, result, fields) {
+			if(err) throw err;
+			res.json(result);
+		});
+});
 
+app.get('/getRecommendedQuestion', function (req, res) {
+
+	con.query("SELECT q.questionID, q.isPoll, q.title, q.description " + 
+		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
+		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
+		" tq.questionID = q.questionID AND tq.questionID <> '"+ req.query.questionID +
+		"' ORDER BY q.numLikes DESC;",
+	  function (err, result, fields) {
+	    if (err) throw err;
+	    res.json(result);
+	});
+	
+});
 
 
 

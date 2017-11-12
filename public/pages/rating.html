@@ -136,6 +136,16 @@
 			</form>
 		</div>
 
+		<div ng-controller="RatingCtrl" > 
+			<h5>Recommended Poll</h5>
+				<div ng-repeat="option in questionList" ng-click="goToLink(option)">
+						<p> {{option.title}} </p>			
+						<p> {{option.description}} </p>	
+						<br>
+				</div>
+				{{errorMessageRecommendedQuestion}}
+		</div>
+
 
 	</div>
 </div>
