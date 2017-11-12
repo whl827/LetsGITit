@@ -151,13 +151,15 @@
 			</form>
 		</div>
 
-		<div ng-controller="PollCtrl"> 
-			<h5>Recommended Poll</h5>
-				<div ng-repeat="option in questionList">
+		<div ng-controller="PollCtrl" > 
+			<h5>Recommended Poll or Rating</h5>
+				<div ng-repeat="option in questionList" ng-click="goToLink(option)">
 						<p> {{option.title}} </p>			
 						<p> {{option.description}} </p>	
 						<br>
 				</div>
+				{{errorMessageRecommendedQuestion}}
+				
 		</div>
 
 

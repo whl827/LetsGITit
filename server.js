@@ -944,9 +944,19 @@ app.get('/getTag', function (req, res) {
 		});
 });
 
+app.get('/getRecommendedQuestion', function (req, res) {
 
-
-
+	con.query("SELECT q.questionID, q.isPoll, q.title, q.description " + 
+		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
+		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
+		" tq.questionID = q.questionID AND tq.questionID <> '"+ req.query.questionID +
+		"' ORDER BY q.numLikes DESC;",
+	  function (err, result, fields) {
+	    if (err) throw err;
+	    res.json(result);
+	});
+	
+});
 
 
 
