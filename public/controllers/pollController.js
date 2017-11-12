@@ -79,18 +79,18 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 					console.log("IT' CLOSED");
 					$scope.endDate = "(CLOSED)";
 					// This will disable all the children of the div
-					var nodes = document.querySelector(".comments-cont").getElementsByTagName('*');
-					for (var i = 0; i < nodes.length; i++) {
-						nodes[i].disabled = true;
-					}
-					var nodes = document.querySelector(".rank-cont").getElementsByTagName('*');
-					for (var i = 0; i < nodes.length; i++) {
-						nodes[i].disabled = true;
-					}
-					var nodes = document.querySelector(".vote-cont").getElementsByTagName('*');
-					for (var i = 0; i < nodes.length; i++) {
-						nodes[i].disabled = true;
-					}
+					// var nodes = document.querySelector(".comments-cont").getElementsByTagName('*');
+					// for (var i = 0; i < nodes.length; i++) {
+					// 	nodes[i].disabled = true;
+					// }
+					// var nodes = document.querySelector(".rank-cont").getElementsByTagName('*');
+					// for (var i = 0; i < nodes.length; i++) {
+					// 	nodes[i].disabled = true;
+					// }
+					// var nodes = document.querySelector(".vote-cont").getElementsByTagName('*');
+					// for (var i = 0; i < nodes.length; i++) {
+					// 	nodes[i].disabled = true;
+					// }
 				}
 			}
 
