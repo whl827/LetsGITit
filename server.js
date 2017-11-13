@@ -185,13 +185,27 @@ app.get('/checkExistingTitle', function (req, res){
 
 
 app.get('/insertPoll', function (req, res) {
-	//insert the questions
-	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
-		"values(" + req.query.userID + "," + 1 + ", '" + req.query.title.trim() + "' , '" + req.query.subTitle.trim() + "', '" + req.query.description.trim() 
-		+ "', '" + req.query.endDate + "' , " + 0 + "," + 0 + "," + req.query.isAnonymous + ")",
 
-		function (err, result, fields) {
-		});
+	//check the imageURL
+	var imageURL = req.query.image;
+
+	if(imageURL == null){
+		//insert the questions
+		con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
+			"values(" + req.query.userID + "," + 1 + ", '" + req.query.title.trim() + "' , '" + req.query.subTitle.trim() + "', '" + req.query.description.trim() 
+			+ "', '" + req.query.endDate + "' , " + 0 + "," + 0 + "," + req.query.isAnonymous + ")",
+
+			function (err, result, fields) {
+			});
+	}else{
+		//insert the questions
+		con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes, isAnonymous, image) " +
+			"values(" + req.query.userID + "," + 1 + ", '" + req.query.title.trim() + "' , '" + req.query.subTitle.trim() + "', '" + req.query.description.trim() 
+			+ "', '" + req.query.endDate + "' , " + 0 + "," + 0 + "," + req.query.isAnonymous + ", '" + imageURL + "' " + ")",
+
+			function (err, result, fields) {
+			});
+	}
 
 	//insert options
 	con.query("SELECT questionID from Question where title='" + req.query.title.trim() + "'",
@@ -241,13 +255,27 @@ app.get('/insertPoll', function (req, res) {
 });
 
 app.get('/insertPollWithoutEndDate', function (req, res) {
-	//insert the questions
-	con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
-		"values(" + req.query.userID + "," + 1 + ", '" + req.query.title.trim() + "' , '" + req.query.subTitle.trim() + "', '" + req.query.description.trim() 
-		+ "', " + req.query.endDate + ", " + 0 + "," + 0 + "," + req.query.isAnonymous + ")",
 
-		function (err, result, fields) {
-		});
+	//check the imageURL
+	var imageURL = req.query.image;
+
+	if(imageURL == null){
+		//insert the questions
+		con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
+			"values(" + req.query.userID + "," + 1 + ", '" + req.query.title.trim() + "' , '" + req.query.subTitle.trim() + "', '" + req.query.description.trim() 
+			+ "', " + req.query.endDate + ", " + 0 + "," + 0 + "," + req.query.isAnonymous + ")",
+
+			function (err, result, fields) {
+			});
+	}else{
+		//insert the questions
+		con.query("INSERT INTO Question(userID, isPoll, title, subTitle, description, endDate, totalVotes, positiveVotes, isAnonymous, image) " +
+			"values(" + req.query.userID + "," + 1 + ", '" + req.query.title.trim() + "' , '" + req.query.subTitle.trim() + "', '" + req.query.description.trim() 
+			+ "', " + req.query.endDate + ", " + 0 + "," + 0 + "," + req.query.isAnonymous + ", '" + imageURL + "' " + ")",
+
+			function (err, result, fields) {
+			});
+	}
 
 	//insert options
 	con.query("SELECT questionID from Question where title='" + req.query.title.trim() + "'",
@@ -298,12 +326,33 @@ app.get('/insertPollWithoutEndDate', function (req, res) {
 
 app.get('/insertRating', function (req, res) {
 
-	// insert the questions
-	con.query("INSERT INTO Question(userID, isPoll, title, subtitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
-		"values(" + req.query.userID + "," + 0 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '"+ req.query.description 
-		+ "', '" + req.query.endDate + "', " + 0 + "," + 0 + "," + req.query.isAnonymous + ")", 
-		function (err, result, fields) {
-		});
+		//check the imageURL
+	var imageURL = req.query.image;
+
+	if(imageURL == null){
+		// insert the questions
+		con.query("INSERT INTO Question(userID, isPoll, title, subtitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
+			"values(" + req.query.userID + "," + 0 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '"+ req.query.description 
+			+ "', '" + req.query.endDate + "', " + 0 + "," + 0 + "," + req.query.isAnonymous + ")", 
+			function (err, result, fields) {
+			});
+	}else{
+		// insert the questions
+		con.query("INSERT INTO Question(userID, isPoll, title, subtitle, description, endDate, totalVotes, positiveVotes, isAnonymous, image) " +
+			"values(" + req.query.userID + "," + 0 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '"+ req.query.description 
+			+ "', '" + req.query.endDate + "', " + 0 + "," + 0 + "," + req.query.isAnonymous + ", '" + imageURL + "' " + ")", 
+			function (err, result, fields) {
+			});
+	}
+
+		// // insert the questions
+		// con.query("INSERT INTO Question(userID, isPoll, title, subtitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
+		// 	"values(" + req.query.userID + "," + 0 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '"+ req.query.description 
+		// 	+ "', '" + req.query.endDate + "', " + 0 + "," + 0 + "," + req.query.isAnonymous + ")", 
+		// 	function (err, result, fields) {
+		// 	});
+
+
 	//insert the questions
 	con.query("SELECT questionID from Question where title='" + req.query.title + "'",
 		function (err, result, fields) {
@@ -351,12 +400,26 @@ app.get('/insertRating', function (req, res) {
 
 app.get('/insertRatingWithoutEndDate', function (req, res) {
 
-	// insert the questions
-	con.query("INSERT INTO Question(userID, isPoll, title, subtitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
-		"values(" + req.query.userID + "," + 0 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '"+ req.query.description 
-		+ "', " + req.query.endDate + ", " + 0 + "," + 0 + "," + req.query.isAnonymous + ")", 
-		function (err, result, fields) {
-		});
+	//check the imageURL
+	var imageURL = req.query.image;
+
+	if(imageURL == null){
+		// insert the questions
+		con.query("INSERT INTO Question(userID, isPoll, title, subtitle, description, endDate, totalVotes, positiveVotes, isAnonymous) " +
+			"values(" + req.query.userID + "," + 0 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '"+ req.query.description 
+			+ "', " + req.query.endDate + ", " + 0 + "," + 0 + "," + req.query.isAnonymous + ")", 
+			function (err, result, fields) {
+			});
+	}else{
+		// insert the questions
+		con.query("INSERT INTO Question(userID, isPoll, title, subtitle, description, endDate, totalVotes, positiveVotes, isAnonymous, image) " +
+			"values(" + req.query.userID + "," + 0 + ", '" + req.query.title + "' , '" + req.query.subTitle + "', '"+ req.query.description 
+			+ "', " + req.query.endDate + ", " + 0 + "," + 0 + "," + req.query.isAnonymous + ", '" + imageURL + "' " + ")", 
+			function (err, result, fields) {
+			});
+	}
+
+
 	//insert the questions
 	con.query("SELECT questionID from Question where title='" + req.query.title + "'",
 		function (err, result, fields) {
@@ -406,7 +469,7 @@ app.get('/insertRatingWithoutEndDate', function (req, res) {
 
 app.get('/getQuestion', function (req, res) {
 	//fixed con qeury
-	con.query("SELECT q.title, q.userID, u.username, q.description, q.endDate, q.isAnonymous, q.isFlagged " + 
+	con.query("SELECT q.title, q.userID, u.username, q.description, q.endDate, q.isAnonymous, q.isFlagged, q.image " + 
 		"FROM Question q " +
 		"JOIN kuser u on q.userID = u.userID " +
 		"WHERE q.questionID=" + req.query.questionID, 

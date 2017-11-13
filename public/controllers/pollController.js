@@ -43,6 +43,22 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 			$scope.isAnonymous = response.data[0].isAnonymous;
 			$scope.username = null;
 
+
+			//check if it image exists, and if it does, show
+			var image = document.querySelector("#image_in_rating");
+			var imageURL = response.data[0].image;
+			console.log("IMAGE URL: " + imageURL);
+			if(imageURL==null){
+				console.log("IMAGE DOES NOT EXIST: hiding image");
+				image.src = "";
+				image.style.display = "none";
+			}else{
+				console.log("IMAGE EXISTS: Showing image");
+				image.src = imageURL;
+				image.style.display = "inline";
+			}
+
+
 			if ($scope.isAnonymous == 1) {
 
 				$scope.username = "ANONYMOUS";
