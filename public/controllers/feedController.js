@@ -22,6 +22,10 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
         $http.get('/searchQuestionsAnyText?tagQuery=' + $scope.query).then(function (response) {
             $scope.isQuestionList = 1;
             $scope.questionList = response.data;
+
+            str = JSON.stringify(response.data, null, 4); // (Optional) beautiful indented output.
+            console.log(str);
+
         }, 
         function (res) {
             console.log("Question list NOT received");
@@ -33,6 +37,10 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
         $http.get('/searchQuestions?tagQuery=' + $scope.query).then(function (response) {
             $scope.isQuestionList = 1;
             $scope.questionList = response.data;
+
+            str = JSON.stringify(response.data, null, 4); 
+            console.log(str);
+
         }, 
         function (res) {
             console.log("Question list NOT received");
@@ -46,19 +54,46 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
         });
     }
 
+
     $scope.onloadFun = function() {
-        $http.get('/onPageLoad').then(function (response) {
-            $scope.isQuestionList = 1;
-            $scope.questionList = response.data;
-            //document.querySelector(".keywords").innerHTML = "Top 5 Popular Tags: ";
-        },
-        function (res) {
-           
+        $http.get('/onPageLoad')
+            .then(function (response) {
+                    $scope.isQuestionList = 1;
+                    $scope.questionList = response.data;
+                    return response.data; 
+                }, function (res) { 
+                    console.log("FAILED onPageLoad");
+            }).then(function(response){ 
+                var list = response;
+                for(var i=0; i<list.length; i++){
+
+                    var current = list[i]; 
+                    // username
+                    if(current.isAnonymous == 1) current.username = "anonymous";
+                    else getUsername(current);
+
+                    // end date
+                    if (current.endDate == null) {
+                        current.endDateDisplay = "Open Forever"; 
+                    } else {
+                        var date = new Date();
+                        var finalCloseDate = new Date(current.endDate);
+                        if (date < finalCloseDate) { 
+                            current.endDateDisplay = "Closes on " + current.endDate ; 
+                        } else { 
+                            current.endDateDisplay = "CLOSED"; 
+                        }
+                    }
+
+                    // tags
+
+
+                } // end of for loop
+             }).then(function(response){ 
         });
 
+
         $http.get('/getTopTags').then(function (response) {
-
-
             var topTagsStr = "";
             for(var i=0; i<response.data.length; i++){
                 topTagsStr = topTagsStr + response.data[i].tagStr;
@@ -66,12 +101,33 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
                     topTagsStr += ", ";
                 }
             }
-            document.querySelector(".keywords").innerHTML = "Popular Tags: " + topTagsStr;
+            document.querySelector(".keywords").innerHTML = topTagsStr;
         },
         function (res) {
 
         });
     }
+
+    function getUsername(current){
+        $http.get('/getUserName?userID=' + current.userID)
+            .then(function (response) {
+                    current.username = response.data[0].username;
+                }, function (response) {
+                    console.log("FAILED getting username");
+            }
+        );
+    }
+
+
+
+
+
+
+
+
+
+
+
 
     $scope.goToLink = function(question) {
 

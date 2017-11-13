@@ -63,7 +63,6 @@
 
 
 				<!-- Like/Dislike -->
-				<form class="rank-cont" ng-if="userIsLoggedIn()">
 				<form class="rank-cont" ng-if="hideInputFields()">
 
 					<div class="row">
@@ -93,7 +92,7 @@
 
 		<!-- Comment -->
 
-		<div class="comments-cont" ng-if="userIsLoggedIn()">	
+		<div class="comments-cont" ng-if="hideInputFields()">	
 			<textarea ng-model="commentInput" rows="4" cols="50" class="form-control" placeholder="Write a review"></textarea>
 
 			<div class="row comment-cntrl-cont">
