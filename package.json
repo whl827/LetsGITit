@@ -18,6 +18,7 @@
   },
   "homepage": "https://github.com/rdiersing1/LetsGITit#readme",
   "dependencies": {
+    "is-url-superb": "^2.0.0",
     "password-hash-and-salt": "^0.1.4"
   }
 }

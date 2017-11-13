@@ -23,6 +23,55 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
     			twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
 	};
 
+	var imageUploadURL = null;
+
+	$scope.preview = function(){
+
+		var imageURL = document.querySelector("#image_input").value;
+		var image = document.querySelector("#question_image");
+
+		// var imageUrl = 'http://www.google.com/images/srpr/nav_logo14.png';
+		// imageExists(imageUrl, function(exists) {
+		//   console.log('RESULT: url=' + imageUrl + ', exists=' + exists);
+		// });
+
+		//check if it's a image url
+		if(checkURL(imageURL)){
+
+			image.onerror = function() {
+				this.onerror = function(){
+					return;
+				}
+				image.src = "";
+				image.style.display = "none";
+				imageUploadURL = null;
+				console.log("ERROR LOADING IMAGE: HIDIE IMAGE");
+
+			};
+			image.onload = function(){
+				this.onload = function(){
+					return;
+				}
+				image.style.display = "inline";
+				imageUploadURL = imageURL;
+				console.log("VALID IMAGE: IMAGE LOADED");
+			}
+			image.src = imageURL;
+		}else{ //if not, hide
+			console.log("NOT IMAGE URL: HIDIE IMAGE");
+			image.src = "";
+			image.style.display = "none";
+			imageUploadURL = null;
+		}
+	}
+	//check the type of url
+	function checkURL(url) {
+	    return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+	}
+
+
+
+
 	$scope.createRating = function () { // handle submit
 		var validTitle = validate($scope.ratingTitleInput); 
  		var title = $scope.ratingTitleInput; 
@@ -113,7 +162,8 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 								  "&userID=" + userID +
 								  "&endDate=" + endDate +
 								  "&isAnonymous=" + isAnonymous +
-								  "&tagArray[]=" + tagArray
+								  "&tagArray[]=" + tagArray +
+								  "&image=" + imageUploadURL
 								  ).then(function (response) {
 					    	//$window.location.href = '../index.html';
 					    	$window.location.replace("../index.html");
@@ -141,7 +191,8 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 								  "&userID=" + userID +
 								  "&endDate=" + endDate +
 								  "&isAnonymous=" + isAnonymous +
-								  "&tagArray[]=" + tagArray
+								  "&tagArray[]=" + tagArray +
+								  "&image=" + imageUploadURL
 								  ).then(function (response) {
 					    	$window.location.href = '../index.html';
 					    	

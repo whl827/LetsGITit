@@ -25,6 +25,7 @@ create table Question (
     numLikes int(8) default 0 not null,
     isAnonymous boolean not null,
     isFlagged boolean default false,
+    image varchar(20000) default null,
     foreign key fk1(userID) references KUser(userID)
 );
 

@@ -67,6 +67,12 @@
 	<input type="text" placeholder="Please Use Comma Separated Tags When Submitting (i.e T1, T2)" class="form-control" name="tag" ng-model="tagInput">
 	<br>
 
+	<div>
+		<input id ="image_input" type="text" class="form-control" placeholder="Copy Image URL Here (JPEG, JPG, GIF, or PNG)">
+		<button type="button" ng-click="preview()">Upload</button>
+		<p>
+		<img style="display: none" id="question_image" src="" width="250px" alt = "NO IMAGE" ></img>
+	</div>
 
 
 	<input type="submit" 

@@ -24,6 +24,53 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
     			twoDigits(this.getUTCMinutes()) + ":" + twoDigits(this.getUTCSeconds());
 	};
 
+
+	var imageUploadURL = null;
+
+	$scope.preview = function(){
+
+		var imageURL = document.querySelector("#image_input").value;
+		var image = document.querySelector("#question_image");
+
+		// var imageUrl = 'http://www.google.com/images/srpr/nav_logo14.png';
+		// imageExists(imageUrl, function(exists) {
+		//   console.log('RESULT: url=' + imageUrl + ', exists=' + exists);
+		// });
+
+		//check if it's a image url
+		if(checkURL(imageURL)){
+
+			image.onerror = function() {
+				this.onerror = function(){
+					return;
+				}
+				image.src = "";
+				image.style.display = "none";
+				imageUploadURL = null;
+				console.log("ERROR LOADING IMAGE: HIDIE IMAGE");
+
+			};
+			image.onload = function(){
+				this.onload = function(){
+					return;
+				}
+				image.style.display = "inline";
+				imageUploadURL = imageURL;
+				console.log("VALID IMAGE: IMAGE LOADED");
+			}
+			image.src = imageURL;
+		}else{ //if not, hide
+			console.log("NOT IMAGE URL: HIDIE IMAGE");
+			image.src = "";
+			image.style.display = "none";
+			imageUploadURL = null;
+		}
+	}
+	//check the type of url
+	function checkURL(url) {
+	    return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+	}
+
 	$scope.createPoll = function () { // handle submit
 		console.log("inside create poll function ");
 
@@ -175,7 +222,8 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 							  "&endDate=" + endDate +
 							  "&tagArray[]=" + tagArray +
 							  "&openForever=" + openForever +
-							  "&isAnonymous=" + isAnonymous
+							  "&isAnonymous=" + isAnonymous +
+							  "&image=" + imageUploadURL
 							  ).then(function (response) {
 				    		console.log("user received from creaitng poll without end date!");
 					    	//console.log(response.data);
@@ -207,7 +255,8 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 							  "&endDate=" + endDate +
 							  "&tagArray[]=" + tagArray +
 							  "&openForever=" + openForever +
-							  "&isAnonymous=" + isAnonymous
+							  "&isAnonymous=" + isAnonymous +
+							  "&image=" + imageUploadURL
 							  ).then(function (response) {
 				    		console.log("user received from creaitng poll!");
 					    	//console.log(response.data);
