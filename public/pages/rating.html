@@ -1,8 +1,8 @@
-<div class="display-survey-container cont" ng-controller= "pollRatingCtrl">
+<div class="display-survey-container cont">
 	<p class="survey-heading" id = "title">{{title}}</p>
 	<div class="sub-cont">
 
-		<div class="info-cont" ng-controller= "RatingCtrl">
+		<div class="info-cont">
 			<p class="username" id = "username"> Created by {{username}} </p>
 			<p class="description" id = "description"> {{description}} </p>
 			<p class="end-date" id = "endDate"> 
@@ -15,7 +15,7 @@
 				<!-- Rating -->
 				<div ng-if="hideInputFields()">
 					<p class="section-heading vote-heading"> CAST VOTE </p>
-					<form class="vote-cont" ng-controller="pollRatingCtrl">
+					<form class="vote-cont">
 						<input class="option-choice" type="radio" name="rating1" ng-model="rateInput" value="1"> 1 <br>
 						<input class="option-choice" type="radio" name="rating2" ng-model="rateInput" value="2"> 2 <br>
 						<input class="option-choice" type="radio" name="rating3" ng-model="rateInput" value="3"> 3 <br>
@@ -51,7 +51,8 @@
 				</div>
 
 				<!-- Like/Dislike -->
-				<form class="rank-cont" ng-controller= "pollRatingCtrl" ng-if="hideInputFields()">
+				<form class="rank-cont" ng-if="hideInputFields()">
+
 					<div class="row">
 						<div class="col-lg-5 col-md-5 col-sm-12 num-likes">
 							<input class="like" ng-model="likeInput" type="radio" name='like' value="true" /> LIKE
@@ -73,7 +74,9 @@
 		</div>
 
 		<!-- Comment -->
-		<div class="comments-cont" ng-controller= "pollRatingCtrl" ng-if="hideInputFields()">
+
+		<div class="comments-cont" ng-if="hideInputFields()">
+
 			<textarea ng-model="commentInput" rows="4" cols="50" class="form-control" placeholder="Write a review"></textarea>
 			
 			<div class="row comment-cntrl-cont">
@@ -94,6 +97,7 @@
 		</div>
 
 		<div class="all-comments-cont">
+
 			<p class="section-heading total-comments-heading" id = "totalComment">ALL REVIEWS ({{totalComment}}) </p>
 
 			<form ng-controller= "RatingCtrl">
@@ -121,7 +125,6 @@
 								</div>
 								<p class="comment-description"> {{comment.description}} </p>
 							</div>
-
 
 							 <div ng-show="visible">
 							 	<div class="row">
@@ -154,7 +157,7 @@
 
 			                    <!-- <label>Review:</label>
 
-			                    <div ng-controller="RatingCtrl">
+			                    <div>
 
 			                   <textarea rows="4" cols="50" ng-model="comment.newComment" placeholder= {{comment.description}} class="form-control" ng-required> </textarea>
 
@@ -197,7 +200,7 @@
 			</form>
 		</div>
 
-		<div ng-controller="RatingCtrl" > 
+		<div > 
 			<h5>Recommended Poll</h5>
 				<div ng-repeat="option in questionList" ng-click="goToLink(option)">
 						<p> {{option.title}} </p>			

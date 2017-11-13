@@ -88,6 +88,4 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
         $location.path('/userProfile/' + username);
     }
 
-
-
 }]);
