@@ -303,6 +303,7 @@ create-button, .submit-button, .login-button, .signup-button{
 .section-heading{
 	letter-spacing: 2px;
 	color: #e53935;
+	margin-bottom: 10px; 
 }
 
 
@@ -474,6 +475,50 @@ create-button, .submit-button, .login-button, .signup-button{
 
 .dislike-comment-num {
 	margin-left: 5px; 
+}
+
+
+/********* recommentdations/flag section **********/
+.flag-label {
+	font-size: 12px; 
+	margin-bottom: 0px;
+}
+
+.flag-button {
+	font-size: 12px; 
+	border: 0;
+    color: #e53935;
+    cursor: pointer;
+    font-family: "Roboto";
+	background: white;
+
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.flag-button:hover{
+	 opacity: 0.5;
+}
+
+.rec-cont {
+	margin-left: 15px;
+	margin-bottom: 50px;
+}
+
+.rec {
+	cursor: pointer; 
+	margin-bottom: 10px; 
+}
+
+.rec-title {
+	font-weight: bold;
+	margin-bottom: 2px; 
+}
+
+.rec-descript {
+	font-size: 13px;
+	margin-bottom: 0px; 
+
 }
 
 
