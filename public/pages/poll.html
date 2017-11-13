@@ -9,7 +9,6 @@
 				Closes on {{ endDate=="Open Forever" ?
 				endDate : (endDate | date: 'short')}}</p>
 
-
 			<div data-ng-init="loadQFlag()"> 
 				<h3 style="color:red">{{flag.flagInfo}}</h3>
 				<div ng-if="flag.isFlagged">
@@ -23,7 +22,7 @@
 				<div ng-if="hideInputFields()">
 					<p class="section-heading vote-heading"> CAST VOTE </p>
 					<form class="vote-cont">	
-					<form class="vote-cont" ng-controller= "pollRatingCtrl">
+					<form class="vote-cont">
 
 						<p ng-repeat="option in pollList track by $index">	
 							<input class="poll-option" 
@@ -64,7 +63,7 @@
 
 				<!-- Like/Dislike -->
 				<form class="rank-cont" ng-if="userIsLoggedIn()">
-				<form class="rank-cont" ng-controller= "pollRatingCtrl" ng-if="hideInputFields()">
+				<form class="rank-cont" ng-if="hideInputFields()">
 
 					<div class="row">
 						<div class="col-lg-5 col-md-5 col-sm-12 num-likes">
@@ -118,8 +117,8 @@
 
 			<p class="section-heading total-comments-heading" id = "totalComment">ALL REVIEWS ({{totalComment}}) </p>
 
-			<form ng-controller= "PollCtrl">
-				<div class="comments-list" ng-controller="PollCtrl" >
+			<form>
+				<div class="comments-list">
 					
 					<div ng-model= "commentInfo" ng-repeat="comment in commentList">
 						<div class="comment-cont"> 
@@ -160,11 +159,10 @@
 									</div>
 								</div>
 
-			                  	<div ng-controller="PollCtrl">
+			                  	<div >
 			                   		<textarea rows="4" cols="40" ng-model="comment.newComment" placeholder= {{comment.description}} class="form-control" ng-required> </textarea>
 			               		</div>
 			                </div>
-
 
 			                <div class="row comment-rating-cont">
 								<button class="like-comment" ng-model="comment.commentLikeInput" ng-value = "true" ng-click="commentLike(comment)" ng-required ng-if="hideInputFields()"> LIKE </button>
@@ -183,7 +181,7 @@
 			</form>
 		</div>
 
-		<div ng-controller="PollCtrl" > 
+		<div > 
 			<p class="section-heading" id = "totalComment">RECOMMENDED FOR YOU </p>
 				<div ng-repeat="option in questionList" ng-click="goToLink(option)">
 						<p> {{option.title}} </p>			
