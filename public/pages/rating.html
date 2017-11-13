@@ -197,15 +197,19 @@
 		</div>
 
 		<div > 
-			<h5>Recommended Poll</h5>
-				<div ng-repeat="option in questionList" ng-click="goToLink(option)">
-						<p> {{option.title}} </p>			
-						<p> {{option.description}} </p>	
-						<br>
+			<p class="section-heading" id = "totalComment">RECOMMENDED FOR YOU </p>
+			<div class="rec-cont">
+				<div class="rec" ng-repeat="option in questionList" ng-click="goToLink(option)">
+					<p class="rec-title"> {{option.title}} </p>			
+					<p class="rec-descript"> {{option.description}} </p>	
 				</div>
-				{{errorMessageRecommendedQuestion}}
+
+			</div>
+			{{errorMessageRecommendedQuestion}}
 		</div>
-
-
-	</div>
+<!-- 			<div class="row">
+				<button class="flag-button" ng-click='toggleFlag(1)'>Flag</button>
+				<p class="flag-label"> post for inappropriate content </p>
+			</div> -->
+		</div>
 </div>
