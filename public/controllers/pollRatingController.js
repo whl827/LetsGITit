@@ -36,10 +36,6 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
     	return show; 
     }
 
-
-
-
-
 	$scope.toggleFlag = function (flag) {
 		console.log('flagging question: ' + questionID);
 		$http.get('/toggleFlag?questionID=' + questionID + '&flag=' + flag);
