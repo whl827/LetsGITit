@@ -25,6 +25,13 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 	//when true, get info from database
 	//getting information from search page (Home)
 	//(search result controller)
+	
+	if(typeof(title) === 'undefined'){
+		getPoll = true;
+	}
+	else{
+		false;
+	}
 
 	//Set Question ID as URL, and read it when pulling poll / rating information 
 	if (getPoll) {
@@ -41,22 +48,6 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 
 			$scope.isAnonymous = response.data[0].isAnonymous;
 			$scope.username = null;
-
-
-			//check if it image exists, and if it does, show
-			var image = document.querySelector("#image_in_rating");
-			var imageURL = response.data[0].image;
-			console.log("IMAGE URL: " + imageURL);
-			if(imageURL==null){
-				console.log("IMAGE DOES NOT EXIST: hiding image");
-				image.src = "";
-				image.style.display = "none";
-			}else{
-				console.log("IMAGE EXISTS: Showing image");
-				image.src = imageURL;
-				image.style.display = "inline";
-			}
-
 			if ($scope.isAnonymous == 1) {
 				$scope.username = "ANONYMOUS";
 			} else {
@@ -92,18 +83,18 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 					console.log("IT' CLOSED");
 					$scope.endDate = "(CLOSED)";
 					// This will disable all the children of the div
-					// var nodes = document.querySelector(".comments-cont").getElementsByTagName('*');
-					// for (var i = 0; i < nodes.length; i++) {
-					// 	nodes[i].disabled = true;
-					// }
-					// var nodes = document.querySelector(".rank-cont").getElementsByTagName('*');
-					// for (var i = 0; i < nodes.length; i++) {
-					// 	nodes[i].disabled = true;
-					// }
-					// var nodes = document.querySelector(".vote-cont").getElementsByTagName('*');
-					// for (var i = 0; i < nodes.length; i++) {
-					// 	nodes[i].disabled = true;
-					// }
+					var nodes = document.querySelector(".comments-cont").getElementsByTagName('*');
+					for (var i = 0; i < nodes.length; i++) {
+						nodes[i].disabled = true;
+					}
+					var nodes = document.querySelector(".rank-cont").getElementsByTagName('*');
+					for (var i = 0; i < nodes.length; i++) {
+						nodes[i].disabled = true;
+					}
+					var nodes = document.querySelector(".vote-cont").getElementsByTagName('*');
+					for (var i = 0; i < nodes.length; i++) {
+						nodes[i].disabled = true;
+					}
 				}
 			}
 
@@ -148,26 +139,28 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 		});
 
 		$http.get('/getTag?questionID=' + questionID).then(function (response) {
-			if ((response.data).length !== 0) {
+			if((response.data).length !== 0){
 				var tag = response.data[0].tagStr;
 				$http.get('/getRecommendedQuestion?tagQuery=' + tag + "&questionID=" + questionID).then(function (response) {
 					var questionList = response.data;
 					$scope.questionList = response.data;
 
-					if (questionList == null || questionList.length == 0) {
+					if(questionList == null || questionList.length == 0){
 						$scope.errorMessageRecommendedQuestion = "There is no recommended Poll or Rating"
 					}
 				},
 					function (res) {
 						console.log("Question list NOT received");
 					});
-			} else {
-				$scope.errorMessageRecommendedQuestion = "There is no recommended Poll or Rating"
-			}
+				}else{
+					$scope.errorMessageRecommendedQuestion = "There is no recommended Poll or Rating"
+				}
 		},
 			function (res) {
 				console.log("Question list NOT received");
 			});
+
+		
 
 	}//If
 
@@ -336,12 +329,12 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 
 	};
 
-	$scope.userIsLoggedIn = function () {
-		if ($cookies.get('userID') != -1 && $cookies.get('userID') != undefined) {
-			return true;
-		}
-		return false;
-	}
+	$scope.userIsLoggedIn = function(){
+    	if($cookies.get('userID') != -1 && $cookies.get('userID') != undefined){
+    		return true;
+    	}
+    	return false;
+    }
 
 	$scope.toggleFlag = function (flag) {
 		console.log('flagging question: ' + questionID);
@@ -350,35 +343,34 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 
 	$scope.loadQFlag = function () {
 
-		var questionID = $routeParams.questionID;
-		$scope.flag = { flagInfo: "", isFlagged: false };
+        var questionID = $routeParams.questionID;
+        $scope.flag = {flagInfo : "", isFlagged : false};
 
-		console.log("is Admin: " + ($cookies.get('isAdmin') == true));
+        console.log("is Admin: " + ($cookies.get('isAdmin') == true));
 
-		if ($cookies.get('isAdmin') == true) {
-			console.log("Entering the admin only if condition");
-			$http.get('/getQuestion?questionID=' + questionID)
-				.then(function (response) {
-					if (response.data.length == 1 && response.data[0].isFlagged) {
-						$scope.flag = { flagInfo: "This Content Is FLAGGED", isFlagged: true };
-					}
-				}
-				);
-		}
-	}
+        if ($cookies.get('isAdmin') == true) {
+        	console.log("Entering the admin only if condition");
+        	$http.get('/getQuestion?questionID=' + questionID)
+        		.then( function(response) {
+        			if (response.data.length == 1 && response.data[0].isFlagged) {
+        				$scope.flag = {flagInfo : "This Content Is FLAGGED", isFlagged : true};
+        			}
+        		}
+        	);
+        }
+    }
 
-	$scope.createComment = function () {
+	$scope.createComment = function(){
 
 		var userID = $cookies.get("userID");
 
-		if (userID !== -1 && typeof (userID) !== 'undefined') {
-			debugger;
-			var validComment = validate($scope.commentInput);
+		if(userID !== -1 && typeof(userID) !== 'undefined'){
+			var validComment = validate($scope.commentInput); 
 
-			if (!validComment) {
+			if(!validComment){
 				$scope.errorMessageComment = "Please leave a comment";
 			}
-			else {
+			else{ 
 
 				//getting UserName
 				$http.get("/getUserName?userID=" + userID)
@@ -387,46 +379,46 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 						var username = response.data[0].username;
 						var isAnnonymous = $scope.isAnonymousInput;
 						var userIDAnnonymous = "";
-						var comment = $scope.commentInput;
+						var comment =  $scope.commentInput;
 
-						if (isAnnonymous) { userIDAnnonymous = "Anonymous"; }
-						else { userIDAnnonymous = username; }
-						debugger;
+						if(isAnnonymous){ userIDAnnonymous = "Anonymous";}
+						else{ userIDAnnonymous = username; }
+						
 
-						if (isAnnonymous) { isAnnonymous = 1; }
-						else { isAnnonymous = 0; }
+						if(isAnnonymous){isAnnonymous = 1;}
+						else{isAnnonymous = 0;}
 
 
-						console.log(questionID, userID, username, isAnnonymous, userIDAnnonymous, comment);
+						console.log(questionID, userID, username, isAnnonymous,userIDAnnonymous, comment);
 
 						$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
-							+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous
-							+ "&userIDAnnonymous=" + userIDAnnonymous + "&commentLikeCount=0" +
-							"&commentDislikeCount=0")
-							.then(function (response) {
-								console.log("inser into comment table");
-							}, function (response) {
-								console.log("Error");
-							});
+						+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous 
+						+ "&userIDAnnonymous=" + userIDAnnonymous + "&commentLikeCount=0" + 
+						"&commentDislikeCount=0")
+						.then(function (response) {
+							console.log("inser into comment table");
+						},function (response) {
+					    	console.log("Error");
+						});
 
-						$route.reload();
-
-						console.log("Getting userName");
-					}, function (response) {
-						console.log("Error");
-					});
+		 				$route.reload();
+					
+					console.log("Getting userName");
+				},function (response) {
+			    	console.log("Error");
+				});
 
 
 
 				//Insert Comment Only when User haven't submitted
 				// $http.get("/checkUserExist?questionID=" + questionID + "&userID=" + userID)
 				// 	.then(function (response) {
-
-
+					
+						
 				// 		if(typeof response.data[0] == 'undefined'){
 				// 			&& typeof response[0].userID !== 'undefined' 
-
-
+							
+					
 
 				// 		}else {
 				// 			$scope.errorMessageComment = "Already commented. Please press Edit to continue";
@@ -439,196 +431,196 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 				//Inser comment only when user have not commentent
 			}
 		}
-		else {
+		else{
 			$scope.errorMessageComment = "Please log In to comment";
 		}
 	}
 
-	$scope.selectRate = function () {
+	$scope.selectRate = function(){
 
 		var userID = $cookies.get("userID");
-		if (userID !== -1 && typeof (userID) !== 'undefined') {
+		if(userID !== -1 && typeof(userID) !== 'undefined'){
 
-			var validRating = validate($scope.rateInput);
-			if (!validRating) {
+			var validRating = validate($scope.rateInput); 
+			if(!validRating){
 				$scope.errorMessageRate = "Please choose the rating value";
 			}
-			else {
+			else{
 				var ratingValue = $scope.rateInput;
 				//find Rating and put the value into RatingQuestionOption
 				//check if user already rated
 				$http.get("/checkUserRated?questionID=" + questionID + "&userID=" + userID
-				)
+					)
 					.then(function (response) {
-
-						if (typeof response.data[0] == 'undefined') {
+					
+						if(typeof response.data[0] == 'undefined'){
 
 							$http.get("/insertRatingValue?questionID=" + questionID + "&userID=" + userID
 								+ "&rating=" + ratingValue)
 								.then(function (response) {
 									console.log("inser into rating table");
-								}, function (response) {
-									console.log("Error");
-								});
+							},function (response) {
+							    	console.log("Error");
+							});
 
 							$route.reload();
 
-						} else {
-
+						}else {
+							
 
 							$http.get("/UpdateRating?questionID=" + questionID + "&userID=" + userID
 								+ "&rating=" + ratingValue)
 								.then(function (response) {
 									console.log("inser into rating table");
-								}, function (response) {
-									console.log("Error");
-								});
+							},function (response) {
+							    	console.log("Error");
+							});
 
-							$scope.errorMessageRate = "Already rated. Updating your rating";
+							$scope.errorMessageRate = "Already rated. Updating your rating" ;
 
 							$route.reload();
 
 
 						}
-					}, function (response) {
-						console.log("Error");
-					});
+					},function (response) {
+				    	console.log("Error");
+				});
 			}
 		}
-		else {
+		else{
 			$scope.errorMessageRate = "Please log In to rate";
 		}
 	}
 
 
 
-	$scope.selectPollOption = function (index, pollList) {
+	$scope.selectPollOption = function(index, pollList){
 		var userID = $cookies.get("userID");
-		console.log("userID is " + userID);
+		console.log("userID is " + userID); 
 
-		if (userID !== -1 && typeof (userID) !== 'undefined' && userID !== "-1") {
+		if(userID !== -1 && typeof(userID) !== 'undefined' && userID !== "-1"){
 			// Check if user already voted
 			$http.get("/checkUserRated?questionID=" + questionID + "&userID=" + userID)
-				.then(function (response) {
-					// str = JSON.stringify(pollList);
-					// console.log(str); 
-					// console.log("index is: " + index); 
-					// console.log("option title is: " + pollList[index].title);
-					// console.log("optionID is: " + pollList[index].pollOptionID);
-					var optionID = pollList[index].pollOptionID;
+			 	.then(function (response) {
+			 	// str = JSON.stringify(pollList);
+				// console.log(str); 
+			 	// console.log("index is: " + index); 
+				// console.log("option title is: " + pollList[index].title);
+				// console.log("optionID is: " + pollList[index].pollOptionID);
+				var optionID = pollList[index].pollOptionID; 
 
-					if (typeof response.data[0] == 'undefined') {
-						//console.log("hasnt voted yet");
-						// Insert into database
-						$http.get("/insertRatingValue?questionID=" + questionID + "&userID=" + userID + "&rating=" + optionID)
-							.then(function (response) {
-								//console.log("Inserted into RatingQuestionOption Table");
-							}, function (response) {
-								console.log("FAILED Inserted into RatingQuestionOption Table");
-							});
+		 		if(typeof response.data[0] == 'undefined'){
+		 			//console.log("hasnt voted yet");
+		 			// Insert into database
+		 			$http.get("/insertRatingValue?questionID=" + questionID + "&userID=" + userID + "&rating=" + optionID)
+						.then(function (response) {
+							//console.log("Inserted into RatingQuestionOption Table");
+						}, function (response) {
+						    console.log("FAILED Inserted into RatingQuestionOption Table");
+		 			});
 
-						// update PollOption table: for polloptionID and questionID, increment vote
-						$http.get("/addPollVote?questionID=" + questionID + "&pollOptionID=" + optionID)
-							.then(function (response) {
-								//console.log("Updated PollOption Table");
-							}, function (response) {
-								console.log("FAILED Updated PollOption Table");
-							});
+					// update PollOption table: for polloptionID and questionID, increment vote
+					$http.get("/addPollVote?questionID=" + questionID + "&pollOptionID=" + optionID)
+						.then(function (response) {
+							//console.log("Updated PollOption Table");
+						}, function (response) {
+						    console.log("FAILED Updated PollOption Table");
+		 			});
 
 
-						$route.reload();
+			 		$route.reload();
 
-					} else {
-						// Update vote input
-						//console.log("already voted");
-						$http.get("/findPrevVote?questionID=" + questionID + "&userID=" + userID)
-							.then(function (response) {
-								var prevVoteOptionID = response.data[0].rating;
-								//console.log("prevVoteOptionID: " + prevVoteOptionID);
-								//console.log("Selected from PollOption Table");
-								return $http.get("/removePollVote?questionID=" + questionID + "&pollOptionID=" + prevVoteOptionID);
-							}, function (response) {
-								console.log("Selection failed");
-							})
+		 		} else {
+		 			// Update vote input
+					//console.log("already voted");
+					$http.get("/findPrevVote?questionID=" + questionID + "&userID=" + userID)
+					 	.then(function (response) { 
+					 		var prevVoteOptionID = response.data[0].rating; 
+							//console.log("prevVoteOptionID: " + prevVoteOptionID);
+							//console.log("Selected from PollOption Table");
+							return $http.get("/removePollVote?questionID=" + questionID + "&pollOptionID=" + prevVoteOptionID);
+					 	}, function (response) {
+					 	    console.log("Selection failed");
+		 				})
 
-							.then(function (response) {
-								//console.log("Updated PollOption Table: removed vote");
-								return $http.get("/UpdateRating?questionID=" + questionID + "&userID=" + userID + "&rating=" + optionID);
-							}, function (response) {
-								console.log("FAILED Updated PollOption Table: removed vote");
-							})
+					 	.then(function (response) {
+							//console.log("Updated PollOption Table: removed vote");
+							return $http.get("/UpdateRating?questionID=" + questionID + "&userID=" + userID + "&rating=" + optionID); 
+						}, function (response) {
+						    console.log("FAILED Updated PollOption Table: removed vote");
+		 				})
 
-							.then(function (response) {
-								//console.log("Update: Inserted into RatingQuestionOption Table");
-								return $http.get("/addPollVote?questionID=" + questionID + "&pollOptionID=" + optionID);
-							}, function (response) {
-								console.log("FAILED Update: Inserted into RatingQuestionOption Table");
-							})
+					 	.then(function (response) {
+		 					//console.log("Update: Inserted into RatingQuestionOption Table");
+		 					return $http.get("/addPollVote?questionID=" + questionID + "&pollOptionID=" + optionID); 
+		 				},function (response) {
+		 			    	console.log("FAILED Update: Inserted into RatingQuestionOption Table");
+		 				})
 
-							.then(function (response) {
-								//console.log("Updated PollOption Table: added vote");
-								$route.reload();
-								//$scope.errorMessagePoll = "Already voted. Updating your vote" ; // doesnt show up for some reason
-
-							}, function (response) {
-								console.log("FAILED Updated PollOption Table: added vote");
-							});
-					}
-
-				}, function (response) { console.log("Error"); });
+					 	.then(function (response) {
+							//console.log("Updated PollOption Table: added vote");
+							$route.reload();
+							//$scope.errorMessagePoll = "Already voted. Updating your vote" ; // doesnt show up for some reason
+							
+						}, function (response) {
+						    console.log("FAILED Updated PollOption Table: added vote");
+		 			});
+				}
+				
+			}, function (response) { console.log("Error"); });
 
 		} else { $scope.errorMessagePoll = "Please log in to vote"; }
 	}
 
-	$scope.selectLikeOrDislike = function () {
+	$scope.selectLikeOrDislike = function(){
 
 		var userID = $cookies.get("userID");
-		if (userID !== -1 && typeof (userID) !== 'undefined') {
+		if(userID !== -1 && typeof(userID) !== 'undefined'){
 
-			var validLike = validate($scope.likeInput);
+			var validLike = validate($scope.likeInput); 
 
-			if (!validLike) {
+			if(!validLike){
 				$scope.errorMessageLike = "Please choose the like/dislike value";
 			}
-			else {
+			else{
 				var likeorDisLike = $scope.likeInput;
 				//like ans true and dislike as false
 				//var userID = 1; //needs to be the current logged in User 
 
 				//Check if user already voted
 				$http.get("/checkUserVoted?questionID=" + questionID + "&userID=" + userID
-				)
+					)
 					.then(function (response) {
-						if (typeof response.data[0] == 'undefined') {
+						if(typeof response.data[0] == 'undefined'){
 							//&& typeof response[0].userID !== 'undefined' 
 
 							$http.get("/insertQuestionLike?questionID=" + questionID + "&userID=" + userID
 								+ "&pollLike=" + likeorDisLike)
 								.then(function (response) {
 									console.log("insert into questionlike table");
-								}, function (response) {
-									console.log("Error");
-								});
+							},function (response) {
+							    	console.log("Error");
+							});
 
-							$route.reload();
-						} else {
+								$route.reload();
+						}else {			
 
 							$http.get("/UpdateVote?questionID=" + questionID + "&userID=" + userID
 								+ "&pollLike=" + likeorDisLike)
 								.then(function (response) {
 									console.log("insert into questionlike table");
-								}, function (response) {
-									console.log("Error");
-								});
-							$route.reload();
-							$scope.errorMessageLike = "Already voted. Updating your like/dislike";
+							},function (response) {
+							    	console.log("Error");
+							});
+								$route.reload();
+								$scope.errorMessageLike = "Already voted. Updating your like/dislike";
 
 						}
-					}, function (response) {
-						console.log("Error");
-					});
+					},function (response) {
+				    	console.log("Error");
+				});
 			}
-		} else {
+		}else{
 			$scope.errorMessageLike = "Please log In to like/dislike";
 		}
 	}
@@ -652,6 +644,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 	);
 
 	$scope.hideInputFields = function(){
+		debugger;
 		var closed = $scope.isClosed; 
 		var loggedIn; 
     	if($cookies.get('userID') != -1 && $cookies.get('userID') != undefined){
@@ -665,14 +658,15 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
     	return show; 
     }
 
-	function validate(input) {
-		if (input == null || input == "") {
+
+	function validate(input){
+		if(input == null || input == ""){
 			//alert("error"); 
-			return false;
+			return false; 
 		}
 		return true; // success
 	}
-
+	
 
 
 }]);
