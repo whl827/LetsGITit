@@ -19,12 +19,9 @@
 
 		<div class="row">
 			<div class="col-lg-8 col-md-8 col-sm-12">
-
-				<img class = "image_for_question" id="image_in_rating" src= {{imageURL}} ></img>
-
-				
 				<div ng-if="hideInputFields()">
 					<p class="section-heading vote-heading"> CAST VOTE </p>
+
 					<form class="vote-cont">	
 					<form class="vote-cont">
 
@@ -66,15 +63,16 @@
 
 
 				<!-- Like/Dislike -->
+				<!-- <form class="rank-cont" ng-hide="userIsLoggedIn()"> -->
 				<form class="rank-cont" ng-if="hideInputFields()">
 
 					<div class="row">
 						<div class="col-lg-5 col-md-5 col-sm-12 num-likes">
-							<input class="like" id= "likeRadioButton" ng-model="likeInput" type="radio" name="like" value="true" /> LIKE
+							<input class="like" id= "likeRadioButton" ng-model="$parent.likeInput" type="radio" name="like" value="true" /> LIKE
 							<!-- <img src="img/like.png" width="50" height="50"> -->
 						</div>
 						<div class="col-lg-5 col-md-5 col-sm-12 num-likes">
-							<input class="dislike" id = "dislikeRadioButton" ng-model="likeInput" type="radio" name="dislike" value="false" /> DISLIKE
+							<input class="dislike" id = "dislikeRadioButton" ng-model="$parent.likeInput" type="radio" name="dislike" value="false" /> DISLIKE
 							<!-- <img src="img/dislike.png" width="50" height="50"> -->
 						</div>
 					</div>
@@ -91,22 +89,18 @@
 
 		</div>
 
-
-
 		<!-- Comment -->
 
-		<div class="comments-cont" ng-if="hideInputFields()">	
-			<textarea ng-model="commentInput" rows="4" cols="50" class="form-control" placeholder="Write a review"></textarea>
+		<div class="comments-cont" ng-if="userIsLoggedIn()">	
+			<textarea ng-model="$parent.commentInput" rows="4" cols="50" class="form-control" placeholder="Write a review"></textarea>
 
 			<div class="row comment-cntrl-cont">
 
 				<div class="comment-ann-cont col-lg-6 col-md-5">
 					<p class="comment-ann">
-						<input id="anonymous" type="checkbox" name="anonymous" ng-model="isAnonymousInput"> Comment Anonymously 
+						<input id="anonymous" type="checkbox" name="anonymous" ng-model="$parent.isAnonymousInput"> Comment Anonymously 
 					</p>
 				</div>
-
-
 				<div class="col-lg-6 col-md-6">
 					<input class="comment-button pull-right" id = "CommentButton" type="submit" value="SUBMIT" ng-click="createComment()">
 				</div>
@@ -166,6 +160,7 @@
 			                   		<textarea rows="4" cols="40" ng-model="comment.newComment" placeholder= {{comment.description}} class="form-control" ng-required> </textarea>
 			               		</div>
 			                </div>
+
 
 			                <div class="row comment-rating-cont">
 								<button class="like-comment" ng-model="comment.commentLikeInput" ng-value = "true" ng-click="commentLike(comment)" ng-required ng-if="hideInputFields()"> LIKE </button>

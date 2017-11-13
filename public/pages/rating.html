@@ -19,11 +19,11 @@
 				<div ng-if="hideInputFields()">
 					<p class="section-heading vote-heading"> CAST VOTE </p>
 					<form class="vote-cont">
-						<input class="option-choice" type="radio" name="rating1" ng-model="rateInput" value="1"> 1 <br>
-						<input class="option-choice" type="radio" name="rating2" ng-model="rateInput" value="2"> 2 <br>
-						<input class="option-choice" type="radio" name="rating3" ng-model="rateInput" value="3"> 3 <br>
-						<input class="option-choice" type="radio" name="rating4" ng-model="rateInput" value="4"> 4 <br>
-						<input class="option-choice" type="radio" name="rating5" ng-model="rateInput" value="5"> 5 <br>
+						<input class="option-choice" type="radio" name="rating1" ng-model="$parent.rateInput" value="1"> 1 <br>
+						<input class="option-choice" type="radio" name="rating2" ng-model="$parent.rateInput" value="2"> 2 <br>
+						<input class="option-choice" type="radio" name="rating3" ng-model="$parent.rateInput" value="3"> 3 <br>
+						<input class="option-choice" type="radio" name="rating4" ng-model="$parent.rateInput" value="4"> 4 <br>
+						<input class="option-choice" type="radio" name="rating5" ng-model="$parent.rateInput" value="5"> 5 <br>
 						
 						<input class="button vote-button" id ="RatingButton" type="submit" value="VOTE" ng-click="selectRate()">
 
@@ -58,11 +58,11 @@
 
 					<div class="row">
 						<div class="col-lg-5 col-md-5 col-sm-12 num-likes">
-							<input class="like" ng-model="likeInput" type="radio" name='like' value="true" /> LIKE
+							<input class="like" ng-model="$parent.likeInput" type="radio" name='like' value="true" /> LIKE
 					
 						</div>
 						<div class="col-lg-5 col-md-5 col-sm-12 num-likes">
-							<input ng-model="likeInput" type="radio" name='dislike' value="false" /> DISLIKE
+							<input ng-model="$parent.likeInput" type="radio" name='dislike' value="false" /> DISLIKE
 					
 						</div>
 					</div>
@@ -80,13 +80,13 @@
 
 		<div class="comments-cont" ng-if="hideInputFields()">
 
-			<textarea ng-model="commentInput" rows="4" cols="50" class="form-control" placeholder="Write a review"></textarea>
+			<textarea ng-model="$parent.commentInput" rows="4" cols="50" class="form-control" placeholder="Write a review"></textarea>
 			
 			<div class="row comment-cntrl-cont">
 
 				<div class="comment-ann-cont col-lg-6 col-md-5">
 					<p class="comment-ann">
-						<input id = "anonymous" type="checkbox" name="anonymous" ng-model="isAnonymousInput">Comment Anonymously 
+						<input id = "anonymous" type="checkbox" name="anonymous" ng-model="$parent.isAnonymousInput">Comment Anonymously 
 					</p>
 				</div>
 
