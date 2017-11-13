@@ -19,32 +19,71 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
 
     $scope.queryQuestionsAnyText = function () {
 
-        $http.get('/searchQuestionsAnyText?tagQuery=' + $scope.query).then(function (response) {
-            $scope.isQuestionList = 1;
-            $scope.questionList = response.data;
-
-            str = JSON.stringify(response.data, null, 4); // (Optional) beautiful indented output.
-            console.log(str);
-
-        }, 
-        function (res) {
-            console.log("Question list NOT received");
-        });
+        $http.get('/searchQuestionsAnyText?tagQuery=' + $scope.query)
+            .then(function (response) {
+                    $scope.isQuestionList = 1;
+                    $scope.questionList = response.data;
+                    return response.data; 
+                }, function (res) {
+                    console.log("Question list NOT received");
+            }).then(function(response){ 
+                var list = response;
+                for(var i=0; i<list.length; i++){
+                    var current = list[i]; 
+                    // username
+                    if(current.isAnonymous == 1) current.username = "anonymous";
+                    else getUsername(current);
+                    // end date
+                    if (current.endDate == null) {
+                        current.endDateDisplay = "Open Forever"; 
+                    } else {
+                        var date = new Date();
+                        var finalCloseDate = new Date(current.endDate);
+                        if (date < finalCloseDate) { 
+                             current.endDateDisplay = "Open until " + convertDay(finalCloseDate) ; 
+                        } else { 
+                            current.endDateDisplay = "CLOSED"; 
+                        }
+                    }
+                    // tags
+                    getTags(current); 
+                } // end of for loop
+            }
+        );
     }
 
     $scope.queryQuestions = function () {
-
-        $http.get('/searchQuestions?tagQuery=' + $scope.query).then(function (response) {
-            $scope.isQuestionList = 1;
-            $scope.questionList = response.data;
-
-            str = JSON.stringify(response.data, null, 4); 
-            console.log(str);
-
-        }, 
-        function (res) {
-            console.log("Question list NOT received");
-        });
+        $http.get('/searchQuestions?tagQuery=' + $scope.query)
+            .then(function (response) {
+                    $scope.isQuestionList = 1;
+                    $scope.questionList = response.data;
+                    return response.data; 
+                }, function (res) {
+                    console.log("Question list NOT received");
+            }).then(function(response){ 
+                var list = response;
+                for(var i=0; i<list.length; i++){
+                    var current = list[i]; 
+                    // username
+                    if(current.isAnonymous == 1) current.username = "anonymous";
+                    else getUsername(current);
+                    // end date
+                    if (current.endDate == null) {
+                        current.endDateDisplay = "Open Forever"; 
+                    } else {
+                        var date = new Date();
+                        var finalCloseDate = new Date(current.endDate);
+                        if (date < finalCloseDate) { 
+                             current.endDateDisplay = "Open until " + convertDay(finalCloseDate) ; 
+                        } else { 
+                            current.endDateDisplay = "CLOSED"; 
+                        }
+                    }
+                    // tags
+                    getTags(current); 
+                } // end of for loop
+            }
+        );
     }
 
     $scope.queryUsers = function () {
@@ -66,12 +105,10 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
             }).then(function(response){ 
                 var list = response;
                 for(var i=0; i<list.length; i++){
-
                     var current = list[i]; 
                     // username
                     if(current.isAnonymous == 1) current.username = "anonymous";
                     else getUsername(current);
-
                     // end date
                     if (current.endDate == null) {
                         current.endDateDisplay = "Open Forever"; 
@@ -79,18 +116,21 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
                         var date = new Date();
                         var finalCloseDate = new Date(current.endDate);
                         if (date < finalCloseDate) { 
-                            current.endDateDisplay = "Closes on " + current.endDate ; 
+                            // var month = finalCloseDate.getUTCMonth() + 1; 
+                            // var day = finalCloseDate.getUTCDate();
+                            // var year = finalCloseDate.getUTCFullYear();
+                            // newdate = month + "/" + day + "/" + year;
+                            //current.endDateDisplay = "Open until " + newdate ; 
+                            current.endDateDisplay = "Open until " + convertDay(finalCloseDate) ; 
                         } else { 
                             current.endDateDisplay = "CLOSED"; 
                         }
                     }
-
                     // tags
-
-
+                    getTags(current); 
                 } // end of for loop
-             }).then(function(response){ 
-        });
+            }
+        );
 
 
         $http.get('/getTopTags').then(function (response) {
@@ -108,6 +148,14 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
         });
     }
 
+    function convertDay(endDate){
+        var month = endDate.getUTCMonth() + 1; 
+        var day = endDate.getUTCDate();
+        var year = endDate.getUTCFullYear();
+        newdate = month + "/" + day + "/" + year;
+        return newdate
+    }
+
     function getUsername(current){
         $http.get('/getUserName?userID=' + current.userID)
             .then(function (response) {
@@ -118,8 +166,28 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
         );
     }
 
+    function getTags(current){
+        $http.get('/getQuestionTags?questionID=' + current.questionID)
+            .then(function (response) {
+                    var tags = [];
+                    for(var i=0; i<response.data.length; i++){
+                        tags.push({
+                            tagStr: response.data[i].tagStr
+                        });
+                    }
+                    current.allTags = tags; 
+                }, function (response) {
+                    console.log("FAILED getting tags");
+            }
+        );
+    }
 
 
+
+/*
+    str = JSON.stringify(response.data, null, 4); 
+    console.log(str);
+*/
 
 
 
