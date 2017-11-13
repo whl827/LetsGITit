@@ -613,6 +613,38 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 		}
 	}
 
+	$scope.isClosed = null; 
+	$http.get('/checkQuestionDate?questionID=' + questionID)
+		.then(function (response) {
+			if (response.data[0].endDate == null) {
+				return false; 
+			} else {
+				var date = new Date();
+				var finalCloseDate = new Date(response.data[0].endDate);
+				if (date < finalCloseDate) { return false; 
+				} else { return true; }
+			}
+		}, function (res) {
+			console.log("Error in isQuestionClosed");
+		}).then(function(response){
+			$scope.isClosed = response; 
+		}
+	);
+
+	$scope.hideInputFields = function(){
+		var closed = $scope.isClosed; 
+		var loggedIn; 
+    	if($cookies.get('userID') != -1 && $cookies.get('userID') != undefined){
+    		loggedIn = true; 
+    	} else {
+    		loggedIn = false; 
+    	}
+    	// console.log("loggedIn variable "+ loggedIn);
+    	// console.log("closed variable "+ closed);
+    	var show = loggedIn && !closed; 
+    	return show; 
+    }
+
 
 	function validate(input){
 		if(input == null || input == ""){
