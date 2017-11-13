@@ -45,15 +45,17 @@
 
 								<div class="row">
 									<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-										<p class="feed-user"> Created by (username) on {{question.startDate | date: 'yyyy-MM-dd'}}</p>
+										<p class="feed-user"> Created by {{question.username}} on {{question.startDate | date: 'yyyy-MM-dd'}}</p>
 										<p class="feed-subtitle">{{question.subtitle=="undefined" ? "" : question.subtitle}} </p> 
 								 		<p class="feed-description">{{question.description=="undefined" ? "" : question.description}} </p> 
 
 									</div>
 									<div class="feed-stats col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
 										<!-- <p class="feed-survey-type">{{question.isPoll ? 'Poll' : 'Rating'}} </p> -->
-										<p class="feed-end-date">Closes on {{ question.endDate!=null ?
-											(question.endDate | date: 'yyyy-MM-dd') : 'Open Forever'}}</p>
+										<p class="feed-end-date">{{question.endDateDisplay}}</p>
+
+										<!-- <p class="feed-end-date">Closes on {{ question.endDate!=null ?
+											(question.endDate | date: 'yyyy-MM-dd') : 'Open Forever'}}</p> -->
 										<p class="feed-total-votes">{{question.totalVotes}} VOTES</p>
 										<!-- <p class="feed-positive-votes"> {{question.positiveVotes}}</p> -->
 										<p class="feed-num-likes"> {{question.numLikes}} LIKES</p>

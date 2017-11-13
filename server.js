@@ -29,7 +29,7 @@ app.use(express.static(__dirname + '/public'));
 // Get Question Search from navbar (ANY TEXT)
 app.get('/searchQuestionsAnyText', function (req, res) {
 
-	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, " +
+	con.query("SELECT q.questionID,  q.userID, q.isAnonymous, q.isPoll, q.title, q.subtitle, q.description, " +
 			          " q.startDate, q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " + 
 		"FROM Question q WHERE " + 
 		"q.title LIKE '%" + req.query.tagQuery + "%' or " +
@@ -44,7 +44,7 @@ app.get('/searchQuestionsAnyText', function (req, res) {
 // Get Question Search from navbar
 app.get('/searchQuestions', function (req, res) {
 
-	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " + 
+	con.query("SELECT q.questionID, q.userID, q.isAnonymous, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " + 
 		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
 		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
 		" tq.questionID = q.questionID ORDER BY q.numLikes DESC;",
@@ -57,7 +57,7 @@ app.get('/searchQuestions', function (req, res) {
 app.get('/onPageLoad', function (req, res){
 
 
-	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, " +
+	con.query("SELECT q.questionID, q.userID, q.isAnonymous, q.isPoll, q.title, q.subtitle, q.description, q.startDate, " +
 					" q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " +
 			 " FROM Question q " +
 			 " ORDER BY q.numLikes desc",
