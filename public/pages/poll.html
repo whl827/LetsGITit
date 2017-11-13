@@ -1,8 +1,8 @@
-<div class="display-survey-container cont" ng-controller= "pollRatingCtrl">
+<div class="display-survey-container cont">
 	<p class="survey-heading" id = "title">{{title}}</p>
 	<div class="sub-cont">
 
-		<div class="info-cont" ng-controller= "PollCtrl" >
+		<div class="info-cont">
 			<p class="username"  id = "username"> Created by {{username}} </p>
 			<p class="description" id = "description"> {{description}} </p>
 			<p class="end-date" id = "endDate"> 
@@ -22,7 +22,7 @@
 				<div ng-if="userIsLoggedIn()">
 					<p class="section-heading vote-heading"> CAST VOTE </p>
 					
-					<form class="vote-cont" ng-controller= "pollRatingCtrl">	
+					<form class="vote-cont">	
 						<p ng-repeat="option in pollList track by $index">	
 							<input class="poll-option" 
 							 		id ="RatingButton" 
@@ -34,7 +34,7 @@
 					</form>
 				</div>
 
-				<div class="poll-results" ng-controller= "PollCtrl">
+				<div class="poll-results">
 					<p class="section-heading vote-heading"> RESULTS </p>
 					<div ng-repeat="option in pollResults">
 						<p> {{option.title}} : {{option.votes}}</p>
@@ -63,7 +63,7 @@
 
 
 				<!-- Like/Dislike -->
-				<form class="rank-cont" ng-controller= "pollRatingCtrl" ng-if="userIsLoggedIn()">
+				<form class="rank-cont" ng-if="userIsLoggedIn()">
 					<div class="row">
 						<div class="col-lg-5 col-md-5 col-sm-12 num-likes">
 							<input class="like" id= "likeRadioButton" ng-model="likeInput" type="radio" name="like" value="true" /> LIKE
@@ -90,7 +90,7 @@
 
 
 		<!-- Comment -->
-		<div class="comments-cont" ng-controller= "pollRatingCtrl" ng-if="userIsLoggedIn()">	
+		<div class="comments-cont" ng-if="userIsLoggedIn()">	
 			<textarea ng-model="commentInput" rows="4" cols="50" class="form-control" placeholder="Write a review"></textarea>
 
 			<div class="row comment-cntrl-cont">
@@ -103,7 +103,7 @@
 
 
 				<div class="col-lg-6 col-md-6">
-					<input class="comment-button pull-right" id = "CommentButton" type="submit" value="SUBMIT" ng-controller= "PollCtrl" ng-click="createComment()">
+					<input class="comment-button pull-right" id = "CommentButton" type="submit" value="SUBMIT" ng-click="createComment()">
 				</div>
 			</div>
 			<br>
@@ -113,8 +113,8 @@
 
 		<div class="all-comments-cont">
 			<p class="section-heading" id = "totalComment">ALL REVIEWS ({{totalComment}}) </p>
-			<form ng-controller= "PollCtrl">	
-				<div ng-controller="PollCtrl" >
+			<form>	
+				<div>
 					<ul ng-model= "commentInfo" ng-repeat="comment in commentList">
 						<li> 
 							<span ng-hide="visible">{{comment.userIDAnnonymous}}: <br> {{comment.description}}</span>
@@ -124,7 +124,7 @@
 
 			                   <label>Review:</label>
 
-			                   <div ng-controller="PollCtrl">
+			                   <div>
 
 			                   <textarea rows="4" cols="50" ng-model="comment.newComment" placeholder= {{comment.description}} class="form-control" ng-required> </textarea>
 
@@ -153,7 +153,7 @@
 			</form>
 		</div>
 
-		<div ng-controller="PollCtrl" > 
+		<div> 
 			<h5>Recommended Poll or Rating</h5>
 				<div ng-repeat="option in questionList" ng-click="goToLink(option)">
 						<p> {{option.title}} </p>			
@@ -162,7 +162,7 @@
 				</div>
 				{{errorMessageRecommendedQuestion}}
 				
-		<div ng-controller= "pollRatingCtrl">
+		<div>
 			Flag post for inappropriate content <br>
 			<button ng-click='toggleFlag(1)'>FLAG</button>
 		</div>
