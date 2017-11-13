@@ -692,9 +692,6 @@ app.get('/getPollResults', function (req, res) {
 	});
 });
 
-
-
-
 app.get('/addPollVote', function (req, res) {
 	con.query("UPDATE PollOption SET votes=votes+1 WHERE questionID='" +
 		req.query.questionID + "' AND pollOptionID='" + req.query.pollOptionID + "';", 
