@@ -185,16 +185,17 @@
 
 		<div > 
 			<p class="section-heading" id = "totalComment">RECOMMENDED FOR YOU </p>
-				<div ng-repeat="option in questionList" ng-click="goToLink(option)">
-						<p> {{option.title}} </p>			
-						<p> {{option.description}} </p>	
-						<br>
+			<div class="rec-cont">
+				<div class="rec" ng-repeat="option in questionList" ng-click="goToLink(option)">
+					<p class="rec-title"> {{option.title}} </p>			
+					<p class="rec-descript"> {{option.description}} </p>	
 				</div>
-				{{errorMessageRecommendedQuestion}}
+			</div>
+			{{errorMessageRecommendedQuestion}}
 				
-		<div>
-			Flag post for inappropriate content <br>
-			<button ng-click='toggleFlag(1)'>FLAG</button>
+		<div class="row">
+			<button class="flag-button" ng-click='toggleFlag(1)'>Flag</button>
+			<p class="flag-label"> post for inappropriate content </p>
 		</div>
 
 
