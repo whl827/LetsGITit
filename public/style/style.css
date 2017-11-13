@@ -710,7 +710,9 @@ create-button, .submit-button, .login-button, .signup-button{
 	/*background-color: #F58335;*/
 	color: white;
 
-	margin-left: 7px;
+	margin-left: 30px;
+	margin-bottom: 0px;
+	/*margin-right: 40px;*/
 
 	padding-left: 15px;
 	padding-right: 15px; 
@@ -725,6 +727,7 @@ create-button, .submit-button, .login-button, .signup-button{
 }
 
 .tags-container {
+	padding-right: 10px;
 	float: right;
 }
 

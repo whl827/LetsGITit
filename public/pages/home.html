@@ -51,19 +51,13 @@
 
 									</div>
 									<div class="feed-stats col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-										<!-- <p class="feed-survey-type">{{question.isPoll ? 'Poll' : 'Rating'}} </p> -->
 										<p class="feed-end-date">{{question.endDateDisplay}}</p>
-
-										<!-- <p class="feed-end-date">Closes on {{ question.endDate!=null ?
-											(question.endDate | date: 'yyyy-MM-dd') : 'Open Forever'}}</p> -->
 										<p class="feed-total-votes">{{question.totalVotes}} VOTES</p>
-										<!-- <p class="feed-positive-votes"> {{question.positiveVotes}}</p> -->
 										<p class="feed-num-likes"> {{question.numLikes}} LIKES</p>
 
 										<!-- add tags  -->
-										<div class="tags-container row">
-											<div class="tag"> Food </div>
-											<div class="tag"> Fruit </div>
+										<div class="tags-container row" ng-repeat="tag in question.allTags">
+											<div class="tag"> {{tag.tagStr}} </div>
 										</div>
 
 

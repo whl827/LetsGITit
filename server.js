@@ -61,11 +61,27 @@ app.get('/onPageLoad', function (req, res){
 					" q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " +
 			 " FROM Question q " +
 			 " ORDER BY q.numLikes desc",
-	  function (err, result, fields) {
+	function (err, result, fields) {
 	    if (err) throw err;
 	    res.json(result);
 	});
 });
+
+
+
+
+app.get('/getQuestionTags', function (req, res){
+	con.query("SELECT t.tagID, t.tagStr FROM Tag t INNER JOIN TagToQuestion ttq" +
+			" ON t.tagID = ttq.tagID WHERE ttq.questionID='" +
+			req.query.questionID + "';", 
+	function (err, result, fields) {
+		if(err) throw err;
+		res.json(result);
+	});
+});
+
+
+
 //get array of 5 top popular tags
 app.get('/getTopTags', function (req, res){
 
