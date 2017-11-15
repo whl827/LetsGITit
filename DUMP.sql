@@ -39,6 +39,7 @@ create table QuestionComment (
     commentLikeCount int(8) not null,
     commentDislikeCount int(8) not null,
 	isFlagged boolean default false,
+    image varchar(20000) default null,
     foreign key fk1(questionID) references Question(questionID),
     foreign key fk2(userID) references KUser(userID)
 );
