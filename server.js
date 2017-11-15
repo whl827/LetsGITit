@@ -67,8 +67,13 @@ app.get('/onPageLoad', function (req, res){
 	});
 });
 
-
-
+app.get('/getFlaggedQuestions', function (req, res) {
+	con.query("SELECT * FROM Question WHERE isFlagged = 1", 
+	function(err, result, response) {
+		if (err) throw err;
+		res.json(result);
+	});
+});
 
 app.get('/getQuestionTags', function (req, res){
 	con.query("SELECT t.tagID, t.tagStr FROM Tag t INNER JOIN TagToQuestion ttq" +
@@ -628,6 +633,8 @@ app.get('/follow', function(req, res) {
 			if (err) throw err;
 		}
 	);
+
+	con.query("UPDATE KUser SET numFollowers = numFollowers + 1 WHERE username='" + userToFollow + "'");
 })
 
 app.get('/unfollow', function(req, res) {
@@ -642,6 +649,17 @@ app.get('/unfollow', function(req, res) {
 			if (err) throw err;
 		}
 	);
+
+	con.query("UPDATE KUser SET numFollowers = numFollowers - 1 WHERE username='" + userToUnfollow + "'");
+
+});
+
+app.get('/toggelCommentFlag', function(req, res) {
+	var id = req.query.questionCommentID;
+	var flag = req.query.flag;
+
+	console.log("UPDATE QuestionComment SET isFlagged = " + flag + " WHERE questionCommentID = " + id);
+	con.query("UPDATE QuestionComment SET isFlagged = " + flag + " WHERE questionCommentID = " + id);
 });
 
 app.get('/insertRatingValue', function (req, res) { // also inserts poll optionvote
@@ -848,17 +866,6 @@ app.get('/checkQuestionDate', function (req, res) {
 			res.json(result);
 	});
 });
-
-
-
-
-
-
-
-
-
-
-
 
 app.get('/UpdateVote', function (req, res) {
 
