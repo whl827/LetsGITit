@@ -510,7 +510,7 @@ app.get('/pollList', function (req, res) {
 
 app.get('/commentList', function (req, res) {
 
-	con.query("SELECT qc.questionCommentID, qc.userID, qc.userIDAnnonymous, qc.description, qc.commentLikeCount, qc.commentDislikeCount "+
+	con.query("SELECT qc.questionCommentID, qc.userID, qc.userIDAnnonymous, qc.description, qc.commentLikeCount, qc.commentDislikeCount, qc.image "+
 		"FROM QuestionComment qc WHERE " + 
 		"qc.questionID='" + req.query.questionID + "';",
 	  	function (err, result, fields) {
@@ -525,14 +525,29 @@ app.get('/insertComment', function (req, res) {
 	var description = req.query.description;
 	var isAnnonymous = req.query.isAnnonymous;
 	var userIDAnnonymous = req.query.userIDAnnonymous;
+	var image = req.query.image;
 
-	//onsole.log(questionID, userID, description, isAnnonymous, userIDAnnonymous, commentLikeCount, commentDislikeCount );
-	
-	con.query("INSERT INTO QuestionComment (questionID, userID, description, isAnnonymous, userIDAnnonymous, commentLikeCount, commentDislikeCount) " +
-			"VALUES('" + questionID + "', '" + userID + "', '" + description + "', '"
-			 + isAnnonymous + "', '" + userIDAnnonymous + "', '" + req.query.commentLikeCount+ "', '" + req.query.commentDislikeCount + "');",
-	  	function (err, result, fields) {
-	});
+	if(image == null){
+		console.log("image is null");
+	}
+	else{
+		console.log("image is NOT null");
+		console.log(image);
+	}
+	//console.log(questionID, userID, description, isAnnonymous, userIDAnnonymous, commentLikeCount, commentDislikeCount , req.query.image);
+	if(image == null){
+		con.query("INSERT INTO QuestionComment (questionID, userID, description, isAnnonymous, userIDAnnonymous, commentLikeCount, commentDislikeCount) " +
+				"VALUES('" + questionID + "', '" + userID + "', '" + description + "', '"
+				+ isAnnonymous + "', '" + userIDAnnonymous + "', '" + req.query.commentLikeCount+ "', '" + req.query.commentDislikeCount + "');",
+			function (err, result, fields) {
+		});
+	}else{
+		con.query("INSERT INTO QuestionComment (questionID, userID, description, isAnnonymous, userIDAnnonymous, commentLikeCount, commentDislikeCount, image) " +
+		"VALUES('" + questionID + "', '" + userID + "', '" + description + "', '"
+		+ isAnnonymous + "', '" + userIDAnnonymous + "', '" + req.query.commentLikeCount+ "', '" + req.query.commentDislikeCount + "', '" + req.query.image + "');",
+		function (err, result, fields) {
+		});
+	}
 
 });
 
@@ -867,15 +882,27 @@ app.get('/editComment', function (req, res) {
 	var userID = req.query.userID;
 	var currentComment = req.query.currentComment;
 	var newComment = req.query.newComment;
+	var newImage = req.query.newImage;
 
-	con.query("UPDATE QuestionComment " + 
-		"SET description='"+ newComment + "' WHERE questionID='" +
+	if(newImage == null){
+		con.query("UPDATE QuestionComment " + 
+			"SET description='"+ newComment + "' WHERE questionID='" +
+			req.query.questionID + "' and userID='" + req.query.userID + 
+			"' and description='" + currentComment +"';", 
+			function (err, result, fields) {
+				if(err) throw err;
+				res.json(result);
+			});
+	}else{
+		con.query("UPDATE QuestionComment " + 
+		"SET description='"+ newComment + "', image='"+ newImage + "' WHERE questionID='" +
 		req.query.questionID + "' and userID='" + req.query.userID + 
 		"' and description='" + currentComment +"';", 
 		function (err, result, fields) {
 			if(err) throw err;
 			res.json(result);
 		});
+	}
 });
 
 app.get('/deleteComment', function (req, res) {

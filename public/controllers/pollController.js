@@ -138,7 +138,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 
 
 		$http.get('/commentList?questionID=' + questionID).then(function (response) {
-			$scope.totalComment = response.data.length;
+			$scope.totalComment = response.data.length;	
 			$scope.commentList = response.data;
 		}, function (response) {
 
@@ -184,22 +184,29 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 
 	$scope.editComment = function (comment) {
 
-		console.log("in edit comment");
-		//var original = $scope.commentList.indexOf(field);
 		var currentComment = angular.copy(comment).description;
 		var newComment = comment.newComment;
-		console.log(" currentComment is " + currentComment);
-		console.log("New comment is " + newComment);
+		var newImage = comment.newImage;
 
-		$http.get("/editComment?questionID=" + questionID + "&userID=" + loggedInuserID
-			+ "&currentComment=" + currentComment + "&newComment=" + newComment)
+		if(newImage == null){
+			$http.get("/editComment?questionID=" + questionID + "&userID=" + loggedInuserID
+				+ "&currentComment=" + currentComment + "&newComment=" + newComment)
+				.then(function (response) {
+					$route.reload();
+					console.log("inser into edit comment table");
+				}, function (response) {
+					console.log("Error");
+				});
+		}else{
+			$http.get("/editComment?questionID=" + questionID + "&userID=" + loggedInuserID
+			+ "&currentComment=" + currentComment + "&newComment=" + newComment + "&newImage=" + newImage)
 			.then(function (response) {
 				$route.reload();
 				console.log("inser into edit comment table");
 			}, function (response) {
 				console.log("Error");
 			});
-
+		}
 	}
 
 	$scope.deleteComment = function (comment) {
@@ -401,51 +408,47 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 						if(isAnnonymous){ userIDAnnonymous = "Anonymous";}
 						else{ userIDAnnonymous = username; }
 						
-
 						if(isAnnonymous){isAnnonymous = 1;}
 						else{isAnnonymous = 0;}
+						var picURL = document.querySelector("#pictureURL").value;
 
+						if(picURL == ""){
+							picURL = null;
+						}
+						
+						//console.log(questionID, userID, username, isAnnonymous,userIDAnnonymous, comment);
+						if(picURL==null){
 
-						console.log(questionID, userID, username, isAnnonymous,userIDAnnonymous, comment);
+							$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
+							+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous 
+							+ "&userIDAnnonymous=" + userIDAnnonymous + "&commentLikeCount=0" + 
+							"&commentDislikeCount=0")
+							.then(function (response) {
+								console.log("inser into comment table");
+							},function (response) {
+								console.log("Error");
+							});
 
-						$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
-						+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous 
-						+ "&userIDAnnonymous=" + userIDAnnonymous + "&commentLikeCount=0" + 
-						"&commentDislikeCount=0")
-						.then(function (response) {
-							console.log("inser into comment table");
-						},function (response) {
-					    	console.log("Error");
-						});
+						}else{
+
+							$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
+							+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous 
+							+ "&userIDAnnonymous=" + userIDAnnonymous +"&image=" + picURL+ "&commentLikeCount=0" + 
+							"&commentDislikeCount=0")
+							.then(function (response) {
+								console.log("inser into comment table");
+							},function (response) {
+								console.log("Error");
+							});
+
+						}
 
 		 				$route.reload();
-					
-					console.log("Getting userName");
+				
 				},function (response) {
 			    	console.log("Error");
 				});
 
-
-
-				//Insert Comment Only when User haven't submitted
-				// $http.get("/checkUserExist?questionID=" + questionID + "&userID=" + userID)
-				// 	.then(function (response) {
-					
-						
-				// 		if(typeof response.data[0] == 'undefined'){
-				// 			&& typeof response[0].userID !== 'undefined' 
-							
-					
-
-				// 		}else {
-				// 			$scope.errorMessageComment = "Already commented. Please press Edit to continue";
-				// 		}
-
-				// },function (response) {
-				//     	console.log("Error");
-				// });
-
-				//Inser comment only when user have not commentent
 			}
 		}
 		else{
@@ -661,7 +664,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 	);
 
 	$scope.hideInputFields = function(){
-		debugger;
+		
 		var closed = $scope.isClosed; 
 		var loggedIn; 
     	if($cookies.get('userID') != -1 && $cookies.get('userID') != undefined){
@@ -683,7 +686,9 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 		}
 		return true; // success
 	}
-	
 
-
+	$scope.createCommentPic = function() {	
+		var picURL = document.querySelector("#pictureURL").value;
+		document.querySelector("#comment-pic").src = picURL;
+	}
 }]);
