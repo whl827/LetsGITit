@@ -586,6 +586,8 @@ app.get('/follow', function(req, res) {
 			if (err) throw err;
 		}
 	);
+
+	con.query("UPDATE KUser SET numFollowers = numFollowers + 1 WHERE username='" + userToFollow + "'");
 })
 
 app.get('/unfollow', function(req, res) {
@@ -600,6 +602,9 @@ app.get('/unfollow', function(req, res) {
 			if (err) throw err;
 		}
 	);
+
+	con.query("UPDATE KUser SET numFollowers = numFollowers - 1 WHERE username='" + userToUnfollow + "'");
+
 });
 
 app.get('/insertRatingValue', function (req, res) { // also inserts poll optionvote
