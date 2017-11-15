@@ -67,8 +67,13 @@ app.get('/onPageLoad', function (req, res){
 	});
 });
 
-
-
+app.get('/getFlaggedQuestions', function (req, res) {
+	con.query("SELECT * FROM Question WHERE isFlagged = 1", 
+	function(err, result, response) {
+		if (err) throw err;
+		res.json(result);
+	});
+});
 
 app.get('/getQuestionTags', function (req, res){
 	con.query("SELECT t.tagID, t.tagStr FROM Tag t INNER JOIN TagToQuestion ttq" +
@@ -819,17 +824,6 @@ app.get('/checkQuestionDate', function (req, res) {
 			res.json(result);
 	});
 });
-
-
-
-
-
-
-
-
-
-
-
 
 app.get('/UpdateVote', function (req, res) {
 

@@ -20,6 +20,7 @@ angular.module("KnowItAll").controller('adminCtrl', ['$scope', '$http', '$locati
                 auth, auth};
 
     $scope.input = {adminPassword : ""};
+    $scope.flagged = {questionList : []};
 
     $scope.authenticate = function() {
         $http.get('/user?username=' + $cookies.get('username')
@@ -29,6 +30,13 @@ angular.module("KnowItAll").controller('adminCtrl', ['$scope', '$http', '$locati
                 } else {
                     $scope.adminData = {AdminErrorMessage : "You are not logged in as admin", auth : false};
                 }
+        });
+    }
+
+    $scope.loadFlagged = function() {
+        $http.get('/getFlaggedQuestions').then(function (response) {
+          console.log("Question list is of size: " + response.data.length);
+          $scope.flagged.questionList = response.data;
         });
     }
 
