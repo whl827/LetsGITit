@@ -7,15 +7,15 @@
 
 				<div class="row">
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-12 col-xl-12 ">
-						<img id="profile-pic" class="img-circle" src = "img/blankprofile.png" alt="NO IMAGE" width="150px" height="150px">
+						<img id="profile-pic" class="img-circle" src = {{imageURL}} alt="NO IMAGE" width="150px" height="150px">
 
-						<input id="pictureURL" type="text"/>
-						<button id="imageButton" ng-click="createProfilePic()">SUBMIT</button>
+						<!-- <input id="pictureURL" type="text"/>
+						<button id="imageButton" ng-click="createProfilePic()">SUBMIT</button> -->
 					</div>
 
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-12 col-xl-12 ">
 						<p class="profile-username"> {{username}} </p>
-						<p class="bio"> Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices ultrices felis cras amet. </p>
+						<p id="bio" class="bio"> {{bio}}  </p>
 
 						<div class="row following-cont">
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 ">
@@ -27,11 +27,47 @@
 								<p class="following-heading"> FOLLOWING </p>
 							</div>
 						</div>
-						<button class="profile-button"> EDIT </button>
+						<button class="profile-button" data-toggle="modal" data-target="#exampleModal"> EDIT </button>
 					</div>
 				</div>
 			</div>
 		</div>
+
+
+		<!-- Button trigger modal -->
+<!-- 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
+		  Edit Profile
+		</button> -->
+
+		<!-- Modal -->
+		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+
+		      <div class="modal-body">
+		     		<input ng-model="updatedBioInput" type="text" placeholder="bio">
+		     		<input ng-model="updatedImageURLInput" id="pictureURL" type="text" placeholder="image"/>
+		      </div>
+
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="editProfile()">Save changes</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+
+
+
+
+
 
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 offset-lg-3 col-xl-9 offset-lg-3">
 			<div class="my-posts-container">
@@ -44,15 +80,13 @@
 							<p class="feed-description">{{question.description=="undefined" ? "" : question.description}} </p> 
 						</div>
 						<div class="feed-stats col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-							<p class="feed-end-date">Closes on {{ question.endDate!=null ?
-							(question.endDate | date: 'yyyy-MM-dd') : 'Open Forever'}}</p>
+							<p class="feed-end-date">{{question.endDateDisplay}}</p>
 							<p class="feed-total-votes">{{question.totalVotes}} VOTES</p>
 							<p class="feed-num-likes"> {{question.numLikes}} LIKES</p>
 
 							<!-- add tags  -->
-							<div class="tags-container row">
-								<div class="tag"> Food </div>
-								<div class="tag"> Fruit </div>
+							<div class="tags-container row" ng-repeat="tag in question.allTags">
+								<div class="tag"> {{tag.tagStr}} </div>
 							</div>
 						</div>
 					</div>

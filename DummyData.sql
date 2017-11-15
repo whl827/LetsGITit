@@ -45,10 +45,10 @@ insert into KUser(username, passwordHash, isAdmin) values
     true
 );
 
-insert into Tag(tagStr) values ("t1");
-insert into Tag(tagStr) values ("t2");
-insert into Tag(tagStr) values ("t3");
-insert into Tag(tagStr) values ("t4");
+insert into Tag(tagStr) values ("Pizza");
+insert into Tag(tagStr) values ("Movie");
+insert into Tag(tagStr) values ("USC");
+insert into Tag(tagStr) values ("Course");
 
 insert into Question(userID, isPoll, title, subTitle, description, totalVotes, isAnonymous) 
 values (
@@ -394,6 +394,16 @@ values(2,1);
 
 update KUser set numFollowers = 1 where userID = 1;
 update KUser set numFollowers = 1 where userID = 2;
+
+update KUser 
+set bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices ultrices felis cras amet.",
+imageURL = "https://i.redd.it/lpj7hm6t9zly.jpg" 
+where userID = 2;
+
+update KUser 
+set bio = "I'm a computer science major, and I love pho and pigs!",
+imageURL = "http://www.critterbabies.com/wp-content/uploads/2014/11/p2.jpg" 
+where userID = 3;
 
 insert into UserToQuestion(userID, questionID) values (1, 1);
 insert into UserToQuestion(userID, questionID) values (1, 2);
