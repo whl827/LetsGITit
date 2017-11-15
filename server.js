@@ -182,7 +182,7 @@ app.get('/profile', function (req, res) {
 
 	console.log("Getting users feed");
 
-	con.query("SELECT q.questionID, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes  " + 
+	con.query("SELECT q.questionID, q.userID, q.isAnonymous, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes  " + 
 		"FROM KUser u, Question q, UserToQuestion uq WHERE u.username='" +
 		req.query.username + "' AND uq.userID = u.userID AND uq.questionID = q.questionID ORDER BY q.startDate desc, q.questionID desc;", 
 		function (err, result, fields) {
@@ -190,6 +190,8 @@ app.get('/profile', function (req, res) {
 			res.json(result);
 		});
 });
+
+
 
 app.get('/checkExistingTitle', function (req, res){
 	//insert the questions
@@ -562,6 +564,31 @@ app.get('/isFollowing', function(req, res) {
 			res.json(result);
 		}
 	);
+});
+
+app.get('/getUserInfo', function(req, res) {
+	var username = req.query.username;
+	con.query("SELECT bio, imageURL FROM KUser WHERE username='" + username + "'", 
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
+});
+
+app.get('/updateBio', function(req, res) {
+	con.query("UPDATE KUser SET bio = '" + req.query.bio + "'WHERE userID='" + req.query.userID + "'", 
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
+});
+
+app.get('/updateProfilePic', function(req, res) {
+	con.query("UPDATE KUser SET imageURL = '" + req.query.imageURL + "'WHERE userID='" + req.query.userID + "'", 
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
 });
 
 app.get('/numFollowers', function(req, res) {

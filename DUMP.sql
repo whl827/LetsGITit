@@ -3,12 +3,13 @@ create database KnowItAll;
 use KnowItAll;
 
 create table KUser (
-
 	userID int(8) primary key auto_increment,
     username varchar(12) not null,
     numFollowers int(8) default 0 not null,
     passwordHash int(12) not null,
-    isAdmin boolean default false
+    isAdmin boolean default false,
+    bio varchar(105),
+    imageURL varchar(2000)
 );  
 
 create table Question (
