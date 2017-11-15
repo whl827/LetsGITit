@@ -336,6 +336,12 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 		}
 	}
 
+	$scope.toggleCommentFlag = function (comment, flag) {
+		var questionCommentID = angular.copy(comment).questionCommentID;
+		console.log('flagging comment ' + questionCommentID + ', flag=' + flag);
+		$http.get('/toggelCommentFlag?questionCommentID=' + questionCommentID + '&flag=' + flag);
+	}
+
 	$scope.goToLink = function (question) {
 		if (question.isPoll) {
 			$location.path('/poll/' + question.questionID);

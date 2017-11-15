@@ -607,6 +607,14 @@ app.get('/unfollow', function(req, res) {
 
 });
 
+app.get('/toggelCommentFlag', function(req, res) {
+	var id = req.query.questionCommentID;
+	var flag = req.query.flag;
+
+	console.log("UPDATE QuestionComment SET isFlagged = " + flag + " WHERE questionCommentID = " + id);
+	con.query("UPDATE QuestionComment SET isFlagged = " + flag + " WHERE questionCommentID = " + id);
+});
+
 app.get('/insertRatingValue', function (req, res) { // also inserts poll optionvote
 	var questionID = req.query.questionID;
 	var userID = req.query.userID;
