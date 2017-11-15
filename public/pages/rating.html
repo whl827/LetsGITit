@@ -176,6 +176,9 @@
 
 								<button class="dislike-comment" ng-model="comment.commentLikeInput" ng-click="commentDislike(comment)" ng-required ng-if="hideInputFields()">DISLIKE </button>
 								<p class="dislike-comment-num"> {{comment.commentDislikeCount}} </p>
+
+								<!-- hey joyce can you make this button look nice? -->
+								<button ng-click="toggleCommentFlag(comment, 1)"> FLAG </button>
 							</div>
 
 
@@ -207,9 +210,11 @@
 			</div>
 			{{errorMessageRecommendedQuestion}}
 		</div>
-<!-- 			<div class="row">
+
+		<div class="row">
 				<button class="flag-button" ng-click='toggleFlag(1)'>Flag</button>
 				<p class="flag-label"> post for inappropriate content </p>
-			</div> -->
 		</div>
+
+	</div>
 </div>

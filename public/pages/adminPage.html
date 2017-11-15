@@ -8,8 +8,9 @@
         <button type="button" ng-click="authenticate()">AUTHENTICATE</button>
     </div>
 
-
     <div ng-if="adminData.auth == 1">
+
+    	<h3>Flagged Posts</h3>
     	<div data-ng-init="loadFlagged()">
 
 			<div class="post-container" ng-repeat="question in flagged.questionList" ng-click="goToLink(question)">
