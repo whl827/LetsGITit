@@ -9,6 +9,7 @@
 				Closes on {{ endDate=="Open Forever" ?
 				endDate : (endDate | date: 'short')}}</p>
 
+			
 			<div data-ng-init="loadQFlag()"> 
 				<h3 style="color:red">{{flag.flagInfo}}</h3>
 				<div ng-if="flag.isFlagged">
@@ -95,7 +96,7 @@
 
 		<!-- Comment -->
 
-		<div class="comments-cont" ng-if="userIsLoggedIn()">	
+		<div class="comments-cont" ng-if="hideInputFields()">	
 			<textarea ng-model="$parent.commentInput" rows="4" cols="50" class="form-control" placeholder="Write a review"></textarea>
 
 			<div class="row comment-cntrl-cont">
@@ -112,6 +113,7 @@
 				<div>
 					<input id="pictureURL" type="text"/>
 					<button id="imageButton" ng-click="createCommentPic(); commentPic = true">SUBMIT</button>
+					{{errorMessageCommentPic}}
 				</div>
 
 				<div class="col-lg-6 col-md-6">
@@ -210,7 +212,9 @@
 				
 			<div class="row">
 				<button class="flag-button" ng-click='toggleFlag(1)'>Flag</button>
-				<p class="flag-label"> post for inappropriate content </p>
+				<p class="flag-label"> post for inappropriate content </p> 
 			</div>
+			<br>
+			<span style="color:red">{{flag.message}}</span>
 		</div>
 </div>

@@ -377,7 +377,7 @@ values (
 insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
 	6,
-    2,
+    6,
     "Edward",
     "starbucks at cafe84 is 24hrs!",
     false,

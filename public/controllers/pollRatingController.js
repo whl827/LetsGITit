@@ -22,6 +22,25 @@ angular.module("KnowItAll").controller('pollRatingCtrl', ['$scope', '$http', '$c
 		}
 	);
 
+	$scope.loadQFlag = function () {
+
+	    var questionID = $routeParams.questionID;
+	    $scope.flag = {flagInfo : "", isFlagged : false};
+
+	    console.log("is Admin: " + ($cookies.get('isAdmin') == true));
+
+	    if ($cookies.get('isAdmin') == true) {
+	    	console.log("Entering the admin only if condition");
+	    	$http.get('/getQuestion?questionID=' + questionID)
+	    		.then( function(response) {
+	    			if (response.data.length == 1 && response.data[0].isFlagged) {
+	    				$scope.flag = {flagInfo : "This Content Is FLAGGED", isFlagged : true};
+	    			}
+	    		}
+	    	);
+		}
+    }
+
 	$scope.hideInputFields = function(){
 		var closed = $scope.isClosed; 
 		var loggedIn; 
