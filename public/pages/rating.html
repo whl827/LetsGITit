@@ -96,6 +96,7 @@
 				<div>
 					<input id="pictureURL" type="text"/>
 					<button id="imageButton" ng-click="createCommentPic(); commentPic = true">SUBMIT</button>
+					{{errorMessageCommentPic}}
 				</div>
 
 				<div class="col-lg-6 col-md-6">
@@ -157,7 +158,9 @@
 
 			                  	<div>
 			                   		<textarea rows="4" cols="40" ng-model="comment.newComment" placeholder= {{comment.description}} class="form-control" ng-required> </textarea>
-			               		</div>
+									<p>Update image:</p> <input id="pictureURL" ng-model="comment.newImage" type="text"/>
+									   
+								</div>
 
 			                </div>
 

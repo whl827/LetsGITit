@@ -140,6 +140,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 		$http.get('/commentList?questionID=' + questionID).then(function (response) {
 			$scope.totalComment = response.data.length;	
 			$scope.commentList = response.data;
+			debugger;
 		}, function (response) {
 
 		});
@@ -410,15 +411,17 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 						
 						if(isAnnonymous){isAnnonymous = 1;}
 						else{isAnnonymous = 0;}
+
 						var picURL = document.querySelector("#pictureURL").value;
 
 						if(picURL == ""){
 							picURL = null;
 						}
-						
-						//console.log(questionID, userID, username, isAnnonymous,userIDAnnonymous, comment);
-						if(picURL==null){
 
+				
+						//console.log(questionID, userID, username, isAnnonymous,userIDAnnonymous, comment);
+						if(picURL==null || picURL == ""){
+							
 							$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
 							+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous 
 							+ "&userIDAnnonymous=" + userIDAnnonymous + "&commentLikeCount=0" + 
@@ -429,21 +432,31 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 								console.log("Error");
 							});
 
-						}else{
+							$route.reload();
 
-							$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
-							+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous 
-							+ "&userIDAnnonymous=" + userIDAnnonymous +"&image=" + picURL+ "&commentLikeCount=0" + 
-							"&commentDislikeCount=0")
-							.then(function (response) {
-								console.log("inser into comment table");
-							},function (response) {
-								console.log("Error");
-							});
+						}else{
+							
+							if(checkURL(picURL)){
+
+								$http.get("/insertComment?questionID=" + questionID + "&userID=" + userID
+								+ "&description=" + comment + "&isAnnonymous=" + isAnnonymous 
+								+ "&userIDAnnonymous=" + userIDAnnonymous +"&image=" + picURL+ "&commentLikeCount=0" + 
+								"&commentDislikeCount=0")
+								.then(function (response) {
+									console.log("inser into comment table");
+								},function (response) {
+									console.log("Error");
+								});
+
+								$route.reload();
+					
+							}else{ //if not, hide
+								$scope.errorMessageCommentPic = "Cannot create comment. Please use correct image url"
+							}
 
 						}
 
-		 				$route.reload();
+		 				
 				
 				},function (response) {
 			    	console.log("Error");
@@ -688,7 +701,44 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 	}
 
 	$scope.createCommentPic = function() {	
-		var picURL = document.querySelector("#pictureURL").value;
-		document.querySelector("#comment-pic").src = picURL;
+
+		var imageURL = document.querySelector("#pictureURL").value;
+		var image = document.querySelector("#comment-pic");
+
+		//check if it's a image url
+		if(checkURL(imageURL)){
+			
+			image.onerror = function() {
+				this.onerror = function(){
+					return;
+				}
+				image.src = "";
+				image.style.display = "none";
+				$scope.errorMessageCommentPic = "Cannot load image. Please retry"
+			}
+			// image.onload = function(){
+			// 	this.onload = function(){
+			// 		return;
+			// 	}
+			// 	image.style.display = "inline";
+			// 	$scope.errorMessageCommentPic = "Invalid image. Please retry"
+			// }
+
+			$scope.errorMessageCommentPic = ""
+			image.src = imageURL;
+
+		}else{ //if not, hide
+			$scope.errorMessageCommentPic = "Please use correct image url"
+			image.src = "";
+			image.style.display = "none";
+		}
+	
 	}
+
+	function checkURL(url) {
+		return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+	}
+
+	
 }]);
+
