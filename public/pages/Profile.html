@@ -8,9 +8,6 @@
 				<div class="row">
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-12 col-xl-12 ">
 						<img id="profile-pic" class="img-circle" src = {{imageURL}} alt="NO IMAGE" width="150px" height="150px">
-
-						<!-- <input id="pictureURL" type="text"/>
-						<button id="imageButton" ng-click="createProfilePic()">SUBMIT</button> -->
 					</div>
 
 					<div class="col-xs-6 col-sm-6 col-md-6 col-lg-12 col-xl-12 ">
@@ -27,21 +24,16 @@
 								<p class="following-heading"> FOLLOWING </p>
 							</div>
 						</div>
-						<button class="profile-button" data-toggle="modal" data-target="#exampleModal"> EDIT </button>
+						<button class="profile-button" data-toggle="modal" data-target="#editProfileModal"> EDIT </button>
 					</div>
 				</div>
 			</div>
 		</div>
 
 
-		<!-- Button trigger modal -->
-<!-- 		<button type="button" class="btn btn-primary" data-toggle="modal" data-target="#exampleModal">
-		  Edit Profile
-		</button> -->
-
-		<!-- Modal -->
-		<div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-		  <div class="modal-dialog" role="document">
+		<!-- Edit Profile Modal -->
+		<div class="modal fade" id="editProfileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="edit-profile-modal modal-dialog" role="document">
 		    <div class="modal-content">
 		      <div class="modal-header">
 		        <h5 class="modal-title" id="exampleModalLabel">Edit Profile</h5>
@@ -51,13 +43,23 @@
 		      </div>
 
 		      <div class="modal-body">
-		     		<input ng-model="updatedBioInput" type="text" placeholder="bio">
-		     		<input ng-model="updatedImageURLInput" id="pictureURL" type="text" placeholder="image"/>
+		      	<form>
+				  <div class="form-group">
+				    <label for="profilePic">Edit your profile picture</label>
+				    <input id="pictureURL" ng-model="updatedImageURLInput" type="text" class="form-control imageInput" id="profilePic">
+				  </div>
+
+				  <div class="form-group">
+				    <label for="bio">Edit your bio</label>
+				    <textarea ng-model="updatedBioInput" class="form-control bioInput" id="bio" rows="3" placeholder="Limited to 100 characters"></textarea>
+				  </div>
+
+				</form>
 		      </div>
 
 		      <div class="modal-footer">
-		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-		        <button type="button" class="btn btn-primary" data-dismiss="modal" ng-click="editProfile()">Save changes</button>
+		        <button type="button" class="btn btn-secondary cancel-edit" data-dismiss="modal">Cancel</button>
+		        <button type="button" class="btn btn-primary save-edit" data-dismiss="modal" ng-click="editProfile()">Save changes</button>
 		      </div>
 		    </div>
 		  </div>
