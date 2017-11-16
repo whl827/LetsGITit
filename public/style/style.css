@@ -49,9 +49,17 @@ body {
 
 
 
-/* create poll */
+/********************** CREATE POLL **********************/
 .create-survey-container > p {
 	font-size: 20px;
+}
+
+#option {
+	margin-bottom: 10px;
+}
+
+.align-with-label {
+	padding-top: 7px;
 }
 
 .heading {
@@ -59,25 +67,43 @@ body {
 }
 
 .create-survey-container {
-	/*background-color: white; */
 	padding-left: 150px;
 	padding-right: 150px;
 	padding-top: 30px;
 	padding-bottom: 50px;
 }
 
-.create-button, .submit-button, .login-button, .signup-button, .comment-button, .button{
+
+.preview-button {
+	display:block; 
+  /*  width:40%;
+    margin-left: auto;
+    margin-right: auto; 
+*/
+	border: 0;
+    color: #e53935;
+    cursor: pointer;
+    font-family: "Roboto";
+    font-size: 14px; 
+	/*letter-spacing: 2px;*/
+	background: white; 
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.preview-button:hover {
+	 opacity: 0.5;
+}
+
+/*.preview-button {
 	border-radius: 30px;
 	border: 0;
 
 	background: #e53935; 
 	background: -webkit-linear-gradient(to right, #e53935, #e35d5b);
 	background: linear-gradient(to right, #e53935, #e35d5b);
-
 	color: white;
-
     cursor: pointer;
-
     font-family: "Roboto";
 	letter-spacing: 2px;
 	font-size: 12px; 
@@ -87,13 +113,37 @@ body {
 	padding-bottom: 10px;
 	padding-top: 10px;
 
+    transition-duration: 0.7s;
+}
+
+.preview-button:hover{
+	opacity: 0.8;
+}
+*/
+
+
+
+.create-button, .submit-button, .login-button, .signup-button, .comment-button, .button{
+	border-radius: 30px;
+	border: 0;
+
+	background: #e53935; 
+	background: -webkit-linear-gradient(to right, #e53935, #e35d5b);
+	background: linear-gradient(to right, #e53935, #e35d5b);
+	color: white;
+    cursor: pointer;
+    font-family: "Roboto";
+	letter-spacing: 2px;
+	font-size: 12px; 
+
+	padding-left: 25px;
+	padding-right: 25px;
+	padding-bottom: 10px;
+	padding-top: 10px;
 
 	-webkit-box-shadow: 2px 10px 40px -10px rgba(0,0,0,0.75);
 	-moz-box-shadow: 2px 10px 40px -10px rgba(0,0,0,0.75);
 	 box-shadow: 2px 10px 40px -10px rgba(0,0,0,0.75);
-
-
-
 
 	-webkit-transition-duration: 0.7s; /* Safari */
     transition-duration: 0.7s;
@@ -103,7 +153,10 @@ body {
 create-button, .submit-button, .login-button, .signup-button{
 	margin-top: 50px;
 	margin-left: 85%;
+}
 
+.create-button {
+	float: right;
 }
 
 
@@ -118,10 +171,7 @@ create-button, .submit-button, .login-button, .signup-button{
 
 
 .create-button:hover, submit-button:hover, .login-button:hover, .signup-button:hover, .comment-button:hover, .button:hover {
-	opacity: 0.8;
-
-
-    
+	opacity: 0.8;    
 }
 
 
@@ -778,7 +828,7 @@ create-button, .submit-button, .login-button, .signup-button{
 	margin-top: 17px;  
 	background-color: white; 
 	width: 23%;
-	left: 20px;
+	left: 40px;
 
 	padding-left: 20px; 
 	padding-right: 20px; 
@@ -792,6 +842,9 @@ create-button, .submit-button, .login-button, .signup-button{
 
 .my-posts-container {
 	margin-top: 0px; 
+	margin-left: 50px;
+	margin-right: 50px;
+	margin-bottom: 75px;
 }
 
 #profile-pic{
