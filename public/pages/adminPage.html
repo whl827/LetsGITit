@@ -5,7 +5,39 @@
     {{adminData.AdminErrorMessage}}
     <div ng-if="adminData.auth == 0">
         <input type="password" ng-model="input.adminPassword">
-        <div data-ng-init="loadFlagged()"></div>
         <button type="button" ng-click="authenticate()">AUTHENTICATE</button>
+    </div>
+
+    <div ng-if="adminData.auth == 1">
+
+    	<h3>Flagged Posts</h3>
+    	<div data-ng-init="loadFlagged()">
+
+			<div class="post-container" ng-repeat="question in flagged.questionList" ng-click="goToLink(question)">
+				<p class="feed-question-title" id="current-question-title">{{question.title}}</p>
+
+
+				<div class="row">
+					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+						<p class="feed-user"> Created by {{question.username}} on {{question.startDate | date: 'yyyy-MM-dd'}}</p>
+						<p class="feed-subtitle">{{question.subtitle=="undefined" ? "" : question.subtitle}} </p> 
+				 		<p class="feed-description">{{question.description=="undefined" ? "" : question.description}} </p> 
+
+					</div>
+					<div class="feed-stats col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+						<p class="feed-end-date">{{question.endDateDisplay}}</p>
+						<p class="feed-total-votes">{{question.totalVotes}} VOTES</p>
+						<p class="feed-num-likes"> {{question.numLikes}} LIKES</p>
+
+						<!-- add tags  -->
+						<div class="tags-container row" ng-repeat="tag in question.allTags">
+							<div class="tag"> {{tag.tagStr}} </div>
+						</div>
+
+					</div>
+				</div>
+			</div>
+
+    	</div>
     </div>
 </div>

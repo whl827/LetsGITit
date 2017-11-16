@@ -90,6 +90,14 @@
 					</p>
 				</div>
 
+				<!-- Image URL -->
+
+				<img ng-show="commentPic" id="comment-pic" width="150px" height="150px">
+				<div>
+					<input id="pictureURL" type="text"/>
+					<button id="imageButton" ng-click="createCommentPic(); commentPic = true">SUBMIT</button>
+				</div>
+
 				<div class="col-lg-6 col-md-6">
 					<input class="comment-button pull-right" id = "CommentButton" type="submit" value="SUBMIT" ng-click="createComment()">
 				</div>
@@ -114,6 +122,7 @@
 								<div class="row">
 									<div class= "col-lg-9 col-md-9 col-sm-12">
 										<p class="comment-username"> {{comment.userIDAnnonymous}} </p>
+										<img ng-show="comment.image != null" src = {{comment.image}} width="150px" height="150px"> 
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12">
 										<div class="action-buttons-container">
@@ -150,40 +159,18 @@
 			                   		<textarea rows="4" cols="40" ng-model="comment.newComment" placeholder= {{comment.description}} class="form-control" ng-required> </textarea>
 			               		</div>
 
-
-			                    <!-- <label>Review:</label>
-
-			                    <div>
-
-			                   <textarea rows="4" cols="50" ng-model="comment.newComment" placeholder= {{comment.description}} class="form-control" ng-required> </textarea>
-
-			               		</div>
-			             
-			                    <button class="btn" type="submit" 
-			                    ng-click ="visible=false; editComment(comment)">Save</button> -->
-
 			                </div>
 
-
-<!-- 			                 <button class="btn" ng-show="comment.userID==loggedInuserID" 
-							ng-click="visible=true"> Edit</button>
-
-							<button class="btn" ng-show="comment.userID==loggedInuserID" 
-							ng-click="deleteComment(comment)"> delete</button>   -->
 							<div class="row comment-rating-cont">
 								<button class="like-comment" ng-model="comment.commentLikeInput" ng-value = "true" ng-click="commentLike(comment)" ng-required ng-if="hideInputFields()"> LIKE </button>
 								<p class="like-comment-num"> {{comment.commentLikeCount}} </p>
 
 								<button class="dislike-comment" ng-model="comment.commentLikeInput" ng-click="commentDislike(comment)" ng-required ng-if="hideInputFields()">DISLIKE </button>
 								<p class="dislike-comment-num"> {{comment.commentDislikeCount}} </p>
+
+								<!-- hey joyce can you make this button look nice? -->
+								<button ng-click="toggleCommentFlag(comment, 1)"> FLAG </button>
 							</div>
-
-
-
-
-
-<!-- 							<a href="" ng-model="comment.commentLikeInput" ng-value = "true" ng-click="commentLike(comment)" ng-required ng-if="hideInputFields()">LIKE</a>{{comment.commentLikeCount}}
-							<a href="" ng-model="comment.commentLikeInput" ng-click="commentDislike(comment)" ng-required ng-if="hideInputFields()">DISLIKE </a>{{comment.commentDislikeCount}} -->
 
 							{{errorMessageCommentLike}}
 
@@ -207,9 +194,11 @@
 			</div>
 			{{errorMessageRecommendedQuestion}}
 		</div>
-<!-- 			<div class="row">
+
+		<div class="row">
 				<button class="flag-button" ng-click='toggleFlag(1)'>Flag</button>
 				<p class="flag-label"> post for inappropriate content </p>
-			</div> -->
 		</div>
+
+	</div>
 </div>
