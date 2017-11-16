@@ -33,6 +33,14 @@ angular.module("KnowItAll").controller('adminCtrl', ['$scope', '$http', '$locati
         });
     }
 
+    $scope.unflag = function(question, questionList, index) {
+        var question =  angular.copy(question);
+        var id = question.questionID;
+        $http.get('/toggleFlag?questionID=' + id + '&flag=0');
+
+        questionList.splice(index, 1);
+    }
+
     $scope.loadFlagged = function() {
         $http.get('/getFlaggedQuestions').then(function (response) {
           console.log("Question list is of size: " + response.data.length);

@@ -29,6 +29,8 @@
 						<p class="feed-total-votes">{{question.totalVotes}} VOTES</p>
 						<p class="feed-num-likes"> {{question.numLikes}} LIKES</p>
 
+						<button ng-click="unflag(question, flagged.questionList, $index)">UNFLAG</button>
+
 						<!-- add tags  -->
 						<div class="tags-container row" ng-repeat="tag in question.allTags">
 							<div class="tag"> {{tag.tagStr}} </div>

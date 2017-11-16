@@ -13,6 +13,13 @@
 		<div class="row">
 			<div class="col-lg-8 col-md-8 col-sm-12">
 
+				<div data-ng-init="loadQFlag()"> 
+					<h3 style="color:red">{{flag.flagInfo}}</h3>
+					<div ng-if="flag.isFlagged">
+						<button ng-click="toggleFlag(0)">UNFLAG</button>
+					</div>
+				</div>
+
 				<img class = "image_for_question" id="image_in_rating" src= {{imageURL}} ></img>
 
 				<!-- Rating -->
@@ -199,6 +206,8 @@
 				<button class="flag-button" ng-click='toggleFlag(1)'>Flag</button>
 				<p class="flag-label"> post for inappropriate content </p>
 		</div>
+		<br>
+		<span style="color:red">{{flag.message}}</span>
 
 	</div>
 </div>

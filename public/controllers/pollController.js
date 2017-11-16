@@ -369,6 +369,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 	$scope.toggleFlag = function (flag) {
 		console.log('flagging question: ' + questionID);
 		$http.get('/toggleFlag?questionID=' + questionID + '&flag=' + flag);
+		$scope.flag.message = "You have flagged this post";
 	}
 
 	$scope.loadQFlag = function () {
