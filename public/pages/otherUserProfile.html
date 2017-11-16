@@ -8,15 +8,12 @@
 
 						<div class="row">
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-12 col-xl-12 ">
-								<img id="profile-pic" class="img-circle" src = "img/blankprofile.png" alt="NO IMAGE" width="150px" height="150px">
-
-								<input id="pictureURL" type="text"/>
-								<button id="imageButton" ng-click="createProfilePic()">SUBMIT</button>
+								<img id="profile-pic" class="img-circle" src = {{imageURL}} alt="NO IMAGE" width="150px" height="150px">
 							</div>
 
 							<div class="col-xs-6 col-sm-6 col-md-6 col-lg-12 col-xl-12 ">
 								<p class="profile-username"> {{otherUsername}} </p>
-								<p class="bio"> My bio </p>
+								<p class="bio"> {{bio}} </p>
 
 								<div class="row following-cont">
 									<div class="col-xs-6 col-sm-6 col-md-6 col-lg-6 col-xl-6 ">
@@ -58,13 +55,11 @@
 							 		<p class="feed-description">{{question.description=="undefined" ? "" : question.description}} </p> 
 								</div>
 								<div class="feed-stats col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-									<p class="feed-end-date">Closes on {{ question.endDate!=null ?
-										(question.endDate | date: 'yyyy-MM-dd') : 'Open Forever'}}</p>
+									<p class="feed-end-date">{{question.endDateDisplay}}</p>
 									<p class="feed-total-votes">{{question.totalVotes}} VOTES</p>
 									<p class="feed-num-likes"> {{question.numLikes}} LIKES</p>
-									<div class="tags-container row">
-										<div class="tag"> Food </div>
-										<div class="tag"> Fruit </div>
+									<div class="tags-container row" ng-repeat="tag in question.allTags">
+										<div class="tag"> {{tag.tagStr}} </div>
 									</div>
 								</div>
 							</div>
@@ -78,10 +73,10 @@
 
 
 		</div>
-		<div id="userProfileError" ng-switch-default>
+		<!-- <div id="userProfileError" ng-switch-default>
 			You are not logged in
-		</div>
+		</div> -->
 
-		Num followers: {{numFollowers.num}}
+		<!-- Num followers: {{numFollowers.num}} -->
 	</div>
 </div>

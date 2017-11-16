@@ -35,7 +35,7 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 		// var imageButton = document.getElementById("imageButton");
 		// imageButton.style.display = "initial";
 
-		console.log("You are logged in");
+		//console.log("You are logged in");
 
 		// feed
 		$http.get('/profile?username=' + username)
