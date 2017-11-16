@@ -750,21 +750,16 @@ create-button, .submit-button, .login-button, .signup-button{
 
 	border-radius: 20px;
 	margin-bottom: 6px;
-	/*background-color: #229B87;*/
 	background-color: #BB298B;
-	/*background-color: #F58335;*/
 	color: white;
 
 	margin-left: 30px;
 	margin-bottom: 0px;
-	/*margin-right: 40px;*/
 
 	padding-left: 15px;
 	padding-right: 15px; 
 	padding-top: 7px; 
 	padding-bottom: 7px;  
-
-
 }
 
 .feed-stats {
@@ -804,9 +799,6 @@ create-button, .submit-button, .login-button, .signup-button{
 	display: block;
     margin: 0 auto;
 }
-
-
-
 
 .profile-username {
 	font-size: 40px; 
@@ -848,17 +840,53 @@ create-button, .submit-button, .login-button, .signup-button{
     margin-right: auto; 
     margin-top: 20px; 
 
- 
-
 	border: 0;
     color: #e53935;
     cursor: pointer;
     font-family: "Roboto";
 	letter-spacing: 2px;
 	background: white; 
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
 }
 
+.profile-button:hover {
+	 opacity: 0.5;
+}
 
+.close {
+	cursor: pointer;
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.cancel-edit {
+	cursor: pointer;	
+}
+
+.save-edit {
+	cursor: pointer;
+}
+
+.close:hover {
+	 opacity: 0.2;
+}
+
+/*.close:hover, .cancel-edit:hover, .save-edit:hover {
+
+}*/
+
+.edit-profile-modal {
+	margin-top: 100px;
+}
+
+	
+input:focus,
+select:focus,
+textarea:focus,
+button:focus {
+    outline: none;
+}
 
 /************ MEDIA QUERIES ***************/
 
