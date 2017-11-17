@@ -883,7 +883,7 @@ hr {
 	color: #616161;
 }
 
-.profile-button, .deactivate-button {
+.profile-button, .deactivate-button, .delete-post-button {
 	display:block; 
     width:40%;
     margin-left: auto;
@@ -900,7 +900,7 @@ hr {
     transition-duration: 0.4s;
 }
 
-.profile-button:hover, .deactivate-button:hover {
+.profile-button:hover, .deactivate-button:hover, .delete-post-button:hover {
 	 opacity: 0.5;
 }
 

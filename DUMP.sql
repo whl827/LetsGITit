@@ -29,7 +29,7 @@ create table Question (
     isFlagged boolean default false,
     image varchar(20000) default null,
     deactivated boolean default false,
-    foreign key fk1(userID) references KUser(userID)
+    foreign key fk1(userID) references KUser(userID) ON DELETE CASCADE
 );
 
 create table QuestionComment (
@@ -43,8 +43,8 @@ create table QuestionComment (
     commentDislikeCount int(8) not null,
 	isFlagged boolean default false,
     image varchar(20000) default null,
-    foreign key fk1(questionID) references Question(questionID),
-    foreign key fk2(userID) references KUser(userID)
+    foreign key fk1(questionID) references Question(questionID) ON DELETE CASCADE,
+    foreign key fk2(userID) references KUser(userID) ON DELETE CASCADE
 );
 
 create table PollOption (
@@ -52,7 +52,7 @@ create table PollOption (
     questionID int(8) not null,
     title varchar(200) not null,
     votes int(8) not null,
-	foreign key fk1(questionID) references Question(questionID)
+	foreign key fk1(questionID) references Question(questionID) ON DELETE CASCADE
 );
 
 create table RatingQuestionOption (
@@ -60,8 +60,8 @@ create table RatingQuestionOption (
     userID int(8) not null,
     questionID int(8) not null,
     rating int(3) not null,		# MUST be between 1 - 5 !!
-    foreign key fk1(userID) references KUser(userID),
-    foreign key fk2(questionID) references Question(questionID)
+    foreign key fk1(userID) references KUser(userID) ON DELETE CASCADE,
+    foreign key fk2(questionID) references Question(questionID) ON DELETE CASCADE
 );
 
 create table Tag(
@@ -72,22 +72,22 @@ create table Tag(
 create table TagToQuestion (
 	tagID int(8) not null,
     questionID int (8) not null,
-    foreign key fk1(tagID) references Tag(tagID),
-    foreign key fk2(questionID) references Question(questionID)
+    foreign key fk1(tagID) references Tag(tagID) ON DELETE CASCADE,
+    foreign key fk2(questionID) references Question(questionID) ON DELETE CASCADE
 );
 
 create table UserToQuestion (
 	userID int(8) not null,
     questionID int(8) not null,
-    foreign key fk1(userID) references KUser(userID),
-    foreign key fk2(questionID) references Question(questionID)
+    foreign key fk1(userID) references KUser(userID) ON DELETE CASCADE,
+    foreign key fk2(questionID) references Question(questionID) ON DELETE CASCADE
 );
 
 create table QuestionToPollOption (
 	questionID int(8) not null,
     pollOptionID int(8) not null,
-    foreign key fk1(questionID) references Question(questionID),
-    foreign key fk2(pollOptionID) references PollOption(pollOptionID)
+    foreign key fk1(questionID) references Question(questionID) ON DELETE CASCADE,
+    foreign key fk2(pollOptionID) references PollOption(pollOptionID) ON DELETE CASCADE
 );
 
 create table QuestionLike (
@@ -95,8 +95,8 @@ create table QuestionLike (
     questionID int(8) not null,
     userID int(8) not null,
     pollLike boolean not null,
-    foreign key fk1(questionID) references Question(questionID),
-    foreign key fk2(userID) references KUser(userID)
+    foreign key fk1(questionID) references Question(questionID) ON DELETE CASCADE,
+    foreign key fk2(userID) references KUser(userID) ON DELETE CASCADE
 );
 
 create table CommentLike (
@@ -104,20 +104,20 @@ create table CommentLike (
     questionCommentID int(8) not null,
     userID int(8) not null,
     pollLike boolean not null,
-    foreign key fk1(questionCommentID) references QuestionComment(questionCommentID),
-    foreign key fk2(userID) references KUser(userID)
+    foreign key fk1(questionCommentID) references QuestionComment(questionCommentID) ON DELETE CASCADE,
+    foreign key fk2(userID) references KUser(userID) ON DELETE CASCADE
 );
 
 create table userToFollowing(
 	mainUserID int(8) not null,
     followingUserID int(8) not null,
-    foreign key fk1(mainUserID) references KUser(userID),
-    foreign key fk2(followingUserID) references KUser(userID)
+    foreign key fk1(mainUserID) references KUser(userID) ON DELETE CASCADE,
+    foreign key fk2(followingUserID) references KUser(userID) ON DELETE CASCADE
 );
 
 create table userToFollowers(
 	mainUserID int(8) not null,
     followerUserID int(8) not null,
-    foreign key fk1(mainUserID) references KUser(userID),
-    foreign key fk2(followerUserID) references KUser(userID)
+    foreign key fk1(mainUserID) references KUser(userID) ON DELETE CASCADE,
+    foreign key fk2(followerUserID) references KUser(userID) ON DELETE CASCADE
 );

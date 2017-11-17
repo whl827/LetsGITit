@@ -42,6 +42,25 @@
 </head>
 <body>
 
+	<!-- LOG OUT MODAL -->
+	<div class="modal fade" id="logoutModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+	  <div class="edit-profile-modal modal-dialog" role="document">
+	    <div class="modal-content">
+	      <div class="modal-header">
+	        <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to log out?</h5>
+	        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+	          <span aria-hidden="true">&times;</span>
+	        </button>
+	      </div>
+
+	      <div class="modal-footer">
+	      	<button type="button" class="btn btn-primary save-edit" ng-controller="loginController" data-dismiss="modal" ng-click="logout()">Yes</button>
+	        <button type="button" class="btn btn-secondary cancel-edit" data-dismiss="modal">No</button>
+	      </div>
+	    </div>
+	  </div>
+	</div>
+
 	<nav class="navbar navbar-expand-lg navbar-light fixed-top">
 		
 		<a class="navbar-brand" href="#">KnowItAll!</a>
@@ -92,7 +111,7 @@
 				</li>	
 
 				<li class="nav-item" ng-controller="loginController">
-					<a class="nav-link" ng-if="userIsLoggedIn()" ng-click="logout()" href="">Logout</a>
+					<a class="nav-link" ng-if="userIsLoggedIn()" data-toggle = "modal" data-target="#logoutModal" href="">Logout</a>
 				</li>		
 
 				<li class="nav-item" ng-controller="loginController" >
@@ -100,14 +119,24 @@
 				</li>
 
 
+
+
 			</ul>
+
+
 		</div>
+
+
 	</nav>
+
+
 
 	<br>
 	<br>
 	<br>
 	<br>
+
+
 
 	<div className = "navBar" ng-view></div>
 
