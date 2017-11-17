@@ -32,6 +32,8 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 			    $cookies.put('userID', newUserID);
                 $cookies.put('isAdmin', isAdmin);
 
+
+
                 // reactivating under login
                 $http.get('/reactivateUser?username=' + $scope.username +
                                      "&password=" + password).then(function (response) {} );
