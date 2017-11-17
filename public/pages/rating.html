@@ -1,10 +1,15 @@
 <div class="display-survey-container cont">
-	<p class="survey-heading" id = "title">{{title}}</p>
+	<p class="survey-heading" id = "title">[ {{isPoll}} ]  {{title}}</p>
 	<div class="sub-cont">
+		<p class="description" id = "description"> {{description}} </p>
 
 		<div class="info-cont">
-			<p class="username" id = "username"> Created by {{username}} </p>
-			<p class="description" id = "description"> {{description}} </p>
+			<p class="username" id = "username">
+			Asked by
+			<img id="profileImage" class="img-circle" src= {{profileImageURL}} width="40px" height="40px" />
+			 {{username}} 
+			</p>
+			
 			<p class="end-date" id = "endDate"> 
 				Closes on {{ endDate=="Open Forever" ?
 				endDate : (endDate | date: 'short')}}</p>
@@ -127,6 +132,8 @@
 
 
 							<div ng-hide="visible">
+									<img ng-show = "comment.imageURL !== null" class="img-circle" src= {{comment.imageURL}} width="50px" height="50px">
+									<img ng-show="comment.imageURL == null" class="img-circle" src = "img/blankprofile.png" width="50px" height="50px"> 
 								<div class="row">
 									<div class= "col-lg-9 col-md-9 col-sm-12">
 										<p class="comment-username"> {{comment.userIDAnnonymous}} </p>
@@ -153,6 +160,9 @@
 									</div>
 									<div class= "col-lg-3 col-md-3 col-sm-12">
 										<div class="action-buttons-container">
+											<button class="action-buttons save-comment-button" type="submit" ng-click ="deletePicture(comment)">
+												DELETE PICTURE
+											</button>
 											<button class="action-buttons save-comment-button" type="submit" ng-click ="visible=false; editComment(comment)">
 												SAVE
 											</button>
@@ -166,7 +176,8 @@
 			                  	<div>
 			                   		<textarea rows="4" cols="40" ng-model="comment.newComment" placeholder= {{comment.description}} class="form-control" ng-required> </textarea>
 									<p>Update image:</p> <input id="pictureURL" ng-model="comment.newImage" type="text"/>
-									   
+									
+									{{deleteProfilePicture}}  
 								</div>
 
 			                </div>

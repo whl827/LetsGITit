@@ -36,6 +36,15 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 	//Set Question ID as URL, and read it when pulling poll / rating information 
 	if (getPoll) {
 		$http.get('/getQuestion?questionID=' + questionID).then(function (response) {
+			
+			var isPoll = response.data[0].isPoll;
+			
+			if(isPoll == "0"){
+				$scope.isPoll = "RATING"
+			}else{
+				$scope.isPoll = "POLL"
+			}
+
 			$scope.title = response.data[0].title;
 			title = response.data[0].title;
 			$scope.userID = response.data[0].userID;
@@ -45,11 +54,9 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 				$scope.description = response.data[0].description;
 
 			}
-
 			$scope.isAnonymous = response.data[0].isAnonymous;
 			$scope.username = null;
-
-
+			
 			//check if it image exists, and if it does, show
 			var image = document.querySelector("#image_in_poll");
 			var imageURL = response.data[0].image;
@@ -64,11 +71,29 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 				image.style.display = "inline";
 			}
 
+			var profileImage = document.querySelector("#profileImage");
 
 			if ($scope.isAnonymous == 1) {
 				$scope.username = "ANONYMOUS";
+				profileImage.src = "img/anonymous_profile.png";
+				//assign sample profile pic
 			} else {
+
 				$scope.username = response.data[0].username;
+				$http.get("/getProfilePic?userID=" + response.data[0].userID)
+				.then(function (response) {
+					if(response.data[0].imageURL == "" || response.data[0].imageURL == null){
+						profileImage.src = "img/blankprofile.png";
+					}
+					else{
+						profileImage.src = response.data[0].imageURL;
+					}
+					
+					console.log("got profile picture");
+				},function (response) {
+					console.log("Error");
+				});
+				//profile
 			}
 
 			$scope.endDate = null;
@@ -135,11 +160,10 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 		}, function (response) {
 			console.log("Error");
 		});
-
-
+		
 		$http.get('/commentList?questionID=' + questionID).then(function (response) {
 			$scope.totalComment = response.data.length;	
-			$scope.commentList = response.data;
+			$scope.commentList = response.data;			
 			debugger;
 		}, function (response) {
 
@@ -190,8 +214,8 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 		var newImage = comment.newImage;
 
 		if(newImage == null){
-			$http.get("/editComment?questionID=" + questionID + "&userID=" + loggedInuserID
-				+ "&currentComment=" + currentComment + "&newComment=" + newComment)
+			$http.get("/editComment?questionCommentID=" + comment.questionCommentID 
+				+ "&newComment=" + newComment)
 				.then(function (response) {
 					$route.reload();
 					console.log("inser into edit comment table");
@@ -199,8 +223,8 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 					console.log("Error");
 				});
 		}else{
-			$http.get("/editComment?questionID=" + questionID + "&userID=" + loggedInuserID
-			+ "&currentComment=" + currentComment + "&newComment=" + newComment + "&newImage=" + newImage)
+			$http.get("/editComment?questionCommentID=" + comment.questionCommentID 
+			+ "&newComment=" + newComment + "&newImage=" + newImage)
 			.then(function (response) {
 				$route.reload();
 				console.log("inser into edit comment table");
@@ -214,8 +238,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 		var currentComment = angular.copy(comment).description;
 		var questionCommentID = angular.copy(comment).questionCommentID;
 
-		$http.get('/deleteComment?&questionID=' + questionID + "&userID=" + loggedInuserID +
-			"&description=" + currentComment + "&questionCommentID=" + questionCommentID)
+		$http.get('/deleteComment?&questionCommentID=' + comment.questionCommentID)
 			.then(function (response) {
 				$route.reload();
 				console.log("comment succesfully deleted");
@@ -721,25 +744,29 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 				}
 				image.src = "";
 				image.style.display = "none";
-				$scope.errorMessageCommentPic = "Cannot load image. Please retry"
+				$scope.errorMessageCommentPic = "Cannot load image. Please retry";
 			}
-			// image.onload = function(){
-			// 	this.onload = function(){
-			// 		return;
-			// 	}
-			// 	image.style.display = "inline";
-			// 	$scope.errorMessageCommentPic = "Invalid image. Please retry"
-			// }
-
 			$scope.errorMessageCommentPic = ""
 			image.src = imageURL;
 
 		}else{ //if not, hide
-			$scope.errorMessageCommentPic = "Please use correct image url"
+			$scope.errorMessageCommentPic = "Please use correct image url";
 			image.src = "";
 			image.style.display = "none";
 		}
+	}
+
+	$scope.deletePicture = function(comment) {	
 	
+		$http.get("/deleteCommentImage?questionCommentID=" + comment.questionCommentID)
+			.then(function (response) {
+				var response = response.data;
+				debugger;
+				$scope.deleteProfilePicture = "Picture deleted!";
+			}, function (response) {
+				console.log("Error");
+		});
+		
 	}
 
 	function checkURL(url) {
