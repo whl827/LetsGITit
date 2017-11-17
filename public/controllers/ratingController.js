@@ -19,6 +19,15 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 
 	if (getRating) {
 		$http.get('/getQuestion?questionID=' + questionID).then(function (response) {
+			
+			var isPoll = response.data[0].isPoll;
+			debugger;
+			if(isPoll == 0){
+				$scope.isPoll = "RATING"
+			}else{
+				$scope.isPoll = "POLL"
+			}
+
 			$scope.title = response.data[0].title;
 			$scope.userID = response.data[0].userID;
 			$scope.description = response.data[0].description;
@@ -41,11 +50,26 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 				image.style.display = "inline";
 			}
 
+			var profileImage = document.querySelector("#profileImage");
+			
 			if ($scope.isAnonymous == 1) {
-
 				$scope.username = "ANONYMOUS";
+				profileImage.src = "img/anonymous_profile.png";
 			} else {
 				$scope.username = response.data[0].username;
+				$http.get("/getProfilePic?userID=" + response.data[0].userID)
+				.then(function (response) {
+					if(response.data[0].imageURL == "" || response.data[0].imageURL == null){
+						profileImage.src = "img/blankprofile.png";
+					}
+					else{
+						profileImage.src = response.data[0].imageURL;
+					}
+					
+					console.log("got profile picture");
+				},function (response) {
+					console.log("Error");
+				});
 			}
 
 			$scope.endDate = null;
@@ -161,8 +185,8 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 		var newImage = comment.newImage;
 
 		if(newImage == null){
-		$http.get("/editComment?questionID=" + questionID + "&userID=" + loggedInuserID
-			+ "&currentComment=" + currentComment + "&newComment=" + newComment)
+			$http.get("/editComment?questionCommentID=" + comment.questionCommentID 
+			+ "&newComment=" + newComment)
 			.then(function (response) {
 				$route.reload();
 				console.log("inser into edit comment table");
@@ -170,8 +194,8 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 				console.log("Error");
 			});
 		}else{
-			$http.get("/editComment?questionID=" + questionID + "&userID=" + loggedInuserID
-			+ "&currentComment=" + currentComment + "&newComment=" + newComment + "&newImage=" + newImage)
+			$http.get("/editComment?questionCommentID=" + comment.questionCommentID 
+			+ "&newComment=" + newComment + "&newImage=" + newImage)
 			.then(function (response) {
 				$route.reload();
 				console.log("inser into edit comment table");
@@ -686,6 +710,19 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			image.src = "";
 			image.style.display = "none";
 		}
+	}
+
+	$scope.deletePicture = function(comment) {	
+		
+		$http.get("/deleteCommentImage?questionCommentID=" + comment.questionCommentID)
+			.then(function (response) {
+				var response = response.data;
+				debugger;
+				$scope.deleteProfilePicture = "Picture deleted!";
+			}, function (response) {
+				console.log("Error");
+		});
+			
 	}
 
 	function checkURL(url) {
