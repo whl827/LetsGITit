@@ -1,44 +1,71 @@
 <div class="cont create-cont">
 
-<h2 class="heading">Create a New Rating</h2>
-
-<!-- TODO: Getting rating datas -->
+<h2 class="heading">Create A New Rating</h2>
 
 <form class="create-survey-container" ng-controller="CreateRateCtrl">
 
-	<p> Title </p>
-	<input type="text" name="title" class="form-control" ng-model="ratingTitleInput">
-	<br>
-
-	<p> Subtitle </p>
-	<input type="text" name="subtitle" class="form-control" ng-model="pollSubtitleInput">
-	<br>
-
-	<p> Description </p>
-	<textarea rows="4" cols="50" name="description" class="form-control" ng-model="descriptionInput">
-	</textarea> 
-	<br>
-
-	<p> End Date </p>
-	<input type="date" name="endDate" class="form-control" ng-model="endDateInput" min ="{{minDate | date:'yyyy-MM-dd'}}">
-
-	<p><input type="checkbox" name="openForever" ng-model="openForeverInput">
-	Open Forever </p>
-
-	<p><input type="checkbox" name="anonymous" ng-model="isAnonymousInput">
-	Post Anonymously </p>
-
-	<p> Tags </p>
-	<input type="text" placeholder="Please Use Comma Separated Tags When Submitting (i.e T1, T2)" class="form-control" ng-model="tagInput">
-	<br>
-
-	<div>
-		<input id ="image_input" type="text" class="form-control" placeholder="Copy Image URL Here (JPEG, JPG, GIF, or PNG)">
-		<button type="button" ng-click="preview()">Upload</button>
-		<p>
-		<img style="display: none" id="question_image" src="" width="250px" alt = "NO IMAGE" ></img>
+	<div class="form-group row">
+		<label for="title" class="col-sm-2 col-form-label">Title</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="title" name="title" ng-model="ratingTitleInput">
+		</div>
 	</div>
 
+	<div class="form-group row">
+		<label for="subtitle" class="col-sm-2 col-form-label">Subtitle</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="subtitle" name="subtitle" ng-model="pollSubtitleInput">
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="description" class="col-sm-2 col-form-label">Description</label>
+		<div class="col-sm-10">
+			<textarea rows="4" cols="50" name="description" class="form-control" id="description" name="description" ng-model="descriptionInput">
+			</textarea> 
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="activity-period" class="col-sm-2 col-form-label">Activity Period</label>
+		<div class="col-sm-10 align-with-label">
+			<div class="row">
+				<p class="col-sm-3"> Select An End Date </p>
+				<input type="date" class="form-control col-sm-4" name="endDate" ng-model="endDateInput" min ="{{minDate | date:'yyyy-MM-dd'}}">
+			</div>
+			<div class="row">
+				<p class="col-sm-3"> Or </p>
+				<p class="col-sm-4 align-with-label"><input type="checkbox" name="openForever" ng-model="openForeverInput"> Open Forever </p>
+			</div>
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="tags" class="col-sm-2 col-form-label">Tags</label>
+		<div class="col-sm-10">
+			<input type="text" class="form-control" id="tags" name="tag" ng-model="tagInput" placeholder="Separate tags with commas">
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="image_input" class="col-sm-2 col-form-label">Image</label>
+		<div class="col-sm-10">
+			<div class="row remove-margins">
+				<input id ="image_input" type="text" class="form-control col-sm-9" placeholder="Image URL (JPEG, JPG, GIF, PNG)">
+				<button class="preview-button col-sm-3" ng-click="preview()">PREVIEW IMAGE</button>
+			</div>	
+
+			<img style="display: none" id="question_image" src="" width="250px" alt = "NO IMAGE" >
+		</div>
+	</div>
+
+	<div class="form-group row">
+		<label for="title" class="col-sm-2 col-form-label">Privacy</label>
+		<div class="col-sm-10 align-with-label">
+			<input type="checkbox" name="anonymous" ng-model="isAnonymousInput"> Post Anonymously 
+		</div>
+	</div>
+	
 	<input type="submit"
 			id="createButtonInRating" 
 		   value="CREATE"
