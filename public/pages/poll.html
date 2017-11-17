@@ -73,17 +73,14 @@
 
 
 				<!-- Like/Dislike -->
-				<!-- <form class="rank-cont" ng-hide="userIsLoggedIn()"> -->
 				<form class="rank-cont" ng-if="hideInputFields()">
 
 					<div class="row">
 						<div class="col-lg-5 col-md-5 col-sm-12 num-likes">
 							<input class="like" id= "likeRadioButton" ng-model="$parent.likeInput" type="radio" name="like" value="true" /> LIKE
-							<!-- <img src="img/like.png" width="50" height="50"> -->
 						</div>
 						<div class="col-lg-5 col-md-5 col-sm-12 num-likes">
 							<input class="dislike" id = "dislikeRadioButton" ng-model="$parent.likeInput" type="radio" name="dislike" value="false" /> DISLIKE
-							<!-- <img src="img/dislike.png" width="50" height="50"> -->
 						</div>
 					</div>
 
@@ -139,71 +136,93 @@
 					<div ng-model= "commentInfo" ng-repeat="comment in commentList">
 						<div class="comment-cont"> 
 
+
 							<div ng-hide="visible">
-								<img ng-show = "comment.imageURL !== null" class="img-circle" src= {{comment.imageURL}} width="50px" height="50px">
-								<img ng-show="comment.imageURL == null" class="img-circle" src = "img/blankprofile.png" width="50px" height="50px"> 
+
+
 								<div class="row">
-									<div class= "col-lg-9 col-md-9 col-sm-12">
-										<p class="comment-username"> {{comment.userIDAnnonymous}} </p>
-										<img ng-show="comment.image != null" src = {{comment.image}} width="150px" height="150px"> 
+
+									<div class= "col-lg-1 col-md-1 col-sm-1">
+										<img ng-show = "comment.imageURL !== null" class="comment-profile-pic" src= {{comment.imageURL}} width="60px" height="60px">
+										<img ng-show="comment.imageURL == null" class="comment-profile-pic" src = "img/blankprofile.png" width="60px" height="60px">
 									</div>
-									<div class="col-lg-3 col-md-3 col-sm-12">
-										<div class="action-buttons-container">
-											<button class="action-buttons edit-comment-button" ng-show="comment.userID==loggedInuserID" ng-click="visible=true">
-							                	EDIT
-							                </button>
-											<button class="action-buttons delete-comment-button" ng-show="comment.userID==loggedInuserID" ng-click="deleteComment(comment)"> 
-												DELETE
-											</button> 
-										</div> 
+
+									<div class= "col-lg-11 col-md-11 col-sm-11">
+										<div class="row">
+											<div class= "col-lg-9 col-md-9 col-sm-12">
+												<p class="comment-username"> {{comment.userIDAnnonymous}} </p>
+												<img ng-show="comment.image != null" src = {{comment.image}} width="150px" height="150px"> 
+											</div>
+											<div class="col-lg-3 col-md-3 col-sm-12">
+												<div class="action-buttons-container">
+													<button class="action-buttons edit-comment-button" ng-show="comment.userID==loggedInuserID" ng-click="visible=true">
+									                	EDIT
+									                </button>
+													<button class="action-buttons delete-comment-button" ng-show="comment.userID==loggedInuserID" ng-click="deleteComment(comment)"> 
+														DELETE
+													</button> 
+												</div> 
+											</div>
+										</div>
+										<p class="comment-description"> {{comment.description}} </p>
+										<div class="row comment-rating-cont">
+											<button class="like-comment" ng-model="comment.commentLikeInput" ng-value = "true" ng-click="commentLike(comment)" ng-required ng-if="hideInputFields()"> LIKE </button>
+											<p class="like-comment-num"> {{comment.commentLikeCount}} </p>
+
+											<button class="dislike-comment" ng-model="comment.commentLikeInput" ng-click="commentDislike(comment)" ng-required ng-if="hideInputFields()">DISLIKE </button>
+											<p class="dislike-comment-num"> {{comment.commentDislikeCount}} </p>
+
+											<button class="flag-comment" ng-click="toggleCommentFlag(comment, 1)"> FLAG </button>
+										</div>
 									</div>
+
 								</div>
-								<p class="comment-description"> {{comment.description}} </p>
+
 							</div>
 
+
+
 							<div ng-show="visible">
-			                   	<div class="row">
-									<div class= "col-lg-9 col-md-9 col-sm-12">
-										<p class="comment-username"> {{comment.userIDAnnonymous}} </p>
+								<div class="row">
+									<div class= "col-lg-1 col-md-1 col-sm-1">
+										<img ng-show = "comment.imageURL !== null" class="comment-profile-pic" src= {{comment.imageURL}} width="60px" height="60px">
+										<img ng-show="comment.imageURL == null" class="comment-profile-pic" src = "img/blankprofile.png" width="60px" height="60px">
 									</div>
-									<div class= "col-lg-3 col-md-3 col-sm-12">
-										<div class="action-buttons-container">
-											<button class="action-buttons save-comment-button" type="submit" ng-click ="deletePicture(comment)">
-												DELETE PICTURE
-											</button>
-											<button class="action-buttons save-comment-button" type="submit" ng-click ="visible=false; editComment(comment)">
-												SAVE
-											</button>
-											<button class="action-buttons delete-comment-button" ng-show="comment.userID==loggedInuserID" ng-click="deleteComment(comment)"> 
-												DELETE
-											</button>   
+									<div class= "col-lg-11 col-md-11 col-sm-11">
+					                   	<div class="row">
+											<div class= "col-lg-9 col-md-9 col-sm-12">
+												<p class="comment-username"> {{comment.userIDAnnonymous}} </p>
+											</div>
+											<div class= "col-lg-3 col-md-3 col-sm-12">
+												<div class="action-buttons-container">
+													<button class="action-buttons save-comment-button" type="submit" ng-click ="deletePicture(comment)">
+														DELETE PICTURE
+													</button>
+													<button class="action-buttons save-comment-button" type="submit" ng-click ="visible=false; editComment(comment)">
+														SAVE
+													</button>
+													<button class="action-buttons delete-comment-button" ng-show="comment.userID==loggedInuserID" ng-click="deleteComment(comment)"> 
+														DELETE
+													</button>   
+												</div>
+											</div>
+										</div>
+
+					                  	<div >
+										   <textarea rows="4" cols="40" ng-model="comment.newComment" placeholder= {{comment.description}} class="form-control" ng-required> </textarea>
+											<p>Update image:</p> <input id="pictureURL" ng-model="comment.newImage" type="text"/>
+											{{deleteProfilePicture}}
 										</div>
 									</div>
 								</div>
-
-			                  	<div >
-									   <textarea rows="4" cols="40" ng-model="comment.newComment" placeholder= {{comment.description}} class="form-control" ng-required> </textarea>
-										<p>Update image:</p> <input id="pictureURL" ng-model="comment.newImage" type="text"/>
-					
-										{{deleteProfilePicture}}
-				
-								   </div>
 								   
 			                </div>
 
 
-			                <div class="row comment-rating-cont">
-								<button class="like-comment" ng-model="comment.commentLikeInput" ng-value = "true" ng-click="commentLike(comment)" ng-required ng-if="hideInputFields()"> LIKE </button>
-								<p class="like-comment-num"> {{comment.commentLikeCount}} </p>
-
-								<button class="dislike-comment" ng-model="comment.commentLikeInput" ng-click="commentDislike(comment)" ng-required ng-if="hideInputFields()">DISLIKE </button>
-								<p class="dislike-comment-num"> {{comment.commentDislikeCount}} </p>
-
-								<!-- hey joyce can you make this button look nice? -->
-								<button ng-click="toggleCommentFlag(comment, 1)"> FLAG </button>
-							</div>
+			              
 
 							{{errorMessageCommentLike}}
+							<hr />
 							
 			             </div>
 			        </div>		 
