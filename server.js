@@ -186,7 +186,7 @@ app.get('/sendEmail', function (req, res) {
 //insert user to the database
 app.get('/insertUser', function (req, res) {
 	var username = req.query.username;
-	var password = req.query.passwordHash
+	var password = req.query.passwordHash;
 
 	con.query("INSERT INTO KUser(username, passwordHash) " +
 			"values('" + username + "', " + password + ");",
@@ -511,7 +511,7 @@ app.get('/insertRatingWithoutEndDate', function (req, res) {
 
 app.get('/getQuestion', function (req, res) {
 	//fixed con qeury
-	con.query("SELECT q.title, q.userID, u.username, q.description, q.endDate, q.isAnonymous, q.isFlagged, q.image " + 
+	con.query("SELECT q.title, q.userID, u.username, q.isPoll, q.description, q.endDate, q.isAnonymous, q.isFlagged, q.image " + 
 		"FROM Question q " +
 		"JOIN kuser u on q.userID = u.userID " +
 		"WHERE q.questionID=" + req.query.questionID, 
@@ -534,9 +534,9 @@ app.get('/pollList', function (req, res) {
 
 app.get('/commentList', function (req, res) {
 
-	con.query("SELECT qc.questionCommentID, qc.userID, qc.userIDAnnonymous, qc.description, qc.commentLikeCount, qc.commentDislikeCount, qc.image "+
-		"FROM QuestionComment qc WHERE " + 
-		"qc.questionID='" + req.query.questionID + "';",
+	con.query("SELECT qc.questionCommentID, qc.userID, qc.userIDAnnonymous, qc.description, qc.commentLikeCount, qc.commentDislikeCount, qc.image, u.imageURL "+
+		"FROM QuestionComment qc, KUser u WHERE " + 
+		"qc.questionID='" + req.query.questionID + "' and qc.userID = u.userID;",
 	  	function (err, result, fields) {
 	    if (err) throw err;
 	    res.json(result);
@@ -904,26 +904,32 @@ app.get('/UpdateVote', function (req, res) {
 
 app.get('/editComment', function (req, res) {
 
-	var questionID = req.query.questionID;
-	var userID = req.query.userID;
-	var currentComment = req.query.currentComment;
+	// var questionID = req.query.questionID;
+	// var userID = req.query.userID;
+	// var currentComment = req.query.currentComment;
 	var newComment = req.query.newComment;
 	var newImage = req.query.newImage;
 
 	if(newImage == null){
-		con.query("UPDATE QuestionComment " + 
-			"SET description='"+ newComment + "' WHERE questionID='" +
-			req.query.questionID + "' and userID='" + req.query.userID + 
-			"' and description='" + currentComment +"';", 
+		// con.query("UPDATE QuestionComment " + 
+		// 	"SET description='"+ newComment + "' WHERE questionCommentID='" +
+		// 	req.query.questionID + "' and userID='" + req.query.userID + 
+		// 	"' and description='" + currentComment +"';", 
+		// 	function (err, result, fields) {
+		// 		if(err) throw err;
+		// 		res.json(result);
+		// 	});
+			con.query("UPDATE QuestionComment " + 
+			"SET description='"+ newComment + "' WHERE questionCommentID='" +
+			req.query.questionCommentID +"';", 
 			function (err, result, fields) {
 				if(err) throw err;
 				res.json(result);
 			});
 	}else{
 		con.query("UPDATE QuestionComment " + 
-		"SET description='"+ newComment + "', image='"+ newImage + "' WHERE questionID='" +
-		req.query.questionID + "' and userID='" + req.query.userID + 
-		"' and description='" + currentComment +"';", 
+		"SET description='"+ newComment + "', image='"+ newImage + "' WHERE questionCommentID='" +
+		req.query.questionCommentID +"';", 
 		function (err, result, fields) {
 			if(err) throw err;
 			res.json(result);
@@ -933,7 +939,7 @@ app.get('/editComment', function (req, res) {
 
 app.get('/deleteComment', function (req, res) {
 
-	console.log(req.query.userID, req.query.questionCommentID, req.query.questionID, req.query.userID, req.query.description);
+	//console.log(req.query.userID, req.query.questionCommentID, req.query.questionID, req.query.userID, req.query.description);
 
 	// con.query("SET foreign_key_checks = 0;", 
 	// 	function (err, result, fields) {
@@ -941,12 +947,10 @@ app.get('/deleteComment', function (req, res) {
 	// 		res.json(result);
 	// 	});
 
-	con.query("DELETE FROM CommentLike WHERE userID='" + req.query.userID  + 
-		"' and questionCommentID='" + req.query.questionCommentID + "';");
+	con.query("DELETE FROM CommentLike WHERE questionCommentID='" + req.query.questionCommentID + "';");
 
-	con.query("DELETE FROM QuestionComment WHERE questionID='" 
-		+ req.query.questionID + "' and userID='" + req.query.userID 
-		+ "' and description='" + req.query.description + "';", 
+	con.query("DELETE FROM QuestionComment WHERE questionCommentID='" 
+		+ req.query.questionCommentID + "';", 
 		function (err, result, fields) {
 			if(err) throw err;
 			res.json(result);
@@ -1140,6 +1144,25 @@ app.get('/deactivateAccount', function (req, res) {
 	});
 });
 
+app.get('/getProfilePic', function (req, res) {
+	console.log("user id is " + req.query.userID);
+		con.query("SELECT u.imageURL FROM KUser u " +
+			"WHERE u.userID='" + req.query.userID + "'",
+		  function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
+	});
+
+app.get('/deleteCommentImage', function(req, res) {
+
+	console.log("in upsate porfile pid " + req.query.questionCommentID );
+	con.query("UPDATE QuestionComment SET image = null WHERE questionCommentID='" + req.query.questionCommentID + "';", 
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
+});
 
 
 app.listen(8080);
