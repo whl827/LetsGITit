@@ -128,6 +128,25 @@ app.get('/user', function (req, res) {
 	});
 });
 
+//reactivating user under login
+app.get('/reactivateUser', function (req, res) {
+	console.log("Trying to reactivate...");
+	con.query("UPDATE KUser k " +
+			  "SET deactivated=false " +
+			  "WHERE k.username='" + req.query.username +
+			  "' AND k.passwordHash=" + req.query.password,
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
+});
+
+// //reactivating q
+// app.get('/reactivateQuestion', funct)
+// 			  "UPDATE Question q" +
+// 			  "SET deactivated=false" +
+// 			  "WHERE q.userID=" + req.query.userID
+
 //sign up
 app.get('/signupFunction', function (req, res) {
 
@@ -1111,6 +1130,15 @@ app.get('/getRecommendedQuestion', function (req, res) {
 	
 });
 
+app.get('/deactivateAccount', function (req, res) {
+
+	con.query("UPDATE KUser k SET deactivated=" + req.query.deactivated +
+			 " WHERE k.userID=" + req.query.userID + " AND k.username='" + req.query.username + "';",
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+	});
+});
 
 
 

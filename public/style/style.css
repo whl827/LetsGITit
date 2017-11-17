@@ -886,7 +886,7 @@ create-button, .submit-button, .login-button, .signup-button{
 	color: #616161;
 }
 
-.profile-button {
+.profile-button, .deactivate-button {
 	display:block; 
     width:40%;
     margin-left: auto;
@@ -903,7 +903,7 @@ create-button, .submit-button, .login-button, .signup-button{
     transition-duration: 0.4s;
 }
 
-.profile-button:hover {
+.profile-button:hover, .deactivate-button:hover {
 	 opacity: 0.5;
 }
 

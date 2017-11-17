@@ -8,6 +8,7 @@ create table KUser (
     numFollowers int(8) default 0 not null,
     passwordHash int(12) not null,
     isAdmin boolean default false,
+    deactivated boolean default false,
     bio varchar(105),
     imageURL varchar(2000)
 );  
@@ -27,6 +28,7 @@ create table Question (
     isAnonymous boolean not null,
     isFlagged boolean default false,
     image varchar(20000) default null,
+    deactivated boolean default false,
     foreign key fk1(userID) references KUser(userID)
 );
 

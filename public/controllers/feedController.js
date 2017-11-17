@@ -2,6 +2,8 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
 
     // $scope.isQuestionList = 1;
 
+    console.log($scope.questionList);
+
     $scope.searchButton = function(){
         var menu = document.querySelector(".drop-down-menu").value;
         switch(menu){

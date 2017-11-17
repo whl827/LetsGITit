@@ -1,4 +1,4 @@
-angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cookies', '$location', function($scope, $http, $cookies, $location) {
+angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cookies', '$location', '$window', function($scope, $http, $cookies, $location, $window) {
 	var username = null;
 	var loggedIn = true;
 
@@ -151,6 +151,24 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 	            }, function (response) { console.log("FAILED updateProfilePic");}
 		    );
     	}
+    }
+
+    $scope.deactivateAccount = function () {
+
+    	var deactivated = true;
+    	$scope.userID = $cookies.get('userID');
+    	$scope.username = $cookies.get('username');
+
+    	$http.get('/deactivateAccount?deactivated=' + deactivated + '&userID=' + $scope.userID + "&username=" + $scope.username)
+    		.then(function (response) {
+    			console.log("deactivating account for: " + $scope.username);
+    		}
+    	);
+
+    	$cookies.put("username", null);
+        $cookies.put("userID", -1);
+        $cookies.put("isAdmin", false);
+        $window.location.replace("#!login");
     }
 
 }]);
