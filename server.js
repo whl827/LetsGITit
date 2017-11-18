@@ -75,6 +75,14 @@ app.get('/getFlaggedQuestions', function (req, res) {
 	});
 });
 
+app.get('/getFlaggedComments', function(req, res) {
+	con.query("SELECT * FROM QuestionComment WHERE isFlagged = 1", 
+	function(err, result, response) {
+		if (err) throw err;
+		res.json(result);
+	});
+});
+
 app.get('/getQuestionTags', function (req, res){
 	con.query("SELECT t.tagID, t.tagStr FROM Tag t INNER JOIN TagToQuestion ttq" +
 			" ON t.tagID = ttq.tagID WHERE ttq.questionID='" +
@@ -114,6 +122,13 @@ app.get('/toggleFlag', function (req, res) {
 		function(err, result, feilds) {
 			if (err) throw err;
 		});
+});
+
+app.get('/toggleCommentFlag', function(req, res) {
+	var id = req.query.questionCommentID;
+	var flag = req.query.flag;
+	
+	con.query("UPDATE QuestionComment SET isFlagged = " + flag + " WHERE questionCommentID = " + id);
 });
 
 //log in
@@ -671,14 +686,6 @@ app.get('/unfollow', function(req, res) {
 
 	con.query("UPDATE KUser SET numFollowers = numFollowers - 1 WHERE username='" + userToUnfollow + "'");
 
-});
-
-app.get('/toggelCommentFlag', function(req, res) {
-	var id = req.query.questionCommentID;
-	var flag = req.query.flag;
-
-	console.log("UPDATE QuestionComment SET isFlagged = " + flag + " WHERE questionCommentID = " + id);
-	con.query("UPDATE QuestionComment SET isFlagged = " + flag + " WHERE questionCommentID = " + id);
 });
 
 app.get('/insertRatingValue', function (req, res) { // also inserts poll optionvote

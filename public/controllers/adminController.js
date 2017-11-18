@@ -20,7 +20,7 @@ angular.module("KnowItAll").controller('adminCtrl', ['$scope', '$http', '$locati
                 auth, auth};
 
     $scope.input = {adminPassword : ""};
-    $scope.flagged = {questionList : []};
+    $scope.flagged = {questionList : [], commentList : []};
 
     $scope.authenticate = function() {
         $http.get('/user?username=' + $cookies.get('username')
@@ -41,10 +41,24 @@ angular.module("KnowItAll").controller('adminCtrl', ['$scope', '$http', '$locati
         questionList.splice(index, 1);
     }
 
+    $scope.unflagComment = function(comment, commentList, index) {
+        var comment = angular.copy(comment);
+        var id = comment.questionCommentID;
+        $http.get('/toggleCommentFlag?questionCommentID=' + id + '&flag=0');
+
+        commentList.splice(index, 1);
+    }
+
     $scope.loadFlagged = function() {
         $http.get('/getFlaggedQuestions').then(function (response) {
           console.log("Question list is of size: " + response.data.length);
           $scope.flagged.questionList = response.data;
+        });
+    }
+
+    $scope.loadFlaggedComments = function() {
+        $http.get('/getFlaggedComments').then(function (response) {
+            $scope.flagged.commentList = response.data;
         });
     }
 

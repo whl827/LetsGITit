@@ -3,6 +3,7 @@
 	<p class="admin-heading"> Admin Page </p>
     <p class="admin-subheading"> {{adminData.AdminErrorMessage}} </p>
     <div ng-if="adminData.auth == 0">
+
         <div class="form-group row">
 			<label for="password" class="col-sm-1 col-form-label">Password </label>
 			<div class="col-sm-6">
@@ -11,18 +12,14 @@
 			<input type="submit" 
 		    value="AUTHENTICATE"
 		    class = "create-button auth-button"
-		    ng-click="authenticate()"
-		>
+		    ng-click="authenticate()">
 		</div>
 		
-
-
-
     </div>
 
     <div ng-if="adminData.auth == 1">
 
-    	<h3>Flagged Posts</h3>
+    	<h3>Flagged Questions</h3>
     	<div data-ng-init="loadFlagged()">
 
 			<div class="post-container" ng-repeat="question in flagged.questionList" ng-click="goToLink(question)">
@@ -50,7 +47,26 @@
 				</div>
 			</div>
 
-
     	</div>
+
+
+    	<!-- Joyce work your magic here -->
+    	<h3>Flagged Comments</h3>
+    	<br>
+    	<br>
+    	<div data-ng-init="loadFlaggedComments()">
+
+    		<div ng-repeat="comment in flagged.commentList">
+
+       			------------------------------------------- <br>
+    			{{comment.description}} <br>
+    			<img src="{{comment.image}}"> <br>
+    			<button ng-click="unflagComment(comment, flagged.commentList, $index)">UNFLAG</button> <br>
+    			------------------------------------------- <br>
+    			<br>
+    			<br>
+
+    		</div>
+
     </div>
 </div>
