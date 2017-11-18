@@ -200,12 +200,18 @@ create-button, .submit-button, .login-button, .signup-button{
 
 .info-cont{
 	padding-bottom: 10px; 
+	margin-bottom: 15px;
 }
 
 .question-sub-cont {
 	padding-left: 50px; 
 	padding-right: 50px; 
 	padding-top: 25px;
+}
+
+.end-date {
+	margin-bottom: 0px;
+	color: #BB298B;
 }
 
 .main-info {
@@ -216,12 +222,21 @@ create-button, .submit-button, .login-button, .signup-button{
 	padding-left: 50px;
 }
 
+.balance-row-margin{
+	margin-left: 0px;
+}
+
+.secondary-info{
+	font-size: 17px;
+	margin-bottom: 10px;
+}
+
 .survey-heading{
 	font-size: 30px; 
 	margin-bottom: 0px;
 }
 
-.description, .end-date {
+.description {
 	font-size: 13px; 
 	margin-bottom: 5px; 
 }
@@ -253,6 +268,7 @@ create-button, .submit-button, .login-button, .signup-button{
 
 .vote-heading{
 	margin-bottom: 7px; 
+	margin-top: 30px;
 
 }
 
@@ -264,7 +280,7 @@ create-button, .submit-button, .login-button, .signup-button{
 
 
 .poll-option{
-	width: 50%;
+	width: 75%;
 
 
 
@@ -275,7 +291,7 @@ create-button, .submit-button, .login-button, .signup-button{
 	cursor: pointer;
 
 	font-family: "Roboto";
-	letter-spacing: 3px;
+	letter-spacing: 1px;
 	font-size: 15px; 
 
 	padding-left: 25px;
@@ -380,6 +396,10 @@ create-button, .submit-button, .login-button, .signup-button{
 
 }
 
+.comment-info {
+	padding-left: 30px;
+}
+
 
 .comment-button{
 	margin-right: 30px; 
@@ -415,7 +435,7 @@ create-button, .submit-button, .login-button, .signup-button{
 	/*margin-top: 10px;*/
 	margin-bottom: 50px;
 
-	padding-bottom: 50px;
+	padding-bottom: 10px;
 	/*padding-top: 25px;*/
 }
 
@@ -982,6 +1002,36 @@ select:focus,
 textarea:focus,
 button:focus {
     outline: none;
+}
+
+
+/************ ADMIN PAGE ******************/
+.admin-heading {
+	font-size: 30px;
+	margin-bottom: 7px;
+}
+
+.admin-subheading {
+	font-size: 15px;
+	margin-bottom: 50px;
+}
+
+.admin-cont {
+	background-color: white; 
+	margin-left: 50px; 
+	margin-right: 50px;
+	padding-left: 100px; 
+	padding-right: 100px; 
+	padding-top: 50px; 
+	padding-bottom: 50px; 
+
+	-webkit-box-shadow: -1px 9px 43px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: -1px 9px 43px 0px rgba(0,0,0,0.5);
+	box-shadow: -1px 9px 43px 0px rgba(0,0,0,0.5);
+}
+
+.auth-button {
+	margin-left: 20px;
 }
 
 /************ MEDIA QUERIES ***************/

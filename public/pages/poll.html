@@ -8,31 +8,9 @@
 	<div class="display-survey-container cont">
 
 
-		<!-- <div class="question-sub-cont">
-			<div class="info-cont">
-				<div class="row main-info">
-					<div class= "col-lg-2 col-md-2 col-sm-2">
-						<img id="profileImage" class="creater-profile-pic"/>
-					</div>
-					<div class= "col-lg-10 col-md-10 col-sm-10"> 
-						<p class="survey-heading" id = "title"> {{title}}</p>
-						<p class="username" id = "username"> Asked by {{username}} </p>
-					</div>
-				</div>
-			</div>
-
-		</div>
- -->
-
 		<img class = "post-image" id="image_in_poll" src= {{imageURL}} />
 		
-		
-		
-
 		<div class="question-sub-cont">
-
-
-			
 			<div class="info-cont">
 				<div class="row main-info">
 					<div class= "col-lg-1 col-md-1 col-sm-1">
@@ -45,11 +23,16 @@
 				</div>
 
 
-				
+
+				<div class="row secondary-info balance-row-margin">
+					<p class="end-date" id = "endDate"> 
+						{{endDateDisplay}}
+					</p>
+				</div>
+
+
 				<p class="description" id = "description"> {{description}} </p>
-				<p class="end-date" id = "endDate"> 
-					Closes on {{ endDate=="Open Forever" ?
-					endDate : (endDate | date: 'short')}}</p>
+	
 				<div data-ng-init="loadQFlag()"> 
 					<h3 style="color:red">{{flag.flagInfo}}</h3>
 					<div ng-if="flag.isFlagged">
@@ -62,12 +45,8 @@
 
 			<div class="row">
 				<div class="col-lg-8 col-md-8 col-sm-12">
-
-					<!-- <img class = "image_for_question" id="image_in_poll" src= {{imageURL}} /> -->
-
-
 					<div ng-if="hideInputFields()">
-						<p class="section-heading vote-heading"> CAST VOTE </p>
+						<!-- <p class="section-heading vote-heading"> CAST VOTE </p> -->
 
 						<form class="vote-cont">	
 						<form class="vote-cont">
@@ -86,7 +65,7 @@
 					<div class="poll-results">
 						<p class="section-heading vote-heading"> RESULTS </p>
 						<div ng-repeat="option in pollResults">
-							<p> {{option.title}} : {{option.votes}}</p>
+							<p> {{option.votes}} voted for {{option.title}}</p>
 
 						</div>
 					</div>
@@ -131,6 +110,8 @@
 				</div>
 
 
+
+
 			</div>
 
 			<!-- Comment -->
@@ -147,6 +128,10 @@
 
 					<!-- Image URL -->
 
+					<div class="col-lg-6 col-md-6">
+						<input class="comment-button pull-right" id = "CommentButton" type="submit" value="SUBMIT" ng-click="createComment()">
+					</div>
+
 					<img ng-show="commentPic" id="comment-pic" width="150px" height="150px">
 					<div>
 						<input id="pictureURL" type="text"/>
@@ -154,17 +139,19 @@
 						{{errorMessageCommentPic}}
 					</div>
 
-					<div class="col-lg-6 col-md-6">
-						<input class="comment-button pull-right" id = "CommentButton" type="submit" value="SUBMIT" ng-click="createComment()">
-					</div>
+
+
 				</div>
 				<br>
 				<p id = "CommentErrorMessage">{{errorMessageComment}}</p>
 				<br>
 			</div>
 
-			<div class="all-comments-cont">
 
+
+
+
+			<div class="all-comments-cont">
 				<p class="section-heading total-comments-heading" id = "totalComment">ALL REVIEWS ({{totalComment}}) </p>
 
 				<form>
@@ -183,7 +170,7 @@
 											<img ng-show="comment.imageURL == null" class="comment-profile-pic" src = "img/blankprofile.png" width="60px" height="60px">
 										</div>
 
-										<div class= "col-lg-11 col-md-11 col-sm-11">
+										<div class= "col-lg-11 col-md-11 col-sm-11 comment-info">
 											<div class="row">
 												<div class= "col-lg-9 col-md-9 col-sm-12">
 													<p class="comment-username"> {{comment.userIDAnnonymous}} </p>
@@ -267,17 +254,7 @@
 				</form>
 			</div>
 
-			<div> 
-<!-- 				<p class="section-heading" id = "totalComment">RECOMMENDED FOR YOU </p>
-				<div class="rec-cont">
-					<div class="rec" ng-repeat="option in questionList" ng-click="goToLink(option)">
-						<p class="rec-title"> {{option.title}} </p>			
-						<p class="rec-descript"> {{option.description}} </p>
-						<hr />	
-					</div>
-				</div>
-				{{errorMessageRecommendedQuestion}} -->
-					
+			<div> 					
 				<div class="row">
 					<button class="flag-button" ng-click='toggleFlag(1)'>Flag</button>
 					<p class="flag-label"> post for inappropriate content </p> 

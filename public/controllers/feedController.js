@@ -125,7 +125,7 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
                             //current.endDateDisplay = "Open until " + newdate ; 
                             current.endDateDisplay = "Open until " + convertDay(finalCloseDate) ; 
                         } else { 
-                            current.endDateDisplay = "CLOSED"; 
+                            current.endDateDisplay = "Closed"; 
                         }
                     }
                     // tags
