@@ -40,6 +40,12 @@ angular.module("KnowItAll").controller('CreatePollCtrl', ['$scope', '$http', '$c
 		//check if it's a image url
 		if(checkURL(imageURL)){
 
+			if(imageURL.length > 2000){
+				imageUploadURL = null;
+				console.log("IMAGE URL IS TOO LONG");
+				return;
+			};
+
 			image.onerror = function() {
 				this.onerror = function(){
 					return;
