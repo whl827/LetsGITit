@@ -20,9 +20,10 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 	$scope.loggedInuserID = loggedInuserID;
 	var questionID = $routeParams.questionID;
 	var getPoll = true; //check if poll is selected
-
-	var title;
+	var username;
 	var userID;
+	var title;
+	
 	//when true, get info from database
 	//getting information from search page (Home)
 	//(search result controller)
@@ -50,6 +51,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 			title = response.data[0].title;
 			$scope.userID = response.data[0].userID;
 			userID = response.data[0].userID;
+
 
 			$scope.description = null;
 			if (response.data[0].description != 'undefined') {
@@ -82,6 +84,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 			} else {
 
 				$scope.username = response.data[0].username;
+				username = response.data[0].username;
 				$http.get("/getProfilePic?userID=" + response.data[0].userID)
 				.then(function (response) {
 					if(response.data[0].imageURL == "" || response.data[0].imageURL == null){
@@ -189,7 +192,6 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 		$http.get('/commentList?questionID=' + questionID).then(function (response) {
 			$scope.totalComment = response.data.length;	
 			$scope.commentList = response.data;			
-			debugger;
 		}, function (response) {
 
 		});
@@ -408,12 +410,20 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 	};
 
 	$scope.goToProfilePageFromComment = function (comment) {
-		$location.path('/profile/' + comment.userID);
+		if(comment.userID == loggedInuserID){
+			$location.path('/profile/');
+		}
+		else{
+			$location.path('/userProfile/' + comment.userIDAnnonymous);
+		}
 	};
 
 	$scope.goToProfilePage = function () {
-		debugger;
-		$location.path('/profile/' + userID);
+		if(userID == loggedInuserID){
+			$location.path('/profile/');
+		}else{
+			$location.path('/userProfile/' + username);
+		}
 	};
 
 	$scope.userIsLoggedIn = function(){
@@ -794,7 +804,6 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 		$http.get("/deleteCommentImage?questionCommentID=" + comment.questionCommentID)
 			.then(function (response) {
 				var response = response.data;
-				debugger;
 				$scope.deleteProfilePicture = "Picture deleted!";
 			}, function (response) {
 				console.log("Error");

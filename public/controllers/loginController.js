@@ -88,11 +88,6 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
         return false;
 	}
 
-	$scope.goToLink = function () {
-		$location.path('/profile/' + $cookies.get('userID'));
-	};
-
-
     
 }]).
 directive('ngConfirmClick', [

@@ -3,9 +3,8 @@ angular.module("KnowItAll").config(function($routeProvider) {
     .when("/", {
         templateUrl : "pages/home.html"
     })
-    .when("/profile/:userID", {
+    .when("/profile/", {
         templateUrl : "pages/profile.html",
-        controller : "ProfileCtrl"
     })
     .when("/login", {
         templateUrl : "pages/login.html",
