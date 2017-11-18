@@ -78,9 +78,9 @@ insert into Question(userID, isPoll, title, subTitle, description, totalVotes, i
 values (
 	1, 
     true,
-	"Movie to watch",
+	"What movie should I watch?",
     "nothing",
-    "Which movie should I watch?",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a tempor ligula. Maecenas tortor orci, posuere sed hendrerit in, vulputate et sem. ",
     0,
     false,
     "https://cdn-media-1.lifehack.org/wp-content/files/2014/06/Frozen-Free-Wallpaper.jpg"
@@ -182,7 +182,7 @@ values (
 insert into PollOption(questionID, title, votes) 
 values (
 	1,
-    "Papa john's",
+    "Papa Johns",
     10
 );
 
