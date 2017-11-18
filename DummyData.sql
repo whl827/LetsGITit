@@ -410,9 +410,10 @@ set bio = "I'm a computer science major, and I love pho and pigs!",
 imageURL = "http://www.critterbabies.com/wp-content/uploads/2014/11/p2.jpg" 
 where userID = 3;
 
-insert into UserToQuestion(userID, questionID) values (1, 1);
+
 insert into UserToQuestion(userID, questionID) values (1, 2);
 insert into UserToQuestion(userID, questionID) values (1, 3);
+insert into UserToQuestion(userID, questionID) values (2, 1);
 insert into UserToQuestion(userID, questionID) values (2, 4);
 insert into UserToQuestion(userID, questionID) values (2, 5);
 insert into UserToQuestion(userID, questionID) values (3, 6);
