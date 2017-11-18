@@ -17,6 +17,8 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 	var questionID = $routeParams.questionID;
 	var getRating = true;
 
+	var userID;
+
 	if (getRating) {
 		$http.get('/getQuestion?questionID=' + questionID).then(function (response) {
 			
@@ -30,6 +32,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 
 			$scope.title = response.data[0].title;
 			$scope.userID = response.data[0].userID;
+			userID = response.data[0].userID;
 			$scope.description = response.data[0].description;
 
 			$scope.isAnonymous = response.data[0].isAnonymous;
@@ -354,7 +357,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 	};
 
 	$scope.goToProfilePage = function () {
-		$location.path('/profile/' + loggedInuserID);
+		$location.path('/profile/' + userID);
 	};
 
 	$scope.userIsLoggedIn = function(){

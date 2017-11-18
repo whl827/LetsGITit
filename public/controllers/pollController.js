@@ -22,6 +22,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 	var getPoll = true; //check if poll is selected
 
 	var title;
+	var userID;
 	//when true, get info from database
 	//getting information from search page (Home)
 	//(search result controller)
@@ -48,6 +49,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 			$scope.title = response.data[0].title;
 			title = response.data[0].title;
 			$scope.userID = response.data[0].userID;
+			userID = response.data[0].userID;
 
 			$scope.description = null;
 			if (response.data[0].description != 'undefined') {
@@ -74,7 +76,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 			var profileImage = document.querySelector("#profileImage");
 
 			if ($scope.isAnonymous == 1) {
-				$scope.username = "anonymous";
+				$scope.username = "Anonymous";
 				profileImage.src = "img/anonymous_profile.png";
 				//assign sample profile pic
 			} else {
@@ -410,7 +412,8 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 	};
 
 	$scope.goToProfilePage = function () {
-		$location.path('/profile/' + loggedInuserID);
+		debugger;
+		$location.path('/profile/' + userID);
 	};
 
 	$scope.userIsLoggedIn = function(){

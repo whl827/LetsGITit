@@ -6,8 +6,8 @@
 		<div class="info-cont">
 			<p class="username" id = "username">
 			Asked by
-			<img id="profileImage" class="img-circle" ng-click="goToProfilePage()" src= {{profileImageURL}} width="40px" height="40px" />
-			 {{username}} 
+			<img id="profileImage" class="img-circle" width="40px" height="40px" />
+			<a ng-click="username!='Anonymous' && goToProfilePage()"> {{username}} </a>
 			</p>
 			
 			<p class="end-date" id = "endDate"> 
@@ -132,12 +132,12 @@
 
 
 							<div ng-hide="visible">
-									<img ng-show = "comment.imageURL !== null && comment.userIDAnnonymous!='Anonymous'" ng-click="goToProfilePageFromComment(comment)" class="comment-profile-pic" src= {{comment.imageURL}} width="60px" height="60px">
-									<img ng-show="comment.imageURL == null && comment.userIDAnnonymous!='Anonymous'" ng-click="goToProfilePageFromComment(comment)" class="comment-profile-pic" src = "img/blankprofile.png" width="60px" height="60px">
+									<img ng-show = "comment.imageURL !== null && comment.userIDAnnonymous!='Anonymous'" class="comment-profile-pic" src= {{comment.imageURL}} width="60px" height="60px">
+									<img ng-show="comment.imageURL == null && comment.userIDAnnonymous!='Anonymous'" class="comment-profile-pic" src = "img/blankprofile.png" width="60px" height="60px">
 									<img ng-show="comment.userIDAnnonymous=='Anonymous'" class="comment-profile-pic" src = "img/anonymous_profile.png" width="60px" height="60px">
 								<div class="row">
 									<div class= "col-lg-9 col-md-9 col-sm-12">
-										<p class="comment-username"> {{comment.userIDAnnonymous}} </p>
+											<p class="comment-username" ng-click="comment.userIDAnnonymous!='Anonymous' && goToProfilePageFromComment(comment)"> {{comment.userIDAnnonymous}} </p>
 										<img ng-show="comment.image != null" src = {{comment.image}} width="150px" height="150px"> 
 									</div>
 									<div class="col-lg-3 col-md-3 col-sm-12">
