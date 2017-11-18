@@ -349,6 +349,14 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 
 	};
 
+	$scope.goToProfilePageFromComment = function (comment) {
+		$location.path('/profile/' + comment.userID);
+	};
+
+	$scope.goToProfilePage = function () {
+		$location.path('/profile/' + loggedInuserID);
+	};
+
 	$scope.userIsLoggedIn = function(){
     	if($cookies.get('userID') != -1 && $cookies.get('userID') != undefined){
     		return true;

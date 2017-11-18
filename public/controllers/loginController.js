@@ -1,4 +1,4 @@
-angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$window', '$cookies', function($scope, $http, $window, $cookies) {
+angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$window', '$cookies','$location', function($scope, $http, $window, $cookies, $location) {
 
     hashCode = function(str) {
 	  var hash = 0, i, chr;
@@ -86,7 +86,11 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
             return true;
         }
         return false;
-    }
+	}
+
+	$scope.goToLink = function () {
+		$location.path('/profile/' + $cookies.get('userID'));
+	};
 
 
     

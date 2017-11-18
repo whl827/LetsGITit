@@ -6,7 +6,7 @@
 		<div class="info-cont">
 			<p class="username" id = "username">
 			Asked by
-			<img id="profileImage" class="img-circle" src= {{profileImageURL}} width="40px" height="40px" />
+			<img id="profileImage" class="img-circle" ng-click="goToProfilePage()" src= {{profileImageURL}} width="40px" height="40px" />
 			 {{username}} 
 			</p>
 			
@@ -132,8 +132,9 @@
 
 
 							<div ng-hide="visible">
-									<img ng-show = "comment.imageURL !== null" class="img-circle" src= {{comment.imageURL}} width="50px" height="50px">
-									<img ng-show="comment.imageURL == null" class="img-circle" src = "img/blankprofile.png" width="50px" height="50px"> 
+									<img ng-show = "comment.imageURL !== null && comment.userIDAnnonymous!='Anonymous'" ng-click="goToProfilePageFromComment(comment)" class="comment-profile-pic" src= {{comment.imageURL}} width="60px" height="60px">
+									<img ng-show="comment.imageURL == null && comment.userIDAnnonymous!='Anonymous'" ng-click="goToProfilePageFromComment(comment)" class="comment-profile-pic" src = "img/blankprofile.png" width="60px" height="60px">
+									<img ng-show="comment.userIDAnnonymous=='Anonymous'" class="comment-profile-pic" src = "img/anonymous_profile.png" width="60px" height="60px">
 								<div class="row">
 									<div class= "col-lg-9 col-md-9 col-sm-12">
 										<p class="comment-username"> {{comment.userIDAnnonymous}} </p>
