@@ -180,4 +180,44 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
         $window.location.replace("#!login");
     }
 
+    $scope.showPopUpForDeletingPost = function(question){
+    	var questionID = question.questionID;
+    	$scope.deleteQuestionID = questionID;
+    	$("#deletePostModal").modal('show');
+    }
+
+	$scope.deletePost = function() {
+		console.log("In deletePost in ProfileCtrl");
+        
+		console.log("QUESTIONID: " + $scope.deleteQuestionID);
+
+    	$http.get('/deletePost?questionID=' + $scope.deleteQuestionID)
+    		.then(function (response) {
+    			//redirect to profile
+    			console.log("SUCCESS deleting Post "); 
+    			$window.location.reload();
+    			console.log("CALLED");
+    		}, function (response) {
+	            console.log("FAILED deleting post");
+	        }
+    	);
+    };
+    
+	$scope.deleteAllPosts = function() {
+		console.log("In deletePost in ProfileCtrl");
+        
+		console.log("USER ID: " + $cookies.get("userID"));
+		var userID = $cookies.get("userID");
+
+    	$http.get('/deleteAllPosts?userID=' + userID)
+    		.then(function (response) {
+    			//redirect to profile
+    			$window.location.reload();
+    			console.log("SUCCESS deleting All Posts"); 
+    		}, function (response) {
+	            console.log("FAILED deleting all posts");
+	        }
+    	);
+    };
 }]);
+

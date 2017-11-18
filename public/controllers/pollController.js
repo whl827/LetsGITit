@@ -74,7 +74,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 			var profileImage = document.querySelector("#profileImage");
 
 			if ($scope.isAnonymous == 1) {
-				$scope.username = "ANONYMOUS";
+				$scope.username = "anonymous";
 				profileImage.src = "img/anonymous_profile.png";
 				//assign sample profile pic
 			} else {
@@ -95,6 +95,29 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 				});
 				//profile
 			}
+
+
+			$scope.endDateDisplay = null;
+			var end_date = response.data[0].endDate;
+			if (end_date == null) {
+                $scope.endDateDisplay = "Open Forever"; 
+            } else {
+                var date = new Date();
+                var finalCloseDate = new Date(end_date);
+                if (date < finalCloseDate) { 
+                    var month = finalCloseDate.getUTCMonth() + 1; 
+                    var day = finalCloseDate.getUTCDate();
+                    var year = finalCloseDate.getUTCFullYear();
+                    newdate = month + "/" + day + "/" + year;
+                    $scope.endDateDisplay = "Open until " + newdate ; 
+                    //current.endDateDisplay = "Open until " + convertDay(finalCloseDate) ; 
+                } else { 
+                    $scope.endDateDisplay = "Closed"; 
+                }
+            }
+
+
+
 
 			$scope.endDate = null;
 			if (response.data[0].endDate == null) {

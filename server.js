@@ -1164,6 +1164,36 @@ app.get('/deleteCommentImage', function(req, res) {
 		});
 });
 
+app.get('/deletePost', function(req, res) {
+
+	console.log("DELETING QUESTION ID IN SERVER " + req.query.questionID);
+
+	var questionID = req.query.questionID;
+
+	console.log("DELETE from question where questionID = " + questionID);
+
+	con.query("DELETE from question where questionID = " + questionID, 
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
+});
+
+app.get('/deleteAllPosts', function(req, res) {
+
+	console.log("IN SERVER , DELETING ALL QUESTION FROM USER ID: " + req.query.userID);
+
+	var userID = req.query.userID;
+
+	console.log("DELETE from question where userID = " + userID);
+
+	con.query("DELETE from question where userID = " + userID, 
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
+});
+
 
 app.listen(8080);
 console.log("Server running on port 8080");

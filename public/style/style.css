@@ -177,26 +177,88 @@ create-button, .submit-button, .login-button, .signup-button{
 }
 
 
-/* poll/rating */
+/******************** POLL/RATING ***********/
 
-.image_for_question{
+/*.image_for_question{
 	max-width: 90%;
 	height: auto;
 	margin: 20px;
+}*/
+
+/***************** info *****************/
+
+.post-image-container{
+	/*padding-top: 56.25%;*/
 }
 
-
+.post-image {
+	width: 100%;
+	height: 350px;
+    object-fit: cover;
+    overflow: hidden;
+}
 
 .info-cont{
 	padding-bottom: 10px; 
+	margin-bottom: 15px;
 }
 
-.username, .description, .end-date {
+.question-sub-cont {
+	padding-left: 50px; 
+	padding-right: 50px; 
+	padding-top: 25px;
+}
+
+.end-date {
+	margin-bottom: 0px;
+	color: #BB298B;
+}
+
+.main-info {
+	margin-bottom: 20px;
+}
+
+.main-info-text{
+	padding-left: 50px;
+}
+
+.balance-row-margin{
+	margin-left: 0px;
+}
+
+.secondary-info{
+	font-size: 17px;
+	margin-bottom: 10px;
+}
+
+.survey-heading{
+	font-size: 30px; 
+	margin-bottom: 0px;
+}
+
+.description {
 	font-size: 13px; 
 	margin-bottom: 5px; 
 }
 
+.creater-profile-pic{
+	border-radius: 50%; 
+	width: 70px;
+	height: 70px;
+}
 
+.username {
+	font-size: 15px; 
+	margin-bottom: 0px;
+	color: #9E9E9E;
+}
+
+/*.center {
+    margin: auto;
+    width: 60%;
+}
+
+*/
 
 
 .vote-cont{
@@ -206,6 +268,7 @@ create-button, .submit-button, .login-button, .signup-button{
 
 .vote-heading{
 	margin-bottom: 7px; 
+	margin-top: 30px;
 
 }
 
@@ -217,7 +280,7 @@ create-button, .submit-button, .login-button, .signup-button{
 
 
 .poll-option{
-	width: 50%;
+	width: 75%;
 
 
 
@@ -228,7 +291,7 @@ create-button, .submit-button, .login-button, .signup-button{
 	cursor: pointer;
 
 	font-family: "Roboto";
-	letter-spacing: 3px;
+	letter-spacing: 1px;
 	font-size: 15px; 
 
 	padding-left: 25px;
@@ -252,8 +315,6 @@ create-button, .submit-button, .login-button, .signup-button{
 
 .poll-option:hover{
 	background-color: #e53935;
-
-
     color: white;
 	-webkit-box-shadow: 4px 18px 82px -9px rgba(0,0,0,0.59);
 	-moz-box-shadow: 4px 18px 82px -9px rgba(0,0,0,0.59);
@@ -335,6 +396,10 @@ create-button, .submit-button, .login-button, .signup-button{
 
 }
 
+.comment-info {
+	padding-left: 30px;
+}
+
 
 .comment-button{
 	margin-right: 30px; 
@@ -356,7 +421,7 @@ create-button, .submit-button, .login-button, .signup-button{
 .cont {
 	background-color: white; 
 
-	border-radius: 10px;
+	/*border-radius: 10px;*/
 
 	-webkit-box-shadow: -1px 10px 39px -5px rgba(0,0,0,0.75);
 	-moz-box-shadow: -1px 10px 39px -5px rgba(0,0,0,0.75);
@@ -365,13 +430,13 @@ create-button, .submit-button, .login-button, .signup-button{
 
 
 .display-survey-container {
-	margin-left: 120px;
-	margin-right: 120px;
-	margin-top: 10px;
+	margin-left: 30px;
+	margin-right: 10px;
+	/*margin-top: 10px;*/
 	margin-bottom: 50px;
 
-	padding-bottom: 50px;
-	padding-top: 50px;
+	padding-bottom: 10px;
+	/*padding-top: 25px;*/
 }
 
 .create-cont{
@@ -398,11 +463,6 @@ create-button, .submit-button, .login-button, .signup-button{
 
 
 
-
-.survey-heading{
-	font-size: 40px; 
-	padding-left: 55px;
-}
 
 .sub-cont {
 	padding-left: 80px;
@@ -551,8 +611,14 @@ hr {
 }
 
 .rec-cont {
-	margin-left: 15px;
-	margin-bottom: 50px;
+	background: white;
+	padding: 20px;
+	margin-right: 20px;
+	position: fixed;
+
+	-webkit-box-shadow: -1px 10px 39px -5px rgba(0,0,0,0.75);
+	-moz-box-shadow: -1px 10px 39px -5px rgba(0,0,0,0.75);
+	box-shadow: -1px 10px 39px -5px rgba(0,0,0,0.75);
 }
 
 .rec {
@@ -883,7 +949,7 @@ hr {
 	color: #616161;
 }
 
-.profile-button, .deactivate-button {
+.profile-button, .deactivate-button, .delete-post-button {
 	display:block; 
     width:40%;
     margin-left: auto;
@@ -900,7 +966,7 @@ hr {
     transition-duration: 0.4s;
 }
 
-.profile-button:hover, .deactivate-button:hover {
+.profile-button:hover, .deactivate-button:hover, .delete-post-button:hover {
 	 opacity: 0.5;
 }
 
@@ -936,6 +1002,36 @@ select:focus,
 textarea:focus,
 button:focus {
     outline: none;
+}
+
+
+/************ ADMIN PAGE ******************/
+.admin-heading {
+	font-size: 30px;
+	margin-bottom: 7px;
+}
+
+.admin-subheading {
+	font-size: 15px;
+	margin-bottom: 50px;
+}
+
+.admin-cont {
+	background-color: white; 
+	margin-left: 50px; 
+	margin-right: 50px;
+	padding-left: 100px; 
+	padding-right: 100px; 
+	padding-top: 50px; 
+	padding-bottom: 50px; 
+
+	-webkit-box-shadow: -1px 9px 43px 0px rgba(0,0,0,0.5);
+	-moz-box-shadow: -1px 9px 43px 0px rgba(0,0,0,0.5);
+	box-shadow: -1px 9px 43px 0px rgba(0,0,0,0.5);
+}
+
+.auth-button {
+	margin-left: 20px;
 }
 
 /************ MEDIA QUERIES ***************/

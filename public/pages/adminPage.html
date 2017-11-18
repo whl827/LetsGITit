@@ -1,11 +1,23 @@
 <div>
-<h1>Administrator Home Page</h1>
-
-<div ng-controller="adminCtrl">
-    {{adminData.AdminErrorMessage}}
+<div class="admin-cont" ng-controller="adminCtrl">
+	<p class="admin-heading"> Admin Page </p>
+    <p class="admin-subheading"> {{adminData.AdminErrorMessage}} </p>
     <div ng-if="adminData.auth == 0">
-        <input type="password" ng-model="input.adminPassword">
-        <button type="button" ng-click="authenticate()">AUTHENTICATE</button>
+        <div class="form-group row">
+			<label for="password" class="col-sm-1 col-form-label">Password </label>
+			<div class="col-sm-6">
+				<input id = "pollTitle" type="password" class="form-control" id="password" name="password" ng-model="input.adminPassword">
+			</div>
+			<input type="submit" 
+		    value="AUTHENTICATE"
+		    class = "create-button auth-button"
+		    ng-click="authenticate()"
+		>
+		</div>
+		
+
+
+
     </div>
 
     <div ng-if="adminData.auth == 1">
@@ -15,8 +27,6 @@
 
 			<div class="post-container" ng-repeat="question in flagged.questionList" ng-click="goToLink(question)">
 				<p class="feed-question-title" id="current-question-title">{{question.title}}</p>
-
-
 				<div class="row">
 					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
 						<p class="feed-user"> Created by {{question.username}} on {{question.startDate | date: 'yyyy-MM-dd'}}</p>
@@ -39,6 +49,7 @@
 					</div>
 				</div>
 			</div>
+
 
     	</div>
     </div>

@@ -27,6 +27,7 @@
 						<div class="profile-change-settings">
 							<button class="profile-button" data-toggle="modal" data-target="#editProfileModal"> EDIT </button>
 							<button class="deactivate-button" data-toggle="modal" data-target="#deactivateProfileModal"> DEACTIVATE </button>
+							<button class="delete-post-button" data-toggle="modal" data-target="#deleteAllPostModal"> DELETE ALL POSTS </button>
 						</div>
 					</div>
 				</div>
@@ -68,8 +69,6 @@
 		  </div>
 		</div>
 
-
-
 		<!-- Deactivate Profile Modal -->
 		<div class="modal fade" id="deactivateProfileModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
 		  <div class="edit-profile-modal modal-dialog" role="document">
@@ -89,7 +88,43 @@
 		  </div>
 		</div>
 
+		<!-- DELETE All Profile QUESTIONS MODAL -->
+		<div class="modal fade" id="deleteAllPostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="edit-profile-modal modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete all of your questions?</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
 
+		      <div class="modal-footer">
+		      	<button type="button" class="btn btn-primary save-edit" data-dismiss="modal" ng-click="deleteAllPosts()">Yes</button>
+		        <button type="button" class="btn btn-secondary cancel-edit" data-dismiss="modal">No</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+
+		<!-- DELETE Profile QUESTION MODAL -->
+		<div class="modal fade" id="deletePostModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="edit-profile-modal modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Are you sure you want to delete this question?</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+
+		      <div class="modal-footer modal-for-deleting-post">
+		      	<button type="button" class="btn btn-primary save-edit" data-dismiss="modal" ng-click="deletePost()">Yes</button>
+		        <button type="button" class="btn btn-secondary cancel-edit" data-dismiss="modal">No</button>
+		      </div>
+		    </div>
+		  </div>
+		</div>
 
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 offset-lg-3 col-xl-9 offset-lg-3">
 			<div class="my-posts-container">
@@ -111,10 +146,15 @@
 								<div class="tag"> {{tag.tagStr}} </div>
 							</div>
 						</div>
+						<div ng-click="d(); $event.stopPropagation();">
+							<button class="delete-post-button" data-toggle="modal" data-target="#deletePostModal" 
+								    ng-click="showPopUpForDeletingPost(question)">DELETE</button>
+						</div>
 					</div>
 				</div>
 			</div>
 		</div>
+
 
 
 	</div>

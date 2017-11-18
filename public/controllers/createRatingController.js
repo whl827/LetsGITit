@@ -38,6 +38,12 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 		//check if it's a image url
 		if(checkURL(imageURL)){
 
+			if(imageURL.length > 2000){
+				imageUploadURL = null;
+				console.log("IMAGE URL IS TOO LONG");
+				return;
+			};
+
 			image.onerror = function() {
 				this.onerror = function(){
 					return;
@@ -45,7 +51,7 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 				image.src = "";
 				image.style.display = "none";
 				imageUploadURL = null;
-				console.log("ERROR LOADING IMAGE: HIDIE IMAGE");
+				console.log("ERROR LOADING IMAGE: HIDE IMAGE");
 
 			};
 			image.onload = function(){
@@ -58,7 +64,7 @@ angular.module("KnowItAll").controller('CreateRateCtrl', ['$scope', '$http', '$c
 			}
 			image.src = imageURL;
 		}else{ //if not, hide
-			console.log("NOT IMAGE URL: HIDIE IMAGE");
+			console.log("NOT IMAGE URL: HIDE IMAGE");
 			image.src = "";
 			image.style.display = "none";
 			imageUploadURL = null;
