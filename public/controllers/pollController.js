@@ -394,10 +394,11 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 		}
 	}
 
-	$scope.toggleCommentFlag = function (comment, flag) {
+	$scope.flagComment = function (comment, commentList, index) {
 		var questionCommentID = angular.copy(comment).questionCommentID;
-		console.log('flagging comment ' + questionCommentID + ', flag=' + flag);
-		$http.get('/toggleCommentFlag?questionCommentID=' + questionCommentID + '&flag=' + flag);
+		console.log('flagging comment ' + questionCommentID + ', flag=1');
+		commentList[index].isFlagged = 1;
+		$http.get('/toggleCommentFlag?questionCommentID=' + questionCommentID + '&flag=1');
 	}
 
 	$scope.goToLink = function (question) {

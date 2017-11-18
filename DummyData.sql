@@ -45,6 +45,12 @@ insert into KUser(username, passwordHash, isAdmin) values
     true
 );
 
+insert into UserNotification(userID, description) values 
+(
+	7,
+    "first notificaiton"
+);
+
 insert into Tag(tagStr) values ("Pizza");
 insert into Tag(tagStr) values ("Movie");
 insert into Tag(tagStr) values ("USC");

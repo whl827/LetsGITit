@@ -191,7 +191,7 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 	            console.log("FAILED deleting post");
 	        }
     	);
-    };
+    }
     
 	$scope.deleteAllPosts = function() {
 		console.log("In deletePost in ProfileCtrl");
@@ -208,6 +208,27 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 	            console.log("FAILED deleting all posts");
 	        }
     	);
-    };
+    }
+
+    $scope.getUnreadNotifications = function() {
+    	var userID = $cookies.get("userID");
+    	$scope.notifications = {notificationList : [] };
+
+    	$http.get('/getNotifications?userID=' + userID + '&read=0')
+    	.then(function (response) {
+    		$scope.notifications.notificationList = response.data;
+    	});
+    }
+
+    $scope.markAsRead = function(notification, notificationList, index) {
+    	console.log("Marking as read");
+    	var notification = angular.copy(notification)
+    	var notificationID = notification.userNotificaitonID;
+
+    	console.log(notification);
+    	$http.get('/markNotificationAsRead?id=' + notificationID);
+    	notificationList.splice(index, 1);
+    }
+
 }]);
 

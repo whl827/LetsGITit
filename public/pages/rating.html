@@ -190,8 +190,9 @@
 								<button class="dislike-comment" ng-model="comment.commentLikeInput" ng-click="commentDislike(comment)" ng-required ng-if="hideInputFields()">DISLIKE </button>
 								<p class="dislike-comment-num"> {{comment.commentDislikeCount}} </p>
 
-								<!-- hey joyce can you make this button look nice? -->
-								<button ng-click="toggleCommentFlag(comment, 1)"> FLAG </button>
+								<button class="flag-comment" ng-click="flagComment(comment, commentList, $index)"> FLAG </button>
+								<br>
+								<span ng-if="comment.isFlagged == 1" style="color:red">This comment is flagged</span>
 							</div>
 
 							{{errorMessageCommentLike}}

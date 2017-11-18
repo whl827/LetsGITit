@@ -67,6 +67,7 @@
 		      </div>
 		    </div>
 		  </div>
+
 		</div>
 
 		<!-- Deactivate Profile Modal -->
@@ -124,6 +125,19 @@
 		      </div>
 		    </div>
 		  </div>
+		</div>
+
+		<!-- Joyce do the syle things here :D -->
+
+		<div data-ng-init="getUnreadNotifications()">
+
+	  		<div ng-repeat="notification in notifications.notificationList">
+	  			----------------- <br>
+	  			{{notification.description}} <br>
+	  			<button ng-click="markAsRead(notification, notifications.notificationList, $index)">Mark as read</button> <br>
+	  			----------------- <br>
+	  		</div>
+
 		</div>
 
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 offset-lg-3 col-xl-9 offset-lg-3">

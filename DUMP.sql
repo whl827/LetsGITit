@@ -13,6 +13,13 @@ create table KUser (
     imageURL varchar(2000)
 );  
 
+create table UserNotification (
+	userNotificaitonID int(8) primary key auto_increment,
+    userID int(8) not null,
+    description varchar(200),
+    isRead boolean default false
+);
+
 create table Question (
 	questionID int(8) primary key auto_increment,
     userID int(8) not null,

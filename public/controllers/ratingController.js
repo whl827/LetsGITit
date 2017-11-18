@@ -369,6 +369,14 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 	$scope.toggleFlag = function (flag) {
 		console.log('flagging question: ' + questionID);
 		$http.get('/toggleFlag?questionID=' + questionID + '&flag=' + flag);
+		$scope.flag.message = "You have flagged this post";
+	}
+
+	$scope.flagComment = function (comment, commentList, index) {
+		var questionCommentID = angular.copy(comment).questionCommentID;
+		console.log('flagging comment ' + questionCommentID + ', flag=1');
+		commentList[index].isFlagged = 1;
+		$http.get('/toggleCommentFlag?questionCommentID=' + questionCommentID + '&flag=1');
 	}
 
 	$scope.loadQFlag = function () {

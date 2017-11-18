@@ -26,6 +26,28 @@ con.connect(function(err) {
 
 app.use(express.static(__dirname + '/public'));
 
+
+app.get('/getNotifications', function (req, res) {
+
+	console.log("getting notifications: ");
+	console.log("SELECT * FROM UserNotification WHERE userID = " + req.query.userID 
+		+ " AND isRead = " + req.query.read);
+
+	con.query("SELECT * FROM UserNotification WHERE userID = " + req.query.userID 
+		+ " AND isRead = " + req.query.read, 
+		function (err, result, feilds) {
+			if (err) throw err;
+			res.json(result);
+		});
+});
+
+app.get('/markNotificationAsRead', function (req, res) {
+	con.query("UPDATE UserNotification SET isRead = 0 WHERE userNotificaitonID = " + req.query.id, 
+		function (err, result, feilds) {
+			if (err) throw err;
+		});
+});
+
 // Get Question Search from navbar (ANY TEXT)
 app.get('/searchQuestionsAnyText', function (req, res) {
 
