@@ -16,14 +16,13 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 	$scope.loggedInuserID = loggedInuserID;
 	var questionID = $routeParams.questionID;
 	var getRating = true;
-
-	var userID;
+	var username;
 
 	if (getRating) {
 		$http.get('/getQuestion?questionID=' + questionID).then(function (response) {
 			
 			var isPoll = response.data[0].isPoll;
-			debugger;
+		
 			if(isPoll == 0){
 				$scope.isPoll = "RATING"
 			}else{
@@ -32,7 +31,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 
 			$scope.title = response.data[0].title;
 			$scope.userID = response.data[0].userID;
-			userID = response.data[0].userID;
 			$scope.description = response.data[0].description;
 
 			$scope.isAnonymous = response.data[0].isAnonymous;
@@ -60,6 +58,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 				profileImage.src = "img/anonymous_profile.png";
 			} else {
 				$scope.username = response.data[0].username;
+				username = response.data[0].username;
 				$http.get("/getProfilePic?userID=" + response.data[0].userID)
 				.then(function (response) {
 					if(response.data[0].imageURL == "" || response.data[0].imageURL == null){
@@ -353,11 +352,11 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 	};
 
 	$scope.goToProfilePageFromComment = function (comment) {
-		$location.path('/profile/' + comment.userID);
+		$location.path('/userProfile/' + comment.userIDAnnonymous);
 	};
 
 	$scope.goToProfilePage = function () {
-		$location.path('/profile/' + userID);
+		$location.path('/userProfile/' + username);
 	};
 
 	$scope.userIsLoggedIn = function(){
@@ -728,7 +727,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 		$http.get("/deleteCommentImage?questionCommentID=" + comment.questionCommentID)
 			.then(function (response) {
 				var response = response.data;
-				debugger;
 				$scope.deleteProfilePicture = "Picture deleted!";
 			}, function (response) {
 				console.log("Error");
