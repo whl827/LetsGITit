@@ -8,13 +8,13 @@ insert into KUser(username, passwordHash) values
 
 insert into KUser(username, passwordHash) values
 (
-	"Joyce",
+	"joyce",
     111421
 );
 
 insert into KUser(username, passwordHash) values
 (
-	"Summer",
+	"summer",
     111421
 );
 
@@ -50,29 +50,31 @@ insert into Tag(tagStr) values ("Movie");
 insert into Tag(tagStr) values ("USC");
 insert into Tag(tagStr) values ("Course");
 
-insert into Question(userID, isPoll, title, subTitle, description, totalVotes, isAnonymous) 
+insert into Question(userID, isPoll, title, subTitle, description, totalVotes, isAnonymous, image) 
 values (
-	1, 
+	2, 
     true,
-	"Best Pizza",
-    "around USC",
-    "What's the best pizza around the campus?",
+	"What is the best pizza place around USC?",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum orci sit amet ipsum rutrum sed.",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec nibh id lacus dignissim commodo id vitae libero. Nunc sapien dolor, sodales in suscipit at, blandit et velit. Cras maximus tellus ac nulla rutrum, vel gravida nunc finibus. Duis aliquet, libero non suscipit dapibus, quam augue semper elit, sit amet.",
     0,
-    false
+    false,
+    "https://i.ytimg.com/vi/1X6OAucemtE/maxresdefault.jpg"
 );
 
-insert into Question(userID, isPoll, title, subTitle, description, totalVotes, isAnonymous) 
+insert into Question(userID, isPoll, title, subTitle, description, totalVotes, isAnonymous, image) 
 values (
 	1, 
     true,
-	"Best CS Course",
+	"What is the best CS course at USC?",
     "USC",
-    "What is the best CS Course you've taken?",
+    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a tempor ligula. Maecenas tortor orci, posuere sed hendrerit in, vulputate et sem. Sed in consectetur purus, a imperdiet nunc.",
     0,
-    true
+    true,
+    "http://www.austincc.edu/sites/default/files/Computer-Science_10282016.jpg"
 );
 
-insert into Question(userID, isPoll, title, subTitle, description, totalVotes, isAnonymous)  
+insert into Question(userID, isPoll, title, subTitle, description, totalVotes, isAnonymous, image)  
 values (
 	1, 
     true,
@@ -80,7 +82,8 @@ values (
     "nothing",
     "Which movie should I watch?",
     0,
-    false
+    false,
+    "https://cdn-media-1.lifehack.org/wp-content/files/2014/06/Frozen-Free-Wallpaper.jpg"
 );
 
 insert into Question(userID, isPoll, title, subTitle, description, totalVotes, positiveVotes, isAnonymous) 
@@ -95,7 +98,7 @@ values (
     false
 );
 
-insert into Question(userID, isPoll, title, subTitle, endDate, description, totalVotes, isAnonymous) 
+insert into Question(userID, isPoll, title, subTitle, endDate, description, totalVotes, isAnonymous, image) 
 values (
 	2,
     false,
@@ -104,19 +107,21 @@ values (
     "2017-10-17",
     "How are we doing this year?! ",
     0,
-    false
+    false,
+    "http://sportsformulator.com/wp-content/uploads/2016/04/USC-Football-1024x576.jpg"
 );
 
-insert into Question(userID, isPoll, title, subTitle, endDate, description, totalVotes, isAnonymous) 
+insert into Question(userID, isPoll, title, subTitle, endDate, description, totalVotes, isAnonymous, image) 
 values (
 	3,
     true,
-	"The most study friendly coffee shop around campus",
+	"Study-friendly coffee shops on campus?",
     "USC",
     "2017-10-17",
     "What do u guys think?",
     0,
-    false
+    false,
+    "https://www.healthline.com/hlcmsresource/images/topic_centers/Food-Nutrition/Coffee1-banner.jpg"
 );
 
 insert into Question(userID, isPoll, title, subTitle, endDate, description, totalVotes, isAnonymous) 
