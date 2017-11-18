@@ -380,7 +380,14 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 		else {
 			$location.path('/rating/' + question.questionID);
 		}
+	};
 
+	$scope.goToProfilePageFromComment = function (comment) {
+		$location.path('/profile/' + comment.userID);
+	};
+
+	$scope.goToProfilePage = function () {
+		$location.path('/profile/' + loggedInuserID);
 	};
 
 	$scope.userIsLoggedIn = function(){

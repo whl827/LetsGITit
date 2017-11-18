@@ -64,7 +64,7 @@
 					<a class="nav-link" ng-if="userIsAdmin()" href="#!adminPage">Admin Page</a>
 				</li>
 				<li class="nav-item" ng-controller="loginController">
-					<a class="nav-link" ng-if="userIsLoggedIn()" href="#!profile">Profile</a>
+					<a class="nav-link" ng-if="userIsLoggedIn()" ng-click = "goToLink()">Profile</a>
 				</li>
 
 <!-- 				<li class="nav-item" ng-controller="loginController" >
