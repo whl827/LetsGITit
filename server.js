@@ -42,9 +42,64 @@ app.get('/getNotifications', function (req, res) {
 });
 
 app.get('/markNotificationAsRead', function (req, res) {
-	con.query("UPDATE UserNotification SET isRead = 0 WHERE userNotificaitonID = " + req.query.id, 
+	con.query("UPDATE UserNotification SET isRead = 1 WHERE userNotificaitonID = " + req.query.id, 
 		function (err, result, feilds) {
 			if (err) throw err;
+		});
+});
+
+app.get('/notifyFollowing', function (req, res) {
+
+	function emailUser(email, description) {
+
+		if (email != null) {
+
+			var mailOptions = {
+				from: 'knowitall857@gmail.com',
+				to: email,
+				subject: 'A notification From KnowItAll',
+				text: description
+			};
+
+			transporter.sendMail(mailOptions, function(error, info){
+				if (error) {
+					console.log("In send email ERROR");
+					console.log(error);
+				} else {
+					console.log('Email sent: ' + info.response);
+					res.json(info);
+				}
+			});
+		}
+	}
+
+	var currUser = req.query.currUser;
+	var otherUser = req.query.userToNotify;
+	var action = req.query.action;
+	var description = "null notification";
+
+	console.log("in notifyFollowing");
+
+	if (action == 'unfollow') {
+		description = currUser + " has unfollowed you";
+	} else if (action == 'follow') {
+		description = currUser + " has followed you";
+	}
+
+	con.query('INSERT UserNotification(userID, description) VALUES((SELECT userID FROM KUser where username="' + otherUser + 
+		'"), "' + description + '");', 
+		function (err, result, feilds) {
+			if (err) throw err;
+		});
+
+
+	var email = null;
+	con.query('SELECT email FROM KUser WHERE username="' + otherUser + '"',
+		function (err, result, feilds) {
+			if (err) throw err;
+			email = result[0].email;
+			console.log(result[0].email);
+			emailUser(email, description);
 		});
 });
 
@@ -244,8 +299,8 @@ app.get('/insertUser', function (req, res) {
 	var username = req.query.username;
 	var password = req.query.passwordHash;
 
-	con.query("INSERT INTO KUser(username, passwordHash) " +
-			"values('" + username + "', " + password + ");",
+	con.query("INSERT INTO KUser(username, passwordHash, email) " +
+			"values('" + username + "', " + password + ", '" + email + "');",
 	  function (err, result, fields) {
 	  	if (err) throw err;
 	});

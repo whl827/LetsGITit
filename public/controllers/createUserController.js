@@ -2,9 +2,10 @@ angular.module("KnowItAll").controller('createUser', ['$scope', '$http', '$cooki
 
 	var username = $routeParams.username.replace(":", "");
     var password = $routeParams.password.replace(":", "");
+    var email = $cookies.get("newEmail");
 
-	if (true /* put security logic here later */) {
-		$http.get("/insertUser?username=" + username + "&passwordHash=" + password).then(
+	if (username == $cookies.get("newUsername") && password == $cookies.get("newPasswordHash")) {
+		$http.get("/insertUser?username=" + username + "&passwordHash=" + password + "&email=" + email).then(
 			function (response) {
 				$cookies.put('username', username);
 				$cookies.put('userID', response.data[0].userID);
