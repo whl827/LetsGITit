@@ -50,6 +50,7 @@ create table QuestionComment (
     commentDislikeCount int(8) not null,
 	isFlagged boolean default false,
     image varchar(20000) default null,
+    deactivated boolean default false,
     foreign key fk1(questionID) references Question(questionID) ON DELETE CASCADE,
     foreign key fk2(userID) references KUser(userID) ON DELETE CASCADE
 );

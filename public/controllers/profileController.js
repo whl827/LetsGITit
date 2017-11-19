@@ -168,11 +168,21 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
     			console.log("deactivating questions for: " + $scope.username);
     		}
     	);
+    	$http.get('/deactivateComments?userID=' + $scope.userID)
+    		.then(function (response) {
+    			console.log("deactivating comments for: " + $scope.username);
+    		}
+    	);
 
     	$cookies.put("username", null);
         $cookies.put("userID", -1);
         $cookies.put("isAdmin", false);
         $window.location.replace("#!login");
+
+        // After redirected to login page and after it loads, display a modal for the user with a message
+		$(document).ready(function () {
+		    $('#deactivateLoginModal').modal('show');
+		});
     }
 
     $scope.showPopUpForDeletingPost = function(question){
