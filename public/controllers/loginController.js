@@ -36,10 +36,9 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
                 // reactivating under login
                 $http.get('/reactivateUser?username=' + $scope.username +
                                      "&password=" + password).then(function (response) {} );
-                $cookies.put('newUserIDmsg', "NEW USER ID IS: " + newUserID);
                 // console.log("NEW USER ID IS: " + newUserID);
                 $http.get('/reactivateQuestions?userID=' + newUserID).then(function (response) {} );
-                $cookies.put('test', "WHY ISN'T THIS WORKING???");
+                $http.get('/reactivateComments?userID=' + newUserID).then(function (response) {} );
 
 			    // $scope.errorMessage = "Successfully logged in";
 			    //redirect to home page

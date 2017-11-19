@@ -131,7 +131,7 @@ app.get('/getTopTags', function (req, res){
 app.get('/searchUsers', function (req, res) {
 
 	con.query("SELECT u.username FROM KUser u WHERE u.username like '%" 
-		+ req.query.userQuery + "%';", 
+		+ req.query.userQuery + "%' AND u.deactivated=0;", 
 		function (err, result, fields) {
 			if (err) throw err;
 			res.json(result);
@@ -165,7 +165,7 @@ app.get('/user', function (req, res) {
 	});
 });
 
-//reactivating user under login
+// reactivating user under login
 app.get('/reactivateUser', function (req, res) {
 	console.log("Trying to reactivate user...");
 	con.query("UPDATE KUser k " +
@@ -178,7 +178,7 @@ app.get('/reactivateUser', function (req, res) {
 		});
 });
 
-// //reactivating questions
+// reactivating questions
 app.get('/reactivateQuestions', function (req, res) {
 	console.log("Try to reactivate questions...");
 	con.query("UPDATE Question q " +
@@ -190,7 +190,18 @@ app.get('/reactivateQuestions', function (req, res) {
 			res.json(result);
 		});
 });
-			  
+
+// reactivating comments
+app.get('/reactivateComments', function (req, res) {
+	con.query("UPDATE QuestionComment qc " +
+			  "SET deactivated=false " +
+			  "WHERE qc.userID=" + req.query.userID +
+			  " AND qc.deactivated=true",
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
+});
 
 //sign up
 app.get('/signupFunction', function (req, res) {
@@ -579,9 +590,9 @@ app.get('/pollList', function (req, res) {
 
 app.get('/commentList', function (req, res) {
 
-	con.query("SELECT qc.questionCommentID, qc.userID, qc.userIDAnnonymous, qc.description, qc.commentLikeCount, qc.commentDislikeCount, qc.image, u.imageURL "+
+	con.query("SELECT qc.questionCommentID, qc.userID, qc.userIDAnnonymous, qc.description, qc.commentLikeCount, qc.commentDislikeCount, qc.image, u.imageURL, qc.deactivated "+
 		"FROM QuestionComment qc, KUser u WHERE " + 
-		"qc.questionID='" + req.query.questionID + "' and qc.userID = u.userID;",
+		"qc.questionID='" + req.query.questionID + "' and qc.userID = u.userID AND qc.deactivated=false;",
 	  	function (err, result, fields) {
 	    if (err) throw err;
 	    res.json(result);
@@ -1189,6 +1200,16 @@ app.get('/deactivateQuestions', function (req, res) {
 			if (err) throw err;
 			res.json(result);
 	});
+});
+
+app.get('/deactivateComments', function (req, res) {
+
+	con.query("UPDATE QuestionComment qc SET deactivated=true" +
+			  " WHERE qc.userID=" + req.query.userID + " AND qc.deactivated=false",
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
 });
 
 app.get('/getProfilePic', function (req, res) {
