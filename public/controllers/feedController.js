@@ -1,8 +1,9 @@
-angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$location', function($scope, $http, $location) {
+angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$location', '$cookies', function($scope, $http, $location, $cookies) {
 
     // $scope.isQuestionList = 1;
 
-    console.log($scope.questionList);
+    // console.log("THIS IS QUESTIONLIST:");
+    // console.log($scope.questionList);
 
     $scope.searchButton = function(){
         var menu = document.querySelector(".drop-down-menu").value;
@@ -97,6 +98,8 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
 
 
     $scope.onloadFun = function() {
+        // console.log($cookies.get("newUserIDmsg"));
+        // console.log($cookies.get('test'));
         $http.get('/onPageLoad')
             .then(function (response) {
                     $scope.isQuestionList = 1;

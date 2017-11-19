@@ -158,9 +158,14 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
     	$scope.userID = $cookies.get('userID');
     	$scope.username = $cookies.get('username');
 
-    	$http.get('/deactivateAccount?deactivated=' + deactivated + '&userID=' + $scope.userID + "&username=" + $scope.username)
+    	$http.get('/deactivateUser?deactivated=' + deactivated + '&userID=' + $scope.userID + "&username=" + $scope.username)
     		.then(function (response) {
     			console.log("deactivating account for: " + $scope.username);
+    		}
+    	);
+    	$http.get('/deactivateQuestions?userID=' + $scope.userID)
+    		.then(function (response) {
+    			console.log("deactivating questions for: " + $scope.username);
     		}
     	);
 
