@@ -33,11 +33,13 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
                 $cookies.put('isAdmin', isAdmin);
 
 
-
                 // reactivating under login
                 $http.get('/reactivateUser?username=' + $scope.username +
                                      "&password=" + password).then(function (response) {} );
-                // $http.get('/reactivateQuestions?userID=' + $scope.userID).then(function (response) {} );
+                $cookies.put('newUserIDmsg', "NEW USER ID IS: " + newUserID);
+                // console.log("NEW USER ID IS: " + newUserID);
+                $http.get('/reactivateQuestions?userID=' + newUserID).then(function (response) {} );
+                $cookies.put('test', "WHY ISN'T THIS WORKING???");
 
 			    // $scope.errorMessage = "Successfully logged in";
 			    //redirect to home page

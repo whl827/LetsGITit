@@ -80,7 +80,7 @@ app.get('/onPageLoad', function (req, res){
 
 
 	con.query("SELECT q.questionID, q.userID, q.isAnonymous, q.isPoll, q.title, q.subtitle, q.description, q.startDate, " +
-					" q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " +
+					" q.endDate, q.totalVotes, q.positiveVotes, q.numLikes, q.deactivated " +
 			 " FROM Question q " +
 			 " ORDER BY q.numLikes desc",
 	function (err, result, fields) {
@@ -167,7 +167,7 @@ app.get('/user', function (req, res) {
 
 //reactivating user under login
 app.get('/reactivateUser', function (req, res) {
-	console.log("Trying to reactivate...");
+	console.log("Trying to reactivate user...");
 	con.query("UPDATE KUser k " +
 			  "SET deactivated=false " +
 			  "WHERE k.username='" + req.query.username +
@@ -178,11 +178,19 @@ app.get('/reactivateUser', function (req, res) {
 		});
 });
 
-// //reactivating q
-// app.get('/reactivateQuestion', funct)
-// 			  "UPDATE Question q" +
-// 			  "SET deactivated=false" +
-// 			  "WHERE q.userID=" + req.query.userID
+// //reactivating questions
+app.get('/reactivateQuestions', function (req, res) {
+	console.log("Try to reactivate questions...");
+	con.query("UPDATE Question q " +
+			  "SET deactivated=false " +
+			  "WHERE q.userID=" + req.query.userID +
+			  " AND q.deactivated=true",
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
+});
+			  
 
 //sign up
 app.get('/signupFunction', function (req, res) {
@@ -1163,10 +1171,20 @@ app.get('/getRecommendedQuestion', function (req, res) {
 	
 });
 
-app.get('/deactivateAccount', function (req, res) {
+app.get('/deactivateUser', function (req, res) {
 
 	con.query("UPDATE KUser k SET deactivated=" + req.query.deactivated +
 			 " WHERE k.userID=" + req.query.userID + " AND k.username='" + req.query.username + "';",
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+	});
+});
+
+app.get('/deactivateQuestions', function (req, res) {
+
+	con.query("UPDATE Question q SET deactivated=true" +
+			 " WHERE q.userID=" + req.query.userID + " AND q.deactivated=false",
 		function (err, result, fields) {
 			if (err) throw err;
 			res.json(result);
