@@ -996,6 +996,12 @@ app.get('/UpdateVote', function (req, res) {
 	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
 	else{likeDislikeValue = 0;}
 
+	if(likeDislikeValue == 1){
+		con.query("UPDATE Question " + 
+		"SET numLikes= numLikes+1 WHERE questionID='" +
+		req.query.questionID + "' and userID='" + req.query.userID + "';");
+	}
+	
 	con.query("UPDATE QuestionLike " + 
 		"SET pollLike='"+ likeDislikeValue + "' WHERE questionID='" +
 		req.query.questionID + "' and userID='" + req.query.userID + "';", 
