@@ -948,7 +948,7 @@ hr {
 }
 
 .my-posts-container {
-	margin-top: 0px; 
+	margin-top: px; 
 	margin-left: 50px;
 	margin-right: 50px;
 	margin-bottom: 75px;
@@ -1077,6 +1077,53 @@ button:focus {
 }
 
 
+.notification-cont{
+	background-color: white; 
+
+	margin-bottom: 20px;
+	margin-left: 50px;
+	margin-right: 50px;
+
+	padding-left: 20px; 
+	padding-right: 20px; 
+	padding-top: 30px; 
+	padding-bottom: 20px; 
+
+	-webkit-box-shadow: -1px 10px 39px -5px rgba(0,0,0,0.75);
+	-moz-box-shadow: -1px 10px 39px -5px rgba(0,0,0,0.75);
+	box-shadow: -1px 10px 39px -5px rgba(0,0,0,0.75);
+}
+
+.notification-text {
+	margin-bottom: 0px;
+	font-size: 12px;
+}
+
+.mark-read-cont {
+	float: right;
+}
+
+.mark-read-button {
+	font-size: 10px; 
+	border: 0;
+    color: #e53935;
+    cursor: pointer;
+    font-family: "Roboto";
+	letter-spacing: 1px;
+	background: white; 
+
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+
+  /*  margin-left: 80%;*/
+}
+
+.mark-read-button:hover{
+	 opacity: 0.5;
+}
+
+
+
 /************ ADMIN PAGE ******************/
 .admin-heading {
 	font-size: 30px;
@@ -1198,18 +1245,22 @@ button:focus {
 		margin-left: -49%; 
 	}
 
+	.notification-cont {
+		margin-top: 365px; 
+		margin-left: 10px;
+		margin-right: 10px;
+
+	}
 
 	.my-posts-container {
-		margin-top: 365px; 
+		margin-top: 10px; 
 		margin-left: 10px;
 		margin-right: 10px;
 	}
 
 	.rec-container {
-	
+
 	}
-
-
 
 
 }

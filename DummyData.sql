@@ -52,6 +52,18 @@ insert into UserNotification(userID, description) values
     "first notificaiton"
 );
 
+insert into UserNotification(userID, description) values 
+(
+	2,
+    "second notification"
+);
+
+insert into UserNotification(userID, description) values 
+(
+	2,
+    "third notification"
+);
+
 insert into Tag(tagStr) values ("Pizza");
 insert into Tag(tagStr) values ("Movie");
 insert into Tag(tagStr) values ("USC");
