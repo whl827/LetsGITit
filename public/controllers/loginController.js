@@ -11,6 +11,17 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 	  return hash;
 	};
 
+    $scope.deactivateAccountMessage = function() {
+        var isDeactivated = $cookies.get("isDeactivated");
+        // console.log("DEACTIVATED STATUS IS: " + isDeactivated);
+        if (isDeactivated == "true") {
+            $(document).ready(function () {
+                $("#deactivateLoginModal").modal('show');
+            });
+            $cookies.put("isDeactivated", false);
+        }
+    }
+
     $scope.userQuery = function () {
 
     	var password = hashCode($scope.password);
@@ -33,11 +44,12 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
                 $cookies.put('isAdmin', isAdmin);
 
 
-
                 // reactivating under login
                 $http.get('/reactivateUser?username=' + $scope.username +
                                      "&password=" + password).then(function (response) {} );
-                // $http.get('/reactivateQuestions?userID=' + $scope.userID).then(function (response) {} );
+                // console.log("NEW USER ID IS: " + newUserID);
+                $http.get('/reactivateQuestions?userID=' + newUserID).then(function (response) {} );
+                $http.get('/reactivateComments?userID=' + newUserID).then(function (response) {} );
 
 			    // $scope.errorMessage = "Successfully logged in";
 			    //redirect to home page

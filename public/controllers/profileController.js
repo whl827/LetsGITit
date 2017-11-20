@@ -158,16 +158,33 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
     	$scope.userID = $cookies.get('userID');
     	$scope.username = $cookies.get('username');
 
-    	$http.get('/deactivateAccount?deactivated=' + deactivated + '&userID=' + $scope.userID + "&username=" + $scope.username)
+    	$http.get('/deactivateUser?deactivated=' + deactivated + '&userID=' + $scope.userID + "&username=" + $scope.username)
     		.then(function (response) {
     			console.log("deactivating account for: " + $scope.username);
     		}
     	);
+    	$http.get('/deactivateQuestions?userID=' + $scope.userID)
+    		.then(function (response) {
+    			console.log("deactivating questions for: " + $scope.username);
+    		}
+    	);
+    	$http.get('/deactivateComments?userID=' + $scope.userID)
+    		.then(function (response) {
+    			console.log("deactivating comments for: " + $scope.username);
+    		}
+    	);
+
 
     	$cookies.put("username", null);
         $cookies.put("userID", -1);
         $cookies.put("isAdmin", false);
+        $cookies.put("isDeactivated", true);
         $window.location.replace("#!login");
+
+        // After redirected to login page and after it loads, display a modal for the user with a message
+		// $(document).ready(function () {
+		//     $("#deactivateLoginModal").modal('show');
+		// });
     }
 
     $scope.showPopUpForDeletingPost = function(question){

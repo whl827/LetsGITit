@@ -1036,7 +1036,7 @@ hr {
 
 }*/
 
-.edit-profile-modal {
+.edit-profile-modal, .login-modal {
 	margin-top: 100px;
 }
 

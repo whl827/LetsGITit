@@ -42,9 +42,64 @@ app.get('/getNotifications', function (req, res) {
 });
 
 app.get('/markNotificationAsRead', function (req, res) {
-	con.query("UPDATE UserNotification SET isRead = 0 WHERE userNotificaitonID = " + req.query.id, 
+	con.query("UPDATE UserNotification SET isRead = 1 WHERE userNotificaitonID = " + req.query.id, 
 		function (err, result, feilds) {
 			if (err) throw err;
+		});
+});
+
+app.get('/notifyFollowing', function (req, res) {
+
+	function emailUser(email, description) {
+
+		if (email != null) {
+
+			var mailOptions = {
+				from: 'knowitall857@gmail.com',
+				to: email,
+				subject: 'A notification From KnowItAll',
+				text: description
+			};
+
+			transporter.sendMail(mailOptions, function(error, info){
+				if (error) {
+					console.log("In send email ERROR");
+					console.log(error);
+				} else {
+					console.log('Email sent: ' + info.response);
+					res.json(info);
+				}
+			});
+		}
+	}
+
+	var currUser = req.query.currUser;
+	var otherUser = req.query.userToNotify;
+	var action = req.query.action;
+	var description = "null notification";
+
+	console.log("in notifyFollowing");
+
+	if (action == 'unfollow') {
+		description = currUser + " has unfollowed you";
+	} else if (action == 'follow') {
+		description = currUser + " has followed you";
+	}
+
+	con.query('INSERT UserNotification(userID, description) VALUES((SELECT userID FROM KUser where username="' + otherUser + 
+		'"), "' + description + '");', 
+		function (err, result, feilds) {
+			if (err) throw err;
+		});
+
+
+	var email = null;
+	con.query('SELECT email FROM KUser WHERE username="' + otherUser + '"',
+		function (err, result, feilds) {
+			if (err) throw err;
+			email = result[0].email;
+			console.log(result[0].email);
+			emailUser(email, description);
 		});
 });
 
@@ -80,7 +135,7 @@ app.get('/onPageLoad', function (req, res){
 
 
 	con.query("SELECT q.questionID, q.userID, q.isAnonymous, q.isPoll, q.title, q.subtitle, q.description, q.startDate, " +
-					" q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " +
+					" q.endDate, q.totalVotes, q.positiveVotes, q.numLikes, q.deactivated " +
 			 " FROM Question q " +
 			 " ORDER BY q.numLikes desc",
 	function (err, result, fields) {
@@ -131,7 +186,7 @@ app.get('/getTopTags', function (req, res){
 app.get('/searchUsers', function (req, res) {
 
 	con.query("SELECT u.username FROM KUser u WHERE u.username like '%" 
-		+ req.query.userQuery + "%';", 
+		+ req.query.userQuery + "%' AND u.deactivated=0;", 
 		function (err, result, fields) {
 			if (err) throw err;
 			res.json(result);
@@ -165,9 +220,9 @@ app.get('/user', function (req, res) {
 	});
 });
 
-//reactivating user under login
+// reactivating user under login
 app.get('/reactivateUser', function (req, res) {
-	console.log("Trying to reactivate...");
+	console.log("Trying to reactivate user...");
 	con.query("UPDATE KUser k " +
 			  "SET deactivated=false " +
 			  "WHERE k.username='" + req.query.username +
@@ -178,11 +233,30 @@ app.get('/reactivateUser', function (req, res) {
 		});
 });
 
-// //reactivating q
-// app.get('/reactivateQuestion', funct)
-// 			  "UPDATE Question q" +
-// 			  "SET deactivated=false" +
-// 			  "WHERE q.userID=" + req.query.userID
+// reactivating questions
+app.get('/reactivateQuestions', function (req, res) {
+	console.log("Try to reactivate questions...");
+	con.query("UPDATE Question q " +
+			  "SET deactivated=false " +
+			  "WHERE q.userID=" + req.query.userID +
+			  " AND q.deactivated=true",
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
+});
+
+// reactivating comments
+app.get('/reactivateComments', function (req, res) {
+	con.query("UPDATE QuestionComment qc " +
+			  "SET deactivated=false " +
+			  "WHERE qc.userID=" + req.query.userID +
+			  " AND qc.deactivated=true",
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
+});
 
 //sign up
 app.get('/signupFunction', function (req, res) {
@@ -225,8 +299,8 @@ app.get('/insertUser', function (req, res) {
 	var username = req.query.username;
 	var password = req.query.passwordHash;
 
-	con.query("INSERT INTO KUser(username, passwordHash) " +
-			"values('" + username + "', " + password + ");",
+	con.query("INSERT INTO KUser(username, passwordHash, email) " +
+			"values('" + username + "', " + password + ", '" + email + "');",
 	  function (err, result, fields) {
 	  	if (err) throw err;
 	});
@@ -571,9 +645,9 @@ app.get('/pollList', function (req, res) {
 
 app.get('/commentList', function (req, res) {
 
-	con.query("SELECT qc.questionCommentID, qc.userID, qc.userIDAnnonymous, qc.description, qc.commentLikeCount, qc.commentDislikeCount, qc.image, u.imageURL "+
+	con.query("SELECT qc.questionCommentID, qc.userID, qc.userIDAnnonymous, qc.description, qc.commentLikeCount, qc.commentDislikeCount, qc.image, u.imageURL, qc.deactivated "+
 		"FROM QuestionComment qc, KUser u WHERE " + 
-		"qc.questionID='" + req.query.questionID + "' and qc.userID = u.userID;",
+		"qc.questionID='" + req.query.questionID + "' and qc.userID = u.userID AND qc.deactivated=false;",
 	  	function (err, result, fields) {
 	    if (err) throw err;
 	    res.json(result);
@@ -1163,7 +1237,7 @@ app.get('/getRecommendedQuestion', function (req, res) {
 	
 });
 
-app.get('/deactivateAccount', function (req, res) {
+app.get('/deactivateUser', function (req, res) {
 
 	con.query("UPDATE KUser k SET deactivated=" + req.query.deactivated +
 			 " WHERE k.userID=" + req.query.userID + " AND k.username='" + req.query.username + "';",
@@ -1171,6 +1245,26 @@ app.get('/deactivateAccount', function (req, res) {
 			if (err) throw err;
 			res.json(result);
 	});
+});
+
+app.get('/deactivateQuestions', function (req, res) {
+
+	con.query("UPDATE Question q SET deactivated=true" +
+			 " WHERE q.userID=" + req.query.userID + " AND q.deactivated=false",
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+	});
+});
+
+app.get('/deactivateComments', function (req, res) {
+
+	con.query("UPDATE QuestionComment qc SET deactivated=true" +
+			  " WHERE qc.userID=" + req.query.userID + " AND qc.deactivated=false",
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
 });
 
 app.get('/getProfilePic', function (req, res) {

@@ -34,10 +34,8 @@
 
 						<div class="feed" ng-controller= "FeedCtrl" >
 
-
-							<div class="post-container" ng-repeat="question in questionList" ng-click="goToLink(question)">
-								<p class="feed-question-title" id="current-question-title">{{question.title}}</p>
-
+							<div class="post-container" ng-repeat="question in questionList" ng-if="question.deactivated == 0" ng-click="goToLink(question)">
+								<p class="feed-question-title" id="current-question-title" >{{question.title}}</p>
 
 								<div class="row">
 									<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">

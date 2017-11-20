@@ -19,6 +19,7 @@ angular.module("KnowItAll").controller('signUpController', ['$scope', '$http', '
 
 	    		$cookies.put("newUsername", username);
 	    		$cookies.put("newPasswordHash", passwordHash);	
+	    		$cookies.put("newEmail", signupEmail);
 
 	    		$http.get("/sendEmail?newUsername=" + username + 
 	    			"&newPasswordHash=" + passwordHash +

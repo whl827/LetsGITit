@@ -5,6 +5,7 @@ use KnowItAll;
 create table KUser (
 	userID int(8) primary key auto_increment,
     username varchar(12) not null,
+    email varchar(100),
     numFollowers int(8) default 0 not null,
     passwordHash int(12) not null,
     isAdmin boolean default false,
@@ -50,6 +51,7 @@ create table QuestionComment (
     commentDislikeCount int(8) not null,
 	isFlagged boolean default false,
     image varchar(20000) default null,
+    deactivated boolean default false,
     foreign key fk1(questionID) references Question(questionID) ON DELETE CASCADE,
     foreign key fk2(userID) references KUser(userID) ON DELETE CASCADE
 );

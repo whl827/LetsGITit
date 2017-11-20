@@ -10,13 +10,6 @@ angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '
 	if (isLoggedIn) {
 
 		// feed
-		// $http.get('/profile?username=' + otherUsername).then(function (response) {
-		// 	$scope.questionList = response.data;
-		// }, function (response) {
-		// 	console.log("Failed to get current user, not logged in");
-		// });
-
-		// feed
 		$http.get('/profile?username=' + otherUsername)
 			.then(function (response) {
 					$scope.questionList = response.data;
@@ -92,16 +85,6 @@ angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '
 	        );
 	    }
 
-
-
-
-
-
-
-
-
-
-
 		$http.get('/isFollowing?user1=' + currUsername +
 		 "&user2=" + otherUsername).then(function (response) {
 		 	if(response.data.length > 0) {
@@ -117,13 +100,18 @@ angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '
 	}
 	
 	$scope.toggleFollow = function() {
+		var otherUsername = $routeParams.username.replace(":", "");
+
+
 		if ($scope.isFollowing.bool) {
 			$http.get('/unfollow?currUser=' + currUsername + "&userToUnfollow=" + otherUsername);
+			$http.get('/notifyFollowing?currUser=' + currUsername + '&userToNotify=' + otherUsername + '&action=unfollow');
 			$scope.isFollowing = {bool : false, string : "FOLLOW"};
 			$scope.numFollowers = {num : $scope.numFollowers.num - 1};
 			console.log($scope.numFollowers.num);
 		} else {
 			$http.get('/follow?currUser=' + currUsername + "&userToFollow=" + otherUsername);
+			$http.get('/notifyFollowing?currUser=' + currUsername + '&userToNotify=' + otherUsername + '&action=follow');
 			$scope.isFollowing = {bool : true, string : "UNFOLLOW"};
 			$scope.numFollowers = {num : $scope.numFollowers.num + 1};
 			console.log($scope.numFollowers.num);
