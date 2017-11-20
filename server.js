@@ -315,9 +315,6 @@ app.get('/insertUser', function (req, res) {
 
 // Get a users profile
 app.get('/profile', function (req, res) {
-
-	console.log("Getting users feed");
-
 	con.query("SELECT q.questionID, q.userID, q.isAnonymous, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes, q.numLikes  " + 
 		"FROM KUser u, Question q, UserToQuestion uq WHERE u.username='" +
 		req.query.username + "' AND uq.userID = u.userID AND uq.questionID = q.questionID ORDER BY q.startDate desc, q.questionID desc;", 
@@ -997,6 +994,12 @@ app.get('/UpdateVote', function (req, res) {
 	if(likeDislikeValue == 'true'){likeDislikeValue = 1;}
 	else{likeDislikeValue = 0;}
 
+	if(likeDislikeValue == 1){
+		con.query("UPDATE Question " + 
+		"SET numLikes= numLikes+1 WHERE questionID='" +
+		req.query.questionID + "' and userID='" + req.query.userID + "';");
+	}
+	
 	con.query("UPDATE QuestionLike " + 
 		"SET pollLike='"+ likeDislikeValue + "' WHERE questionID='" +
 		req.query.questionID + "' and userID='" + req.query.userID + "';", 
@@ -1008,21 +1011,31 @@ app.get('/UpdateVote', function (req, res) {
 
 app.get('/editComment', function (req, res) {
 
-	// var questionID = req.query.questionID;
-	// var userID = req.query.userID;
-	// var currentComment = req.query.currentComment;
 	var newComment = req.query.newComment;
 	var newImage = req.query.newImage;
 
-	if(newImage == null){
-		// con.query("UPDATE QuestionComment " + 
-		// 	"SET description='"+ newComment + "' WHERE questionCommentID='" +
-		// 	req.query.questionID + "' and userID='" + req.query.userID + 
-		// 	"' and description='" + currentComment +"';", 
-		// 	function (err, result, fields) {
-		// 		if(err) throw err;
-		// 		res.json(result);
-		// 	});
+	if(newImage != 'undefined'){
+		if(newComment != 'undefined'){
+			con.query("UPDATE QuestionComment " + 
+			"SET description='"+ newComment + "', image='"+ newImage + "' WHERE questionCommentID='" +
+			req.query.questionCommentID +"';", 
+			function (err, result, fields) {
+				if(err) throw err;
+				res.json(result);
+			});
+		}
+		else{
+			con.query("UPDATE QuestionComment " + 
+			"SET image='"+ newImage + "' WHERE questionCommentID='" +
+			req.query.questionCommentID +"';", 
+			function (err, result, fields) {
+				if(err) throw err;
+				res.json(result);
+			});
+
+		}
+	}else{
+		if(newComment != 'undefined'){
 			con.query("UPDATE QuestionComment " + 
 			"SET description='"+ newComment + "' WHERE questionCommentID='" +
 			req.query.questionCommentID +"';", 
@@ -1030,26 +1043,11 @@ app.get('/editComment', function (req, res) {
 				if(err) throw err;
 				res.json(result);
 			});
-	}else{
-		con.query("UPDATE QuestionComment " + 
-		"SET description='"+ newComment + "', image='"+ newImage + "' WHERE questionCommentID='" +
-		req.query.questionCommentID +"';", 
-		function (err, result, fields) {
-			if(err) throw err;
-			res.json(result);
-		});
+		}
 	}
 });
 
 app.get('/deleteComment', function (req, res) {
-
-	//console.log(req.query.userID, req.query.questionCommentID, req.query.questionID, req.query.userID, req.query.description);
-
-	// con.query("SET foreign_key_checks = 0;", 
-	// 	function (err, result, fields) {
-	// 		if(err) throw err;
-	// 		res.json(result);
-	// 	});
 
 	con.query("DELETE FROM CommentLike WHERE questionCommentID='" + req.query.questionCommentID + "';");
 
@@ -1269,7 +1267,6 @@ app.get('/deactivateComments', function (req, res) {
 });
 
 app.get('/getProfilePic', function (req, res) {
-	console.log("user id is " + req.query.userID);
 		con.query("SELECT u.imageURL FROM KUser u " +
 			"WHERE u.userID='" + req.query.userID + "'",
 		  function (err, result, fields) {
@@ -1280,7 +1277,6 @@ app.get('/getProfilePic', function (req, res) {
 
 app.get('/deleteCommentImage', function(req, res) {
 
-	console.log("in upsate porfile pid " + req.query.questionCommentID );
 	con.query("UPDATE QuestionComment SET image = null WHERE questionCommentID='" + req.query.questionCommentID + "';", 
 		function (err, result, fields) {
 			if (err) throw err;
@@ -1290,12 +1286,7 @@ app.get('/deleteCommentImage', function(req, res) {
 
 app.get('/deletePost', function(req, res) {
 
-	console.log("DELETING QUESTION ID IN SERVER " + req.query.questionID);
-
 	var questionID = req.query.questionID;
-
-	console.log("DELETE from question where questionID = " + questionID);
-
 	con.query("DELETE from question where questionID = " + questionID, 
 		function (err, result, fields) {
 			if (err) throw err;
@@ -1305,11 +1296,7 @@ app.get('/deletePost', function(req, res) {
 
 app.get('/deleteAllPosts', function(req, res) {
 
-	console.log("IN SERVER , DELETING ALL QUESTION FROM USER ID: " + req.query.userID);
-
 	var userID = req.query.userID;
-
-	console.log("DELETE from question where userID = " + userID);
 
 	con.query("DELETE from question where userID = " + userID, 
 		function (err, result, fields) {

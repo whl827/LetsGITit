@@ -2,19 +2,19 @@ use KnowItAll;
 
 insert into KUser(username, passwordHash) values 
 (
-	"user1",
+	"User1",
     111421 		# actual password is pwd
 );
 
 insert into KUser(username, passwordHash) values
 (
-	"joyce",
+	"Joyce",
     111421
 );
 
 insert into KUser(username, passwordHash) values
 (
-	"summer",
+	"Summer",
     111421
 );
 
@@ -69,111 +69,120 @@ insert into Tag(tagStr) values ("Movie");
 insert into Tag(tagStr) values ("USC");
 insert into Tag(tagStr) values ("Course");
 
-insert into Question(userID, isPoll, title, subTitle, description, totalVotes, isAnonymous, image) 
+insert into Question(userID, isPoll, title, subTitle, description, totalVotes, numLikes, isAnonymous, image) 
 values (
-	2, 
+	1, 
     true,
 	"What is the best pizza place around USC?",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Ut interdum orci sit amet ipsum rutrum sed.",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nullam nec nibh id lacus dignissim commodo id vitae libero. Nunc sapien dolor, sodales in suscipit at, blandit et velit. Cras maximus tellus ac nulla rutrum, vel gravida nunc finibus. Duis aliquet, libero non suscipit dapibus, quam augue semper elit, sit amet.",
-    0,
+    "",
+    "really good cheese pizza place? ",
+    59,
+    3,
     false,
     "https://i.ytimg.com/vi/1X6OAucemtE/maxresdefault.jpg"
 );
 
-insert into Question(userID, isPoll, title, subTitle, description, totalVotes, isAnonymous, image) 
+insert into Question(userID, isPoll, title, subTitle, description, totalVotes, numLikes, isAnonymous, image) 
 values (
-	1, 
+	2, 
     true,
 	"What is the best CS course at USC?",
     "USC",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a tempor ligula. Maecenas tortor orci, posuere sed hendrerit in, vulputate et sem. Sed in consectetur purus, a imperdiet nunc.",
-    0,
+    "I am taking 103 right now, I am curious what other great courses are there!",
+    52,
+    3,
     true,
     "http://www.austincc.edu/sites/default/files/Computer-Science_10282016.jpg"
 );
 
-insert into Question(userID, isPoll, title, subTitle, description, totalVotes, isAnonymous, image)  
+insert into Question(userID, isPoll, title, subTitle, description, totalVotes, numLikes, isAnonymous, image)  
 values (
-	1, 
+	3, 
     true,
 	"What movie should I watch?",
     "nothing",
-    "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Aliquam a tempor ligula. Maecenas tortor orci, posuere sed hendrerit in, vulputate et sem. ",
-    0,
+    "I am going on a date with my girlfriend next week, she likes animated movies but she's open to other choices too. any recommendation?",
+    35,
+    6,
     false,
     "https://cdn-media-1.lifehack.org/wp-content/files/2014/06/Frozen-Free-Wallpaper.jpg"
 );
 
-insert into Question(userID, isPoll, title, subTitle, description, totalVotes, positiveVotes, isAnonymous) 
+insert into Question(userID, isPoll, title, subTitle, description, totalVotes, numLikes, isAnonymous, image) 
 values (
-	2, 
+	4, 
     true,
 	"CS Course recommendation",
     "USC",
     "Please help me w my schedule next semester!",
-    0, 
-    0,
-    false
+    38, 
+    4,
+    false,
+    "https://previews.123rf.com/images/enotmaks/enotmaks1402/enotmaks140200008/25528506-Flat-illustration-of-programmer-and-process-coding-and-programming-Workflow-and-planning-illustratio-Stock-Vector.jpg"
 );
 
-insert into Question(userID, isPoll, title, subTitle, endDate, description, totalVotes, isAnonymous, image) 
+insert into Question(userID, isPoll, title, subTitle, endDate, description, totalVotes, numLikes, isAnonymous, image) 
 values (
-	2,
+	5,
     false,
 	"USC Football",
     "USC",
     "2017-10-17",
     "How are we doing this year?! ",
-    0,
+    10,
+    3,
     false,
     "http://sportsformulator.com/wp-content/uploads/2016/04/USC-Football-1024x576.jpg"
 );
 
-insert into Question(userID, isPoll, title, subTitle, endDate, description, totalVotes, isAnonymous, image) 
+insert into Question(userID, isPoll, title, subTitle, endDate, description, totalVotes, numLikes, isAnonymous, image) 
 values (
-	3,
+	6,
     true,
 	"Study-friendly coffee shops on campus?",
     "USC",
     "2017-10-17",
     "What do u guys think?",
-    0,
+    20,
+    4,
     false,
     "https://www.healthline.com/hlcmsresource/images/topic_centers/Food-Nutrition/Coffee1-banner.jpg"
 );
 
-insert into Question(userID, isPoll, title, subTitle, endDate, description, totalVotes, isAnonymous) 
+insert into Question(userID, isPoll, title, subTitle, endDate, description, totalVotes, numLikes, isAnonymous) 
 values (
-	3,
+	1,
     false,
 	"Leavey library",
     "USC",
     "2017-10-17",
     "how do u guys think about leavey?",
-    0,
+    20,
+    3,
     false
 );
 
-insert into Question(userID, isPoll, title, subTitle, description, totalVotes, isAnonymous) 
+insert into Question(userID, isPoll, title, subTitle, description, totalVotes, numLikes, isAnonymous) 
 values (
-	3, 
+	1, 
     false,
 	"What do u guys think about USC Village?",
     "USC",
     "Good? Bad?",
-    0,
+    20,
+    3,
     true
 );
 
-insert into Question(userID, isPoll, title, subTitle, description, totalVotes, isAnonymous) 
+insert into Question(userID, isPoll, title, subTitle, description, totalVotes, numLikes, isAnonymous) 
 values (
-	3, 
+	2, 
     false,
 	"Rate CS310",
     "USC",
     "What do you guys think about CS310?",
-    0,
+    20,
+    4,
     false
 );
 
@@ -232,8 +241,6 @@ values (
     "CS360",
     8
 );
-
-
 
 insert into PollOption(questionID, title, votes) 
 values (
@@ -320,6 +327,12 @@ values (
     0
 );
 
+-- insert into RatingQuestionOption(questionID, userID, rating) 
+-- values (
+-- 	6,
+--     "Starbucks - Cafe84",
+--     0
+-- );
 
 insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
@@ -328,8 +341,8 @@ values (
     "WoongHee",
     "I like CPK! it's the best",
     false,
-    0,
-    0
+    5,
+    3
 );
 
 insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
@@ -339,7 +352,7 @@ values (
     "Robert",
     "We need another pizza place....",
     false,
-    0,
+    10,
     0
 );
 
@@ -350,29 +363,62 @@ values (
     "Summer",
     "Take 310!!!",
     false,
-    0,
-    0
+    10,
+    5
+);
+
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
+values (
+	2,
+    1,
+    "Joyce",
+    "I like 360! Good intro to AI and great projects :) ",
+    false,
+    20,
+    5
 );
 
 insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
 	3,
-    2,
+    1,
     "Joyce",
-    "Helpful Poll!!",
+    "Helpful Poll!! I am going to watch despicable me w my friend this weekend",
     false,
-    0,
-    0
+    10,
+    5
+);
+
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
+values (
+	3,
+    4,
+    "Robert",
+    "Oh It was pretty good.",
+    false,
+    7,
+    1
 );
 
 insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
 	4,
     1,
-    "user1",
-    "Hey! I like this poll",
+    "User1",
+    "I would take ITP368 for an elective",
     false,
-    0,
+    9,
+    2
+);
+
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
+values (
+	4,
+    5,
+    "Woonghee",
+    "Don't take hard classes w OS",
+    false,
+    30,
     0
 );
 
@@ -383,19 +429,31 @@ values (
     "Joyce",
     "Go USC",
     false,
-    0,
-    0
+    34,
+    15
 );
+
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
+values (
+	5,
+    6,
+    "Edward",
+    "We are doing okay",
+    false,
+    20,
+    10
+);
+
 
 insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
 	6,
     2,
     "Anonymous",
-    "Dulce is coming soon!",
+    "Dulce is coming soon! and I heard it's 24hrs",
     true,
-    0,
-    0
+    10,
+    3
 );
 
 insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
@@ -403,11 +461,411 @@ values (
 	6,
     6,
     "Edward",
-    "starbucks at cafe84 is 24hrs!",
+    "starbucks at cafe84 is 24hrs as well!",
     false,
-    0,
+    34,
+    5
+);
+
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
+values (
+	7,
+    1,
+    "User1",
+    "Leavey is really packed thesedays due to construction on 4th floor",
+    false,
+    16,
+    4
+);
+
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
+values (
+	7,
+    2,
+    "Joyce",
+    "I don't goto leavey that much anymore",
+    false,
+    30,
+    1
+);
+
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
+values (
+	8,
+    4,
+    "Robert",
+    "More option for lunch for sure",
+    false,
+    20,
+    1
+);
+
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
+values (
+	8,
+    5,
+    "Woonghee",
+    "I love UV!",
+    false,
+    10,
+    1
+);
+
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
+values (
+	9,
+    6,
+    "Edward",
+    "It's a great class!",
+    false,
+    10,
+    1
+);
+
+insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
+values (
+	9,
+    1,
+    "User1",
+    "310 project is alot of work but also you learn alot",
+    false,
+    20,
+    1
+);
+
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    1,
+    1,
+    1
+);
+
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    1,
+    2,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    1,
+    3,
+    1
+);
+
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    1,
+    4,
     0
 );
+
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    1,
+    5,
+    0
+);
+
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    1,
+    6,
+    0
+);
+
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    2,
+    1,
+    0
+);
+
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    2,
+    2,
+    0
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    2,
+    3,
+    0
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    2,
+    4,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    2,
+    5,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    2,
+    6,
+    1
+);
+
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    3,
+    1,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    3,
+    2,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    3,
+    3,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    3,
+    4,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    3,
+    5,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    3,
+    6,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    4,
+    1,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    4,
+    2,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    4,
+    3,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    4,
+    4,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    4,
+    5,
+    0
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    4,
+    6,
+    0
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    5,
+    1,
+    0
+);
+
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    5,
+    2,
+    0
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    5,
+    3,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    5,
+    4,
+    0
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    5,
+    5,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    5,
+    6,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    6,
+    1,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    6,
+    2,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    6,
+    3,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    6,
+    4,
+    0
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    6,
+    5,
+    0
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    6,
+    6,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    7,
+    1,
+    0
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    7,
+    2,
+    0
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    7,
+    3,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    7,
+    4,
+    0
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    7,
+    5,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    7,
+    6,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    8,
+    1,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    8,
+    2,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    8,
+    3,
+    0
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    8,
+    4,
+    0
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    8,
+    5,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    8,
+    6,
+    0
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    9,
+    1,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    9,
+    2,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    9,
+    3,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    9,
+    4,
+    1
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    9,
+    5,
+    0
+);
+insert into QuestionLike(questionID, userID, pollLike) 
+values (
+    9,
+    6,
+    0
+);
+
 
 
 # users 1 and 2 follow eachother
