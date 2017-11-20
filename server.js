@@ -107,11 +107,11 @@ app.get('/notifyFollowing', function (req, res) {
 app.get('/searchQuestionsAnyText', function (req, res) {
 
 	con.query("SELECT q.questionID,  q.userID, q.isAnonymous, q.isPoll, q.title, q.subtitle, q.description, " +
-			          " q.startDate, q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " + 
-		"FROM Question q WHERE " + 
+			          " q.startDate, q.endDate, q.totalVotes, q.positiveVotes, q.numLikes, q.deactivated " + 
+		"FROM Question q WHERE (q.deactivated = 0) and (" + 
 		"q.title LIKE '%" + req.query.tagQuery + "%' or " +
 		"q.subTitle LIKE '%" + req.query.tagQuery + "%' or " + 
-		"q.description LIKE '%" + req.query.tagQuery + "%' order by q.numLikes desc;",
+		"q.description LIKE '%" + req.query.tagQuery + "%') order by q.numLikes desc;",
 	  function (err, result, fields) {
 	    if (err) throw err;
 	    res.json(result);
@@ -121,8 +121,8 @@ app.get('/searchQuestionsAnyText', function (req, res) {
 // Get Question Search from navbar
 app.get('/searchQuestions', function (req, res) {
 
-	con.query("SELECT q.questionID, q.userID, q.isAnonymous, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes, q.numLikes " + 
-		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
+	con.query("SELECT q.questionID, q.userID, q.isAnonymous, q.isPoll, q.title, q.subtitle, q.description, q.startDate, q.endDate, q.totalVotes, q.positiveVotes, q.numLikes, q.deactivated " + 
+		"FROM Question q, Tag t, TagToQuestion tq WHERE q.deactivated = 0 AND " + 
 		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
 		" tq.questionID = q.questionID ORDER BY q.numLikes DESC;",
 	  function (err, result, fields) {

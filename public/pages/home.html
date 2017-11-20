@@ -13,7 +13,8 @@
 			</div>
 
 			<div> 
-				<p class="search-result"> {{questionList.length}} POSTS </p>
+				<p ng-if="isQuestionList == 1" class="search-result"> {{questionList.length}} POST(S) </p>
+				<p ng-if="isQuestionList == 2" class="search-result"> {{userList.length}} USER(S) </p>
 			</div>
 		</div>
 
