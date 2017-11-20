@@ -13,7 +13,7 @@
 						<div class="col-lg-11 col-md-11 col-sm-11 main-info-text">
 							<p class="survey-heading" id="title"> {{title}}</p>
 							<p class="username" id="username"> Asked by 
-							<a class="clickable" ng-click="username!='Anonymous' && goToProfilePage()"> {{username}} </a>
+								<a class="clickable" ng-click="username!='Anonymous' && goToProfilePage()"> {{username}} </a>
 							</p>
 						</div>
 					</div>
@@ -101,7 +101,6 @@
 					<textarea ng-model="$parent.commentInput" rows="4" cols="50" class="form-control" placeholder="Write a review"></textarea>
 
 					<div class="row comment-cntrl-cont">
-
 						<div class="comment-ann-cont col-lg-6 col-md-5">
 							<p class="comment-ann">
 								<input id="anonymous" type="checkbox" name="anonymous" ng-model="$parent.isAnonymousInput"> Comment Anonymously
@@ -142,7 +141,10 @@
 									<div ng-hide="visible">
 
 
+
+
 										<div class="row">
+											<!-- Comment Profile Picture -->
 											<div class="col-lg-1 col-md-1 col-sm-1">
 												<img ng-show="comment.imageURL !== null && comment.userIDAnnonymous!='Anonymous'" class="comment-profile-pic" src={{comment.imageURL}}
 													width="60px" height="60px">
@@ -168,8 +170,9 @@
 														</div>
 													</div>
 												</div>
-
+												<!-- Comment Text -->
 												<p class="comment-description"> {{comment.description}} </p>
+												<!-- Comment Action Buttons -->
 												<div class="row comment-rating-cont">
 													<button class="like-comment" ng-model="comment.commentLikeInput" ng-value="true" ng-click="commentLike(comment)" ng-required
 														ng-if="hideInputFields()"> LIKE </button>
@@ -187,6 +190,21 @@
 
 										</div>
 									</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 									<div ng-show="visible">
 										<div class="row">
@@ -206,9 +224,6 @@
 													</div>
 													<div class="col-lg-5 col-md-5 col-sm-12">
 														<div class="action-buttons-container">
-															<!-- <button class="action-buttons save-comment-button" type="submit" ng-click="deletePicture(comment)">
-																DELETE PICTURE
-															</button> -->
 															<button class="action-buttons save-comment-button" type="submit" ng-click="visible=false; editComment(comment)">
 																SAVE
 															</button>
@@ -221,21 +236,23 @@
 													</div>
 												</div>
 
+
+
 												<div class="edit-comment-inputs">
 													<textarea rows="4" cols="60" ng-model="comment.newComment" placeholder={{comment.description}} class="form-control" ng-required> </textarea>
-
 													<div class="row remove-margins edit-picture">
 														<p class="update-heading"> Update image: </p>
-														<input id="pictureURL" class="form-control new-image-input" ng-model="comment.newImage" type="text" /> {{deleteProfilePicture}}
+														<input id="pictureURL" class="form-control new-image-input" ng-model="comment.newImage" type="text" /> 
+														{{deleteProfilePicture}}
 
 														<p class="update-heading"> Or </p>
 														<button class="action-buttons save-comment-button" type="submit" ng-click="deletePicture(comment)">
 																DELETE PICTURE
 														</button>
-
 													</div>
-
 												</div>
+
+
 
 												
 											</div>
@@ -243,7 +260,7 @@
 										{{errorMessageCommentLike}}
 									</div>
 
-
+									<hr />
 
 								</div>
 							</div>
@@ -252,14 +269,15 @@
 				</div>
 
 
-
-				{{errorMessageRecommendedQuestion}}
+				<!-- Flag -->
 				<div class="row">
 					<button class="flag-button" ng-click='toggleFlag(1)'>Flag</button>
 					<p class="flag-label"> post for inappropriate content </p>
 				</div>
 				<br>
 				<span style="color:red">{{flag.message}}</span>
+
+
 
 			</div>
 		</div>
@@ -268,17 +286,15 @@
 
 
 
-	<!-- recommended  -->
+	<!-- Recommendations  -->
 	<div class="col-xs-12 col-sm-12 col-md-12 col-lg-4 col-xl-4">
 		<div class="rec-cont">
 			<p class="section-heading" id="totalComment">RECOMMENDED FOR YOU </p>
-			<!-- <div class="rec-cont"> -->
 			<div class="rec" ng-repeat="option in questionList" ng-click="goToLink(option)">
 				<p class="rec-title clickable"> {{option.title}} </p>
 				<p class="rec-descript"> {{option.description}} </p>
 				<hr />
 			</div>
-			<!-- </div> -->
 			{{errorMessageRecommendedQuestion}}
 		</div>
 	</div>
