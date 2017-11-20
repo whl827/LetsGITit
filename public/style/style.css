@@ -186,6 +186,18 @@ create-button, .submit-button, .login-button, .signup-button{
 }*/
 
 /***************** info *****************/
+.clickable {
+	cursor: pointer;
+	font-weight: bold;
+
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.clickable:hover{
+	 opacity: 0.5;
+}
+
 
 .post-image-container{
 	/*padding-top: 56.25%;*/
@@ -476,6 +488,14 @@ create-button, .submit-button, .login-button, .signup-button{
 
 
 /******* comments section ****************/
+
+.add-picture {
+	width: 50%;
+	margin-right: 15px;
+	margin-left: 15px;
+}
+
+
 .total-comments-heading {
 	margin-bottom: 30px; 
 }
@@ -574,6 +594,7 @@ hr {
 	font-size: 12px; 
 	margin-bottom: 0px;
 	font-weight: bold;
+	padding-top: 2px;
 }
 
 .like-comment-num {
@@ -584,8 +605,31 @@ hr {
 .dislike-comment-num {
 	margin-left: 5px; 
 	margin-right: 15px;
+/*	margin-top: px;
+*/}
+
+.comment-info-cont {
+	padding-left: 30px;
 }
 
+.update-heading {
+	margin-bottom: 0px;
+	margin-right: 10px;
+	margin-top: 5px;
+}
+
+.edit-picture {
+	margin-top: 10px;
+}
+
+.edit-comment-inputs {
+	margin-top: 10px;
+}
+
+.new-image-input {
+	width: 30%;
+	margin-right: 10px;
+}
 
 
 /********* recommentdations/flag section **********/
