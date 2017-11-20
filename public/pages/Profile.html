@@ -131,50 +131,57 @@
 		  </div>
 		</div>
 
-		<!-- Joyce do the syle things here :D -->
 
-		<div data-ng-init="getUnreadNotifications()">
-
-	  		<div ng-repeat="notification in notifications.notificationList">
-	  			----------------- <br>
-	  			{{notification.description}} <br>
-	  			<button ng-click="markAsRead(notification, notifications.notificationList, $index)">Mark as read</button> <br>
-	  			----------------- <br>
-	  		</div>
-
-		</div>
+		
 
 		<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 offset-lg-3 col-xl-9 offset-lg-3">
-			<div class="my-posts-container">
-				<div class="post-container" ng-repeat="question in questionList" ng-click="goToLink(question)">
-					<p class="feed-question-title" id="current-question-title">{{question.title}}</p>
-					<div class="row">
-						<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
-							<p class="feed-user"> Created by {{username}} on {{question.startDate | date: 'yyyy-MM-dd'}}</p>
-							<p class="feed-subtitle">{{question.subtitle=="undefined" ? "" : question.subtitle}} </p> 
-							<p class="feed-description">{{question.description=="undefined" ? "" : question.description}} </p> 
-						</div>
-						<div class="feed-stats col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
-							<p class="feed-end-date">{{question.endDateDisplay}}</p>
-							<p class="feed-total-votes">{{question.totalVotes}} VOTES</p>
-							<p class="feed-num-likes"> {{question.numLikes}} LIKES</p>
-
-							<!-- add tags  -->
-							<div class="tags-container row" ng-repeat="tag in question.allTags">
-								<div class="tag"> {{tag.tagStr}} </div>
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<div class="notification-cont" data-ng-init="getUnreadNotifications()">
+					<p class="section-heading" id="totalComment">UNREAD NOTIFICATIONS </p>
+					<div ng-repeat="notification in notifications.notificationList">
+						<div class="row remove-margins">
+							<div class="col-xs-9 col-sm-9 col-md-9 col-lg-9 col-xl-9">
+								<p class="notification-text"> {{notification.description}} </p>
+							</div>
+							<div class="col-xs-3 col-sm-3 col-md-3 col-lg-3 col-xl-3">
+								<div class="mark-read-cont">
+									<button class="mark-read-button" ng-click="markAsRead(notification, notifications.notificationList, $index)">MARK AS READ</button> 
+								</div>
 							</div>
 						</div>
-						<div ng-click="d(); $event.stopPropagation();">
-							<button class="delete-post-button" data-toggle="modal" data-target="#deletePostModal" 
-								    ng-click="showPopUpForDeletingPost(question)">DELETE</button>
+						<hr />
+					</div>
+				</div>
+			</div>
+
+			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-12 col-xl-12">
+				<div class="my-posts-container">
+					<div class="post-container" ng-repeat="question in questionList" ng-click="goToLink(question)">
+						<p class="feed-question-title" id="current-question-title">{{question.title}}</p>
+						<div class="row">
+							<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
+								<p class="feed-user"> Created by {{username}} on {{question.startDate | date: 'yyyy-MM-dd'}}</p>
+								<!-- <p class="feed-subtitle">{{question.subtitle=="undefined" ? "" : question.subtitle}} </p>  -->
+								<p class="feed-description">{{question.description=="undefined" ? "" : question.description}} </p> 
+							</div>
+							<div class="feed-stats col-xs-4 col-sm-4 col-md-4 col-lg-4 col-xl-4">
+								<p class="feed-end-date">{{question.endDateDisplay}}</p>
+								<p class="feed-total-votes">{{question.totalVotes}} VOTES</p>
+								<p class="feed-num-likes"> {{question.numLikes}} LIKES</p>
+
+								<!-- add tags  -->
+								<div class="tags-container row" ng-repeat="tag in question.allTags">
+									<div class="tag"> {{tag.tagStr}} </div>
+								</div>
+							</div>
+							<div ng-click="d(); $event.stopPropagation();">
+								<button class="delete-post-button" data-toggle="modal" data-target="#deletePostModal" 
+									    ng-click="showPopUpForDeletingPost(question)">DELETE</button>
+							</div>
 						</div>
 					</div>
 				</div>
 			</div>
 		</div>
-
-
-
 	</div>
-
 </div>

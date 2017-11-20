@@ -144,12 +144,23 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
     	}
 
     	var newImageURL = $scope.updatedImageURLInput; 
+
     	if(newImageURL){ 
-    		document.querySelector("#profile-pic").src = newImageURL
-	    	$http.get('/updateProfilePic?userID=' + userID + "&imageURL=" + newImageURL).then(function (response) {
-	            }, function (response) { console.log("FAILED updateProfilePic");}
-		    );
+    		if(checkURL(newImageURL)){
+    			if(newImageURL.length < 2000){
+    				document.querySelector("#profile-pic").src = newImageURL
+			    	$http.get('/updateProfilePic?userID=' + userID + "&imageURL=" + newImageURL).then(function (response) {
+			            }, function (response) { console.log("FAILED updateProfilePic");}
+				    );
+    			}
+    		} else {
+    			console.log("invalid url");
+    		}	
     	}
+
+    	function checkURL(url) {
+	    	return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
+		}
     }
 
     $scope.deactivateAccount = function () {
