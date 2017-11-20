@@ -40,13 +40,10 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			//check if it image exists, and if it does, show
 			var image = document.querySelector("#image_in_rating");
 			var imageURL = response.data[0].image;
-			console.log("IMAGE URL: " + imageURL);
 			if(imageURL==null){
-				console.log("IMAGE DOES NOT EXIST: hiding image");
 				image.src = "";
 				image.style.display = "none";
 			}else{
-				console.log("IMAGE EXISTS: Showing image");
 				image.src = imageURL;
 				image.style.display = "inline";
 			}
@@ -67,8 +64,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 					else{
 						profileImage.src = response.data[0].imageURL;
 					}
-					
-					console.log("got profile picture");
 				},function (response) {
 					console.log("Error");
 				});
@@ -103,21 +98,13 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 
 				//get current time
 				var date = new Date();
-
 				var finalCloseDate = new Date(response.data[0].endDate);
-
-
 				//convert close time to match convert time format
-				// var closeDate = (response.data[0].endDate).replace(".000Z", "");
-				// var finalCloseDate = closeDate.replace("T", " ");
-				console.log("now date: " + date);
-				console.log("close date: " + finalCloseDate);
+
 				//compare and check
 				if (date < finalCloseDate) {
-					console.log("ITS NOT CLOSED YET");
 					$scope.endDate = response.data[0].endDate;
 				} else {
-					console.log("IT' CLOSED");
 					$scope.endDate = "(CLOSED)";
 					//disable everything when it's closed
 					// var nodes = document.querySelector(".comments-cont").getElementsByTagName('*');
@@ -208,25 +195,14 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 		var newComment = comment.newComment;
 		var newImage = comment.newImage;
 
-		if(newImage == null){
-			$http.get("/editComment?questionCommentID=" + comment.questionCommentID 
-			+ "&newComment=" + newComment)
-			.then(function (response) {
-				$route.reload();
-				console.log("inser into edit comment table");
-			}, function (response) {
-				console.log("Error");
-			});
-		}else{
-			$http.get("/editComment?questionCommentID=" + comment.questionCommentID 
-			+ "&newComment=" + newComment + "&newImage=" + newImage)
-			.then(function (response) {
-				$route.reload();
-				console.log("inser into edit comment table");
-			}, function (response) {
-				console.log("Error");
-			});
-		}
+		$http.get("/editComment?questionCommentID=" + comment.questionCommentID 
+		+ "&newComment=" + newComment + "&newImage=" + newImage)
+		.then(function (response) {
+			$route.reload();
+		}, function (response) {
+			console.log("Error");
+	});
+		
 	}
 
 	$scope.deleteComment = function (comment) {
@@ -237,7 +213,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			"&description=" + currentComment + "&questionCommentID=" + questionCommentID)
 			.then(function (response) {
 				$route.reload();
-				console.log("comment succesfully deleted");
 			}, function (response) {
 				console.log("Error");
 			});
@@ -259,7 +234,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 						//if user clicked Like 
 						$http.get("/UpdateCommentLike?questionCommentID=" + questionCommentID + "&questionID=" + questionID + "&userID=" + userID)
 							.then(function (response) {
-								console.log("insert into questionlike table");
 							}, function (response) {
 								console.log("Error");
 							});
@@ -274,7 +248,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 							$http.get("/UpdateCommentVote?questionCommentID=" + questionCommentID + "&questionID=" + questionID
 								+ "&userID=" + userID + "&pollLike=" + pollLike)
 								.then(function (response) {
-									console.log("insert into questionlike table");
 								}, function (response) {
 									console.log("Error");
 								});
@@ -287,7 +260,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 								+ "&questionID=" + questionID + "&userID=" + userID
 								+ "&pollLike=" + pollLike)
 								.then(function (response) {
-									console.log("insert into questionlike table");
 								}, function (response) {
 									console.log("Error");
 								});
@@ -319,7 +291,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 						//If user clicked Dislike
 						$http.get("/UpdateCommentDisLike?questionCommentID=" + questionCommentID + "&questionID=" + questionID + "&userID=" + userID)
 							.then(function (response) {
-								console.log("insert into questionlike table");
 							}, function (response) {
 								console.log("Error");
 							});
@@ -333,7 +304,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 								+ "&questionID=" + questionID + "&userID=" + userID
 								+ "&pollLike=" + pollLike)
 								.then(function (response) {
-									console.log("insert into questionlike table");
+								
 								}, function (response) {
 									console.log("Error");
 								});
@@ -346,7 +317,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 								+ "&questionID=" + questionID + "&userID=" + userID
 								+ "&pollLike=" + pollLike)
 								.then(function (response) {
-									console.log("insert into questionlike table");
+									
 								}, function (response) {
 									console.log("Error");
 								});
@@ -389,14 +360,12 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
     }
 
 	$scope.toggleFlag = function (flag) {
-		console.log('flagging question: ' + questionID);
 		$http.get('/toggleFlag?questionID=' + questionID + '&flag=' + flag);
 		$scope.flag.message = "You have flagged this post";
 	}
 
 	$scope.flagComment = function (comment, commentList, index) {
 		var questionCommentID = angular.copy(comment).questionCommentID;
-		console.log('flagging comment ' + questionCommentID + ', flag=1');
 		commentList[index].isFlagged = 1;
 		$http.get('/toggleCommentFlag?questionCommentID=' + questionCommentID + '&flag=1');
 	}
@@ -480,7 +449,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 								$route.reload();
 
 							}else{ //if not, hide
-								$scope.errorMessageCommentPic = "Cannot create comment. Please use correct image url"
+								$scope.errorMessageCommentPic = "Please use correct image url"
 							}
 						}
 					
@@ -516,7 +485,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 							$http.get("/insertRatingValue?questionID=" + questionID + "&userID=" + userID
 								+ "&rating=" + ratingValue)
 								.then(function (response) {
-									console.log("inser into rating table");
+			
 							},function (response) {
 							    	console.log("Error");
 							});
@@ -554,7 +523,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 
 	$scope.selectPollOption = function(index, pollList){
 		var userID = $cookies.get("userID");
-		console.log("userID is " + userID); 
 
 		if(userID !== -1 && typeof(userID) !== 'undefined' && userID !== "-1"){
 			// Check if user already voted
@@ -761,6 +729,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			}, function (response) {
 				console.log("Error");
 		});
+		$route.reload();
 			
 	}
 

@@ -240,25 +240,14 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 		var newComment = comment.newComment;
 		var newImage = comment.newImage;
 
-		if(newImage == null){
-			$http.get("/editComment?questionCommentID=" + comment.questionCommentID 
-				+ "&newComment=" + newComment)
+		$http.get("/editComment?questionCommentID=" + comment.questionCommentID 
+				+ "&newComment=" + newComment + "&newImage=" + newImage)
 				.then(function (response) {
 					$route.reload();
 					console.log("inser into edit comment table");
 				}, function (response) {
 					console.log("Error");
-				});
-		}else{
-			$http.get("/editComment?questionCommentID=" + comment.questionCommentID 
-			+ "&newComment=" + newComment + "&newImage=" + newImage)
-			.then(function (response) {
-				$route.reload();
-				console.log("inser into edit comment table");
-			}, function (response) {
-				console.log("Error");
 			});
-		}
 	}
 
 	$scope.deleteComment = function (comment) {
@@ -809,6 +798,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 			}, function (response) {
 				console.log("Error");
 		});
+		$route.reload();
 		
 	}
 
