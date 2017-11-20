@@ -174,15 +174,17 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
     		}
     	);
 
+
     	$cookies.put("username", null);
         $cookies.put("userID", -1);
         $cookies.put("isAdmin", false);
+        $cookies.put("isDeactivated", true);
         $window.location.replace("#!login");
 
         // After redirected to login page and after it loads, display a modal for the user with a message
-		$(document).ready(function () {
-		    $('#deactivateLoginModal').modal('show');
-		});
+		// $(document).ready(function () {
+		//     $("#deactivateLoginModal").modal('show');
+		// });
     }
 
     $scope.showPopUpForDeletingPost = function(question){

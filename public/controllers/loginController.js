@@ -11,6 +11,17 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 	  return hash;
 	};
 
+    $scope.deactivateAccountMessage = function() {
+        var isDeactivated = $cookies.get("isDeactivated");
+        // console.log("DEACTIVATED STATUS IS: " + isDeactivated);
+        if (isDeactivated == "true") {
+            $(document).ready(function () {
+                $("#deactivateLoginModal").modal('show');
+            });
+            $cookies.put("isDeactivated", false);
+        }
+    }
+
     $scope.userQuery = function () {
 
     	var password = hashCode($scope.password);
