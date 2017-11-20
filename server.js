@@ -137,6 +137,7 @@ app.get('/onPageLoad', function (req, res){
 	con.query("SELECT q.questionID, q.userID, q.isAnonymous, q.isPoll, q.title, q.subtitle, q.description, q.startDate, " +
 					" q.endDate, q.totalVotes, q.positiveVotes, q.numLikes, q.deactivated " +
 			 " FROM Question q " +
+			 " WHERE q.deactivated=false" +
 			 " ORDER BY q.numLikes desc",
 	function (err, result, fields) {
 	    if (err) throw err;
