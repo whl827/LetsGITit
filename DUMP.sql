@@ -11,14 +11,17 @@ create table KUser (
     isAdmin boolean default false,
     deactivated boolean default false,
     bio varchar(105),
-    imageURL varchar(2000)
+    imageURL varchar(2000),
+    notifyHourly boolean default false
 );  
 
 create table UserNotification (
 	userNotificaitonID int(8) primary key auto_increment,
     userID int(8) not null,
     description varchar(200),
-    isRead boolean default false
+    creationDate datetime not null default now(),
+    isRead boolean default false,
+    isEmailed boolean default false
 );
 
 create table Question (

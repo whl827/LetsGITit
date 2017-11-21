@@ -2,6 +2,7 @@ var express = require('express');
 var app = express();
 var mysql = require('mysql');
 var nodemailer = require('nodemailer');
+var schedule = require('node-schedule');
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -26,6 +27,49 @@ con.connect(function(err) {
 
 app.use(express.static(__dirname + '/public'));
 
+function emailUser(email, description) {
+
+		if (email != null) {
+
+			var mailOptions = {
+				from: 'knowitall857@gmail.com',
+				to: email,
+				subject: 'A notification From KnowItAll',
+				text: description
+			};
+
+			transporter.sendMail(mailOptions, function(error, info){
+				if (error) {
+					console.log("In send email ERROR");
+					console.log(error);
+				} else {
+					console.log('Email sent: ' + info.response);
+					res.json(info);
+				}
+			});
+		}
+	}
+
+// Notifies every hour on the hour
+var notifier = schedule.scheduleJob('11 * * * *', function(){
+  console.log('Notifing everyone');
+
+  con.query('SELECT * FROM KUser WHERE notifyHourly = true',
+  	function (err, result, feilds) {
+  		if (err) throw err;
+  		len = result.length
+  		for (i = 0; i < len; ++i) {
+  			var userID = result[i].userID;
+  			var email = result[i].email;
+  			con.query('SELECT * FROM UserNotification WHERE isEmailed = false AND userID = ' + userID, 
+  				function (err, result, feilds) {
+  					var notificationID = result[0].userNotificaitonID;
+  					con.query('UPDATE UserNotification SET isEmailed = true, isRead = true WHERE userNotificaitonID = ' + notificationID);
+  					emailUser(email, result[0].description);
+  				});
+  		}
+  	});
+});
 
 app.get('/getNotifications', function (req, res) {
 
@@ -50,29 +94,6 @@ app.get('/markNotificationAsRead', function (req, res) {
 
 app.get('/notifyFollowing', function (req, res) {
 
-	function emailUser(email, description) {
-
-		if (email != null) {
-
-			var mailOptions = {
-				from: 'knowitall857@gmail.com',
-				to: email,
-				subject: 'A notification From KnowItAll',
-				text: description
-			};
-
-			transporter.sendMail(mailOptions, function(error, info){
-				if (error) {
-					console.log("In send email ERROR");
-					console.log(error);
-				} else {
-					console.log('Email sent: ' + info.response);
-					res.json(info);
-				}
-			});
-		}
-	}
-
 	var currUser = req.query.currUser;
 	var otherUser = req.query.userToNotify;
 	var action = req.query.action;
@@ -86,20 +107,24 @@ app.get('/notifyFollowing', function (req, res) {
 		description = currUser + " has followed you";
 	}
 
-	con.query('INSERT UserNotification(userID, description) VALUES((SELECT userID FROM KUser where username="' + otherUser + 
-		'"), "' + description + '");', 
-		function (err, result, feilds) {
-			if (err) throw err;
-		});
-
 
 	var email = null;
-	con.query('SELECT email FROM KUser WHERE username="' + otherUser + '"',
+	var isEmailed = false;
+	con.query('SELECT * FROM KUser WHERE username="' + otherUser + '"',
 		function (err, result, feilds) {
 			if (err) throw err;
 			email = result[0].email;
-			console.log(result[0].email);
-			emailUser(email, description);
+			hourly = result[0].notifyHourly;
+			if (!hourly) {
+				emailUser(email, description);
+				isEmailed = true;
+			}
+		});
+
+	con.query('INSERT UserNotification(userID, description, isEmailed) VALUES((SELECT userID FROM KUser where username="' + otherUser + 
+		'"), "' + description + '", ' + isEmailed + ');', 
+		function (err, result, feilds) {
+			if (err) throw err;
 		});
 });
 

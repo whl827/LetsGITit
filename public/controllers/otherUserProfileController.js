@@ -6,6 +6,7 @@ angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '
 	var isLoggedIn = currUsername != "null"; // Because javascript is werid
 	$scope.isLoggedIn = isLoggedIn;	
 	$scope.otherUsername = otherUsername
+	$scope.isAdmin = $cookies.get("isAdmin");
 
 	if (isLoggedIn) {
 
@@ -67,6 +68,34 @@ angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '
 	                    console.log("FAILED getting username");
 	            }
 	        );
+	    }
+
+	    $scope.deactivateAccount = function () {
+
+	    	var deactivated = true;
+	    	var userID = -1;
+	    	$http.get('/user?username=' + otherUsername)
+	    		.then(function (response) {
+	    			userID = response.data[0].userID;
+	    		});
+
+	    	$http.get('/deactivateUser?deactivated=' + deactivated + '&userID=' + userID + "&username=" + otherUsername)
+	    		.then(function (response) {
+	    		}
+	    	);
+	    	$http.get('/deactivateQuestions?userID=' + userID)
+	    		.then(function (response) {
+	    		}
+	    	);
+	    	$http.get('/deactivateComments?userID=' + userID)
+	    		.then(function (response) {
+	    		}
+	    	);
+
+	        // After redirected to login page and after it loads, display a modal for the user with a message
+			// $(document).ready(function () {
+			//     $("#deactivateLoginModal").modal('show');
+			// });
 	    }
 
 	    function getTags(current){

@@ -15,8 +15,8 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 		username = $cookies.get("username");
 		$scope.username = username
 	} else {
-		// $scope.loggedInMessage = "You must be logged in to access your profile";
-		// loggedIn = false;
+		$scope.loggedInMessage = "You must be logged in to access your profile";
+		loggedIn = false;
 		// var image = document.getElementById("profile-pic");
 		// image.style.display = "none";
 		// var imageTextField = document.getElementById("pictureURL");

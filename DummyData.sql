@@ -18,11 +18,12 @@ insert into KUser(username, passwordHash) values
     111421
 );
 
-insert into KUser(username, email, passwordHash) values
+insert into KUser(username, email, passwordHash, notifyHourly) values
 (
 	"Robert",
 	"rdiersin@usc.edu",
-    111421
+    111421,
+    true
 );
 
 
@@ -60,7 +61,7 @@ insert into UserNotification(userID, description) values
 
 insert into UserNotification(userID, description) values 
 (
-	2,
+	4,
     "third notification"
 );
 

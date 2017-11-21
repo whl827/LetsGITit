@@ -1,4 +1,9 @@
 <div ng-controller="otherUserProfile">
+
+	<div ng-if="isAdmin == 1">
+		<button ng-click="deactivateAccount()">DEACTIVATE</button>
+	</div>
+
 	<div ng-switch="isLoggedIn">
 		<div ng-switch-when="true">
 
