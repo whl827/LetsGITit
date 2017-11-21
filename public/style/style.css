@@ -1122,6 +1122,26 @@ button:focus {
 	 opacity: 0.5;
 }
 
+.admin-unflag-button {
+	font-size: 10px; 
+	border: 0;
+    color: #e53935;
+    cursor: pointer;
+    font-family: "Roboto";
+	letter-spacing: 1px;
+	background: white; 
+
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+
+}
+
+
+.admin-unflag-button:hover{
+	 opacity: 0.5;
+}
+
+
 
 
 /************ ADMIN PAGE ******************/
@@ -1225,7 +1245,6 @@ button:focus {
 		padding-right: 10px; 
 		padding-top: 10px; 
 		padding-bottom: 10px; 
-
 
 	}
 
