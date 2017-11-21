@@ -371,7 +371,7 @@ values (
 insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
 	2,
-    1,
+    2,
     "Joyce",
     "I like 360! Good intro to AI and great projects :) ",
     false,
@@ -382,7 +382,7 @@ values (
 insert into QuestionComment(questionID, userID, userIDAnnonymous, description, isAnnonymous, commentLikeCount, commentDislikeCount) 
 values (
 	3,
-    1,
+    2,
     "Joyce",
     "Helpful Poll!! I am going to watch despicable me w my friend this weekend",
     false,
