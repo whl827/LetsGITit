@@ -20,6 +20,7 @@
     <div ng-if="adminData.auth == 1">
 
     	<h3>Flagged Questions</h3>
+
     	<div data-ng-init="loadFlagged()">
 
 			<div class="post-container" ng-repeat="question in flagged.questionList" ng-click="goToLink(question)">
@@ -36,7 +37,7 @@
 						<p class="feed-total-votes">{{question.totalVotes}} VOTES</p>
 						<p class="feed-num-likes"> {{question.numLikes}} LIKES</p>
 
-						<button ng-click="unflag(question, flagged.questionList, $index)">UNFLAG</button>
+						<button class="admin-unflag-button" ng-click="unflag(question, flagged.questionList, $index)">UNFLAG</button>
 
 						<!-- add tags  -->
 						<div class="tags-container row" ng-repeat="tag in question.allTags">
@@ -49,20 +50,16 @@
 
     	</div>
 
-
-    	<!-- Joyce work your magic here -->
     	<h3>Flagged Comments</h3>
     	<br>
     	<br>
     	<div data-ng-init="loadFlaggedComments()">
 
     		<div ng-repeat="comment in flagged.commentList">
-
-       			------------------------------------------- <br>
     			{{comment.description}} <br>
     			<img src="{{comment.image}}"> <br>
-    			<button ng-click="unflagComment(comment, flagged.commentList, $index)">UNFLAG</button> <br>
-    			------------------------------------------- <br>
+    			<button class="admin-unflag-button" ng-click="unflagComment(comment, flagged.commentList, $index)">UNFLAG</button> 
+    			<hr />
     			<br>
     			<br>
 
