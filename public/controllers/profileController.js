@@ -1,8 +1,8 @@
 angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cookies', '$location', '$window', function($scope, $http, $cookies, $location, $window) {
 	var username = null;
 	var loggedIn = true;
-
 	var userID = $cookies.get("userID");
+	$scope.notify = {message : ""};
 
 	// $scope.createProfilePic = function() {
 	// 	console.log("ITS CALLED");
@@ -256,6 +256,19 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
     	console.log(notification);
     	$http.get('/markNotificationAsRead?id=' + notificationID);
     	notificationList.splice(index, 1);
+    }
+
+    $scope.notifyImmediatly = function() {
+    	console.log("notification settings changed to immediate");
+    	var id = $cookies.get("userID");
+    	$http.get('/toggleNotificaitons?userID=' + userID + '&notifyHourly=' + 0);
+    	$scope.notify = {message : "Your notificaitons have been set to immediate"};
+    }
+
+    $scope.notifyHourly = function() {
+    	var id = $cookies.get("userID");
+    	$http.get('/toggleNotificaitons?userID=' + userID + '&notifyHourly=' + 1);
+    	$scope.notify = {message : "Your notificaitons have been set to hourly"};
     }
 
 }]);

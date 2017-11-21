@@ -30,6 +30,11 @@
 							<div class="row profile-button-row">
 								<button class="deactivate-button" data-toggle="modal" data-target="#deactivateProfileModal"> DEACTIVATE </button>
 								<button class="delete-all-button" data-toggle="modal" data-target="#deleteAllPostModal"> DELETE ALL POSTS </button>
+
+								<br>
+								<button class="delete-all-button" ng-click="notifyHourly()"> SEND NOTIFICAITONS HOURLY </button>
+								<button class="delete-all-button" ng-click="notifyImmediatly()"> SEND NOTIFICAITONS IMMEDIATLY </button>
+								<span style="color:red; font-size:10px">{{notify.message}}</span>
 							</div>
 
 						</div>

@@ -85,6 +85,18 @@ app.get('/getNotifications', function (req, res) {
 		});
 });
 
+app.get('/toggleNotificaitons', function (req, res) {
+	var userID = req.query.userID;
+	var notifyHourly = req.query.notifyHourly;
+
+	console.log("Toggeling notification settings");
+	
+	con.query("UPDATE KUser SET notifyHourly = " + notifyHourly + " WHERE userID = " + userID, 
+		function (err, result, feilds) {
+			if (err) throw err;
+		});
+});
+
 app.get('/markNotificationAsRead', function (req, res) {
 	con.query("UPDATE UserNotification SET isRead = 1 WHERE userNotificaitonID = " + req.query.id, 
 		function (err, result, feilds) {
