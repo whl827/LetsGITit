@@ -51,7 +51,7 @@ function emailUser(email, description) {
 	}
 
 // Notifies every hour on the hour
-var notifier = schedule.scheduleJob('11 * * * *', function(){
+var notifier = schedule.scheduleJob('00 * * * *', function(){
   console.log('Notifing everyone');
 
   con.query('SELECT * FROM KUser WHERE notifyHourly = true',
@@ -90,7 +90,7 @@ app.get('/toggleNotificaitons', function (req, res) {
 	var notifyHourly = req.query.notifyHourly;
 
 	console.log("Toggeling notification settings");
-	
+
 	con.query("UPDATE KUser SET notifyHourly = " + notifyHourly + " WHERE userID = " + userID, 
 		function (err, result, feilds) {
 			if (err) throw err;
