@@ -56,6 +56,9 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
     }
 
     $scope.queryQuestions = function () {
+
+        console.log($scope.query);
+
         $http.get('/searchQuestions?tagQuery=' + $scope.query)
             .then(function (response) {
                     $scope.isQuestionList = 1;
@@ -146,7 +149,9 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
                     topTagsStr += ", ";
                 }
             }
-            document.querySelector(".keywords").innerHTML = topTagsStr;
+            //document.querySelector(".keywords").innerHTML = topTagsStr;
+            $scope.topTagsList = response.data;
+            
         },
         function (res) {
 
@@ -187,21 +192,10 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
         );
     }
 
-
-
 /*
     str = JSON.stringify(response.data, null, 4); 
     console.log(str);
 */
-
-
-
-
-
-
-
-
-
     $scope.goToLink = function(question) {
 
         if(question.isPoll){
@@ -215,6 +209,12 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
 
     $scope.goToUser = function(username) {
         $location.path('/userProfile/' + username);
+    }
+
+    $scope.searchClickedTag = function(tag){
+        $scope.query = tag.tagStr;
+        document.querySelector("#TagUserDropDown").value = "Tags";
+        $scope.queryQuestions();
     }
 
 }]);

@@ -213,8 +213,13 @@ app.get('/getQuestionTags', function (req, res){
 //get array of 5 top popular tags
 app.get('/getTopTags', function (req, res){
 
-	con.query("SELECT tq.tagID, t.tagStr, count(tq.questionID) as NumberOfQuestions from tag t " +
-			  "JOIN tagToQuestion tq on t.tagId = tq.tagID GROUP BY tagID LIMIT 5",
+	con.query("SELECT tq.tagID, t.tagStr, count(tq.questionID) as NumberOfQuestions " +
+			  "FROM tag t " +
+			  "JOIN tagToQuestion tq " +
+			  "ON t.tagId = tq.tagID " + 
+			  "GROUP BY tagID " +
+			  "ORDER BY NumberOfQuestions DESC " + 
+			  "LIMIT 5",
 	  function (err, result, fields) {
 	   res.json(result);
 	});
