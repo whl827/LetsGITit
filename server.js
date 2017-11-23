@@ -3,6 +3,8 @@ var app = express();
 var mysql = require('mysql');
 var nodemailer = require('nodemailer');
 var schedule = require('node-schedule');
+var bodyParser = require('body-parser');
+app.use(bodyParser.json());
 
 var con = mysql.createConnection({
   host: "localhost",
@@ -1254,7 +1256,6 @@ app.get('/UndoCommentVote', function (req, res) {
 });
 
 app.get('/getTag', function (req, res) {
-
 	con.query("SELECT t.tagStr FROM Tag t INNER JOIN TagToQuestion ttq" +
 		" ON t.tagID = ttq.tagID WHERE ttq.questionID='" +
 		req.query.questionID + "' LIMIT 1;", 
@@ -1262,6 +1263,16 @@ app.get('/getTag', function (req, res) {
 			if(err) throw err;
 			res.json(result);
 		});
+});
+
+app.get('/tagList', function (req, res) {
+	con.query("SELECT t.tagStr, t.tagID FROM Tag t INNER JOIN TagToQuestion ttq" +
+	" ON t.tagID = ttq.tagID WHERE ttq.questionID='" +
+	req.query.questionID+ "';",
+			function (err, result, fields) {
+		if (err) throw err;
+		res.json(result);
+	});
 });
 
 app.get('/getRecommendedQuestion', function (req, res) {
@@ -1345,6 +1356,48 @@ app.get('/deleteAllPosts', function(req, res) {
 			if (err) throw err;
 			res.json(result);
 		});
+});
+
+// Edit Poll
+app.post('/editPoll', function (req, res) {
+
+	// var editTitle = req.body.editTitle;
+	// var editDescription = req.body.editDescription;
+
+	var newImage = req.body.newImage;
+
+	if(newImage != null){
+		con.query("UPDATE Question SET title='" + req.body.editTitle 
+		+ "', description='" + req.body.editDescription + "', image='" + req.body.newImage + "' WHERE questionID='" + req.body.questionID + "'"); 
+	}
+	else{
+		con.query("UPDATE Question SET title='" + req.body.editTitle + "', description='" 
+		+ req.body.editDescription + "' WHERE questionID='" + req.body.questionID + "'"); 
+	}
+	
+	// Updating poll Option
+	if(req.body.pollList !== 'undefined'){
+		var optionArray = req.body.pollList;
+
+		for(var i=0; i<optionArray.length; i++){
+			con.query("UPDATE pollOption SET title='" + optionArray[i][i] + "' WHERE pollOptionID ='"
+			+ optionArray[i].pollOptionID + "'");
+		}
+	}
+	
+	// Updating Tag
+	var tagArray = req.body.tagList
+	for(var i = 0; i < tagArray.length; i++) {
+		con.query("UPDATE Tag SET tagStr='" + tagArray[i][i] + "' WHERE tagID ='"
+		+ tagArray[i].tagID + "';",
+		function (err, result, fields) {
+			if (err) throw err;
+			res.json(result);
+		});
+
+	 }	
+	// console.log('done');	
+	// res.sendStatus(200);
 });
 
 
