@@ -1,5 +1,4 @@
-angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies', '$routeParams', '$route', '$location', function ($scope, $http, $cookies, $routeParams, $route, $location) {
-
+angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies', '$routeParams', '$route', '$location', function ($scope, $http, $cookies, $routeParams, $route, $location, $uibModalInstance) {
 	function twoDigits(d) {
 		if (0 <= d && d < 10) return "0" + d.toString();
 		if (-10 < d && d < 0) return "-0" + (-1 * d).toString();
@@ -23,6 +22,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 	var username;
 	var userID;
 	var title;
+	var imageURL;
 	
 	//when true, get info from database
 	//getting information from search page (Home)
@@ -34,6 +34,8 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 	else{
 		false;
 	}
+
+	$scope.showPost = false;
 
 	//Set Question ID as URL, and read it when pulling poll / rating information 
 	if (getPoll) {
@@ -52,7 +54,6 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 			$scope.userID = response.data[0].userID;
 			userID = response.data[0].userID;
 
-
 			$scope.description = null;
 			if (response.data[0].description != 'undefined') {
 				$scope.description = response.data[0].description;
@@ -63,7 +64,8 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 			
 			//check if it image exists, and if it does, show
 			var image = document.querySelector("#image_in_poll");
-			var imageURL = response.data[0].image;
+			imageURL = response.data[0].image;
+			//var pollImage = response.data[0].image;
 			console.log("IMAGE URL: " + imageURL);
 			if(imageURL==null){
 				console.log("IMAGE DOES NOT EXIST: hiding image");
@@ -120,9 +122,6 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
                     $scope.endDateDisplay = "Closed"; 
                 }
             }
-
-
-
 
 			$scope.endDate = null;
 			if (response.data[0].endDate == null) {
@@ -205,6 +204,13 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 			$scope.pollResults = response.data;
 		}, function (response) {
 			console.log("FAILED getting poll results");
+		});
+
+		$http.get('/tagList?questionID=' + questionID).then(function (response) {
+			$scope.totalTags = response.data.length;	
+			$scope.tagList = response.data;
+		}, function (response) {
+
 		});
 
 		$http.get('/getTag?questionID=' + questionID).then(function (response) {
@@ -722,6 +728,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 	}
 
 	$scope.isClosed = null; 
+
 	$http.get('/checkQuestionDate?questionID=' + questionID)
 		.then(function (response) {
 			if (response.data[0].endDate == null) {
@@ -767,10 +774,8 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 
 		var imageURL = document.querySelector("#pictureURL").value;
 		var image = document.querySelector("#comment-pic");
-
 		//check if it's a image url
-		if(checkURL(imageURL)){
-			
+		if(checkURL(imageURL)){		
 			image.onerror = function() {
 				this.onerror = function(){
 					return;
@@ -789,6 +794,28 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 		}
 	}
 
+	$scope.editChange = function(pollList, tagList){
+
+		var data = {
+			id: 0,
+			questionID: questionID,
+			editTitle: $scope.editTitle,
+			editDescription: $scope.editDescription,
+			pollList: pollList,
+			tagList: tagList,
+			newImage: $scope.editImage
+		};
+
+		$http.post('/editPoll', data)
+		.then(
+			function(response){
+				$route.reload();
+			},
+			function(error){
+				console.log(error)
+			});				
+	}
+
 	$scope.deletePicture = function(comment) {	
 	
 		$http.get("/deleteCommentImage?questionCommentID=" + comment.questionCommentID)
@@ -804,8 +831,5 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 
 	function checkURL(url) {
 		return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
-	}
-
-	
+	}	
 }]);
-
