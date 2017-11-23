@@ -51,7 +51,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			var profileImage = document.querySelector("#profileImage");
 			
 			if ($scope.isAnonymous == 1) {
-				$scope.username = "ANONYMOUS";
+				$scope.username = "Anonymous";
 				profileImage.src = "img/anonymous_profile.png";
 			} else {
 				$scope.username = response.data[0].username;
@@ -88,9 +88,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
                 }
             }
 
-
-
-
 			$scope.endDate = null;
 			if (response.data[0].endDate == null) {
 				$scope.endDate = "(Open Forever)";
@@ -106,19 +103,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 					$scope.endDate = response.data[0].endDate;
 				} else {
 					$scope.endDate = "(CLOSED)";
-					//disable everything when it's closed
-					// var nodes = document.querySelector(".comments-cont").getElementsByTagName('*');
-					// for (var i = 0; i < nodes.length; i++) {
-					// 	nodes[i].disabled = true;
-					// }
-					// var nodes = document.querySelector(".rank-cont").getElementsByTagName('*');
-					// for (var i = 0; i < nodes.length; i++) {
-					// 	nodes[i].disabled = true;
-					// }
-					// var nodes = document.querySelector(".vote-cont").getElementsByTagName('*');
-					// for (var i = 0; i < nodes.length; i++) {
-					// 	nodes[i].disabled = true;
-					// }
 				}
 
 			}
@@ -163,6 +147,13 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			$scope.commentList = response.data;
 		}, function (response) {
 			console.log("Failed to get current user, not logged in");
+		});
+
+		$http.get('/tagList?questionID=' + questionID).then(function (response) {
+			$scope.totalTags = response.data.length;	
+			$scope.tagList = response.data;
+		}, function (response) {
+
 		});
 
 		$http.get('/getTag?questionID=' + questionID).then(function (response) {
@@ -718,6 +709,28 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			image.src = "";
 			image.style.display = "none";
 		}
+	}
+
+	$scope.editChange = function(tagList){
+
+		var data = {
+			id: 0,
+			questionID: questionID,
+			editTitle: $scope.editTitle,
+			editDescription: $scope.editDescription,
+			tagList: tagList,
+			editOption: $scope.pollList.editOption,
+			newImage: $scope.editImage
+		};
+
+		$http.post('/editPoll', data)
+		.then(
+			function(response){
+				$route.reload();
+			},
+			function(error){
+				console.log(error)
+			});				
 	}
 
 	$scope.deletePicture = function(comment) {	

@@ -187,20 +187,10 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
         );
     }
 
-
-
 /*
     str = JSON.stringify(response.data, null, 4); 
     console.log(str);
 */
-
-
-
-
-
-
-
-
 
     $scope.goToLink = function(question) {
 
