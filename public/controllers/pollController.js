@@ -23,6 +23,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 	var userID;
 	var title;
 	var imageURL;
+	var description;
 	
 	//when true, get info from database
 	//getting information from search page (Home)
@@ -51,12 +52,15 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 
 			$scope.title = response.data[0].title;
 			title = response.data[0].title;
+			$scope.editTitle = title;
 			$scope.userID = response.data[0].userID;
 			userID = response.data[0].userID;
 
 			$scope.description = null;
 			if (response.data[0].description != 'undefined') {
 				$scope.description = response.data[0].description;
+				description = response.data[0].description;
+				$scope.editDescription = description;
 
 			}
 			$scope.isAnonymous = response.data[0].isAnonymous;
@@ -65,6 +69,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 			//check if it image exists, and if it does, show
 			var image = document.querySelector("#image_in_poll");
 			imageURL = response.data[0].image;
+			$scope.editImage = imageURL;
 			//var pollImage = response.data[0].image;
 			console.log("IMAGE URL: " + imageURL);
 			if(imageURL==null){
@@ -235,7 +240,6 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 				console.log("Question list NOT received");
 			});
 
-		
 
 	}//If
 
@@ -799,7 +803,7 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 		var data = {
 			id: 0,
 			questionID: questionID,
-			editTitle: $scope.editTitle,
+			editTitle:  $scope.editTitle,
 			editDescription: $scope.editDescription,
 			pollList: pollList,
 			tagList: tagList,

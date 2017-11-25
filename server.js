@@ -1385,28 +1385,33 @@ app.post('/editPoll', function (req, res) {
 	}
 	
 	// Updating poll Option
-	if(req.body.pollList !== 'undefined'){
+	if(req.body.pollList != null){
 		var optionArray = req.body.pollList;
 
 		for(var i=0; i<optionArray.length; i++){
-			con.query("UPDATE pollOption SET title='" + optionArray[i][i] + "' WHERE pollOptionID ='"
-			+ optionArray[i].pollOptionID + "'");
+			if(optionArray[i][i] != null){
+				con.query("UPDATE pollOption SET title='" + optionArray[i][i] + "' WHERE pollOptionID ='"
+				+ optionArray[i].pollOptionID + "' ");
+			}
 		}
 	}
 	
 	// Updating Tag
 	var tagArray = req.body.tagList
 	for(var i = 0; i < tagArray.length; i++) {
-		con.query("UPDATE Tag SET tagStr='" + tagArray[i][i] + "' WHERE tagID ='"
-		+ tagArray[i].tagID + "';",
-		function (err, result, fields) {
-			if (err) throw err;
-			res.json(result);
-		});
+		if(tagArray[i][i] != null){
+			con.query("UPDATE Tag SET tagStr='" + tagArray[i][i] + "' WHERE tagID ='"
+			+ tagArray[i].tagID + "' ");
+		}
+
+		// function (err, result, fields) {
+		// 	if (err) throw err;
+		// 	res.json(result);
+		// });
 
 	 }	
 	// console.log('done');	
-	// res.sendStatus(200);
+	res.sendStatus(200);
 });
 
 
