@@ -34,26 +34,26 @@
 								<button type="button" class="close" data-dismiss="modal" aria-label="Close">
 									<span aria-hidden="true">&times;</span>
 								</button>
-								<h4 class="modal-title" id="myModalLabel">Edit " {{title}} "</h4>
+								<h4 class="modal-title" id="myModalLabel">Edit "{{title}}"</h4>
 							</div>
 							<div class="modal-body">
 								<!-- Edit -->
 								<p>Title:
-									<input type="text" size="45" ng-model= "editTitle" value={{title}} />
+									<input type="text" size="45" ng-model= "editTitle"  />
 								</p>
 								<p>Description:
 									<textarea rows="4" cols="50"  ng-model= "editDescription" name="comment" form="usrform">{{description}}</textarea>
 								</p>
 								<p ng-repeat="option in pollList track by $index">
 									Poll option {{$index+1}} :
-									<input type="text" ng-model="option[$index]" value={{option.title}}>
+									<input type="text" ng-model="option[$index]" ng-attr-placeholder={{option.title}}>
 								</p>
 								<p>Image URL:
-									<input type="text" ng-model= "editImage" size="45" placeholder={{imageURL}} /> </p>
-
+									<input type="text" ng-model= "editImage" size="45"/> 
+								</p>
 								<p ng-repeat="tag in tagList track by $index">
 									Tags {{$index+1}} :
-									<input type="text" ng-model="tag[$index]" value={{tag.tagStr}}>
+									<input type="text" ng-model="tag[$index]" ng-attr-placeholder={{tag.tagStr}}>
 								</p>
 
 							</div>

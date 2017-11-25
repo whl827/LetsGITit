@@ -17,6 +17,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 	var questionID = $routeParams.questionID;
 	var getRating = true;
 	var username;
+	var description;
 
 	if (getRating) {
 		$http.get('/getQuestion?questionID=' + questionID).then(function (response) {
@@ -30,8 +31,17 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			}
 
 			$scope.title = response.data[0].title;
+			$scope.editTitle = response.data[0].title;
 			$scope.userID = response.data[0].userID;
-			$scope.description = response.data[0].description;
+			//$scope.description = response.data[0].description;
+
+			$scope.description = null;
+			if (response.data[0].description != 'undefined') {
+				$scope.description = response.data[0].description;
+				description = response.data[0].description;
+				$scope.editDescription = description;
+
+			}
 
 			$scope.isAnonymous = response.data[0].isAnonymous;
 			$scope.username = null;
@@ -40,6 +50,8 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			//check if it image exists, and if it does, show
 			var image = document.querySelector("#image_in_rating");
 			var imageURL = response.data[0].image;
+			$scope.editImage = imageURL;
+
 			if(imageURL==null){
 				image.src = "";
 				image.style.display = "none";
@@ -719,7 +731,6 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			editTitle: $scope.editTitle,
 			editDescription: $scope.editDescription,
 			tagList: tagList,
-			editOption: $scope.pollList.editOption,
 			newImage: $scope.editImage
 		};
 
@@ -730,7 +741,8 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			},
 			function(error){
 				console.log(error)
-			});				
+			});	
+					
 	}
 
 	$scope.deletePicture = function(comment) {	
