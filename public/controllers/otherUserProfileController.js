@@ -4,7 +4,24 @@ angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '
 	var currUsername = $cookies.get("username");
 
 	var isLoggedIn = currUsername != "null"; // Because javascript is werid
-	$scope.isLoggedIn = isLoggedIn;	
+
+	var isDeactivated = true;
+
+	$http.get('/findUser?username=' + otherUsername)
+	.then(function (response) {
+		isDeactivated = response.data[0].deactivated;
+		console.log("isDeactivated: " + isDeactivated);
+
+		$scope.errorSignal = 0;
+
+		if (isDeactivated) {
+			$scope.errorSignal = 2;
+		}
+		if (!isLoggedIn) {
+			$scope.errorSignal = 1;
+		}
+	});
+
 	$scope.otherUsername = otherUsername
 	$scope.isAdmin = $cookies.get("isAdmin");
 
@@ -72,25 +89,32 @@ angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '
 
 	    $scope.deactivateAccount = function () {
 
-	    	var deactivated = true;
-	    	var userID = -1;
-	    	$http.get('/user?username=' + otherUsername)
-	    		.then(function (response) {
-	    			userID = response.data[0].userID;
-	    		});
+	    	var otherUsername = $routeParams.username.replace(":", "");
 
-	    	$http.get('/deactivateUser?deactivated=' + deactivated + '&userID=' + userID + "&username=" + otherUsername)
+	    	var deactivated = true;
+
+	    	console.log("username: " + otherUsername);
+
+	    	$http.get('/findUser?username=' + otherUsername)
 	    		.then(function (response) {
-	    		}
-	    	);
-	    	$http.get('/deactivateQuestions?userID=' + userID)
-	    		.then(function (response) {
-	    		}
-	    	);
-	    	$http.get('/deactivateComments?userID=' + userID)
-	    		.then(function (response) {
-	    		}
-	    	);
+	    			var userID = response.data[0].userID;
+
+	    			console.log("Found user");
+	    			console.log("User id: " + userID);
+
+			    	$http.get('/deactivateUser?deactivated=' + deactivated + '&userID=' + userID + "&username=" + otherUsername)
+			    		.then(function (response) {
+			    		}
+			    	);
+			    	$http.get('/deactivateQuestions?userID=' + userID)
+			    		.then(function (response) {
+			    		}
+			    	);
+			    	$http.get('/deactivateComments?userID=' + userID)
+			    		.then(function (response) {
+			    		}
+			    	);
+	    		});
 
 	        // After redirected to login page and after it loads, display a modal for the user with a message
 			// $(document).ready(function () {

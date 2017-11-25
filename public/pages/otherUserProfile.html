@@ -1,11 +1,11 @@
 <div ng-controller="otherUserProfile">
 
-	<div ng-if="isAdmin == 1">
-		<button ng-click="deactivateAccount()">DEACTIVATE</button>
-	</div>
+	<div ng-switch="errorSignal">
+		<div ng-switch-when="0">
 
-	<div ng-switch="isLoggedIn">
-		<div ng-switch-when="true">
+			<div ng-if="isAdmin == 1">
+				<button ng-click="deactivateAccount()">DEACTIVATE</button>
+			</div>
 
 			<div class="row remove-margins">
 	 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 ">
@@ -43,11 +43,6 @@
 					</div>
 				</div> 
 
-
-
-
-
-
 				<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 offset-lg-3 col-xl-9 offset-lg-3">
 					<div class="my-posts-container">
 						<div class="post-container" ng-repeat="question in questionList" ng-click="goToLink(question)">
@@ -73,10 +68,10 @@
 				</div>
 			</div>
 
+		</div>
 
-
-
-
+		<div id="userProfileError" ng-switch-when="2">
+			This account has been deactivated
 		</div>
 		<div id="userProfileError" ng-switch-default>
 			You are not logged in

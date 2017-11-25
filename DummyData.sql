@@ -18,12 +18,10 @@ insert into KUser(username, passwordHash) values
     111421
 );
 
-insert into KUser(username, email, passwordHash, notifyHourly) values
+insert into KUser(username, passwordHash) values
 (
 	"Robert",
-	"rdiersin@usc.edu",
-    111421,
-    true
+    111421
 );
 
 
