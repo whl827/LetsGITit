@@ -209,7 +209,14 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
     };
 
     $scope.goToUser = function(username) {
-        $location.path('/userProfile/' + username);
+        //go to profile page
+        if(username==$cookies.get('username')){
+            $location.path('/profile');
+        }else{
+            //go to other profile page
+            $location.path('/userProfile/' + username);
+        }
+        
     }
 
     $scope.searchClickedTag = function(tag){
