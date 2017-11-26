@@ -265,6 +265,15 @@ app.get('/user', function (req, res) {
 	});
 });
 
+app.get('/findUser', function (req, res) {
+
+	con.query('SELECT * FROM kUser WHERE username="' + req.query.username + '"', 
+		function (err, result, fields) {
+	    if (err) throw err;
+	    res.json(result);
+	});
+});
+
 // reactivating user under login
 app.get('/reactivateUser', function (req, res) {
 	console.log("Trying to reactivate user...");
