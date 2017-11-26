@@ -316,7 +316,7 @@
 			<p class="section-heading" id="totalComment">RECOMMENDED FOR YOU </p>
 			<div class="rec" ng-repeat="option in questionList" ng-click="goToLink(option)">
 				<p class="rec-title clickable"> {{option.title}} </p>			
-				<p class="rec-descript"> {{option.description}} </p>	
+				<p class="rec-descript"> {{option.description=="undefined"? "No Description" : option.description}} </p>
 			</div>
 			{{errorMessageRecommendedQuestion}}
 		</div>

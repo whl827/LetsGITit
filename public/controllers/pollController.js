@@ -72,15 +72,38 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 			$scope.editImage = imageURL;
 			//var pollImage = response.data[0].image;
 			console.log("IMAGE URL: " + imageURL);
-			if(imageURL==null){
-				console.log("IMAGE DOES NOT EXIST: hiding image");
+			
+			// if(imageURL==null){
+			// 	console.log("IMAGE DOES NOT EXIST: hiding image");
+			// 	image.src = "";
+			// 	image.style.display = "none";
+			// }else{
+			// 	console.log("IMAGE EXISTS: Showing image");
+			// 	image.src = imageURL;
+			// 	image.style.display = "inline";
+			// }
+
+			image.onerror = function() {
+				this.onerror = function(){
+					return;
+				}
 				image.src = "";
 				image.style.display = "none";
-			}else{
-				console.log("IMAGE EXISTS: Showing image");
-				image.src = imageURL;
+			};
+			image.onload = function(){
+				this.onload = function(){
+					return;
+				}
 				image.style.display = "inline";
+				image.src = imageURL;
 			}
+			image.src = imageURL;
+
+
+
+
+
+
 
 			var profileImage = document.querySelector("#profileImage");
 

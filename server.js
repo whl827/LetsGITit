@@ -201,7 +201,7 @@ app.get('/getFlaggedComments', function(req, res) {
 });
 
 app.get('/getQuestionTags', function (req, res){
-	con.query("SELECT t.tagID, t.tagStr FROM Tag t INNER JOIN TagToQuestion ttq" +
+	con.query("SELECT distinct(t.tagID), t.tagStr FROM Tag t INNER JOIN TagToQuestion ttq" +
 			" ON t.tagID = ttq.tagID WHERE ttq.questionID='" +
 			req.query.questionID + "';", 
 	function (err, result, fields) {
@@ -1266,7 +1266,7 @@ app.get('/getTag', function (req, res) {
 });
 
 app.get('/tagList', function (req, res) {
-	con.query("SELECT t.tagStr, t.tagID FROM Tag t INNER JOIN TagToQuestion ttq" +
+	con.query("SELECT distinct(t.tagID), t.tagStr FROM Tag t INNER JOIN TagToQuestion ttq" +
 	" ON t.tagID = ttq.tagID WHERE ttq.questionID='" +
 	req.query.questionID+ "';",
 			function (err, result, fields) {
@@ -1277,7 +1277,7 @@ app.get('/tagList', function (req, res) {
 
 app.get('/getRecommendedQuestion', function (req, res) {
 
-	con.query("SELECT q.questionID, q.isPoll, q.title, q.description " + 
+	con.query("SELECT distinct(q.questionID), q.isPoll, q.title, q.description " + 
 		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
 		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
 		" tq.questionID = q.questionID AND tq.questionID <> '"+ req.query.questionID +

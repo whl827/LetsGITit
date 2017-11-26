@@ -52,13 +52,42 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			var imageURL = response.data[0].image;
 			$scope.editImage = imageURL;
 
-			if(imageURL==null){
+
+			//for some reason, image url null but goes to else statement
+			//so i changed it to how it was handled in create poll controller
+			// if(imageURL==null){
+			// 	image.src = "";
+			// 	image.style.display = "none";
+			// }else{
+			// 	image.src = imageURL;
+			// 	image.style.display = "inline";
+			// }
+
+			image.onerror = function() {
+				this.onerror = function(){
+					return;
+				}
 				image.src = "";
 				image.style.display = "none";
-			}else{
-				image.src = imageURL;
+			};
+			image.onload = function(){
+				this.onload = function(){
+					return;
+				}
 				image.style.display = "inline";
+				image.src = imageURL;
 			}
+			image.src = imageURL;
+
+
+
+
+
+
+
+
+
+
 
 			var profileImage = document.querySelector("#profileImage");
 			
