@@ -23,12 +23,13 @@
 			<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 ">
 				<div class="popular-cont affix">
 					<p class="popular"> POPULAR </p>
-					<span class="keywords" ng-repeat="tag in topTagsList" ng-click="searchClickedTag(tag)" >
-						<span >
-							{{tag.tagStr}}
-						</span>
-					</span>
-
+					<div class="row remove-margins">
+						<div ng-repeat="tag in topTagsList" ng-click="searchClickedTag(tag)" >
+							<div class="popular-tag"> 
+								{{tag.tagStr}}
+							</div>
+						</div>
+					</div>
 				</div>
 			</div>
 
@@ -45,7 +46,6 @@
 								<div class="row">
 									<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
 										<p class="feed-user"> Created by {{question.username}} on {{question.startDate | date: 'yyyy-MM-dd'}}</p>
-										<!-- <p class="feed-subtitle">{{question.subtitle=="undefined" ? "" : question.subtitle}} </p>  -->
 								 		<p class="feed-description">{{question.description=="undefined" ? "" : question.description}} </p> 
 
 									</div>

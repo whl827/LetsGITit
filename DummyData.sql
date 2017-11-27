@@ -67,6 +67,15 @@ insert into Tag(tagStr) values ("Pizza");
 insert into Tag(tagStr) values ("Movie");
 insert into Tag(tagStr) values ("USC");
 insert into Tag(tagStr) values ("Course");
+insert into Tag(tagStr) values ("Food");
+insert into Tag(tagStr) values ("CS");
+insert into Tag(tagStr) values ("Football");
+insert into Tag(tagStr) values ("Study");
+insert into Tag(tagStr) values ("Cafe");
+insert into Tag(tagStr) values ("Coffee");
+insert into Tag(tagStr) values ("Leavey");
+insert into Tag(tagStr) values ("UV");
+insert into Tag(tagStr) values ("CS310");
 
 insert into Question(userID, isPoll, title, subTitle, description, totalVotes, numLikes, isAnonymous, image) 
 values (
@@ -898,15 +907,25 @@ insert into UserToQuestion(userID, questionID) values (3, 8);
 insert into UserToQuestion(userID, questionID) values (3, 9);
 
 insert into TagToQuestion(tagID, questionID) values (1, 1);
-insert into TagToQuestion(tagID, questionID) values (1, 2);
-insert into TagToQuestion(tagID, questionID) values (2, 2);
+insert into TagToQuestion(tagID, questionID) values (5, 1);
+insert into TagToQuestion(tagID, questionID) values (3, 2);
+insert into TagToQuestion(tagID, questionID) values (4, 2);
+insert into TagToQuestion(tagID, questionID) values (6, 2);
 insert into TagToQuestion(tagID, questionID) values (2, 3);
 insert into TagToQuestion(tagID, questionID) values (3, 4);
+insert into TagToQuestion(tagID, questionID) values (4, 4);
+insert into TagToQuestion(tagID, questionID) values (6, 4);
 insert into TagToQuestion(tagID, questionID) values (3, 5);
-insert into TagToQuestion(tagID, questionID) values (1, 6);
-insert into TagToQuestion(tagID, questionID) values (2, 6);
-insert into TagToQuestion(tagID, questionID) values (3, 6);
-insert into TagToQuestion(tagID, questionID) values (4, 8);
+insert into TagToQuestion(tagID, questionID) values (7, 5);
+insert into TagToQuestion(tagID, questionID) values (8, 6);
+insert into TagToQuestion(tagID, questionID) values (9, 6);
+insert into TagToQuestion(tagID, questionID) values (10, 6);
+insert into TagToQuestion(tagID, questionID) values (8, 7);
+insert into TagToQuestion(tagID, questionID) values (11, 7);
+insert into TagToQuestion(tagID, questionID) values (3, 8);
+insert into TagToQuestion(tagID, questionID) values (12, 8);
+insert into TagToQuestion(tagID, questionID) values (13, 9);
+
 
 insert into QuestionToPollOption(questionID, pollOptionID) values(1, 1);
 insert into QuestionToPollOption(questionID, pollOptionID) values(1, 2);

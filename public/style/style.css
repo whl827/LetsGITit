@@ -226,6 +226,31 @@ create-button, .submit-button, .login-button, .signup-button{
 	color: #BB298B;
 }
 
+.post-tag {
+	text-transform: uppercase;
+	letter-spacing: 2px; 
+	font-size: 10px; 
+
+	border-radius: 20px;
+	margin-bottom: 6px;
+	background-color: #BB298B;
+	color: white;
+
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 0px;
+
+	padding-left: 15px;
+	padding-right: 15px; 
+	padding-top: 7px; 
+	padding-bottom: 7px;  
+}
+
+.post-tag-container{
+	float: right;
+}
+
+
 .main-info {
 	margin-bottom: 20px;
 }
@@ -929,6 +954,34 @@ hr {
 }
 
 
+.popular-tag {
+	text-transform: uppercase;
+	letter-spacing: 2px; 
+	font-size: 10px; 
+
+	border-radius: 20px;
+	margin-bottom: 6px;
+	background-color: #BB298B;
+	color: white;
+
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 10px;
+
+	padding-left: 15px;
+	padding-right: 15px; 
+	padding-top: 7px; 
+	padding-bottom: 7px;  
+
+	cursor: pointer;
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.popular-tag:hover{
+	 opacity: 0.7;
+}
+
 /*************** PROFILE *****************/
 .profile-cont {
 	position: fixed;
@@ -948,8 +1001,8 @@ hr {
 }
 
 .my-posts-container {
-	margin-top: px; 
-	margin-left: 50px;
+/*	margin-top: px; 
+*/	margin-left: 50px;
 	margin-right: 50px;
 	margin-bottom: 75px;
 }
