@@ -80,10 +80,28 @@
 
 				<!-- end date -->
 				<div class="row secondary-info balance-row-margin">
-					<p class="end-date" id="endDate">
-						{{endDateDisplay}}
-					</p>
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 ">
+						<p class="end-date" id="endDate">
+							{{endDateDisplay}}
+						</p>
+					</div>
+					<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9">
+						<div class="post-tag-container" ng-repeat="tag in tagList track by $index">
+							<div class="post-tag">{{tag.tagStr}}</div>
+						</div>
+					</div>
 				</div>
+
+
+
+						<!-- Tags -->
+		<!-- <p class="section-heading total-comments-heading" id="totalComment">ALL TAGS ({{totalTags}}) </p> -->
+		<!-- <p ng-show ="totalTags=='0'">There is no tag available</p> -->
+
+
+
+
+
 
 				<!-- description -->
 				<p class="description" id="description"> {{description}} </p>
@@ -289,12 +307,6 @@
 		</form>
 	</div>
 
-		<!-- Tags -->
-		<p class="section-heading total-comments-heading" id="totalComment">ALL TAGS ({{totalTags}}) </p>
-		<p ng-show ="totalTags=='0'">There is no tag available</p>
-		<p ng-repeat="tag in tagList track by $index">
-			<button type="button" disabled>{{tag.tagStr}}</button>
-		</p>
 
 		<!-- Flag -->
 		<div class="row">
