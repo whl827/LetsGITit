@@ -377,7 +377,16 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 	};
 
 	$scope.goToProfilePageFromComment = function (comment) {
-		$location.path('/userProfile/' + comment.userIDAnnonymous);
+		// $location.path('/userProfile/' + comment.userIDAnnonymous);
+		if(comment.userID == loggedInuserID){
+			$location.path('/profile/');
+		}
+		else{
+			if (!$scope.userIsLoggedIn())
+				$("#notLoggedInRatingModal").modal();
+			else
+				$location.path('/userProfile/' + comment.userIDAnnonymous);
+		}
 	};
 
 	$scope.goToProfilePage = function () {
