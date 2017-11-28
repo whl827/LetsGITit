@@ -437,7 +437,10 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 			$location.path('/profile/');
 		}
 		else{
-			$location.path('/userProfile/' + comment.userIDAnnonymous);
+			if (!$scope.userIsLoggedIn())
+				$("#notLoggedInPollModal").modal();
+			else
+				$location.path('/userProfile/' + comment.userIDAnnonymous);
 		}
 	};
 

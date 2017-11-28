@@ -218,6 +218,29 @@
 								<img ng-show="comment.imageURL == null && comment.userIDAnnonymous!='Anonymous'" class="comment-profile-pic" src = "img/blankprofile.png" width="60px" height="60px">
 								<img ng-show="comment.userIDAnnonymous=='Anonymous'" class="comment-profile-pic" src = "img/anonymous_profile.png" width="60px" height="60px">
 							</div>
+
+
+
+							<!-- Not Logged in Modal -->
+							<div class="modal fade" id="notLoggedInRatingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="edit-profile-modal modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">You are not logged in!</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary cancel-edit" data-dismiss="modal">OK</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+
+
+
 							<div class="col-lg-11 col-md-11 col-sm-11 comment-info-cont">
 								<div class="row">
 									<div class= "col-lg-9 col-md-9 col-sm-12">
