@@ -7,6 +7,7 @@ create table KUser (
     username varchar(12) not null,
     email varchar(100),
     numFollowers int(8) default 0 not null,
+    numFollowing int(8) default 0 not null,
     passwordHash int(12) not null,
     isAdmin boolean default false,
     isBanned boolean default false,

@@ -148,7 +148,7 @@ angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '
 		 });
 
 		 $http.get('/numFollowers?username=' + otherUsername).then(function (response) {
-		 	$scope.numFollowers = {num : response.data[0].numFollowers};
+		 	$scope.userStats = {numFollowers : response.data[0].numFollowers, numFollowing : response.data[0].numFollowing};
 		 });
 	}
 	
@@ -160,13 +160,13 @@ angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '
 			$http.get('/unfollow?currUser=' + currUsername + "&userToUnfollow=" + otherUsername);
 			$http.get('/notifyFollowing?currUser=' + currUsername + '&userToNotify=' + otherUsername + '&action=unfollow');
 			$scope.isFollowing = {bool : false, string : "FOLLOW"};
-			$scope.numFollowers = {num : $scope.numFollowers.num - 1};
+			$scope.userStats.numFollowers = $scope.userStats.numFollowers - 1;
 			console.log($scope.numFollowers.num);
 		} else {
 			$http.get('/follow?currUser=' + currUsername + "&userToFollow=" + otherUsername);
 			$http.get('/notifyFollowing?currUser=' + currUsername + '&userToNotify=' + otherUsername + '&action=follow');
 			$scope.isFollowing = {bool : true, string : "UNFOLLOW"};
-			$scope.numFollowers = {num : $scope.numFollowers.num + 1};
+			$scope.userStats.numFollowers = $scope.userStats.numFollowers + 1;
 			console.log($scope.numFollowers.num);
 		}
 	}

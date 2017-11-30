@@ -883,6 +883,9 @@ values(2,1);
 update KUser set numFollowers = 1 where userID = 1;
 update KUser set numFollowers = 1 where userID = 2;
 
+update KUser set numFollowing = 1 where userID = 1;
+update KUser set numFollowing = 1 where userID = 2;
+
 update KUser 
 set bio = "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Maecenas ultrices ultrices felis cras amet.",
 imageURL = "https://i.redd.it/lpj7hm6t9zly.jpg" 

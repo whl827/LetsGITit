@@ -69,6 +69,7 @@ angular.module("KnowItAll").controller('ProfileCtrl', ['$scope', '$http', '$cook
 
 		$http.get('/numFollowers?username=' + username).then(function(response) {
 			$scope.numFollowers = response.data[0].numFollowers;
+			$scope.numFollowing = response.data[0].numFollowing;
 		});
 
 		// bio and imageURL
