@@ -18,6 +18,7 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 	var getRating = true;
 	var username;
 	var description;
+	$scope.isAdmin = $cookies.get("isAdmin");
 
 	if (getRating) {
 		$http.get('/getQuestion?questionID=' + questionID).then(function (response) {
@@ -235,6 +236,17 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			console.log("Error");
 	});
 		
+	}
+
+	$scope.deleteQuestion = function() {
+		if (!$cookies.get("isAdmin")) {
+			return;
+		}
+
+		console.log("deleting question: " + questionID);
+		$http.get('deleteQuestion?questionID=' + questionID);
+		$location.path('/');
+		$scope.apply();
 	}
 
 	$scope.deleteComment = function (comment) {
