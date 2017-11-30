@@ -874,8 +874,6 @@ values (
     0
 );
 
-
-
 # users 1 and 2 follow eachother
 insert into userToFollowing(mainUserID, followingUserID)
 values(1,2);

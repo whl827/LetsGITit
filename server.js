@@ -169,6 +169,18 @@ app.get('/searchQuestions', function (req, res) {
 	    res.json(result);
 	});
 });
+
+// close question
+app.get('/closeQuestion', function (req, res) {
+	con.query("UPDATE Question SET endDate = now() WHERE questionID=" + req.query.questionID);
+});
+
+app.get('/deleteQuestion', function (req, res) {
+	con.query('DELETE from Question WHERE questionID = ' + req.query.questionID);
+	con.query('DELETE from QuestionComment WHERE questionID = ' + req.query.questionID);
+})
+
+
 //load questions by dates on page load
 app.get('/onPageLoad', function (req, res){
 

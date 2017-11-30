@@ -24,6 +24,8 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 	var title;
 	var imageURL;
 	var description;
+
+	$scope.isAdmin = $cookies.get("isAdmin");
 	
 	//when true, get info from database
 	//getting information from search page (Home)
@@ -266,6 +268,18 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 
 	}//If
 
+	$scope.closeQuestion = function() {
+		if (!$cookies.get("isAdmin")) {
+			return;
+		}
+
+		console.log("closing quesiton");
+
+		$http.get('/closeQuestion?questionID=' + questionID)
+		.then(function (response) {
+			$route.reload();	
+		});
+	}
 
 	$scope.editComment = function (comment) {
 
@@ -414,6 +428,17 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 		} else {
 			$scope.errorMessageCommentLike = "Please log In to vote comment";
 		}
+	}
+
+	$scope.deleteQuestion = function() {
+		if (!$cookies.get("isAdmin")) {
+			return;
+		}
+
+		console.log("deleting question: " + questionID);
+		$http.get('deleteQuestion?questionID=' + questionID);
+		$location.path('/');
+		$scope.apply();
 	}
 
 	$scope.flagComment = function (comment, commentList, index) {

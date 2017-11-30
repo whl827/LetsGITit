@@ -99,21 +99,31 @@
 		<!-- <p class="section-heading total-comments-heading" id="totalComment">ALL TAGS ({{totalTags}}) </p> -->
 		<!-- <p ng-show ="totalTags=='0'">There is no tag available</p> -->
 
-
-
-
-
-
 				<!-- description -->
 				<p class="description" id="description"> {{description}} </p>
 
-				<!-- flag -->
-				<div data-ng-init="loadQFlag()">
-					<h3 style="color:red">{{flag.flagInfo}}</h3>
-					<div ng-if="flag.isFlagged">
-						<button ng-click="toggleFlag(0)">UNFLAG</button>
+				<!-- close for admin -->
+				<div ng-if="isAdmin == 1">
+
+					Admin Tools <br>
+
+					<!-- flag -->
+					<div data-ng-init="loadQFlag()">
+						<h3 style="color:red">{{flag.flagInfo}}</h3>
+						<div ng-if="flag.isFlagged">
+							<button ng-click="toggleFlag(0)">UNFLAG</button>
+						</div>
 					</div>
+
+					<!-- close -->
+					<div ng-if="isClosed == 0">
+						<button ng-click="closeQuestion()">CLOSE</button>
+					</div>
+
+					<button ng-click="deleteQuestion()">DELETE</button> <br>
+					<span style="font-size: 12px; color:red;">This cannot be undone</span>
 				</div>
+
 			</div>
 
 			<!-- Poll -->
