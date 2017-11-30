@@ -185,6 +185,38 @@ create-button, .submit-button, .login-button, .signup-button{
 	margin: 20px;
 }*/
 
+.admin-tools-heading {
+	margin-bottom: 0px;
+	letter-spacing: 2px;
+    color: #e53935;
+    margin-bottom: 2px;
+    margin-top: 30px;
+}
+
+.warning-heading {
+	margin-bottom: 10px;
+	font-size: 12px;
+}
+
+.admin-tools{
+	font-size: 12px; 
+	border: 0;
+    color: grey;
+    cursor: pointer;
+    font-family: "Roboto";
+	letter-spacing: 2px;
+	background: white; 
+
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.admin-tools:hover{
+	 opacity: 0.5;
+}
+
+
+
 /***************** info *****************/
 .clickable {
 	cursor: pointer;

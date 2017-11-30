@@ -28,26 +28,7 @@
 					</div>
 
 
-					<div ng-if="isAdmin == 1">
 
-						Admin Tools <br>
-
-						<!-- flag -->
-						<div data-ng-init="loadQFlag()">
-							<h3 style="color:red">{{flag.flagInfo}}</h3>
-							<div ng-if="flag.isFlagged">
-								<button ng-click="toggleFlag(0)">UNFLAG</button>
-							</div>
-						</div>
-
-						<!-- close -->
-						<div ng-if="isClosed == 0">
-							<button ng-click="closeQuestion()">CLOSE</button>
-						</div>
-
-						<button ng-click="deleteQuestion()">DELETE</button> <br>
-						<span style="font-size: 12px; color:red;">This cannot be undone</span>
-					</div>
 
 
 					<!-- Edit Post Modal -->
@@ -122,26 +103,43 @@
 					<!-- description -->	
 					<p class="description" id = "description"> {{description}} </p>
 
+
+
 					<div ng-if="isAdmin == 1">
 
-						Admin Tools <br>
-
-						<!-- flag -->
-						<div data-ng-init="loadQFlag()">
-							<h3 style="color:red">{{flag.flagInfo}}</h3>
-							<div ng-if="flag.isFlagged">
-								<button ng-click="toggleFlag(0)">UNFLAG</button>
+						<p class="admin-tools-heading">ADMIN TOOLS </p>
+						<p class="warning-heading"> These actions cannot be undone </p>
+						
+						<div class="row remove-margins">
+							<!-- flag -->
+							<div data-ng-init="loadQFlag()">
+								<h3 style="color:red">{{flag.flagInfo}}</h3>
+								<div ng-if="flag.isFlagged">
+									<button class="admin-tools" ng-click="toggleFlag(0)">UNFLAG</button>
+								</div>
 							</div>
-						</div>
 
-						<!-- close -->
-						<div ng-if="isClosed == 0">
-							<button ng-click="closeQuestion()">CLOSE</button>
+							<!-- close -->
+							<div ng-if="isClosed == 0">
+								<button class="admin-tools" ng-click="closeQuestion()">CLOSE</button>
+							</div>
+							<button class="admin-tools" ng-click="deleteQuestion()">DELETE</button> 
 						</div>
-
-						<button ng-click="deleteQuestion()">DELETE</button> <br>
-						<span style="font-size: 12px; color:red;">This cannot be undone</span>
 					</div>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 					
 				</div>
 
