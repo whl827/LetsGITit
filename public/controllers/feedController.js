@@ -58,7 +58,7 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
     $scope.queryQuestions = function () {
 
         console.log($scope.query);
-
+        debugger;
         $http.get('/searchQuestions?tagQuery=' + $scope.query)
             .then(function (response) {
                     $scope.isQuestionList = 1;
@@ -90,6 +90,8 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
                 } // end of for loop
             }
         );
+
+        
     }
 
     $scope.queryUsers = function () {
@@ -228,4 +230,14 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
         $scope.queryQuestions();
     }
 
+    var fromClickTagFromOtherPage = $cookies.get("fromClickTagFromOtherPage");
+    
+    if(fromClickTagFromOtherPage == "true"){
+       
+        $scope.query = $cookies.get("tagQuery");
+       $cookies.remove("tagQuery");
+       $cookies.put("fromClickTagFromOtherPage", false);
+
+        document.querySelector("#TagUserDropDown").value = "Tags";
+    }
 }]);

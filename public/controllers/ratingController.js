@@ -808,6 +808,14 @@ angular.module("KnowItAll").controller('RatingCtrl', ['$scope', '$http', '$cooki
 			
 	}
 
+	$scope.searchClickedTag = function(tag){
+		
+				$cookies.put("tagQuery", tag.tagStr);
+				$cookies.put("fromClickTagFromOtherPage", true);
+				
+				$location.path('/' );
+	}
+
 	function checkURL(url) {
 		return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
 	}
