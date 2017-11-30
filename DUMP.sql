@@ -9,6 +9,7 @@ create table KUser (
     numFollowers int(8) default 0 not null,
     passwordHash int(12) not null,
     isAdmin boolean default false,
+    isBanned boolean default false,
     deactivated boolean default false,
     bio varchar(105),
     imageURL varchar(2000),

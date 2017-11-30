@@ -185,7 +185,7 @@ app.get('/onPageLoad', function (req, res){
 });
 
 app.get('/getFlaggedQuestions', function (req, res) {
-	con.query("SELECT * FROM Question WHERE isFlagged = 1", 
+	con.query("SELECT * FROM Question WHERE isFlagged = 1 AND deactivated = 0", 
 	function(err, result, response) {
 		if (err) throw err;
 		res.json(result);
@@ -193,7 +193,7 @@ app.get('/getFlaggedQuestions', function (req, res) {
 });
 
 app.get('/getFlaggedComments', function(req, res) {
-	con.query("SELECT * FROM QuestionComment WHERE isFlagged = 1", 
+	con.query("SELECT * FROM QuestionComment WHERE isFlagged = 1 AND deactivated = 0", 
 	function(err, result, response) {
 		if (err) throw err;
 		res.json(result);

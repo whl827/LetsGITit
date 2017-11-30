@@ -181,4 +181,5 @@ angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '
         }
 
     };
+
 }]);

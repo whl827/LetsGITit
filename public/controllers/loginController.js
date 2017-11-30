@@ -13,7 +13,6 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
 
     $scope.deactivateAccountMessage = function() {
         var isDeactivated = $cookies.get("isDeactivated");
-        // console.log("DEACTIVATED STATUS IS: " + isDeactivated);
         if (isDeactivated == "true") {
             $(document).ready(function () {
                 $("#deactivateLoginModal").modal('show');
@@ -47,11 +46,9 @@ angular.module("KnowItAll").controller('loginController', ['$scope', '$http', '$
                 // reactivating under login
                 $http.get('/reactivateUser?username=' + $scope.username +
                                      "&password=" + password).then(function (response) {} );
-                // console.log("NEW USER ID IS: " + newUserID);
                 $http.get('/reactivateQuestions?userID=' + newUserID).then(function (response) {} );
                 $http.get('/reactivateComments?userID=' + newUserID).then(function (response) {} );
 
-			    // $scope.errorMessage = "Successfully logged in";
 			    //redirect to home page
 			    $window.location.replace("../index.html");
 	    	}
