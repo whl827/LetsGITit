@@ -169,18 +169,6 @@ app.get('/searchQuestions', function (req, res) {
 	    res.json(result);
 	});
 });
-
-// close question
-app.get('/closeQuestion', function (req, res) {
-	con.query("UPDATE Question SET endDate = now() WHERE questionID=" + req.query.questionID);
-});
-
-app.get('/deleteQuestion', function (req, res) {
-	con.query('DELETE from Question WHERE questionID = ' + req.query.questionID);
-	con.query('DELETE from QuestionComment WHERE questionID = ' + req.query.questionID);
-})
-
-
 //load questions by dates on page load
 app.get('/onPageLoad', function (req, res){
 
@@ -197,7 +185,7 @@ app.get('/onPageLoad', function (req, res){
 });
 
 app.get('/getFlaggedQuestions', function (req, res) {
-	con.query("SELECT * FROM Question WHERE isFlagged = 1 AND deactivated = 0", 
+	con.query("SELECT * FROM Question WHERE isFlagged = 1", 
 	function(err, result, response) {
 		if (err) throw err;
 		res.json(result);
@@ -205,7 +193,7 @@ app.get('/getFlaggedQuestions', function (req, res) {
 });
 
 app.get('/getFlaggedComments', function(req, res) {
-	con.query("SELECT * FROM QuestionComment WHERE isFlagged = 1 AND deactivated = 0", 
+	con.query("SELECT * FROM QuestionComment WHERE isFlagged = 1", 
 	function(err, result, response) {
 		if (err) throw err;
 		res.json(result);
@@ -807,7 +795,7 @@ app.get('/updateProfilePic', function(req, res) {
 app.get('/numFollowers', function(req, res) {
 	var username = req.query.username;
 
-	con.query("SELECT * FROM KUser WHERE username='" + username + "'", 
+	con.query("SELECT numFollowers FROM KUser WHERE username='" + username + "'", 
 		function (err, result, fields) {
 			if (err) throw err;
 			res.json(result);
@@ -828,7 +816,6 @@ app.get('/follow', function(req, res) {
 	);
 
 	con.query("UPDATE KUser SET numFollowers = numFollowers + 1 WHERE username='" + userToFollow + "'");
-	con.query("UPDATE kUser SET numFollowing = numFollowing + 1 WHERE username='" + currUser + "'");
 })
 
 app.get('/unfollow', function(req, res) {
@@ -845,7 +832,6 @@ app.get('/unfollow', function(req, res) {
 	);
 
 	con.query("UPDATE KUser SET numFollowers = numFollowers - 1 WHERE username='" + userToUnfollow + "'");
-	con.query("UPDATE kUser SET numFollowing = numFollowing - 1 WHERE username='" + currUser + "'");
 
 });
 
@@ -1289,7 +1275,7 @@ app.get('/getTag', function (req, res) {
 });
 
 app.get('/tagList', function (req, res) {
-	con.query("SELECT distinct(t.tagID), t.tagStr FROM Tag t INNER JOIN TagToQuestion ttq" +
+	con.query("SELECT t.tagID, t.tagStr FROM Tag t INNER JOIN TagToQuestion ttq" +
 	" ON t.tagID = ttq.tagID WHERE ttq.questionID='" +
 	req.query.questionID+ "';",
 			function (err, result, fields) {
@@ -1300,7 +1286,7 @@ app.get('/tagList', function (req, res) {
 
 app.get('/getRecommendedQuestion', function (req, res) {
 
-	con.query("SELECT distinct(q.questionID), q.isPoll, q.title, q.description " + 
+	con.query("SELECT q.questionID, q.isPoll, q.title, q.description " + 
 		"FROM Question q, Tag t, TagToQuestion tq WHERE " + 
 		"t.tagStr='" + req.query.tagQuery + "' AND tq.tagID = t.tagID AND" + 
 		" tq.questionID = q.questionID AND tq.questionID <> '"+ req.query.questionID +

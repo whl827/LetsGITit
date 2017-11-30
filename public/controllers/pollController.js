@@ -884,6 +884,14 @@ angular.module("KnowItAll").controller('PollCtrl', ['$scope', '$http', '$cookies
 		
 	}
 
+	$scope.searchClickedTag = function(tag){
+
+		$cookies.put("tagQuery", tag.tagStr);
+		$cookies.put("fromClickTagFromOtherPage", true);
+		
+		$location.path('/' );
+    }
+
 	function checkURL(url) {
 		return(url.match(/\.(jpeg|jpg|gif|png)$/) != null);
 	}	
