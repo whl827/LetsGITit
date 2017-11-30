@@ -226,6 +226,31 @@ create-button, .submit-button, .login-button, .signup-button{
 	color: #BB298B;
 }
 
+.post-tag {
+	text-transform: uppercase;
+	letter-spacing: 2px; 
+	font-size: 10px; 
+
+	border-radius: 20px;
+	margin-bottom: 6px;
+	background-color: #BB298B;
+	color: white;
+
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 0px;
+
+	padding-left: 15px;
+	padding-right: 15px; 
+	padding-top: 7px; 
+	padding-bottom: 7px;  
+}
+
+.post-tag-container{
+	float: right;
+}
+
+
 .main-info {
 	margin-bottom: 20px;
 }
@@ -929,6 +954,34 @@ hr {
 }
 
 
+.popular-tag {
+	text-transform: uppercase;
+	letter-spacing: 2px; 
+	font-size: 10px; 
+
+	border-radius: 20px;
+	margin-bottom: 6px;
+	background-color: #BB298B;
+	color: white;
+
+	margin-left: 5px;
+	margin-right: 5px;
+	margin-bottom: 10px;
+
+	padding-left: 15px;
+	padding-right: 15px; 
+	padding-top: 7px; 
+	padding-bottom: 7px;  
+
+	cursor: pointer;
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+}
+
+.popular-tag:hover{
+	 opacity: 0.7;
+}
+
 /*************** PROFILE *****************/
 .profile-cont {
 	position: fixed;
@@ -948,8 +1001,8 @@ hr {
 }
 
 .my-posts-container {
-	margin-top: px; 
-	margin-left: 50px;
+/*	margin-top: px; 
+*/	margin-left: 50px;
 	margin-right: 50px;
 	margin-bottom: 75px;
 }
@@ -1130,6 +1183,7 @@ button:focus {
     font-family: "Roboto";
 	letter-spacing: 1px;
 	background: white; 
+	float: right;
 
 	-webkit-transition-duration: 0.4s; /* Safari */
     transition-duration: 0.4s;
@@ -1138,6 +1192,27 @@ button:focus {
 
 
 .admin-unflag-button:hover{
+	 opacity: 0.5;
+}
+
+
+.edit-post-button {
+	font-size: 10px; 
+	border: 0;
+    color: #e53935;
+    cursor: pointer;
+    font-family: "Roboto";
+	letter-spacing: 1px;
+	background: white; 
+
+	padding: 0px;
+
+	-webkit-transition-duration: 0.4s; /* Safari */
+    transition-duration: 0.4s;
+
+}
+
+.edit-post-button:hover{
 	 opacity: 0.5;
 }
 
@@ -1152,7 +1227,7 @@ button:focus {
 
 .admin-subheading {
 	font-size: 15px;
-	margin-bottom: 50px;
+	margin-bottom: 20px;
 }
 
 .admin-cont {
@@ -1172,6 +1247,23 @@ button:focus {
 .auth-button {
 	margin-left: 20px;
 }
+
+.flagged-questions-cont {
+
+}
+
+.admin-page-headings {
+	letter-spacing: 2px;
+	color: #e53935;
+	margin-top: 50px;
+	margin-bottom: 20px; 
+}
+
+.flagged-item {
+	margin-bottom: 0px;
+}
+
+
 
 /************ MEDIA QUERIES ***************/
 

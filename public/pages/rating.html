@@ -20,15 +20,16 @@
 							<p class="username " id = "username"> Asked by 
 								<a class="clickable" ng-click="username!='Anonymous' && goToProfilePage()"> {{username}} </a> 
 							</p>
+							<button class="edit-post-button" ng-show = "userID==loggedInuserID" type="button" id="mymodal" data-toggle="modal" data-target="#EditPost">
+								EDIT
+							</button>
 						</div>
 
 					</div>
 
 
 					<!-- edit post button -->
-					<button ng-show = "userID==loggedInuserID" type="button" id="mymodal" data-toggle="modal" data-target="#EditPost">
-						Edit Post
-					</button>
+					
 
 					<!-- Edit Post Modal -->
 					<div class="modal fade" id="EditPost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
@@ -81,9 +82,24 @@
 
 
 					<!-- end date -->
-					<div class="row secondary-info balance-row-margin">
+<!-- 					<div class="row secondary-info balance-row-margin">
 						<p class="end-date" id="endDate"> {{endDateDisplay}}</p>
+					</div> -->
+
+					<div class="row secondary-info balance-row-margin">
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-3 col-xl-3 ">
+							<p class="end-date" id="endDate">
+								{{endDateDisplay}}
+							</p>
+						</div>
+						<div class="col-xs-12 col-sm-12 col-md-12 col-lg-9 col-xl-9">
+							<div class="post-tag-container" ng-repeat="tag in tagList track by $index">
+								<div class="post-tag">{{tag.tagStr}}</div>
+							</div>
+						</div>
 					</div>
+
+
 					<!-- description -->	
 					<p class="description" id = "description"> {{description}} </p>
 
@@ -203,6 +219,29 @@
 								<img ng-show="comment.imageURL == null && comment.userIDAnnonymous!='Anonymous'" class="comment-profile-pic" src = "img/blankprofile.png" width="60px" height="60px">
 								<img ng-show="comment.userIDAnnonymous=='Anonymous'" class="comment-profile-pic" src = "img/anonymous_profile.png" width="60px" height="60px">
 							</div>
+
+
+
+							<!-- Not Logged in Modal -->
+							<div class="modal fade" id="notLoggedInRatingModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+							  <div class="edit-profile-modal modal-dialog" role="document">
+							    <div class="modal-content">
+							      <div class="modal-header">
+							        <h5 class="modal-title" id="exampleModalLabel">You are not logged in!</h5>
+							        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+							          <span aria-hidden="true">&times;</span>
+							        </button>
+							      </div>
+
+							      <div class="modal-footer">
+							        <button type="button" class="btn btn-secondary cancel-edit" data-dismiss="modal">OK</button>
+							      </div>
+							    </div>
+							  </div>
+							</div>
+
+
+
 							<div class="col-lg-11 col-md-11 col-sm-11 comment-info-cont">
 								<div class="row">
 									<div class= "col-lg-9 col-md-9 col-sm-12">
@@ -292,11 +331,11 @@
 	</div>
 
 		<!-- Tags -->
-		<p class="section-heading total-comments-heading" id="totalComment">ALL TAGS ({{totalTags}}) </p>
+<!-- 		<p class="section-heading total-comments-heading" id="totalComment">ALL TAGS ({{totalTags}}) </p>
 		<p ng-show ="totalTags=='0'">There is no tag</p>
 		<p ng-repeat="tag in tagList track by $index">
 			<button type="button" disabled>{{tag.tagStr}}</button>
-		</p>
+		</p> -->
 
 		<!-- Flag -->
 		<div class="row">
@@ -316,7 +355,7 @@
 			<p class="section-heading" id="totalComment">RECOMMENDED FOR YOU </p>
 			<div class="rec" ng-repeat="option in questionList" ng-click="goToLink(option)">
 				<p class="rec-title clickable"> {{option.title}} </p>			
-				<p class="rec-descript"> {{option.description}} </p>	
+				<p class="rec-descript"> {{option.description=="undefined"? "No Description" : option.description}} </p>
 			</div>
 			{{errorMessageRecommendedQuestion}}
 		</div>

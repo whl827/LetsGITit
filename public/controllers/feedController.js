@@ -142,14 +142,17 @@ angular.module("KnowItAll").controller('FeedCtrl', ['$scope', '$http', '$locatio
 
 
         $http.get('/getTopTags').then(function (response) {
-            var topTagsStr = "";
-            for(var i=0; i<response.data.length; i++){
-                topTagsStr = topTagsStr + response.data[i].tagStr;
-                if(i<response.data.length-1){
-                    topTagsStr += ", ";
-                }
-            }
+            // var topTagsStr = "";
+            // for(var i=0; i<response.data.length; i++){
+            //     topTagsStr = topTagsStr + response.data[i].tagStr;
+            //     if(i<response.data.length-1){
+            //         topTagsStr += ", ";
+            //     }
+            // }
+
+            
             //document.querySelector(".keywords").innerHTML = topTagsStr;
+           
             $scope.topTagsList = response.data;
             
         },
