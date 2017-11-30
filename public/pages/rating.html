@@ -20,15 +20,16 @@
 							<p class="username " id = "username"> Asked by 
 								<a class="clickable" ng-click="username!='Anonymous' && goToProfilePage()"> {{username}} </a> 
 							</p>
+							<button class="edit-post-button" ng-show = "userID==loggedInuserID" type="button" id="mymodal" data-toggle="modal" data-target="#EditPost">
+								EDIT
+							</button>
 						</div>
 
 					</div>
 
 
 					<!-- edit post button -->
-					<button ng-show = "userID==loggedInuserID" type="button" id="mymodal" data-toggle="modal" data-target="#EditPost">
-						Edit Post
-					</button>
+					
 
 					<!-- Edit Post Modal -->
 					<div class="modal fade" id="EditPost" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">

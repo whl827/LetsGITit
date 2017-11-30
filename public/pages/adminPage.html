@@ -19,13 +19,25 @@
 
     <div ng-if="adminData.auth == 1">
 
-    	<h3>Flagged Questions</h3>
+    	<p class="admin-page-headings">FLAGGED QUESTIONS</p>
 
     	<div data-ng-init="loadFlagged()">
 
-			<div class="post-container" ng-repeat="question in flagged.questionList" ng-click="goToLink(question)">
-				<p class="feed-question-title" id="current-question-title">{{question.title}}</p>
+			<div ng-repeat="question in flagged.questionList" ng-click="goToLink(question)">
 				<div class="row">
+					<div class="col-lg-10 col-md-10 col-sm-10">
+						<p id="current-question-title" class="flagged-item">{{question.title}}</p>
+					</div>
+					<div class="col-lg-2 col-md-2 col-sm-2">
+						<button class="admin-unflag-button" ng-click="unflag(question, flagged.questionList, $index)">UNFLAG</button>
+					</div>
+				</div>
+				<hr />
+
+
+				
+
+<!-- 				<div class="row">
 					<div class="col-xs-8 col-sm-8 col-md-8 col-lg-8 col-xl-8">
 						<p class="feed-user"> Created by {{question.username}} on {{question.startDate | date: 'yyyy-MM-dd'}}</p>
 						<p class="feed-subtitle">{{question.subtitle=="undefined" ? "" : question.subtitle}} </p> 
@@ -39,33 +51,41 @@
 
 						<button class="admin-unflag-button" ng-click="unflag(question, flagged.questionList, $index)">UNFLAG</button>
 
-						<!-- add tags  -->
 						<div class="tags-container row" ng-repeat="tag in question.allTags">
 							<div class="tag"> {{tag.tagStr}} </div>
 						</div>
 
 					</div>
-				</div>
+				</div> -->
+
+
 			</div>
+
 
     	</div>
 
-    	<h3>Flagged Comments</h3>
-    	<br>
-    	<br>
+
+
+
+    	<p class="admin-page-headings">FLAGGED COMMENTS</p>
     	<div data-ng-init="loadFlaggedComments()">
 
     		<div ng-repeat="comment in flagged.commentList">
-    			{{comment.description}} <br>
-    			<img src="{{comment.image}}"> <br>
-    			<button class="admin-unflag-button" ng-click="unflagComment(comment, flagged.commentList, $index)">UNFLAG</button> 
-    			<hr />
-    			<br>
-    			<br>
-
+    			<div class="row">
+	    			<div class="col-lg-10 col-md-10 col-sm-10">
+		    			<p class="flagged-item"> {{comment.description}} </p>
+		    			<img src="{{comment.image}}"> 
+	    			</div>
+	    			<div class="col-lg-2 col-md-2 col-sm-2">
+	    				<button class="admin-unflag-button" ng-click="unflagComment(comment, flagged.commentList, $index)">UNFLAG</button> 
+	    			</div>
+	    		</div>
+	    		<hr />
     		</div>
 
     	</div>
+
+
 
     </div>
     
