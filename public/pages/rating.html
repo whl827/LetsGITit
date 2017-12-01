@@ -285,9 +285,33 @@
 											<button class="action-buttons edit-comment-button" ng-show="comment.userID==loggedInuserID" ng-click="visible=true">
 												EDIT
 											</button>
-											<button class="action-buttons delete-comment-button" ng-show="comment.userID==loggedInuserID" ng-click="deleteComment(comment)"> 
+
+											<!-- Delete Comment Modal -->
+											<div class="modal fade" id="deleteCommentModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+											  <div class="edit-profile-modal modal-dialog" role="document">
+											    <div class="modal-content">
+											      <div class="modal-header">
+											        <h5 class="modal-title" id="exampleModalLabel">Delete Comment?</h5>
+											        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+											          <span aria-hidden="true">&times;</span>
+											        </button>
+											      </div>
+
+											      <div class="modal-footer">
+											      	<button type="button" class="btn btn-primary save-edit" data-dismiss="modal" ng-click="deleteComment(comment)">Yes</button>
+											        <button type="button" class="btn btn-secondary cancel-edit" data-dismiss="modal">No</button>
+											      </div>
+											    </div>
+											  </div>
+											</div>
+
+											<!-- <button class="action-buttons delete-comment-button" ng-show="comment.userID==loggedInuserID" ng-click="deleteComment(comment)"> 
 												DELETE
-											</button> 
+											</button>  -->
+											<button class="action-buttons delete-comment-button"
+											ng-show="comment.userID==loggedInuserID" data-toggle="modal" data-target="#deleteCommentModal">
+												DELETE
+											</button>
 										</div> 
 									</div>
 								</div>
@@ -332,7 +356,10 @@
 										</button>
 										<button class="action-buttons delete-comment-button" ng-show="comment.userID==loggedInuserID" ng-click="deleteComment(comment)"> 
 											DELETE
-										</button>  
+										</button>
+										<button class="action-buttons cancel-comment-button" ng-click="visible=false">
+											CANCEL
+										</button>
 									</div>	
 								</div>
 							</div>
