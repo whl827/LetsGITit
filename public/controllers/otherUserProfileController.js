@@ -20,6 +20,8 @@ angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '
 		if (!isLoggedIn) {
 			$scope.errorSignal = 1;
 		}
+
+		$scope.userStats = {numFollowers : response.data[0].numFollowers, numFollowing : response.data[0].numFollowing};
 	});
 
 	$scope.otherUsername = otherUsername
@@ -145,10 +147,6 @@ angular.module("KnowItAll").controller('otherUserProfile', ['$scope', '$http', '
 		 	} else {
 		 		$scope.isFollowing = {bool : false, string : "FOLLOW"};
 		 	}
-		 });
-
-		 $http.get('/numFollowers?username=' + otherUsername).then(function (response) {
-		 	$scope.userStats = {numFollowers : response.data[0].numFollowers, numFollowing : response.data[0].numFollowing};
 		 });
 	}
 	
