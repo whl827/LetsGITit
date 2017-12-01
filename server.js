@@ -37,7 +37,7 @@ function emailUser(email, description) {
 				from: 'knowitall857@gmail.com',
 				to: email,
 				subject: 'A notification From KnowItAll',
-				text: description
+				html: description
 			};
 
 			transporter.sendMail(mailOptions, function(error, info){
@@ -67,7 +67,9 @@ var notifier = schedule.scheduleJob('00 * * * *', function(){
   				function (err, result, feilds) {
   					var notificationID = result[0].userNotificaitonID;
   					con.query('UPDATE UserNotification SET isEmailed = true, isRead = true WHERE userNotificaitonID = ' + notificationID);
-  					emailUser(email, result[0].description);
+  					var description = '<h1>From Your Friends at <img src="https://vignette.wikia.nocookie.net/gfaqspsasbr/images/9/99/K.gif/revision/latest?cb=20120909135250">nowItAll,</h1> <br> You Have a notificaiton! <br> <b>' + result[0].description
+  										+ "</b> <br> <br>";
+  					emailUser(email, description);
   				});
   		}
   	});
@@ -130,6 +132,8 @@ app.get('/notifyFollowing', function (req, res) {
 			email = result[0].email;
 			hourly = result[0].notifyHourly;
 			if (!hourly) {
+				var htmlDesc = '<h1>From Your Friends at <img src="https://vignette.wikia.nocookie.net/gfaqspsasbr/images/9/99/K.gif/revision/latest?cb=20120909135250" style="height: 45px; width: 45px;">nowItAll,</h1> <br> You Have a notificaiton! <br> <b>' + description
+  										+ "</b> <br> <br>";
 				emailUser(email, description);
 				isEmailed = true;
 			}
