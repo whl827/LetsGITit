@@ -1,4 +1,54 @@
-Steps to Run KnowItAll:
+# Web Application using JavaScript, Node.js, & AngularJS
+
+## Inspiration
+### A crowd-sourced rating system for USC
+&nbsp;
+
+
+### Main Page
+&nbsp;
+
+![alt text](https://github.com/whl827/LetsGITit/blob/master/Demo%20(pics)/1.PNG)
+&nbsp;
+
+### Login Page
+&nbsp;
+
+![alt text](https://github.com/whl827/LetsGITit/blob/master/Demo%20(pics)/2.PNG)
+&nbsp;
+
+### SignUp Page
+&nbsp;
+
+![alt text](https://github.com/whl827/LetsGITit/blob/master/Demo%20(pics)/3.PNG)
+&nbsp;
+
+### Profile Page
+&nbsp;
+
+![alt text](https://github.com/whl827/LetsGITit/blob/master/Demo%20(pics)/4.PNG)
+&nbsp;
+
+### Creating a new post Page
+&nbsp;
+
+![alt text](https://github.com/whl827/LetsGITit/blob/master/Demo%20(pics)/5.PNG)
+&nbsp;
+
+![alt text](https://github.com/whl827/LetsGITit/blob/master/Demo%20(pics)/6.PNG)
+&nbsp;
+
+### User Post page
+&nbsp;
+
+![alt text](https://github.com/whl827/LetsGITit/blob/master/Demo%20(pics)/7.PNG)
+&nbsp;
+
+
+
+
+## Steps to Run KnowItAll:
+&nbsp;
 1. install Node, Angular, Express, MySQL
 2. Open up MySQL and connect to a localhost. Open up the scripts in the LetsGITit directory and run DUMP.sql script first, and then DummyData.sql after (in that exact order).
 3. Once you installed, inside the directory of LetsGITit in the terminal, run this command: npm start
