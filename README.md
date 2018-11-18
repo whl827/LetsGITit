@@ -5,31 +5,31 @@
 &nbsp;
 
 
-### Main Page
+## Main Page
 &nbsp;
 
 ![alt text](https://github.com/whl827/LetsGITit/blob/master/Demo%20(pics)/1.PNG)
 &nbsp;
 
-### Login Page
+## Login Page
 &nbsp;
 
 ![alt text](https://github.com/whl827/LetsGITit/blob/master/Demo%20(pics)/2.PNG)
 &nbsp;
 
-### SignUp Page
+## SignUp Page
 &nbsp;
 
 ![alt text](https://github.com/whl827/LetsGITit/blob/master/Demo%20(pics)/3.PNG)
 &nbsp;
 
-### Profile Page
+## Profile Page
 &nbsp;
 
 ![alt text](https://github.com/whl827/LetsGITit/blob/master/Demo%20(pics)/4.PNG)
 &nbsp;
 
-### Creating a new post Page
+## Creating A New Post Page
 &nbsp;
 
 ![alt text](https://github.com/whl827/LetsGITit/blob/master/Demo%20(pics)/5.PNG)
@@ -38,7 +38,7 @@
 ![alt text](https://github.com/whl827/LetsGITit/blob/master/Demo%20(pics)/6.PNG)
 &nbsp;
 
-### User Post page
+## User Post page
 &nbsp;
 
 ![alt text](https://github.com/whl827/LetsGITit/blob/master/Demo%20(pics)/7.PNG)
