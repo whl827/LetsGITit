@@ -1,4 +1,4 @@
-# Web Application using JavaScript, HTML/CSS, Node.js, & AngularJS
+# Web App using JavaScript, HTML/CSS, Node.js, & AngularJS
 
 ## Inspiration
 ### A crowd-sourced rating system for USC
